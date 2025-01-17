@@ -272,3 +272,19 @@ Feel free to adjust the TTL or throttling parameters as needed based on the spec
     }
 }
 ```
+
+---
+
+Suggested Repository Structure:
+
+```
+b2c2-events/
+├── apps/
+│   ├── client/          # React frontend
+│   └── functions/       # Serverless functions
+├── packages/
+│   ├── types/          # Shared TypeScript types
+│   └── utils/          # Shared utilities
+├── .github/            # GitHub Actions workflows
+└── package.json        # Root package.json
+```
