@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_KEY!)), // Replace with your service account JSON key
+    credential: admin.credential.cert(JSON.parse(process.env.FIRESTORE_KEY)),
   });
 }
 
