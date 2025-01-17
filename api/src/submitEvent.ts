@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIRESTORE_KEY)),
+    credential: admin.credential.cert(JSON.parse(process.env.FIRESTORE_KEY || '')),
   });
 }
 
@@ -63,7 +63,7 @@ export default async function submitEvent(req: VercelRequest, res: VercelRespons
       }),
     });
 
-    const result = await response.json();
+    const result: any = await response.json();
     if (!result.data?.athleticEventByURL) {
       return res.status(404).json({ error: "Event not found" });
     }
