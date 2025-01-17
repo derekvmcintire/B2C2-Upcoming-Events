@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "packages/api/**/*.ts": {
+      "runtime": "nodejs16.x"
+    }
+  },
+  "builds": [
+    {
+      "src": "packages/client/package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/packages/api/$1"
+    }
+  ]
+}
