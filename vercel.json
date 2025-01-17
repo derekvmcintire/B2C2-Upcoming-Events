@@ -1,8 +1,8 @@
 {
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs16.x",
-      "memory": 1024
+  "builds": [
+    {
+      "src": "packages/api/**/*",
+      "use": "@vercel/node"
     }
-  }
+  ]
 }
