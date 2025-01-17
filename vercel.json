@@ -1,19 +1,8 @@
 {
   "functions": {
-    "packages/api/**/*.ts": {
-      "runtime": "nodejs16.x"
+    "api/**/*.ts": {
+      "runtime": "nodejs16.x",
+      "memory": 1024
     }
-  },
-  "builds": [
-    {
-      "src": "packages/client/package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/packages/api/$1"
-    }
-  ]
+  }
 }
