@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "target": "ES2022",
@@ -7,5 +7,5 @@
     "module": "ESNext",
     "moduleResolution": "node"
   },
-  "include": ["src"]
+  "include": ["src", "submitEvent.ts", "getRegisteredRiders.ts"]
 }
