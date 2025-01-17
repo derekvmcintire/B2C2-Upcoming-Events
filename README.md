@@ -133,11 +133,70 @@ Structure Example:
 
 ---
 
-## Next Steps
-1. Finalize the data storage solution (e.g., Firebase Firestore).
-2. Set up serverless functions for data processing.
-3. Build the React application using Vite and React Hook Form.
-4. Test the user flow and deploy the application (e.g., on Vercel or Netlify).
+## **Caching and Throttling**
+
+### **Caching**
+
+**Goal:** Improve performance by reducing redundant external API calls, particularly for dynamically fetched data (e.g., registered riders) that can change frequently.
+
+1. **Event Data (GraphQL Request)**
+   - **Caching Strategy:** Event data fetched from the external GraphQL API will be stored in Firestore (as described in the data storage section). Therefore, there is no need to cache the event data at the API level, as Firestore will handle persistence and retrieval of this data.
+   - **Action:** No caching is required for the GraphQL event data.
+
+2. **Registered Riders Data (GET Request)**
+   - **Caching Strategy:** Since the list of registered riders can change frequently but may still be used for a few minutes after being fetched, we will implement short-lived caching for the registered riders' data. This will allow quick retrieval if a user refreshes the page or navigates away and then back quickly.
+   - **TTL (Time to Live):** Cache registered riders data for **5 minutes**. This duration strikes a balance between freshness and performance, reducing the need to re-fetch data while still ensuring relatively up-to-date information.
+   - **Cache Storage:** The cache will be stored in a fast-access storage mechanism, such as Redis or in-memory caching within the serverless functions.
+   - **Cache Invalidation:** Each time a request for registered riders is made, the cache will be checked:
+     - If the data is present and still within the TTL, it will be returned from the cache.
+     - If the data is absent or expired, a new request will be made to the external API, and the cache will be updated.
+
+3. **Fallback Behavior:**
+   - If the external API is unreachable, the system will fallback to showing cached data (if available) and notify the user of potential outdated information.
+
+---
+
+### **Throttling and Lazy Loading**
+
+**Goal:** Reduce unnecessary API requests and improve user experience by fetching only the necessary data based on user interactions (e.g., what events are visible on the screen).
+
+1. **Throttling Requests**
+   - **Throttling for Visible Events:**
+     - Requests for registered riders will only be made for events currently visible on the user's screen (above the fold). This ensures we’re not fetching data for events that the user won’t immediately interact with.
+     - **IntersectionObserver API** will be used to detect which events are currently visible and trigger the corresponding API requests.
+     - Requests for events outside of the visible viewport will be throttled and not made until the user scrolls and those events come into view.
+     - **Rate Limiting:** The backend (serverless function) will implement a rate-limiting mechanism to avoid overwhelming the external API, even with multiple requests for visible events.
+
+2. **Lazy Loading of Registered Riders**
+   - **Lazy Loading Behavior:**
+     - Registered riders will be loaded dynamically as the user scrolls down the page (i.e., lazy-loaded). Only a small subset of registered riders will be fetched initially, and as the user scrolls, additional riders will be fetched in batches.
+     - For better user experience, a “Loading…” state will be shown when new data is being fetched.
+     - The system will continue to fetch and cache registered riders data in small chunks, using the throttling strategy mentioned above to manage request frequency.
+
+3. **Scroll Detection and Data Fetching**
+   - **Using IntersectionObserver:** 
+     - The IntersectionObserver API will be employed to track which events have scrolled into view.
+     - When an event becomes visible, the system will trigger an API call to fetch its registered riders.
+   - **Pagination and Batch Requests:**
+     - To further optimize performance, registered riders will be fetched in batches or pages. This will ensure that we are not fetching large amounts of data at once, which could impact performance or trigger rate limits on the external API.
+
+---
+
+### **Summary of Caching and Throttling Strategy**
+
+1. **Caching:**
+   - No caching for GraphQL event data (stored in Firestore).
+   - Short-lived (5-minute TTL) cache for registered riders' data to handle quick page refreshes and navigations.
+   
+2. **Throttling & Lazy Loading:**
+   - Throttling of registered riders' requests based on visible events using IntersectionObserver to detect events in view.
+   - Dynamic lazy loading of registered riders as the user scrolls, minimizing unnecessary API calls.
+
+This approach will ensure a balance between performance, user experience, and minimizing external API load.
+
+---
+
+Feel free to adjust the TTL or throttling parameters as needed based on the specific requirements of your app. This plan should integrate well with your existing system architecture while ensuring optimal performance.
 
 ---
 
