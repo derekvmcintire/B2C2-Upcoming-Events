@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",            // Keep this for compatibility with modern Node.js modules
-    "esModuleInterop": true,        // Enables interoperability with CommonJS modules
+    "module": "NodeNext", // Keep this for compatibility with modern Node.js modules
+    "esModuleInterop": true, // Enables interoperability with CommonJS modules
     "moduleResolution": "nodenext", // Keep this for Node.js native module resolution
-    "noImplicitReturns": true,      // Good practice to catch unintended fallthroughs
-    "noUnusedLocals": true,         // Keep for catching unused variables
-    "outDir": "lib",                // Directory for compiled files
-    "sourceMap": true,              // Useful for debugging
-    "strict": true,                 // Enables strict type checking
-    "target": "ES2020",             // Upgrade to ES2020 for better compatibility with modern libraries
-    "skipLibCheck": true            // Skip type checking in `node_modules`
+    "noImplicitReturns": true, // Good practice to catch unintended fallthroughs
+    "noUnusedLocals": true, // Keep for catching unused variables
+    "outDir": "lib", // Directory for compiled files
+    "sourceMap": true, // Useful for debugging
+    "strict": true, // Enables strict type checking
+    "target": "ES2020", // Upgrade to ES2020 for better compatibility with modern libraries
+    "skipLibCheck": true // Skip type checking in `node_modules`
   },
   "compileOnSave": true,
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "exclude": [
-    "node_modules",                 // Explicitly exclude `node_modules`
-    "lib"                           // Exclude output directory
+    "node_modules", // Explicitly exclude `node_modules`
+    "lib" // Exclude output directory
   ]
 }
