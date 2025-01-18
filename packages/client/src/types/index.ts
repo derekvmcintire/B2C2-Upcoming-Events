@@ -38,7 +38,7 @@ export type EventSubmission = {
   eventType: string
 }
 
-export type ApiResponse = {
+export type FetchEventsWithRegisteredRidersResponse = {
   [key: string]: EventEntry | string; // Handles numbered keys and the 'query' string key
   query: string;
 };

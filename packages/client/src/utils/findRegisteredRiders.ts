@@ -1,4 +1,4 @@
-import { ApiResponse, EventEntry } from "../types";
+import { FetchEventsWithRegisteredRidersResponse, EventEntry } from "../types";
 
 /**
  * Retrieves all entries in the API response that match the given event ID.
@@ -7,7 +7,7 @@ import { ApiResponse, EventEntry } from "../types";
  * @param eventId - The event ID to match
  * @returns An array of matching entries
  */
-export function getEntriesByEventId(response: ApiResponse, eventId: number): EventEntry[] {
+export function getEntriesByEventId(response: FetchEventsWithRegisteredRidersResponse, eventId: number): EventEntry[] {
   const matchingEntries: EventEntry[] = [];
 
   for (const key in response) {

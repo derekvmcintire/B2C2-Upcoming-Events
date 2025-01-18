@@ -1,16 +1,21 @@
 import { Container, Divider, Grid, Stack, Text } from "@mantine/core";
 import classes from './event.module.css';
-import type { Event } from "../../types";
+import type { Event, FetchEventsWithRegisteredRidersResponse } from "../../types";
 import { formatEventDate } from "../../utils/dates";
+import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 
 type EventProps = {
-  event: Event;
+  event: Event,
+  registeredRiders?: FetchEventsWithRegisteredRidersResponse,
 };
 
 export default function EventDetails({
-  event
+  event,
+  registeredRiders,
 }: EventProps) {
-  const { date, name, city, state, eventUrl } = event;
+  const { eventId, date, name, city, state, eventUrl } = event;
+
+  const registrationsByEventId = registeredRiders ? getEntriesByEventId(registeredRiders, Number(eventId)) : [];
 
   // Format the date and split it into weekday and date
   const formattedDate = formatEventDate(date);
@@ -48,6 +53,11 @@ export default function EventDetails({
                 Link to Reg
               </a>
             </Text>
+            {registrationsByEventId.map(reg => {
+              return (
+                <Text>{`${reg["0"]}${reg["1"]}`}</Text>
+              )
+            })}
           </Stack>
         </Grid.Col>
       </Grid>
