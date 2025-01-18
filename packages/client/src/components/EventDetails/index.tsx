@@ -6,7 +6,7 @@ import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 
 type EventProps = {
   event: Event,
-  registeredRiders: FetchEventsWithRegisteredRidersResponse,
+  registeredRiders?: FetchEventsWithRegisteredRidersResponse,
 };
 
 export default function EventDetails({
@@ -15,7 +15,7 @@ export default function EventDetails({
 }: EventProps) {
   const { eventId, date, name, city, state, eventUrl } = event;
 
-  const registrationsByEventId = getEntriesByEventId(registeredRiders, Number(eventId))
+  const registrationsByEventId = registeredRiders ? getEntriesByEventId(registeredRiders, Number(eventId)) : [];
 
   // Format the date and split it into weekday and date
   const formattedDate = formatEventDate(date);
