@@ -1,5 +1,5 @@
 {
-  "extends": "../../../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "target": "ES2022",
@@ -8,5 +8,10 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "include": ["src", "submitEvent.ts", "getRegisteredRiders.ts"]
+  "include": [
+    "submitEvent.ts",
+    "getRegisteredRiders.ts",
+    "getEventsByType.ts",
+    "hello.ts"
+  ]
 }

@@ -5,7 +5,9 @@ import fetch from "node-fetch";
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIRESTORE_KEY || '')),
+    credential: admin.credential.cert(
+      JSON.parse(process.env.FIRESTORE_KEY || ""),
+    ),
   });
 }
 
@@ -24,7 +26,10 @@ interface SubmitEventRequest {
   eventType: "road" | "cx" | "xc";
 }
 
-export default async function submitEvent(req: VercelRequest, res: VercelResponse) {
+export default async function submitEvent(
+  req: VercelRequest,
+  res: VercelResponse,
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }

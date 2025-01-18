@@ -1,7 +1,10 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import fetch from "node-fetch";
 
-export default async function getRegisteredRiders(req: VercelRequest, res: VercelResponse) {
+export default async function getRegisteredRiders(
+  req: VercelRequest,
+  res: VercelResponse,
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -14,7 +17,7 @@ export default async function getRegisteredRiders(req: VercelRequest, res: Verce
     }
 
     const response = await fetch(
-      `https://www.crossresults.com/api/b2c2lookup.php?eventID=${eventId}`
+      `https://www.crossresults.com/api/b2c2lookup.php?eventID=${eventId}`,
     );
     const riders = await response.json();
 

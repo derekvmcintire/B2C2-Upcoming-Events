@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "vercel dev",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "format": "prettier --write ."
   },
   "devDependencies": {

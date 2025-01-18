@@ -4,7 +4,9 @@ import admin from "firebase-admin";
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(process.env.FIRESTORE_KEY || '')),
+    credential: admin.credential.cert(
+      JSON.parse(process.env.FIRESTORE_KEY || ""),
+    ),
   });
 }
 
@@ -18,27 +20,39 @@ interface Event {
   eventUrl: string;
 }
 
-export default async function getEventsByType(req: VercelRequest, res: VercelResponse) {
+export default async function getEventsByType(
+  req: VercelRequest,
+  res: VercelResponse,
+) {
   // Only allow GET requests
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { type, startDate = new Date().toISOString().split('T')[0] } = req.query;
+    const { type, startDate = new Date().toISOString().split("T")[0] } =
+      req.query;
 
     // Validate type parameter
-    if (!type || typeof type !== 'string' || !["road", "cx", "xc"].includes(type.toLowerCase())) {
-      return res.status(400).json({ error: "Invalid event type. Must be one of: road, cx, xc" });
+    if (
+      !type ||
+      typeof type !== "string" ||
+      !["road", "cx", "xc"].includes(type.toLowerCase())
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Invalid event type. Must be one of: road, cx, xc" });
     }
 
     // Validate startDate format if provided
     if (startDate && !/^\d{4}-\d{2}-\d{2}$/.test(startDate.toString())) {
-      return res.status(400).json({ error: "Invalid date format. Use YYYY-MM-DD" });
+      return res
+        .status(400)
+        .json({ error: "Invalid date format. Use YYYY-MM-DD" });
     }
 
     const db = admin.firestore();
-    
+
     // Query events collection
     const eventsRef = db
       .collection("events")
@@ -54,13 +68,12 @@ export default async function getEventsByType(req: VercelRequest, res: VercelRes
     }
 
     // Convert snapshot to array of events
-    const events: Event[] = snapshot.docs.map(doc => ({
+    const events: Event[] = snapshot.docs.map((doc) => ({
       ...(doc.data() as Event),
-      eventId: doc.id
+      eventId: doc.id,
     }));
 
     return res.status(200).json({ events });
-
   } catch (error) {
     console.error("Error fetching events:", error);
     return res.status(500).json({ error: "Internal server error" });
