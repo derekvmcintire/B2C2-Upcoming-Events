@@ -6,10 +6,21 @@ import EventDetails from "./components/EventDetails";
 import TopNav from "./components/TopNav";
 import RaceSubmissionForm from "./components/Submit"
 import { fetchEventsByType } from "./api/fetchEventsByType";
-import type { Event } from "./types";
+import { FetchEventsWithRegisteredRidersResponse, type Event } from "./types";
+import { fetchEventsWithRegisteredRiders } from "./api/fetchRegisteredRiders";
 
 function App() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [registeredRiders, setRegisteredRiders] = useState<FetchEventsWithRegisteredRidersResponse | undefined>(undefined);
+
+  useEffect(() => {
+    const getRegisteredRiders = async () => {
+      const response = await fetchEventsWithRegisteredRiders('road race');
+      setRegisteredRiders(response.events);
+    };
+
+    getRegisteredRiders();
+  }, []);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -26,7 +37,7 @@ function App() {
         <TopNav />
         <RaceSubmissionForm />
         {events.map((event) => (
-          <EventDetails key={event.eventId} event={event} />
+          <EventDetails key={event.eventId} event={event} registeredRiders={registeredRiders} />
         ))}
       </MantineProvider>
     </>
