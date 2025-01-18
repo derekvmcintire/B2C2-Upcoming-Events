@@ -13,6 +13,5 @@
   "include": ["packages/*/src"],  // Adjust for your specific monorepo structure
   "references": [
     { "path": "./packages/client/tsconfig.client.json" },
-    { "path": "./packages/client/api/tsconfig.api.json" }
   ]
 }
