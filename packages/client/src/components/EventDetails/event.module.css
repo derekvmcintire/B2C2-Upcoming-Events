@@ -1,0 +1,33 @@
+.eventContainer {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.eventGrid {
+  padding: 30px;
+}
+
+/* Make adjustments for smaller screens */
+@media (max-width: 768px) {
+  .eventGrid {
+    padding: 15px;
+  }
+
+  /* Make text smaller and more responsive */
+  .eventName {
+    font-size: 1.25rem; /* Smaller font for mobile */
+    word-wrap: break-word; /* Allow long event names to break */
+  }
+
+  .eventDate {
+    font-size: 1rem; /* Adjust font size for date */
+  }
+
+  .eventLocation {
+    font-size: 1rem; /* Adjust font size for location */
+  }
+
+  .eventLink {
+    font-size: 1rem; /* Adjust font size for link */
+  }
+}
