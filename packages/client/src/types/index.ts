@@ -37,3 +37,31 @@ export type EventSubmission = {
   url: string,
   eventType: string
 }
+
+export type ApiResponse = {
+  [key: string]: EventEntry | string; // Handles numbered keys and the 'query' string key
+  query: string;
+};
+
+export type EventEntry = {
+  "0": number; // Event ID
+  "1": string; // Event Name
+  "2": string; // First Name
+  "3": string; // Last Name
+  "4": string; // Category
+  "5": DateDetails; // Event Date
+  "6": DateDetails; // Event End Date
+  EventID: number;
+  EventName: string;
+  FirstName: string;
+  LastName: string;
+  Category: string;
+  EventDate: DateDetails;
+  EventEndDate: DateDetails;
+};
+
+export type DateDetails = {
+  date: string; // ISO format date string
+  timezone_type: number; // Timezone type (3 for most cases)
+  timezone: string; // Timezone string
+};

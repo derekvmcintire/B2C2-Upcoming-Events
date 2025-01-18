@@ -34,7 +34,7 @@ const RaceSubmissionForm = () => {
 
       
 
-      <Group>
+      <Group justify="center">
         <Select
           label="Select Event Type"
           placeholder="Pick one"
