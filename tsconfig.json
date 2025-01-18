@@ -10,9 +10,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
   },
-  "include": ["packages/*/src"],  // Adjust for your specific monorepo structure
+  "include": ["packages/*"],  // Adjust for your specific monorepo structure
   "references": [
     { "path": "./packages/client/tsconfig.client.json" },
-    { "path": "./packages/eventsApi/api/tsconfig.api.json" }
+    { "path": "./packages/eventsApi/tsconfig.api.json" }
   ]
 }
