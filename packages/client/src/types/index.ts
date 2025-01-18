@@ -28,3 +28,7 @@ export const mockEvents: Event[] = [
           eventType: "road"
       }
   ];
+
+export type GetEventsResponse = {
+  events: Event[]
+}

@@ -1,23 +1,31 @@
-
+import { useEffect, useState } from "react";
 import "./App.css";
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import Event from "./components/EventDetails";
+import EventDetails from "./components/EventDetails";
 import TopNav from "./components/TopNav";
-import { mockEvents } from './types/index'
+import { fetchEventsByType } from "./api/fetchEventsByType";
+import type { Event } from "./types";
 
 function App() {
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const response = await fetchEventsByType('road');
+      setEvents(response.events);
+    };
+
+    getEvents();
+  }, []);
 
   return (
     <>
       <MantineProvider>
         <TopNav />
-        {mockEvents.map(event => {
-          return (
-            <Event event={event}/>
-          )
-        })}
-        
+        {events.map((event) => (
+          <EventDetails key={event.eventId} event={event} />
+        ))}
       </MantineProvider>
     </>
   );
