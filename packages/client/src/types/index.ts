@@ -32,3 +32,8 @@ export const mockEvents: Event[] = [
 export type GetEventsResponse = {
   events: Event[]
 }
+
+export type EventSubmission = {
+  url: string,
+  eventType: string
+}
