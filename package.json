@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+<<<<<<< HEAD
     "@types/node": "^22.10.7",
     "@types/node-fetch": "^2.6.12",
     "eslint-config-prettier": "^10.0.1",
@@ -27,5 +28,8 @@
     "@vercel/node": "^5.0.2",
     "firebase-admin": "^13.0.2",
     "node-fetch": "^3.3.2"
+=======
+    "@types/node-fetch": "^2.6.12"
+>>>>>>> parent of 9fa89b6 (Add prettier and scripts)
   }
 }
