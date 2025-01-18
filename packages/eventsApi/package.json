@@ -1,0 +1,28 @@
+{
+  "name": "b2c2-upcoming-events-api",
+  "version": "1.0.0",
+  "description": "## Overview The B2C2 Event Calendar is a simple application designed to allow users to submit cycling event URLs, retrieve event details from an external GraphQL API, and display events organized by type (Road, CX, XC). The system prioritizes simplicity, maintainability, and a lightweight architecture.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "vercel dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/node-fetch": "^2.6.12",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@vercel/node": "^5.0.2",
+    "firebase-admin": "^13.0.2",
+    "node-fetch": "^3.3.2"
+  }
+}
