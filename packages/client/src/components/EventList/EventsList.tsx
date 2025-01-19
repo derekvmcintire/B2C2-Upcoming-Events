@@ -1,11 +1,10 @@
 import { Text } from '@mantine/core';
 import { useEventsContext } from '../../context/events-context';
 import EventDetails from '../EventDetails';
-import { type Event } from "../../types";
+import { type Discipline } from '../../types';
 
 interface EventsListProps {
-    events: Event[];
-    type: string;
+    discipline: Discipline
 }
 
 /**
@@ -13,12 +12,32 @@ interface EventsListProps {
  * @param {EventsListProps} props - The props for the component.
  * @returns {JSX.Element} The EventsList component.
  */
-export default function EventsList({ events, type }: EventsListProps): JSX.Element {
+export default function EventsList({ discipline }: EventsListProps): JSX.Element {
     const eventsContext = useEventsContext();
-    const { registrations } = eventsContext;
+    const { events, registrations } = eventsContext;
+
+//   // Fetch registrations on component mount
+//   useEffect(() => {
+//     const getRegisteredRiders = async () => {
+//       const response = await fetchRegistrations(discipline.queryParam);
+//       setRegistrations(response);
+//     };
+
+//     getRegisteredRiders();
+//   }, [setRegistrations]);
+
+//   // Fetch categorized events on component mount
+//   useEffect(() => {
+//     const getEvents = async () => {
+//       const response = await fetchEventsByType(discipline.id);
+//       setEvents(response.events);
+//     };
+
+//     getEvents();
+//   }, [setEvents]);
 
     return events.length < 1 ? (
-        <Text mt="16">{`No ${type} events found.`}</Text>
+        <Text mt="16">{`No ${discipline.text} events found.`}</Text>
     ) : (
         <>
             {events.map((event) => (

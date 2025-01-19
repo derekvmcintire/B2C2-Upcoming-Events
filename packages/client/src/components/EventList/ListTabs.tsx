@@ -1,11 +1,12 @@
 import { Tabs } from '@mantine/core';
 import EventsList from './EventsList';
 import classes from './event-list.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchRegistrations } from '../../api/fetchRegisteredRiders';
 import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
+import { getDisciplineId } from '../../utils/discipline';
 
 /**
  * Component for rendering a tabbed interface to display categorized events.
@@ -14,62 +15,58 @@ import { DISCIPLINES } from '../../constants';
  * @returns {JSX.Element} The ListTabs component.
  */
 const ListTabs = (): JSX.Element => {
+  const [activeTab, setActiveTab] = useState<string | null>(DISCIPLINES.ROAD.text);
+
+  const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
+  
   const eventsContext = useEventsContext();
   const {
-    roadEvents,
-    cxEvents,
-    xcEvents,
     setRegistrations,
-    setRoadEvents,
-    setCxEvents,
-    setXcEvents,
+    setEvents
   } = eventsContext;
 
-  // @TODO: fetch registrations for other disciplines, not just road
+  const getRegisteredRiders = async () => {
+    const response = await fetchRegistrations(DISCIPLINES.ROAD.queryParam);
+    setRegistrations(response);
+  };
+
+  const getEvents = async (disciplineId: string) => {
+    const roadResponse = await fetchEventsByType(disciplineId);
+    setEvents(roadResponse.events);
+  };
+
+  const handleTabChange = (value: any) => {
+    console.log('handling tab change: ', value)
+    const disciplineId = getDisciplineId(value);
+    getRegisteredRiders();
+    getEvents(disciplineId);
+    setActiveTab(value);
+  }
+
   // Fetch registrations on component mount
   useEffect(() => {
-    const getRegisteredRiders = async () => {
-      const response = await fetchRegistrations(DISCIPLINES.ROAD.queryParam);
-      setRegistrations(response);
-    };
-
     getRegisteredRiders();
-  }, [setRegistrations]);
-
-  // Fetch categorized events on component mount
-  useEffect(() => {
-    const getEvents = async () => {
-      const roadResponse = await fetchEventsByType('road');
-      setRoadEvents(roadResponse.events);
-
-      const cxResponse = await fetchEventsByType('cx');
-      setCxEvents(cxResponse.events);
-
-      const xcResponse = await fetchEventsByType('xc');
-      setXcEvents(xcResponse.events);
-    };
-
-    getEvents();
-  }, [setRoadEvents, setCxEvents, setXcEvents]);
+    getEvents(DEFAULT_DISCIPLINE.id);
+  }, []);
 
   return (
-    <Tabs defaultValue="road" className={classes.eventList}>
+    <Tabs value={activeTab} onChange={handleTabChange} defaultValue={DISCIPLINES.ROAD.text} className={classes.eventList}>
       <Tabs.List>
-        <Tabs.Tab className={classes.eventListTab} value="road">Road</Tabs.Tab>
-        <Tabs.Tab className={classes.eventListTab} value="cx">Cyclocross</Tabs.Tab>
-        <Tabs.Tab className={classes.eventListTab} value="xc">Cross Country</Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.ROAD.text}>Road</Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.CX.text}>Cyclocross</Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>Cross Country</Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel key="road" value="road">
-        <EventsList events={roadEvents} type="Road" />
+      <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
+        <EventsList discipline={DISCIPLINES.ROAD} />
       </Tabs.Panel>
 
-      <Tabs.Panel key="cx" value="cx">
-        <EventsList events={cxEvents} type="Cyclocross" />
+      <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+        <EventsList discipline={DISCIPLINES.CX} />
       </Tabs.Panel>
 
-      <Tabs.Panel key="xc" value="xc">
-        <EventsList events={xcEvents} type="Cross Country" />
+      <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+        <EventsList discipline={DISCIPLINES.XC} />
       </Tabs.Panel>
     </Tabs>
   );
