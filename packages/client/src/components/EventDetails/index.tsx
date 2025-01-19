@@ -27,10 +27,10 @@ export default function EventDetails({
         {/* Left column: Date */}
         <Grid.Col span={4}>
           <Stack align="flex-start">
-            <Text className={classes.eventDate} style={{ fontWeight: 600, fontSize: '1.2rem' }}>
+            <Text className={classes.eventDate} style={{ fontWeight: 600, fontSize: '1.8rem' }}>
               {weekday}
             </Text>
-            <Text className={classes.eventDate} style={{ fontWeight: 400, fontSize: '1rem' }}>
+            <Text className={classes.eventDate} style={{ fontWeight: 400, fontSize: '1.3rem' }}>
               {dateString}
             </Text>
           </Stack>
@@ -53,12 +53,12 @@ export default function EventDetails({
               </a>
             </Text>
             <Text fw="600" size="lg">Teammates Registered:</Text>
-            <Flex>
-            {registeredNames.map((registeredRider: string) => {
-              return (
-                <Pill c="orange" size="lg">{registeredRider}</Pill>
-              )
-            })}
+            <Flex wrap="wrap" style={{ maxWidth: '400px' }}>
+              {[...new Set(registeredNames)].map((registeredRider: string) => (
+                <Pill c="orange" size="lg" key={registeredRider}>
+                  {registeredRider}
+                </Pill>
+              ))}
             </Flex>
           </Stack>
         </Grid.Col>

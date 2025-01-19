@@ -7,6 +7,31 @@
   padding: 30px;
 }
 
+.eventDate {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1; /* Adjust line-height for tighter spacing */
+}
+
+.eventName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1; /* Adjust line-height for tighter spacing */
+}
+
+.eventLocation {
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1; /* Adjust line-height for tighter spacing */
+}
+
+.eventLink {
+  font-size: 1.1rem;
+  color: #1e90ff;
+  font-weight: 500;
+  line-height: 1; /* Adjust line-height for tighter spacing */
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {
