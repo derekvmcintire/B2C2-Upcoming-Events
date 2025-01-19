@@ -1,7 +1,7 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/submit", "destination": "/" }
+    { "src": "/submit", "dest": "/" }
   ],
   "routes": [
     { "handle": "filesystem" },
