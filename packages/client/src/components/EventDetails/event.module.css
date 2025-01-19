@@ -44,6 +44,12 @@
   max-width: 400px;
 }
 
+.registeredName {
+  color: orange;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {

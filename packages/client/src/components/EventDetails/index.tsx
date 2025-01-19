@@ -10,9 +10,18 @@ type EventProps = {
 };
 
 /**
- * Renders the details of an event including date, location, URL, and registered teammates.
- * @param {EventProps} props - The props for the component.
- * @returns {JSX.Element} The EventDetails component.
+ * EventDetails Component
+ * 
+ * Renders the details of a specific event, including the event's date, name, location, registration link, 
+ * and the names of registered teammates (if available).
+ * - Displays the formatted event date with the weekday and date string.
+ * - Displays event details including name, location (city and state), and a link to the registration page.
+ * - Lists the names of registered riders, if provided in the `registrations` prop.
+ * 
+ * @param {EventProps} props - The props for the component, including:
+ *   - `event`: The event object containing details about the event (name, date, location, URL).
+ *   - `registrations` (optional): The list of registrations for the event, used to display registered rider names.
+ * 
  */
 export default function EventDetails({
   event,
@@ -73,7 +82,7 @@ export default function EventDetails({
             {/* Registered Teammates */}
             <Flex wrap="wrap" className={classes.registeredNameList}>
               {[...new Set(registeredNames)].map((registeredRider: string) => (
-                <Pill c="orange" size="lg" key={registeredRider}>
+                <Pill className={classes.registeredName} size="lg" key={registeredRider}>
                   {registeredRider}
                 </Pill>
               ))}
