@@ -83,7 +83,7 @@ export default function EventDetails({
             <Flex wrap="wrap" className={classes.registeredNameList}>
               {[...new Set(registeredNames)].map((registeredRider: string) => (
                 <Pill className={classes.registeredName} size="lg" key={registeredRider}>
-                  {registeredRider}
+                  <Text fw="600">{registeredRider}</Text>
                 </Pill>
               ))}
             </Flex>
