@@ -4,7 +4,11 @@ import { EventSubmission } from '../../types';
 import { submitEvent } from '../../api/submitEvent';
 import classes from './submit.module.css';
 
-const RaceSubmissionForm = ({ getEvents }: any) => {
+interface RaceSubmissionFormProps {
+  getEvents: () => Promise<void>;
+}
+
+const RaceSubmissionForm = ({ getEvents }: RaceSubmissionFormProps) => {
   const [bikeregUrl, setBikeregUrl] = useState('');
   const [eventType, setEventType] = useState<string | null>('');
   const [isSubmitting, setIsSubmitting] = useState(false);

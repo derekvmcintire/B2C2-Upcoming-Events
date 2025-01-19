@@ -6,7 +6,11 @@ import classes from './top-nav.module.css';
 
 export const TOP_NAV_TEST_ID = 'top-nav';
 
-export default function TopNav({ getEvents }: any) {
+interface TopNavProps {
+  getEvents: () => Promise<void>;
+}
+
+export default function TopNav({ getEvents }: TopNavProps) {
   const isMobile = useMediaQuery('(max-width: 950px)');
 
   return (
