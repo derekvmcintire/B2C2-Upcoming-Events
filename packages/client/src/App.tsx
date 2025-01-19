@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import TopNav from "./components/TopNav";
 import ListTabs from "./components/EventList/ListTabs";
 import { EventsProvider } from "./context/events-context";
+import { ColorSchemeToggle } from "./components/ColorSchemeToggle";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <EventsProvider>
           <TopNav />
           <ListTabs />
+          <ColorSchemeToggle />
         </EventsProvider>
       </MantineProvider>
     </>

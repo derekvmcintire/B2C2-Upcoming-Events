@@ -17,3 +17,6 @@ export const DISCIPLINES: EventDisciplines = {
     id: 'xc'
   }
 }
+
+export const LIGHT_COLOR_SCHEME = 'light';
+export const DARK_COLOR_SCHEME = 'dark';
