@@ -10,6 +10,9 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
+  "engines": {
+    "node": ">=18"
+  },  
   "dependencies": {
     "@mantine/core": "^7.16.0",
     "@mantine/hooks": "^7.16.0",
