@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const getRegisteredRiders = async () => {
-      const response = await fetchEventsWithRegisteredRiders('road race');
+      const response = await fetchEventsWithRegisteredRiders('road%20race');
       setRegisteredRiders(response);
     };
 

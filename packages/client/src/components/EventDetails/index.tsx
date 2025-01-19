@@ -1,4 +1,4 @@
-import { Container, Divider, Grid, Stack, Text } from "@mantine/core";
+import { Container, Divider, Flex, Grid, Pill, Stack, Text } from "@mantine/core";
 import classes from './event.module.css';
 import type { Event, FetchEventsWithRegisteredRidersResponse } from "../../types";
 import { formatEventDate } from "../../utils/dates";
@@ -53,11 +53,14 @@ export default function EventDetails({
                 Link to Reg
               </a>
             </Text>
+            <Text fw="600" size="lg">Teammates Registered:</Text>
+            <Flex>
             {registrationsByEventId.map(reg => {
               return (
-                <Text>{`${reg["0"]}${reg["1"]}`}</Text>
+                <Pill c="orange" size="lg">{`${reg["2"]} ${reg["3"]}`}</Pill>
               )
             })}
+            </Flex>
           </Stack>
         </Grid.Col>
       </Grid>
