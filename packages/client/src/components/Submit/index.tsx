@@ -3,17 +3,27 @@ import { Flex, TextInput, Select, Button, Text, Stack, Alert } from '@mantine/co
 import { EventSubmission } from '../../types';
 import { submitEvent } from '../../api/submitEvent';
 import classes from './submit.module.css';
+import { useEventsContext } from '../../context/events-context';
+import { fetchEventsByType } from '../../api/fetchEventsByType';
 
-interface RaceSubmissionFormProps {
-  getEvents: () => Promise<void>;
-}
-
-const RaceSubmissionForm = ({ getEvents }: RaceSubmissionFormProps) => {
+const RaceSubmissionForm = () => {
   const [bikeregUrl, setBikeregUrl] = useState('');
   const [eventType, setEventType] = useState<string | null>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const eventsContext = useEventsContext();
+  const { setRoadEvents } = eventsContext;
+
+  const updateEvents = () => {
+    const getEvents = async () => {
+      const response = await fetchEventsByType('road');
+      setRoadEvents(response.events);
+    };
+    
+    getEvents();
+  }
 
   const validateUrl = (url: string) => {
     if (!url) return 'URL is required';
@@ -55,7 +65,7 @@ const RaceSubmissionForm = ({ getEvents }: RaceSubmissionFormProps) => {
         setShowSuccess(true);
         setBikeregUrl('');
         setEventType(null);
-        getEvents();
+        updateEvents();
       } else {
         setError('Failed to submit race');
       }
@@ -105,8 +115,8 @@ const RaceSubmissionForm = ({ getEvents }: RaceSubmissionFormProps) => {
           onChange={(value: string | null) => setEventType(value)}
           data={[
             { value: 'road', label: 'Road' },
-            { value: 'xc', label: 'XC' },
-            { value: 'cx', label: 'CX' },
+            { value: 'xc', label: 'Cross Country' },
+            { value: 'cx', label: 'Cyclocross' },
           ]}
         />
 
