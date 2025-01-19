@@ -2,7 +2,7 @@
 
 ## Overview
 
-The B2C2 Event Calendar client application is a React-based web application that allows users to submit cycling event URLs, fetch event details from an external GraphQL API, and display events organized by type (Road, CX, XC). The application prioritizes simplicity and maintainability, with a focus on performance and a lightweight architecture.
+The B2C2 Event Calendar client application is a React-based web application that allows users to submit cycling event URLs, fetch event details from an external GraphQL API, and display events organized by type (Road, CX, XC).
 
 ---
 
