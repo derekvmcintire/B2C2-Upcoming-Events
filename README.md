@@ -8,6 +8,10 @@ The B2C2 Event Calendar client application is a React-based web application that
 
 ---
 
+![B2C2CalendarSystemDesign drawio](https://github.com/user-attachments/assets/4ce7a309-55c1-40f7-af57-06750cdc9b46)
+
+---
+
 ## Features
 
 ### 1. **Submit Events:**
