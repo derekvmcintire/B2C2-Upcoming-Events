@@ -1,7 +1,7 @@
 import { formatDateToString } from "../utils/dates";
-import { FetchEventsWithRegisteredRidersResponse } from "../types";
+import { FetchRegistrationsResponse } from "../types";
 
-export const fetchEventsWithRegisteredRiders = async (eventType: string, after: Date = new Date()) => {
+export const fetchRegistrations = async (eventType: string, after: Date = new Date()) => {
   const afterAsString = formatDateToString(after);
   const url = `/api/proxy?eventType=${eventType}&after=${afterAsString}`
   try {
@@ -11,7 +11,7 @@ export const fetchEventsWithRegisteredRiders = async (eventType: string, after: 
           throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
-      const data: FetchEventsWithRegisteredRidersResponse = await response.json();
+      const data: FetchRegistrationsResponse = await response.json();
       return data;
   } catch (error) {
       console.error('Failed to fetch event data:', error);

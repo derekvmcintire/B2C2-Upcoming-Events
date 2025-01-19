@@ -1,14 +1,14 @@
-import { FetchEventsWithRegisteredRidersResponse, EventEntry } from "../types";
+import { FetchRegistrationsResponse, EventEntry } from "../types";
 
 /**
- * Retrieves all entries in the API response that match the given event ID.
+ * Retrieves all entries in the API response that match the given event ID, and returns a list of full names.
  * 
  * @param response - The API response object
  * @param eventId - The event ID to match
- * @returns An array of matching entries
+ * @returns An array of full names pulled from matching entries
  */
-export function getEntriesByEventId(response: FetchEventsWithRegisteredRidersResponse, eventId: number): EventEntry[] {
-  const matchingEntries: EventEntry[] = [];
+export function getEntriesByEventId(response: FetchRegistrationsResponse, eventId: number): string[] {
+  const matchingEntries: string[] = [];
 
   for (const key in response) {
     // Skip the "query" field and ensure it's a valid EventEntry
@@ -20,7 +20,9 @@ export function getEntriesByEventId(response: FetchEventsWithRegisteredRidersRes
 
     // Check if the EventID matches the given eventId
     if (entry.EventID === eventId) {
-      matchingEntries.push(entry);
+      const firstName = entry["2"];
+      const lastName = entry["3"];
+      matchingEntries.push(`${firstName} ${lastName}`);
     }
   }
 
