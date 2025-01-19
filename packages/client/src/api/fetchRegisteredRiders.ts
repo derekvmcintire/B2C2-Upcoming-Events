@@ -1,24 +1,19 @@
-import { simple } from "simple-fetch-ts";
 import { formatDateToString } from "../utils/dates";
-import { FetchEventsWithRegisteredRidersResponse } from "../types";
+import { FetchRegistrationsResponse } from "../types";
 
-// const url = 'https://www.crossresults.com/api/b2c2lookup.php';
-
-// export const fetchEventsWithRegisteredRiders = async (eventType: string, after: Date = new Date()): Promise<any> => {
-//   const afterAsString = formatDateToString(after);
-
-//   const response = await simple(url)
-//     .params({ eventType, after: afterAsString })
-//     .fetch<FetchEventsWithRegisteredRidersResponse>();
-
-//   return response.data;
-// }
-export const fetchEventsWithRegisteredRiders = async (eventType: string, after: Date = new Date()) => {
+export const fetchRegistrations = async (eventType: string, after: Date = new Date()) => {
   const afterAsString = formatDateToString(after);
   const url = `/api/proxy?eventType=${eventType}&after=${afterAsString}`
-    const response = await simple(url)
-    .params({ eventType, after: afterAsString })
-    .fetch<FetchEventsWithRegisteredRidersResponse>();
+  try {
+      const response = await fetch(url);
 
-  return response.data;
+      if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data: FetchRegistrationsResponse = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Failed to fetch event data:', error);
+  }
 };

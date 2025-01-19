@@ -1,21 +1,21 @@
-import { Container, Divider, Grid, Stack, Text } from "@mantine/core";
+import { Container, Divider, Flex, Grid, Pill, Stack, Text } from "@mantine/core";
 import classes from './event.module.css';
-import type { Event, FetchEventsWithRegisteredRidersResponse } from "../../types";
+import type { Event, FetchRegistrationsResponse } from "../../types";
 import { formatEventDate } from "../../utils/dates";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 
 type EventProps = {
   event: Event,
-  registeredRiders?: FetchEventsWithRegisteredRidersResponse,
+  registrations?: FetchRegistrationsResponse,
 };
 
 export default function EventDetails({
   event,
-  registeredRiders,
+  registrations,
 }: EventProps) {
   const { eventId, date, name, city, state, eventUrl } = event;
 
-  const registrationsByEventId = registeredRiders ? getEntriesByEventId(registeredRiders, Number(eventId)) : [];
+  const registeredNames = registrations ? getEntriesByEventId(registrations, Number(eventId)) : [];
 
   // Format the date and split it into weekday and date
   const formattedDate = formatEventDate(date);
@@ -53,11 +53,14 @@ export default function EventDetails({
                 Link to Reg
               </a>
             </Text>
-            {registrationsByEventId.map(reg => {
+            <Text fw="600" size="lg">Teammates Registered:</Text>
+            <Flex>
+            {registeredNames.map((registeredRider: string) => {
               return (
-                <Text>{`${reg["0"]}${reg["1"]}`}</Text>
+                <Pill c="orange" size="lg">{registeredRider}</Pill>
               )
             })}
+            </Flex>
           </Stack>
         </Grid.Col>
       </Grid>
