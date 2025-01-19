@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Flex, TextInput, Select, Button } from '@mantine/core';
+import { Flex, TextInput, Select, Button, Text, Stack } from '@mantine/core';
 import { EventSubmission } from '../../types';
 import { submitEvent } from '../../api/submitEvent';
 import classes from './submit.module.css';
@@ -20,28 +20,31 @@ const RaceSubmissionForm = () => {
   };
 
   return (
-    <Flex align="center" >
+    <Stack align="flex-start">
+      <Text>Enter a BikeReg URL to submit a race.</Text>
+      <Flex align="center" >
 
-      <TextInput
-      className={classes.formInput}
-        placeholder="BikeReg URL"
-        value={bikeregUrl}
-        onChange={(e) => setBikeregUrl(e.target.value)}
-      />
-
-        <Select
-          className={classes.formInput}
-          placeholder="Race Type"
-          value={eventType}
-          onChange={(value: string | null) => setEventType(value)} // Correct type for eventType
-          data={[
-            { value: 'road', label: 'Road' },
-            { value: 'xc', label: 'XC' },
-            { value: 'cx', label: 'CX' },
-          ]}
+        <TextInput
+        className={classes.formInput}
+          placeholder="BikeReg URL"
+          value={bikeregUrl}
+          onChange={(e) => setBikeregUrl(e.target.value)}
         />
-        <Button onClick={handleSubmit}>Submit Race</Button>
-    </Flex>
+
+          <Select
+            className={classes.formInput}
+            placeholder="Race Type"
+            value={eventType}
+            onChange={(value: string | null) => setEventType(value)} // Correct type for eventType
+            data={[
+              { value: 'road', label: 'Road' },
+              { value: 'xc', label: 'XC' },
+              { value: 'cx', label: 'CX' },
+            ]}
+          />
+          <Button onClick={handleSubmit}>Submit Race</Button>
+      </Flex>
+    </Stack>
   );
 };
 
