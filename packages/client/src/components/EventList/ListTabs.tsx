@@ -1,15 +1,37 @@
 import { Tabs } from '@mantine/core';
-import { FetchRegistrationsResponse, type Event } from "../../types";
-import RoadEventsList from './RoadEventsList';
+import EventsList from './EventsList';
 import classes from './event-list.module.css';
+import { useEffect } from 'react';
+import { fetchRegistrations } from '../../api/fetchRegisteredRiders';
+import { useEventsContext } from '../../context/events-context';
+import { fetchEventsByType } from '../../api/fetchEventsByType';
 
+const ListTabs = () => {
+  const eventsContext = useEventsContext();
+  const { roadEvents, cxEvents, xcEvents, setRegistrations, setRoadEvents, setCxEvents, setXcEvents } = eventsContext;
 
-interface ListTabsProps {
-  events: Event[],
-  registrations?: FetchRegistrationsResponse
-}
+  useEffect(() => {
+    const getRegisteredRiders = async () => {
+      const response = await fetchRegistrations('road%20race');
+      setRegistrations(response);
+    };
 
-const ListTabs = ({ events, registrations }: ListTabsProps) => {
+    getRegisteredRiders();
+  }, []);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const roadResponse = await fetchEventsByType('road');
+      setRoadEvents(roadResponse.events);
+      const cxResponse = await fetchEventsByType('cx');
+      setCxEvents(cxResponse.events);
+      const xcResponse = await fetchEventsByType('xc');
+      setXcEvents(xcResponse.events);
+    };
+    
+    getEvents();
+  }, []);
+  
   return (
     <Tabs defaultValue="road" className={classes.eventList}>
       <Tabs.List>
@@ -18,13 +40,13 @@ const ListTabs = ({ events, registrations }: ListTabsProps) => {
         <Tabs.Tab className={classes.eventListTab} value="xc">Cross Country</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel key={"road"} value={"road"}>
-        <RoadEventsList events={events} registrations={registrations}/>
+        <EventsList events={roadEvents} type="Road"/>
       </Tabs.Panel>
       <Tabs.Panel key={"cx"} value={"cx"}>
-              This is cx Stuff
+      <EventsList events={cxEvents} type="Cyclocross"/>
       </Tabs.Panel>
       <Tabs.Panel key={"xc"} value={"xc"}>
-              This is xc Stuff
+      <EventsList events={xcEvents} type="Cross Country" />
       </Tabs.Panel>
     </Tabs>
   );

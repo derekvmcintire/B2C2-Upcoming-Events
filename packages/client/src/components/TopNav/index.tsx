@@ -6,17 +6,13 @@ import classes from './top-nav.module.css';
 
 export const TOP_NAV_TEST_ID = 'top-nav';
 
-interface TopNavProps {
-  getEvents: () => Promise<void>;
-}
-
-export default function TopNav({ getEvents }: TopNavProps) {
+export default function TopNav() {
   const isMobile = useMediaQuery('(max-width: 950px)');
 
   return (
     <div data-testid={TOP_NAV_TEST_ID} className={classes.topNavContainer}>
       <Flex justify="space-between" align="center" pt={10}>
-        {isMobile ? <HamburgerNav /> : <RaceSubmissionForm getEvents={getEvents} />}
+        {isMobile ? <HamburgerNav /> : <RaceSubmissionForm />}
         <Group>
           <Title className={classes.title} ta="right">
             <Text
