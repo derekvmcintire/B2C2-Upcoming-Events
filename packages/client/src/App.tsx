@@ -1,22 +1,17 @@
 import "./App.css";
 import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
-import TopNav from "./components/TopNav";
-import ListTabs from "./components/EventList/ListTabs";
-import { EventsProvider } from "./context/events-context";
-import { ColorSchemeToggle } from "./components/ColorSchemeToggle";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from "./components/Home";
+import Submit from "./components/Submit";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <>
-      <MantineProvider>
-        <EventsProvider>
-          <TopNav />
-          <ListTabs />
-          <ColorSchemeToggle />
-        </EventsProvider>
-      </MantineProvider>
-    </>
+    <Router>
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/submit" element={<Submit />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,12 +1,22 @@
-'use client';
-
 import { Button, Group, useMantineColorScheme } from '@mantine/core';
 import classes from './color-scheme-toggle.module.css';
 import { LIGHT_COLOR_SCHEME, DARK_COLOR_SCHEME } from '../../constants';
 
 export const COLOR_SCHEME_TOGGLE_TEST_ID = 'color-scheme-toggle';
 
-export function ColorSchemeToggle() {
+/**
+ * ColorSchemeToggle Component
+ * 
+ * A button group that allows the user to toggle between light and dark themes. 
+ * It uses Mantine's `useMantineColorScheme` hook to set the color scheme 
+ * based on the user's selection.
+ * 
+ * The component renders two buttons:
+ * - One to switch to the light theme.
+ * - One to switch to the dark theme.
+ * 
+ */
+function ColorSchemeToggle(): JSX.Element {
   const { setColorScheme } = useMantineColorScheme();
 
   return (
@@ -30,3 +40,5 @@ export function ColorSchemeToggle() {
     </div>
   );
 }
+
+export default ColorSchemeToggle;

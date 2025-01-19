@@ -9,10 +9,13 @@ import { DISCIPLINES } from '../../constants';
 import { getDisciplineId } from '../../utils/discipline';
 
 /**
- * Component for rendering a tabbed interface to display categorized events.
- * Fetches event data and registration data on mount.
+ * ListTabs Component
  * 
- * @returns {JSX.Element} The ListTabs component.
+ * Renders a tabbed interface for displaying events categorized by discipline (Road, Cyclocross, Cross Country).
+ * Fetches event and registration data when the component mounts and when the active tab is changed.
+ * 
+ * - Uses Mantine's `Tabs` component for navigation.
+ * - Fetches events and registered riders based on the selected discipline.
  */
 const ListTabs = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState<string | null>(DISCIPLINES.ROAD.text);

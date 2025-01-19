@@ -11,3 +11,11 @@
 .topNavContainer {
   width: 100%;
 }
+
+.horizontalNavAnchor {
+  margin-right: 16px;
+}
+
+.verticalNavAnchor {
+  margin-bottom: 16px;
+}
