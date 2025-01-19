@@ -65,3 +65,15 @@ export type DateDetails = {
   timezone_type: number; // Timezone type (3 for most cases)
   timezone: string; // Timezone string
 };
+
+type Discipline = {
+  queryParam: string,
+  text: string,
+  id: string,
+}
+
+export type EventDisciplines = {
+  ROAD: Discipline,
+  CX: Discipline,
+  XC: Discipline,
+}
