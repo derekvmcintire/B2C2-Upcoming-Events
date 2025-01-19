@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   }, 
   "dependencies": {
     "@mantine/core": "^7.16.0",
