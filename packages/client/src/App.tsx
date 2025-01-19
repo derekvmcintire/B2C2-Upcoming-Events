@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
-import EventDetails from "./components/EventDetails";
 import TopNav from "./components/TopNav";
 import { fetchEventsByType } from "./api/fetchEventsByType";
 import { FetchRegistrationsResponse, type Event } from "./types";
