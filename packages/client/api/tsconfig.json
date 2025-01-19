@@ -1,15 +1,14 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "target": "es2020",
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["node", "@vercel/node/dist/index"]
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]

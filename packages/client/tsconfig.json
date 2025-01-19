@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ESNext",
     "jsx": "react-jsx",
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
     "strict": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
@@ -14,7 +14,5 @@
     "types": ["react/jsx-runtime"]
   },
   "include": ["src"],
-  "references": [
-    { "path": "./api/tsconfig.api.json" }
-  ]
+  "exclude": ["api"]
 }
