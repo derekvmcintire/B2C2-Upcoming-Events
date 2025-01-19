@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { TextInput, Select, Button, Group, Text } from '@mantine/core';
+import { Flex, TextInput, Select, Button } from '@mantine/core';
 import { EventSubmission } from '../../types';
 import { submitEvent } from '../../api/submitEvent';
+import classes from './submit.module.css';
 
 const RaceSubmissionForm = () => {
   // State to hold form input values
@@ -19,25 +20,18 @@ const RaceSubmissionForm = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '0 auto' }}>
-      <Text size="xl" mb="lg">
-        Submit a Race
-      </Text>
+    <Flex align="center" >
 
       <TextInput
-        label="Enter a Bikereg URL"
-        placeholder="https://example.com/race"
+      className={classes.formInput}
+        placeholder="BikeReg URL"
         value={bikeregUrl}
         onChange={(e) => setBikeregUrl(e.target.value)}
-        mb="md"
       />
 
-      
-
-      <Group justify="center">
         <Select
-          label="Select Event Type"
-          placeholder="Pick one"
+          className={classes.formInput}
+          placeholder="Race Type"
           value={eventType}
           onChange={(value: string | null) => setEventType(value)} // Correct type for eventType
           data={[
@@ -45,11 +39,9 @@ const RaceSubmissionForm = () => {
             { value: 'xc', label: 'XC' },
             { value: 'cx', label: 'CX' },
           ]}
-          mb="md"
         />
-        <Button onClick={handleSubmit}>Submit</Button>
-      </Group>
-    </div>
+        <Button onClick={handleSubmit}>Submit Race</Button>
+    </Flex>
   );
 };
 

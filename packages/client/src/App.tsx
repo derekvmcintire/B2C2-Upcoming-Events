@@ -35,7 +35,6 @@ function App() {
     <>
       <MantineProvider>
         <TopNav />
-        <RaceSubmissionForm />
         {events.map((event) => (
           <EventDetails key={event.eventId} event={event} registrations={registrations} />
         ))}
