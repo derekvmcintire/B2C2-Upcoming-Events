@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Burger, Popover, ScrollArea } from '@mantine/core';
-import NavLinks from './NavLinks';
+import { Burger, Popover } from '@mantine/core';
+import RaceSubmissionForm from '../Submit';
 
 export default function HamburgerNav() {
   const [opened, setOpened] = useState(false);
@@ -11,9 +11,7 @@ export default function HamburgerNav() {
           <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
         </Popover.Target>
         <Popover.Dropdown>
-          <ScrollArea w={200} scrollbars="y">
-            <NavLinks isVertical />
-          </ScrollArea>
+        <RaceSubmissionForm />
         </Popover.Dropdown>
       </Popover>
     </>
