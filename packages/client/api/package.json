@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@vercel/node": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.1.6"
+  }
+}
