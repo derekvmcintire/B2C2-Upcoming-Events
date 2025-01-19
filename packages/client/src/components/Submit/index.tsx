@@ -6,7 +6,14 @@ import classes from './submit.module.css';
 import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 
+/**
+ * RaceSubmissionForm Component
+ * 
+ * A form to submit a race by entering a BikeReg URL and selecting a race type. The form validates the input fields,
+ * displays success or error messages, and updates the race events list upon successful submission.
+ */
 const RaceSubmissionForm = () => {
+  // State variables
   const [bikeregUrl, setBikeregUrl] = useState('');
   const [eventType, setEventType] = useState<string | null>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,15 +23,23 @@ const RaceSubmissionForm = () => {
   const eventsContext = useEventsContext();
   const { setRoadEvents } = eventsContext;
 
+  /**
+   * Updates the road events by fetching the latest list from the server.
+   */
   const updateEvents = () => {
     const getEvents = async () => {
       const response = await fetchEventsByType('road');
       setRoadEvents(response.events);
     };
-    
-    getEvents();
-  }
 
+    getEvents();
+  };
+
+  /**
+   * Validates the BikeReg URL.
+   * @param url - The URL to validate.
+   * @returns Error message if invalid, otherwise an empty string.
+   */
   const validateUrl = (url: string) => {
     if (!url) return 'URL is required';
     try {
@@ -38,14 +53,21 @@ const RaceSubmissionForm = () => {
     }
   };
 
+  /**
+   * Checks if the form is valid for submission.
+   * @returns True if valid, false otherwise.
+   */
   const isFormValid = () => {
     return !validateUrl(bikeregUrl) && eventType !== null && eventType !== '';
   };
 
+  /**
+   * Handles form submission by validating input, submitting data, and updating the UI accordingly.
+   */
   const handleSubmit = async () => {
     setError('');
     setShowSuccess(false);
-    
+
     if (!isFormValid()) {
       setError('Please fill in all fields correctly');
       return;
@@ -58,9 +80,9 @@ const RaceSubmissionForm = () => {
         url: bikeregUrl,
         eventType: eventType || ''
       };
-      
+
       const success = await submitEvent(submission);
-      
+
       if (success) {
         setShowSuccess(true);
         setBikeregUrl('');
@@ -79,7 +101,7 @@ const RaceSubmissionForm = () => {
   return (
     <Stack align="flex-start">
       <Text>Enter a BikeReg URL and select Race Type to submit a race.</Text>
-      
+
       {error && (
         <Alert 
           color="red" 
@@ -89,7 +111,7 @@ const RaceSubmissionForm = () => {
           {error}
         </Alert>
       )}
-      
+
       {showSuccess && (
         <Alert 
           color="green" 
