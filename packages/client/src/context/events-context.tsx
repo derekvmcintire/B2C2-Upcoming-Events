@@ -6,12 +6,8 @@ import { FetchRegistrationsResponse, type Event } from "../types";
  * Describes the shape of the state and its associated setters for event-related data.
  */
 interface EventsContextType {
-  roadEvents: Event[]; // List of road events
-  setRoadEvents: (events: Event[]) => void; // Setter for road events
-  cxEvents: Event[]; // List of cyclocross events
-  setCxEvents: (events: Event[]) => void; // Setter for cyclocross events
-  xcEvents: Event[]; // List of cross-country events
-  setXcEvents: (events: Event[]) => void; // Setter for cross-country events
+  events: Event[]; // List of road events
+  setEvents: (events: Event[]) => void; // Setter for road events
   registrations: FetchRegistrationsResponse | undefined; // API response for registrations
   setRegistrations: (registrations: FetchRegistrationsResponse | undefined) => void; // Setter for registrations
   errors: string[]; // List of error messages
@@ -23,12 +19,8 @@ interface EventsContextType {
  * Used to initialize the context and provide default implementations for setters.
  */
 export const defaultEventsContext: EventsContextType = {
-  roadEvents: [],
-  setRoadEvents: () => {},
-  cxEvents: [],
-  setCxEvents: () => {},
-  xcEvents: [],
-  setXcEvents: () => {},
+  events: [],
+  setEvents: () => {},
   registrations: undefined,
   setRegistrations: () => {},
   errors: [],
@@ -48,8 +40,6 @@ const EventsContext = createContext<EventsContextType>(defaultEventsContext);
 interface EventsProviderProps {
   children: ReactNode; // React children to be rendered inside the provider
   initialRoadEvents?: Event[]; // Optional initial road events
-  initialCxEvents?: Event[]; // Optional initial cyclocross events
-  initialXcEvents?: Event[]; // Optional initial cross-country events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
 }
 
@@ -61,27 +51,19 @@ interface EventsProviderProps {
  */
 export const EventsProvider: React.FC<EventsProviderProps> = ({
   children,
-  initialRoadEvents = defaultEventsContext.roadEvents,
-  initialCxEvents = defaultEventsContext.cxEvents,
-  initialXcEvents = defaultEventsContext.xcEvents, // Typo in your default - should be `defaultEventsContext.xcEvents`
+  initialRoadEvents = defaultEventsContext.events,
   initialRegistrations = defaultEventsContext.registrations,
 }) => {
   // State management for different types of events and registrations
-  const [roadEvents, setRoadEvents] = useState<Event[]>(initialRoadEvents);
-  const [cxEvents, setCxEvents] = useState<Event[]>(initialCxEvents);
-  const [xcEvents, setXcEvents] = useState<Event[]>(initialXcEvents);
+  const [events, setEvents] = useState<Event[]>(initialRoadEvents);
   const [registrations, setRegistrations] = useState<FetchRegistrationsResponse | undefined>(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
 
   return (
     <EventsContext.Provider
       value={{
-        roadEvents,
-        setRoadEvents,
-        cxEvents,
-        setCxEvents,
-        xcEvents,
-        setXcEvents,
+        events,
+        setEvents,
         registrations,
         setRegistrations,
         errors,

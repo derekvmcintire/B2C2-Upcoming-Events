@@ -5,6 +5,7 @@ import { submitEvent } from '../../api/submitEvent';
 import classes from './submit.module.css';
 import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
+import { DISCIPLINES } from '../../constants';
 
 /**
  * RaceSubmissionForm Component
@@ -21,15 +22,18 @@ const RaceSubmissionForm = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const eventsContext = useEventsContext();
-  const { setRoadEvents } = eventsContext;
+  const { setEvents } = eventsContext;
 
   /**
    * Updates the road events by fetching the latest list from the server.
    */
   const updateEvents = () => {
+    if (!eventType) {
+      return;
+    }
     const getEvents = async () => {
-      const response = await fetchEventsByType('road');
-      setRoadEvents(response.events);
+      const response = await fetchEventsByType(eventType);
+      setEvents(response.events);
     };
 
     getEvents();
@@ -136,9 +140,9 @@ const RaceSubmissionForm = () => {
           value={eventType}
           onChange={(value: string | null) => setEventType(value)}
           data={[
-            { value: 'road', label: 'Road' },
-            { value: 'xc', label: 'Cross Country' },
-            { value: 'cx', label: 'Cyclocross' },
+            { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
+            { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },
+            { value: DISCIPLINES.XC.id, label: DISCIPLINES.XC.text },
           ]}
         />
 

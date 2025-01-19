@@ -66,7 +66,7 @@ export type DateDetails = {
   timezone: string; // Timezone string
 };
 
-type Discipline = {
+export type Discipline = {
   queryParam: string,
   text: string,
   id: string,
