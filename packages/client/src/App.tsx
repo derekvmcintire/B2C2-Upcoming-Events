@@ -4,10 +4,10 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import EventDetails from "./components/EventDetails";
 import TopNav from "./components/TopNav";
-import RaceSubmissionForm from "./components/Submit"
 import { fetchEventsByType } from "./api/fetchEventsByType";
 import { FetchRegistrationsResponse, type Event } from "./types";
 import { fetchRegistrations } from "./api/fetchRegisteredRiders";
+import ListTabs from "./components/EventList/ListTabs";
 
 function App() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -35,9 +35,7 @@ function App() {
     <>
       <MantineProvider>
         <TopNav />
-        {events.map((event) => (
-          <EventDetails key={event.eventId} event={event} registrations={registrations} />
-        ))}
+        <ListTabs events={events} registrations={registrations}/>
       </MantineProvider>
     </>
   );
