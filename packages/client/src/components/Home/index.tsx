@@ -15,7 +15,9 @@ import { EventsProvider } from "../../context/events-context";
 const Home = (): JSX.Element => {
     return (
       <>
-        <MantineProvider>
+        <MantineProvider
+          defaultColorScheme="dark"
+        >
           <EventsProvider>
             <TopNav />
             <ListTabs />
