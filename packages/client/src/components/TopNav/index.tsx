@@ -4,13 +4,16 @@ import HamburgerNav from './HamburgerNav';
 import RaceSubmissionForm from '../Submit';
 import classes from './top-nav.module.css';
 
-export const TOP_NAV_TEST_ID = 'top-nav';
-
+/**
+ * TopNav Component
+ * 
+ * A header component to hold the web page title, as well as the race submission form, and hamburger nav on mobile
+ */
 export default function TopNav() {
   const isMobile = useMediaQuery('(max-width: 950px)');
 
   return (
-    <div data-testid={TOP_NAV_TEST_ID} className={classes.topNavContainer}>
+    <div className={classes.topNavContainer}>
       <Flex justify="space-between" align="center" pt={10}>
         {isMobile ? <HamburgerNav /> : <RaceSubmissionForm />}
         <Group>
