@@ -2,8 +2,6 @@ import { Button, Group, useMantineColorScheme } from '@mantine/core';
 import classes from './color-scheme-toggle.module.css';
 import { LIGHT_COLOR_SCHEME, DARK_COLOR_SCHEME } from '../../constants';
 
-export const COLOR_SCHEME_TOGGLE_TEST_ID = 'color-scheme-toggle';
-
 /**
  * ColorSchemeToggle Component
  * 
@@ -20,7 +18,7 @@ function ColorSchemeToggle(): JSX.Element {
   const { setColorScheme } = useMantineColorScheme();
 
   return (
-    <div className={classes.colorScheme} data-testid={COLOR_SCHEME_TOGGLE_TEST_ID}>
+    <div className={classes.colorScheme}>
       <Group justify="center">
         <Button
           size="compact-sm"
