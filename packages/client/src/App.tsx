@@ -12,6 +12,11 @@ function App() {
   const [events, setEvents] = useState<Event[]>([]);
   const [registrations, setRegistrations] = useState<FetchRegistrationsResponse | undefined>(undefined);
 
+  const getEvents = async () => {
+    const response = await fetchEventsByType('road');
+    setEvents(response.events);
+  };
+
   useEffect(() => {
     const getRegisteredRiders = async () => {
       const response = await fetchRegistrations('road%20race');
@@ -22,18 +27,14 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const getEvents = async () => {
-      const response = await fetchEventsByType('road');
-      setEvents(response.events);
-    };
-
+  
     getEvents();
   }, []);
 
   return (
     <>
       <MantineProvider>
-        <TopNav />
+        <TopNav getEvents={getEvents} />
         <ListTabs events={events} registrations={registrations}/>
       </MantineProvider>
     </>

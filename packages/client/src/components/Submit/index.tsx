@@ -4,10 +4,10 @@ import { EventSubmission } from '../../types';
 import { submitEvent } from '../../api/submitEvent';
 import classes from './submit.module.css';
 
-const RaceSubmissionForm = () => {
+const RaceSubmissionForm = ({ getEvents }: any) => {
   // State to hold form input values
   const [bikeregUrl, setBikeregUrl] = useState('');
-  const [eventType, setEventType] = useState<string | null>(''); // Make sure it's string | null
+  const [eventType, setEventType] = useState<string | null>('');
 
   // Submit handler placeholder
   const handleSubmit = async () => {
@@ -17,6 +17,7 @@ const RaceSubmissionForm = () => {
     }
     const success = await submitEvent(submission);
     console.log('success??? ', success)
+    getEvents();
   };
 
   return (
