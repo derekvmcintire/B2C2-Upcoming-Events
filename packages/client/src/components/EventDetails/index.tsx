@@ -23,7 +23,6 @@ export default function EventDetails({
 
   return (
     <Container className={classes.eventContainer}>
-      <Divider />
       <Grid w="100%" className={classes.eventGrid}>
         {/* Left column: Date */}
         <Grid.Col span={4}>
@@ -64,6 +63,7 @@ export default function EventDetails({
           </Stack>
         </Grid.Col>
       </Grid>
+      <Divider />
     </Container>
   );
 }
