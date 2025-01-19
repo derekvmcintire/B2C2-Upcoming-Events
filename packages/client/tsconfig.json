@@ -14,7 +14,6 @@
     "types": ["react/jsx-runtime"]
   },
   "include": ["src"],
-  "exclude": ["api"],
   "references": [
     { "path": "./api/tsconfig.api.json" }
   ]
