@@ -8,28 +8,40 @@
 }
 
 .eventDate {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  line-height: 1; /* Adjust line-height for tighter spacing */
+  line-height: 1;
+  font-weight: 600;
+  font-size: '1.8rem';
 }
 
 .eventName {
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1.1; /* Adjust line-height for tighter spacing */
+  line-height: 1.1;
+  font-weight: 700;
+  font-size: '1.5rem';
 }
 
 .eventLocation {
   font-size: 1.1rem;
   font-weight: 500;
-  line-height: 1; /* Adjust line-height for tighter spacing */
+  line-height: 1;
+  font-weight: 500;
+  font-size: '1.1rem';
 }
 
 .eventLink {
   font-size: 1.1rem;
   color: #1e90ff;
   font-weight: 500;
-  line-height: 1; /* Adjust line-height for tighter spacing */
+  line-height: 1;
+  font-weight: 500;
+  font-size: '1.1rem';
+}
+
+.registeredNameList {
+  max-width: 400px;
 }
 
 /* Make adjustments for smaller screens */
