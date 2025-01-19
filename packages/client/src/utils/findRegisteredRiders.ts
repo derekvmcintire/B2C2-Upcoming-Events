@@ -20,9 +20,8 @@ export function getEntriesByEventId(response: FetchRegistrationsResponse, eventI
 
     // Check if the EventID matches the given eventId
     if (entry.EventID === eventId) {
-      const firstName = entry["2"];
-      const lastName = entry["3"];
-      matchingEntries.push(`${firstName} ${lastName}`);
+      const { FirstName, LastName } = entry;
+      matchingEntries.push(`${FirstName} ${LastName}`);
     }
   }
 
