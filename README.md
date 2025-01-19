@@ -1,5 +1,7 @@
 # B2C2 Event Calendar - Client Application
 
+A lot of this information is wrong, I need to update it
+
 ## Overview
 
 The B2C2 Event Calendar client application is a React-based web application that allows users to submit cycling event URLs, fetch event details from an external GraphQL API, and display events organized by type (Road, CX, XC).
@@ -8,45 +10,16 @@ The B2C2 Event Calendar client application is a React-based web application that
 
 ## Features
 
-### 1. **Submit Event Page (`/submit`):**
+### 1. **Submit Events:**
 
 - **Functionality:**
 
   - Accepts a cycling event URL submitted by the user.
   - Validates the URL for correctness.
-  - Sends a request to the external GraphQL API to fetch event details.
-  - Saves the retrieved event data to the database.
+  - Sends a request to a serverless function, which handles the external GraphQL API to fetch event details.
+  - Saves the retrieved event data to the Firestore database.
 
-- **External API:**
-  - **Endpoint:** `POST https://outsideapi.com/fed-gw/graphql`
-  - **Request:**
-    ```json
-    {
-      "query": "query GetAthleticEventByUrl($url: String!) { athleticEventByURL(url: $url) { eventId name date city state latitude longitude eventUrl } }",
-      "variables": {
-        "url": "<submitted-event-url>"
-      }
-    }
-    ```
-  - **Response Example:**
-    ```json
-    {
-      "data": {
-        "athleticEventByURL": {
-          "eventId": "69168",
-          "name": "The Frozen Four 2025: Matt Catania Memorial",
-          "date": "2025-03-02T00:00:00.000-05:00",
-          "city": "Farmington",
-          "state": "CT",
-          "latitude": 41.699024,
-          "longitude": -72.8646034,
-          "eventUrl": "https://www.bikereg.com/the-frozen-four-1-2025"
-        }
-      }
-    }
-    ```
-
-### 2. **Event Type Listing Pages (`/type/[eventType]`):**
+### 2. **(In Development) Event Type Listing Pages (`/type/[eventType]`):**
 
 - **Functionality:**
 
@@ -60,10 +33,10 @@ The B2C2 Event Calendar client application is a React-based web application that
     - Registration Link
     - Registered teammates (dynamically fetched using the event ID).
 
-- **Lazy Loading:**
+- **(In Development) Lazy Loading:**
   - Registered teammates are dynamically fetched as the user scrolls down the list of events.
 
-### 3. **Validation and Caching:**
+### 3. **(In Development) Validation and Caching:**
 
 - **URL Validation:** Ensures only valid event URLs are accepted.
 - **Caching:**
@@ -99,15 +72,13 @@ The B2C2 Event Calendar client application is a React-based web application that
 3. Create a `.env` file in the project root and configure the required environment variables:
 
    ```env
-   REACT_APP_GRAPHQL_API_URL=https://outsideapi.com/fed-gw/graphql
+   TBD
    ```
 
 4. Start the development server:
 
    ```bash
-   npm start
-   # or
-   yarn start
+   npm run dev
    ```
 
 5. Open the application in your browser at `http://localhost:3000`.
