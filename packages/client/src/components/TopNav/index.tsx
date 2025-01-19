@@ -1,7 +1,7 @@
 import { Flex, Group, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import HamburgerNav from './HamburgerNav';
-import NavLinks from './NavLinks';
+import RaceSubmissionForm from '../Submit';
 import classes from './top-nav.module.css';
 
 export const TOP_NAV_TEST_ID = 'top-nav';
@@ -12,7 +12,7 @@ export default function TopNav() {
   return (
     <div data-testid={TOP_NAV_TEST_ID} className={classes.topNavContainer}>
       <Flex justify="space-between" align="center" pt={10}>
-        {isMobile ? <HamburgerNav /> : <NavLinks />}
+        {isMobile ? <HamburgerNav /> : <RaceSubmissionForm />}
         <Group>
           <Title className={classes.title} ta="right">
             <Text
