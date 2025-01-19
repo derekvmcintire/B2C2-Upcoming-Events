@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -9,9 +10,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "allowUmdGlobalAccess": false,
+    "types": ["react/jsx-runtime"]
   },
-  "include": ["packages/*/src"],  // Adjust for your specific monorepo structure
+  "include": ["src"],
+  "exclude": ["api"],
   "references": [
-    { "path": "./packages/client/tsconfig.client.json" },
+    { "path": "./api/tsconfig.api.json" }
   ]
 }
