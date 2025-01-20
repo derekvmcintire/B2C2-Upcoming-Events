@@ -1,43 +1,73 @@
 // @vercel/node
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
+/**
+ * Serverless function to proxy requests to third-party APIs.
+ * Supports multiple HTTP methods and dynamic query parameters.
+ * 
+ * @param req - The request object containing query parameters, request body, and headers.
+ * @param res - The response object for sending back the result or error.
+ * 
+ * Query Parameters:
+ * - `apiUrl` (string): The target API URL for the third-party service.
+ * - `params` (string, optional): The query parameters to include in the API request (JSON string).
+ * - `headers` (string, optional): Additional headers to include in the request (JSON string).
+ * 
+ * Supported Methods:
+ * - GET, POST, PUT, DELETE
+ */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    // Ensure only GET requests are allowed
-    if (req.method !== 'GET') {
-        res.status(405).json({ error: 'Method not allowed' });
-        return;
+    // Ensure only allowed methods are accepted
+    const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+    if (!allowedMethods.includes(req.method as string)) {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Extract query parameters
-    const { eventType, after } = req.query;
-
-    // Validate query parameters
-    if (typeof eventType !== 'string' || typeof after !== 'string') {
-        res.status(400).json({ error: 'Invalid query parameters' });
-        return;
+    // Extract and validate query parameters
+    const { apiUrl, params, headers } = req.query;
+    if (typeof apiUrl !== 'string') {
+        return res.status(400).json({ error: 'Missing or invalid "apiUrl" query parameter' });
     }
 
-    // Construct the third-party API URL
-    const targetUrl = `https://www.crossresults.com/api/b2c2lookup.php?eventType=${encodeURIComponent(
-        eventType
-    )}&after=${encodeURIComponent(after)}`;
+    // Default request options for fetch
+    const requestOptions: RequestInit = {
+        method: req.method, // Use the HTTP method from the request
+        headers: {
+            'Content-Type': 'application/json', // Default header for JSON content
+            ...((headers && JSON.parse(headers as string)) || {}),
+        },
+        body: req.method !== 'GET' && req.body ? JSON.stringify(req.body) : undefined, // Include body if not a GET request
+    };
+
+    // Parse the params string into an object if it's provided
+    let queryParams = '';
+    if (params) {
+        try {
+            const paramsObj = JSON.parse(params as string);
+            // Build the query string manually from the params object
+            queryParams = '?' + new URLSearchParams(paramsObj).toString();
+        } catch (error) {
+            return res.status(400).json({ error: 'Invalid JSON in "params" query parameter' });
+        }
+    }
 
     try {
-        // Fetch data from the third-party API
-        const response = await fetch(targetUrl);
+        // Construct the third-party API URL
+        const targetUrl = `${apiUrl}${queryParams}`;
 
-        // Check if the response was successful
+        // Make the request to the third-party API
+        const response = await fetch(targetUrl, requestOptions);
+
+        // If the response was not successful, throw an error
         if (!response.ok) {
-            throw new Error(
-                `Third-party API request failed with status ${response.status}: ${response.statusText}`
-            );
+            throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
         }
 
         // Parse and send the response JSON
         const data = await response.json();
-        res.status(200).json(data);
+        return res.status(200).json(data);
     } catch (error) {
-        // Handle errors
-        res.status(500).json({ error: (error as Error).message });
+        // Handle errors and send a meaningful message
+        return res.status(500).json({ error: `Request failed: ${(error as Error).message}` });
     }
 }
