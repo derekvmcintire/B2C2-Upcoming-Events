@@ -7,16 +7,17 @@ import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
 import { getDisciplineId } from '../../utils/discipline';
-import { getEventsFromCache, setEventsToCache } from '../../infrastructure/eventCache';
+import { getEventsFromCache, setEventsToCache } from '../../infrastructure/event-cache';
 
 /**
  * ListTabs Component
- * 
- * Renders a tabbed interface for displaying events categorized by discipline (Road, Cyclocross, Cross Country).
- * Fetches event and registration data when the component mounts and when the active tab is changed.
- * 
- * - Uses Mantine's `Tabs` component for navigation.
- * - Fetches events and registered riders based on the selected discipline.
+ *
+ * Renders a tabbed interface for events categorized by discipline 
+ * (Road, Cyclocross, Cross Country). Fetches and caches event data 
+ * per discipline, and fetches registrations for the "Road" discipline.
+ *
+ * - Defaults to the Road discipline on mount.
+ * - Fetches data on tab change, using cached events when available.
  */
 const ListTabs = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState<string | null>(DISCIPLINES.ROAD.text);

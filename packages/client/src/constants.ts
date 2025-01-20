@@ -12,7 +12,7 @@ export const DISCIPLINES: EventDisciplines = {
     id: 'cx',
   },
   XC: {
-    queryParam: 'unknown', // @TODO: figure out query param for XC
+    queryParam: 'mountain%20bike',
     text: 'Cross Country',
     id: 'xc'
   }
