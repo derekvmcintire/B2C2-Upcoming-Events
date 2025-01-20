@@ -6,6 +6,7 @@ import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
 import classes from './submit.module.css';
+import { clearCache } from '../../infrastructure/eventCache';
 
 /**
  * RaceSubmissionForm Component
@@ -16,7 +17,7 @@ import classes from './submit.module.css';
  * 
  * State variables include:
  * - bikeregUrl: URL input for the race event from BikeReg
- * - eventType: Selected type of the event (e.g., road, CX, or XC)
+ * - discipline: Selected type of the event (e.g., road, CX, or XC)
  * - isSubmitting: Flag indicating if the form is in the process of submission
  * - error: Stores error messages if submission fails
  * - showSuccess: Flag indicating whether a success message should be displayed
@@ -27,7 +28,7 @@ import classes from './submit.module.css';
 const RaceSubmissionForm = (): JSX.Element => {
   // State variables
   const [bikeregUrl, setBikeregUrl] = useState('');
-  const [eventType, setEventType] = useState<string | null>('');
+  const [discipline, setDiscipline] = useState<string | null>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -38,12 +39,9 @@ const RaceSubmissionForm = (): JSX.Element => {
   /**
    * Updates the road events by fetching the latest list from the server.
    */
-  const updateEvents = () => {
-    if (!eventType) {
-      return;
-    }
+  const updateEvents = (discipline: string) => {
     const getEvents = async () => {
-      const response = await fetchEventsByType(eventType);
+      const response = await fetchEventsByType(discipline);
       setEvents(response.events);
     };
 
@@ -73,7 +71,7 @@ const RaceSubmissionForm = (): JSX.Element => {
    * @returns True if valid, false otherwise.
    */
   const isFormValid = () => {
-    return !validateUrl(bikeregUrl) && eventType !== null && eventType !== '';
+    return !validateUrl(bikeregUrl) && discipline !== null && discipline !== '';
   };
 
   /**
@@ -93,16 +91,23 @@ const RaceSubmissionForm = (): JSX.Element => {
     try {
       const submission: EventSubmission = {
         url: bikeregUrl,
-        eventType: eventType || ''
+        eventType: discipline || ''
       };
+
+      if (!discipline) {
+        setError('Must select a discipline');
+        return;
+      }
 
       const success = await submitEvent(submission);
 
       if (success) {
         setShowSuccess(true);
         setBikeregUrl('');
-        setEventType(null);
-        updateEvents();
+        setDiscipline(null);
+        clearCache(discipline);
+        updateEvents(discipline);
+
       } else {
         setError('Failed to submit race');
       }
@@ -147,9 +152,9 @@ const RaceSubmissionForm = (): JSX.Element => {
 
         <Select
           className={classes.formInput}
-          placeholder="Race Type"
-          value={eventType}
-          onChange={(value: string | null) => setEventType(value)}
+          placeholder="Race Discipline"
+          value={discipline}
+          onChange={(value: string | null) => setDiscipline(value)}
           data={[
             { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
             { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },

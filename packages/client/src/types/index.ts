@@ -1,4 +1,4 @@
-export type Event = {
+export type EventType = {
   eventId: string;
   name: string;
   date: string; // ISO 8601 date string (you can parse it into a Date object if needed)
@@ -8,7 +8,7 @@ export type Event = {
   eventType: 'road' | 'cx' | 'xc';
 };
 
-export const mockEvents: Event[] = [
+export const mockEvents: EventType[] = [
       {
           eventId: "69168",
           name: "The Frozen Four 2025: Matt Catania Memorial",
@@ -30,7 +30,7 @@ export const mockEvents: Event[] = [
   ];
 
 export type GetEventsResponse = {
-  events: Event[]
+  events: EventType[]
 }
 
 export type EventSubmission = {

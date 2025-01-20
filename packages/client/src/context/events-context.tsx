@@ -1,13 +1,13 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { FetchRegistrationsResponse, type Event } from "../types";
+import { FetchRegistrationsResponse, type EventType } from "../types";
 
 /**
  * Type definition for the Events Context.
  * Describes the shape of the state and its associated setters for event-related data.
  */
 interface EventsContextType {
-  events: Event[]; // List of road events
-  setEvents: (events: Event[]) => void; // Setter for road events
+  events: EventType[]; // List of road events
+  setEvents: (events: EventType[]) => void; // Setter for road events
   registrations: FetchRegistrationsResponse | undefined; // API response for registrations
   setRegistrations: (registrations: FetchRegistrationsResponse | undefined) => void; // Setter for registrations
   errors: string[]; // List of error messages
@@ -39,7 +39,7 @@ const EventsContext = createContext<EventsContextType>(defaultEventsContext);
  */
 interface EventsProviderProps {
   children: ReactNode; // React children to be rendered inside the provider
-  initialRoadEvents?: Event[]; // Optional initial road events
+  initialRoadEvents?: EventType[]; // Optional initial road events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
 }
 
@@ -55,7 +55,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   initialRegistrations = defaultEventsContext.registrations,
 }) => {
   // State management for different types of events and registrations
-  const [events, setEvents] = useState<Event[]>(initialRoadEvents);
+  const [events, setEvents] = useState<EventType[]>(initialRoadEvents);
   const [registrations, setRegistrations] = useState<FetchRegistrationsResponse | undefined>(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
 
