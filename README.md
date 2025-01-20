@@ -30,7 +30,7 @@ A React-based web application for managing and displaying cycling events. Users 
 
 - **Event Display**
   - Organized lists by discipline
-  - Sorted in ascending order from current date
+  - Sorted in ascending order from the current date
   - Displays comprehensive event details:
     - Date
     - Location
@@ -38,9 +38,13 @@ A React-based web application for managing and displaying cycling events. Users 
     - Registration link
     - Dynamic teammate registration status
 
+- **Caching**
+  - Caches event data to improve performance and reduce redundant API requests.
+  - Caching is key-based, with cache keys derived from event type and normalized dates (day-level precision).
+  - Cached data is reused when subsequent requests match the same event type and date.
+
 ### Planned Features
 - Lazy loading for events
-- Caching implementation
 
 ## Installation
 
@@ -137,3 +141,5 @@ export default defineConfig({
 Deployments are automated through Vercel for GitHub:
 - Automatic builds and deployments trigger on pull request creation
 - Separate deployments for UI/proxy and API components
+
+---
