@@ -1,7 +1,6 @@
 import TopNav from "../TopNav";
 import ListTabs from "../EventList/ListTabs";
 import ColorSchemeToggle from "../ColorSchemeToggle";
-import { MantineProvider } from "@mantine/core";
 import { EventsProvider } from "../../context/events-context";
 
 /**
@@ -15,15 +14,11 @@ import { EventsProvider } from "../../context/events-context";
 const Home = (): JSX.Element => {
     return (
       <>
-        <MantineProvider
-          defaultColorScheme="dark"
-        >
-          <EventsProvider>
-            <TopNav />
-            <ListTabs />
-            <ColorSchemeToggle />
-          </EventsProvider>
-        </MantineProvider>
+        <EventsProvider>
+          <TopNav />
+          <ListTabs />
+          <ColorSchemeToggle />
+        </EventsProvider>
       </>
     )
 }
