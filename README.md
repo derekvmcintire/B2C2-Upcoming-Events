@@ -1,151 +1,139 @@
-# B2C2 Event Calendar - Client Application
+# B2C2 Event Calendar
 
-A lot of this information is wrong, I need to update it
+A React-based web application for managing and displaying cycling events. Users can submit event URLs, fetch event details through a GraphQL API, and view events organized by discipline (Road, CX, XC).
 
-## Overview
-
-The B2C2 Event Calendar client application is a React-based web application that allows users to submit cycling event URLs, fetch event details from an external GraphQL API, and display events organized by type (Road, CX, XC).
-
----
+## System Architecture
 
 ![B2C2CalendarSystemDesign drawio](https://github.com/user-attachments/assets/4ce7a309-55c1-40f7-af57-06750cdc9b46)
 
----
+### Frontend
+- Built with Vite, React, and TypeScript
+- Uses Mantine UI library for components
+- Network requests handled by simple-fetch-ts
+
+### Backend
+- Proxy: Serverless function facilitating UI-to-third-party API communication
+- API: Serverless functions managing database operations and third-party API interactions
+- Database: Firebase Firestore for event storage
+
+### Deployment
+- UI and proxy are deployed together on Vercel
+- API is deployed separately on another Vercel project
 
 ## Features
 
-### 1. **Submit Events:**
+### Current Implementation
+- **Event Submission**
+  - Users can submit events via URL
+  - Validates URLs from www.bikereg.com
+  - Requires discipline selection (road, cyclocross, cross country)
 
-- **Functionality:**
-
-  - Accepts a cycling event URL submitted by the user.
-  - Validates the URL for correctness.
-  - Sends a request to a serverless function, which handles the external GraphQL API to fetch event details.
-  - Saves the retrieved event data to the Firestore database.
-
-### 2. **(In Development) Event Type Listing Pages (`/type/[eventType]`):**
-
-- **Functionality:**
-
-  - Displays a sorted list of future events for the specified event type (Road, CX, XC).
-  - Sorts events by date (ascending).
-  - Displays event details, including:
-    - Event Name
+- **Event Display**
+  - Organized lists by discipline
+  - Sorted in ascending order from current date
+  - Displays comprehensive event details:
     - Date
-    - City, State
-    - Description
-    - Registration Link
-    - Registered teammates (dynamically fetched using the event ID).
+    - Location
+    - Event name
+    - Registration link
+    - Dynamic teammate registration status
 
-- **(In Development) Lazy Loading:**
-  - Registered teammates are dynamically fetched as the user scrolls down the list of events.
-
-### 3. **(In Development) Validation and Caching:**
-
-- **URL Validation:** Ensures only valid event URLs are accepted.
-- **Caching:**
-  - Short-lived (5-minute TTL) cache for registered teammates data.
-  - Cached data is invalidated and re-fetched as needed.
-
----
+### Planned Features
+- Lazy loading for events
+- Caching implementation
 
 ## Installation
 
-### Prerequisites
+1. Clone the repository
+```bash
+git clone git@github.com:derekvmcintire/B2C2-Upcoming-Events.git
+```
 
-- Node.js (v16 or higher recommended)
-- npm or yarn
-
-### Steps
-
-1. Clone the repository:
-
+2. Install client dependencies:
    ```bash
-   git clone <repository-url>
-   cd b2c2-event-calendar-client
-   ```
-
-2. Install dependencies:
-
-   ```bash
+   cd packages/client
    npm install
-   # or
-   yarn install
    ```
 
-3. Create a `.env` file in the project root and configure the required environment variables:
-
-   ```env
-   TBD
-   ```
-
-4. Start the development server:
-
+3. Install proxy dependencies:
    ```bash
-   npm run dev
+   cd packages/client/api
+   npm install
    ```
 
-5. Open the application in your browser at `http://localhost:3000`.
+4. Start the proxy:
+   ```bash
+   make run-api  # Runs on localhost:3000
+   ```
 
----
+5. Start the client:
+   ```bash
+   make run  # Runs on localhost:5173
+   ```
 
-## Project Structure
+## Project Configuration
 
+### Client Dependencies
+```json
+{
+  "dependencies": {
+    "@mantine/core": "^7.16.0",
+    "@mantine/hooks": "^7.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.3",
+    "simple-fetch-ts": "^1.0.8"
+  }
+}
 ```
-/src
-  /components
-    EventForm.jsx         # Form for submitting event URLs
-    EventList.jsx         # Component for displaying a list of events
-  /pages
-    /submit
-      index.jsx          # Submit Event page
-    /type
-      [eventType].jsx    # Event type listing page
-  /services
-    graphql.js           # GraphQL API interactions
-    caching.js           # Caching logic for registered teammates data
-  App.jsx                # Main application component
+
+### Proxy Dependencies
+```json
+{
+  "type": "module",
+  "dependencies": {
+    "@vercel/node": "^5.0.2"
+  }
+}
 ```
 
----
+### Development Commands
+Available Make commands:
+- `make run` - Start the development server
+- `make run-api` - Start the API proxy
+- `make build` - Build the project
+- `make lint` - Run linting
+- `make preview` - Preview the build
+- `make typecheck` - Run TypeScript checks
+
+### Vite Configuration
+```javascript
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      }
+    }
+  }
+})
+```
+
+### Vercel Configuration
+```json
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" },
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ]
+}
+```
 
 ## Deployment
 
-The client application can be deployed to any static hosting provider. The following steps describe deployment to **Vercel**:
-
-1. Install the Vercel CLI:
-
-   ```bash
-   npm install -g vercel
-   ```
-
-2. Build the application:
-
-   ```bash
-   npm run build
-   # or
-   yarn build
-   ```
-
-3. Deploy the application:
-
-   ```bash
-   vercel
-   ```
-
-4. Follow the CLI prompts to complete the deployment process.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
-## Acknowledgments
-
-- External GraphQL API provided by [outsideapi.com](https://outsideapi.com).
-- React and Vite for powering the front end.
-
----
+Deployments are automated through Vercel for GitHub:
+- Automatic builds and deployments trigger on pull request creation
+- Separate deployments for UI/proxy and API components
