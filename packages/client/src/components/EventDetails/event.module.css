@@ -41,13 +41,14 @@
 }
 
 .registeredNameList {
-  max-width: 400px;
+  max-width: 600px;
 }
 
 .registeredName {
-  color: orange;
-  margin-bottom: 8px;
-  margin-right: 8px;
+  outline: 2px solid light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-5));
+  color: light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-5));
+  margin-bottom: 16px;
+  margin-right: 16px;
 }
 
 /* Make adjustments for smaller screens */
