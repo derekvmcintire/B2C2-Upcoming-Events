@@ -39,8 +39,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         body: req.method !== 'GET' && req.body ? JSON.stringify(req.body) : undefined, // Include body if not a GET request
     };
 
-    // Build query string for GET requests
-    const queryParams = params ? `?${new URLSearchParams(params as any).toString()}` : '';
+    // Parse the params string into an object if it's provided
+    let queryParams = '';
+    if (params) {
+        try {
+            const paramsObj = JSON.parse(params as string);
+            // Build the query string manually from the params object
+            queryParams = '?' + new URLSearchParams(paramsObj).toString();
+        } catch (error) {
+            return res.status(400).json({ error: 'Invalid JSON in "params" query parameter' });
+        }
+    }
 
     try {
         // Construct the third-party API URL
