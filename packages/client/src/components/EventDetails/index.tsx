@@ -82,7 +82,7 @@ export default function EventDetails({
             {/* Registered Teammates */}
             <Flex wrap="wrap" className={classes.registeredNameList}>
               {[...new Set(registeredNames)].map((registeredRider: string) => (
-                <Pill className={classes.registeredName} size="lg" key={registeredRider}>
+                <Pill variant="outline" color="orange" className={classes.registeredName} size="lg" key={registeredRider}>
                   <Text fw="600">{registeredRider}</Text>
                 </Pill>
               ))}
