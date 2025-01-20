@@ -1,11 +1,11 @@
 import { Container, Divider, Flex, Grid, Pill, Stack, Text } from "@mantine/core";
 import classes from './event.module.css';
-import type { Event, FetchRegistrationsResponse } from "../../types";
+import type { EventType, FetchRegistrationsResponse } from "../../types";
 import { formatEventDate } from "../../utils/dates";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 
 type EventProps = {
-  event: Event,
+  event: EventType,
   registrations?: FetchRegistrationsResponse,
 };
 

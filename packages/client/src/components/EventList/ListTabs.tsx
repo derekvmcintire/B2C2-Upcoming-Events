@@ -7,6 +7,7 @@ import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
 import { getDisciplineId } from '../../utils/discipline';
+import { getEventsFromCache, setEventsToCache } from '../../infrastructure/eventCache';
 
 /**
  * ListTabs Component
@@ -29,13 +30,27 @@ const ListTabs = (): JSX.Element => {
   } = eventsContext;
 
   const getRegisteredRiders = async () => {
-    const response = await fetchRegistrations(DISCIPLINES.ROAD.queryParam);
+    const disciplineId = DISCIPLINES.ROAD.queryParam;
+    const afterDate = new Date(); // or pass a specific date if needed
+  
+    const response = await fetchRegistrations(disciplineId, afterDate);
     setRegistrations(response);
   };
 
   const getEvents = async (disciplineId: string) => {
-    const roadResponse = await fetchEventsByType(disciplineId);
-    setEvents(roadResponse.events);
+    // First, check cache
+    const cachedEvents = getEventsFromCache(disciplineId);
+
+    if (cachedEvents) {
+      // If cached data exists, use it
+      setEvents(cachedEvents);
+    } else {
+      // Otherwise, fetch new data from API
+      const roadResponse = await fetchEventsByType(disciplineId);
+      setEvents(roadResponse.events);
+      // Cache the new data
+      setEventsToCache(disciplineId, roadResponse.events);
+    }
   };
 
   const handleTabChange = (value: any) => {
