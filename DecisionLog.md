@@ -22,6 +22,8 @@ This document tracks key architectural and technical decisions made for the B2C2
 - Efficient querying by type and date
 - Real-time data syncing capabilities
 
+---
+
 ### Data Reading/Writing (2024-01)
 **Context:** Need a solution for handling data operations and external API interactions.
 
@@ -39,6 +41,8 @@ This document tracks key architectural and technical decisions made for the B2C2
   - GraphQL endpoint interaction
   - Database operations
 
+---
+
 ### Client Framework (2024-01)
 **Context:** Need a frontend framework for building the user interface.
 
@@ -54,6 +58,8 @@ This document tracks key architectural and technical decisions made for the B2C2
 - Familiar React ecosystem
 - Mantine UI provides comprehensive component library
 
+---
+
 ### Form Submission (2024-01)
 **Context:** Need a solution for handling the event submission form.
 
@@ -68,22 +74,36 @@ This document tracks key architectural and technical decisions made for the B2C2
 - Already using Mantine UI for other components
 - Built-in validation capabilities
 
-## Pending Decisions
+---
 
 ### Caching Strategy
 **Context:** Need to optimize performance and reduce redundant API calls.
 
 **Options Under Consideration:**
 1. Event Data (GraphQL):
-   - No additional caching needed (Firestore serves as persistence layer)
+   - Store event data to avoid extra network requests when user clicks through the tabs
+   - Proposed: 5-minute TTL cache
+   - Cache is cleared if user submits a new event
    
 2. Registered Riders Data:
    - Proposed: 5-minute TTL cache
-   - Storage options:
-     - Redis
-     - In-memory caching in serverless functions
    
-**Status:** Under review
+Storage options:
+ - Redis
+ - Memcached
+ - In-memory caching with JavaScript Map
+
+**Decision:** In-memory caching with JavaScript Map
+
+**Rationale:**
+- Client-side caching: The nature of your app suggests that the events data for each discipline is relatively small and temporary. Storing it in the client app avoids multiple network requests for the same data, and you don’t need a serverless function or additional infrastructure.
+- Lightweight: Map is built into JavaScript, so you don’t need to introduce new dependencies or complex architecture to handle this caching.
+- Local and fast: By keeping the data in the browser's memory, access times are very fast, as you are not relying on an external cache (like Memcached or Redis).
+- Avoid unnecessary complexity: You're already using React context to manage your data. By adding a simple in-memory cache layer within the app, you can keep your architecture simple and avoid potential issues with server-side state.
+
+---
+
+## Pending Decisions
 
 ### Throttling and Lazy Loading
 **Context:** Need to optimize data fetching and improve performance.
@@ -119,4 +139,6 @@ For future decisions, use this template:
 - [Impact and benefits]
 
 **Status:** [Implemented/In Progress/Under Review]
+
+---
 ```
