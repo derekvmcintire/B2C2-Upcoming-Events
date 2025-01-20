@@ -1,8 +1,8 @@
 import Cache from "./cache";
 import { EventType } from "../types";
+import { TTL_FIVE_MINUTES } from "./constants";
 
-// Create a cache instance with a 5-minute TTL for events
-const eventCache = new Cache<EventType[]>(5 * 60 * 1000);
+const eventCache = new Cache<EventType[]>(TTL_FIVE_MINUTES);
 
 /**
  * Retrieves cached event data for a given discipline ID.

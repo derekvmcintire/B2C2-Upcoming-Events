@@ -1,9 +1,9 @@
 import Cache from "./cache";
 import { FetchRegistrationsResponse } from "../types";
 import { normalizeDate } from "./utility";
+import { TTL_FIVE_MINUTES } from "./constants";
 
-// Create a cache instance with a 5-minute TTL for registrations
-const registrationCache = new Cache<FetchRegistrationsResponse>(5 * 60 * 1000);
+const registrationCache = new Cache<FetchRegistrationsResponse>(TTL_FIVE_MINUTES);
 
 /**
  * Generate a unique cache key based on the eventType and normalized after date.
