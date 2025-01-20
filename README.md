@@ -4,7 +4,7 @@ A React-based web application for managing and displaying cycling events. Users 
 
 ## System Architecture
 
-![B2C2CalendarSystemDesign drawio](https://github.com/user-attachments/assets/4ce7a309-55c1-40f7-af57-06750cdc9b46)
+![B2C2CalendarSystemDesign drawio (2)](https://github.com/user-attachments/assets/58b23045-9024-422f-b10d-3114a8c1b883)
 
 ### Frontend
 - Built with Vite, React, and TypeScript
