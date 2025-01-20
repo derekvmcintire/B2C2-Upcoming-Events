@@ -44,7 +44,7 @@ A React-based web application for managing and displaying cycling events. Users 
   - Cached data is reused when subsequent requests match the same event type and date.
 
 ### Planned Features
-- Lazy loading for events
+- Lazy loading or pagination
 
 ## Installation
 
