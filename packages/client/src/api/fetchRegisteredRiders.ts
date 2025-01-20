@@ -3,7 +3,7 @@ import { FetchRegistrationsResponse } from "../types";
 import { 
   getRegistrationsFromCache, 
   setRegistrationsToCache 
-} from "../infrastructure/registrationCache";
+} from "../infrastructure/registration-cache";
 import { normalizeDate } from "../infrastructure/utility";
   
 export const fetchRegistrations = async (eventType: string, after: Date = new Date()) => {

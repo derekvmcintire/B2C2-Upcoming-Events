@@ -6,7 +6,7 @@ import { useEventsContext } from '../../context/events-context';
 import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
 import classes from './submit.module.css';
-import { clearCache } from '../../infrastructure/eventCache';
+import { clearEventCache } from '../../infrastructure/event-cache';
 
 /**
  * RaceSubmissionForm Component
@@ -105,7 +105,7 @@ const RaceSubmissionForm = (): JSX.Element => {
         setShowSuccess(true);
         setBikeregUrl('');
         setDiscipline(null);
-        clearCache(discipline);
+        clearEventCache(discipline);
         updateEvents(discipline);
 
       } else {
