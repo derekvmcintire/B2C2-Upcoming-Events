@@ -17,7 +17,6 @@ export const fetchEventsByType = async (type: string): Promise<GetEventsResponse
   
   const params = { type };
   const proxyUrl = buildProxyRequestUrl(url, params);
-  console.log('getting events by type with url: ', proxyUrl)
   const response = await simple(proxyUrl)
     .fetch<GetEventsResponse>();
 

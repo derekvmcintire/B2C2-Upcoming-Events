@@ -55,7 +55,6 @@ const ListTabs = (): JSX.Element => {
   };
 
   const handleTabChange = (value: any) => {
-    console.log('handling tab change: ', value)
     const disciplineId = getDisciplineId(value);
     getRegisteredRiders();
     getEvents(disciplineId);
