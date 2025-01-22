@@ -26,7 +26,6 @@ export const fetchRegistrations = async (eventType: string, after: Date = new Da
     // Check cache first
     const cachedData = getRegistrationsFromCache(eventType, normalizedAfter);
     if (cachedData) {
-        console.log('Returning cached registrations');
         return cachedData;
     }
 
