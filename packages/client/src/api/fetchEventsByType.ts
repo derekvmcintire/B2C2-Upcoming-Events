@@ -7,7 +7,7 @@ const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
 
 /**
  * Fetches events by their type from the backend API.
- * This function constructs a URL with the provided event type, makes a request to the backend API through the proxy,
+ * This function constructs a URL with the provided event type, makes a request to the backend API via the proxy,
  * and returns the response containing the event data.
  *
  * @param type - The type of events to fetch (e.g., "upcoming", "past").
