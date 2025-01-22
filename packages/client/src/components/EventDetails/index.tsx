@@ -81,11 +81,15 @@ export default function EventDetails({
             </Text>
             {/* Registered Teammates */}
             <Flex wrap="wrap" className={classes.registeredNameList}>
-              {[...new Set(registeredNames)].map((registeredRider: string) => (
-                <Pill variant="outline" color="orange" className={classes.registeredName} size="lg" key={registeredRider}>
-                  <Text fw="600">{registeredRider}</Text>
-                </Pill>
-              ))}
+              {registeredNames.length > 0 && (
+                <Text
+                size="lg"
+                fw="600"
+                className={classes.registeredName} // Apply your custom styles here
+              >
+                {[...new Set(registeredNames)].join(', ')}
+              </Text>
+              )}
             </Flex>
           </Stack>
         </Grid.Col>
