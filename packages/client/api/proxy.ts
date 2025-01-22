@@ -64,8 +64,7 @@ function prepareRequest(req: VercelRequest, _res: VercelResponse, apiUrl: string
  */
 function isSecuredApi(apiUrl: string) {
     const securedApis = [B2C2_API_BASE_URL, 'http://localhost:5173/'];
-    const isSecured = securedApis.some((url) => apiUrl.startsWith(url));
-    return isSecured;
+    return securedApis.some((url) => apiUrl.startsWith(url));
 }
 
 /**
