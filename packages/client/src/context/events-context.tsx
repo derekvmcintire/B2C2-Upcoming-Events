@@ -10,6 +10,8 @@ interface EventsContextType {
   setEvents: (events: EventType[]) => void; // Setter for road events
   registrations: FetchRegistrationsResponse | undefined; // API response for registrations
   setRegistrations: (registrations: FetchRegistrationsResponse | undefined) => void; // Setter for registrations
+  registrationsLoading: boolean, // If registrations are loading
+  setRegistrationsLoading: (isLoading: boolean) => void, // Setter for registrationsLoading
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
 }
@@ -23,6 +25,8 @@ export const defaultEventsContext: EventsContextType = {
   setEvents: () => {},
   registrations: undefined,
   setRegistrations: () => {},
+  registrationsLoading: true,
+  setRegistrationsLoading: () => {},
   errors: [],
   setErrors: () => {},
 };
@@ -41,6 +45,7 @@ interface EventsProviderProps {
   children: ReactNode; // React children to be rendered inside the provider
   initialRoadEvents?: EventType[]; // Optional initial road events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
+  initialRegistrationsLoading?: boolean;
 }
 
 /**
@@ -53,11 +58,13 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   children,
   initialRoadEvents = defaultEventsContext.events,
   initialRegistrations = defaultEventsContext.registrations,
+  initialRegistrationsLoading = defaultEventsContext.registrationsLoading,
 }) => {
   // State management for different types of events and registrations
   const [events, setEvents] = useState<EventType[]>(initialRoadEvents);
   const [registrations, setRegistrations] = useState<FetchRegistrationsResponse | undefined>(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
+  const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(initialRegistrationsLoading);
 
   return (
     <EventsContext.Provider
@@ -66,6 +73,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         setEvents,
         registrations,
         setRegistrations,
+        registrationsLoading,
+        setRegistrationsLoading,
         errors,
         setErrors,
       }}

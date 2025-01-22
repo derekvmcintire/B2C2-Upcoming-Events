@@ -7,6 +7,10 @@
   font-weight: 500;
 }
 
+.loading {
+  margin-top: 16px;
+}
+
 @media (max-width: 768px) {
   .eventListTab {
     font-size: 1rem;

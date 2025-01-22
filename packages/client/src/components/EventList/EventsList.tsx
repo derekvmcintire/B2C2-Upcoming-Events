@@ -2,6 +2,7 @@ import { Text } from '@mantine/core';
 import { useEventsContext } from '../../context/events-context';
 import EventDetails from '../EventDetails';
 import { type Discipline } from '../../types';
+import classes from './event-list.module.css';
 
 interface EventsListProps {
     discipline: Discipline
@@ -20,19 +21,27 @@ interface EventsListProps {
  */
 export default function EventsList({ discipline }: EventsListProps): JSX.Element {
     const eventsContext = useEventsContext();
-    const { events, registrations } = eventsContext;
+    const { events, registrations, registrationsLoading } = eventsContext;
+
+    const getEventDetails = () => {
+        return (
+            registrationsLoading ? (
+                <div className={classes.loading}>Loading...</div>
+            ) : (
+                <>
+                    {events.map((event) => (
+                        <EventDetails 
+                            key={event.eventId} 
+                            event={event} 
+                            registrations={registrations} 
+                        />
+                    ))}
+                </>
+            )
+        )
+    }
 
     return events.length < 1 ? (
         <Text mt="16">{`No ${discipline.text} events found.`}</Text>
-    ) : (
-        <>
-            {events.map((event) => (
-                <EventDetails 
-                    key={event.eventId} 
-                    event={event} 
-                    registrations={registrations} 
-                />
-            ))}
-        </>
-    );
+    ) : getEventDetails();
 }
