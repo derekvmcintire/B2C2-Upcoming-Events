@@ -123,16 +123,16 @@ const RaceSubmissionForm = ({ vertical = false }: RaceSubmissionFormProps): JSX.
   };
 
   const formCore = (
-    <>
+    <Stack>
       <TextInput
-            className={classes.formInput}
+            className={`${classes.formInput} ${classes.urlInput}`}
             placeholder="https://www.bikereg.com/..."
             value={bikeregUrl}
             onChange={(e) => setBikeregUrl(e.target.value)}
           />
-
+        <Flex w="100%" justify="space-between">
           <Select
-            className={classes.formInput}
+            className={`${classes.formInput} ${classes.disciplineInput}`}
             placeholder="Race Discipline"
             value={discipline}
             onChange={(value: string | null) => setDiscipline(value)}
@@ -150,13 +150,14 @@ const RaceSubmissionForm = ({ vertical = false }: RaceSubmissionFormProps): JSX.
           >
             Submit Race
           </Button>
-    </>
+        </Flex>
+    </Stack>
   )
 
 const alignment = vertical ? "center" : "flex-start";
   return (
-    <Stack align={alignment}>
-      <Text>Enter a BikeReg URL and select Race Type to submit a race.</Text>
+    <Stack align={alignment} w="80%">
+      <Text>Submit a race</Text>
 
       {error && (
         <Alert 

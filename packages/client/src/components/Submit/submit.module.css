@@ -2,6 +2,18 @@
   margin-right: 8px;
 }
 
+.urlInput {
+  min-width: 100%;
+}
+
+.disciplineInput {
+  width: 300px;
+}
+
+.submitButton {
+  width: 150px;
+}
+
 .formContainer {
   margin-top: 25px;
 }
