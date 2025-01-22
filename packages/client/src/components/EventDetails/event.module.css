@@ -45,11 +45,15 @@
 }
 
 .registeredName {
-  outline: 2px solid light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-5));
   color: light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-5));
+  letter-spacing: 1px;
   margin-bottom: 16px;
   margin-right: 16px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
 }
+
 
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
