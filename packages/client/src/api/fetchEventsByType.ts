@@ -16,7 +16,7 @@ const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
 export const fetchEventsByType = async (type: string): Promise<GetEventsResponse> => {
   
   const params = { type };
-  const proxyUrl = buildProxyRequestUrl(`${url}/api/getEventsByType`, params);
+  const proxyUrl = buildProxyRequestUrl(url, params);
   console.log('getting events by type with url: ', proxyUrl)
   const response = await simple(proxyUrl)
     .fetch<GetEventsResponse>();
