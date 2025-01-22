@@ -1,4 +1,4 @@
-import { Flex, Group, Text, Title } from '@mantine/core';
+import { Divider, Flex, Group, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import HamburgerNav from './HamburgerNav';
 import RaceSubmissionForm from '../Submit/RaceSubmissionForm';
@@ -18,7 +18,7 @@ export default function TopNav(): JSX.Element {
   const getNavbarContents = location.pathname !== '/submit' ? (<RaceSubmissionForm />) : (<Nav />);
   return (
     <div className={classes.topNavContainer}>
-      <Flex justify="space-between" align="center" pt={10}>
+      <Flex justify="space-between" align="flex-start">
         {isMobile ? <HamburgerNav /> : getNavbarContents}
         <Group>
           <Title className={classes.title} ta="right">
