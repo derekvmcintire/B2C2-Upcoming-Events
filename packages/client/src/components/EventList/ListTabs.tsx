@@ -1,6 +1,5 @@
 import { Tabs } from '@mantine/core';
 import EventsList from './EventsList';
-import classes from './event-list.module.css';
 import { useEffect, useState } from 'react';
 import { fetchRegistrations } from '../../api/fetchRegisteredRiders';
 import { useEventsContext } from '../../context/events-context';
@@ -8,6 +7,7 @@ import { fetchEventsByType } from '../../api/fetchEventsByType';
 import { DISCIPLINES } from '../../constants';
 import { getDisciplineId } from '../../utils/discipline';
 import { getEventsFromCache, setEventsToCache } from '../../infrastructure/event-cache';
+import classes from './event-list.module.css';
 
 /**
  * ListTabs Component
@@ -21,13 +21,15 @@ import { getEventsFromCache, setEventsToCache } from '../../infrastructure/event
  */
 const ListTabs = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState<string | null>(DISCIPLINES.ROAD.text);
+  const [eventsLoading, setEventsLoading] = useState<boolean>(true);
 
   const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
   
   const eventsContext = useEventsContext();
   const {
     setRegistrations,
-    setEvents
+    setEvents,
+    setRegistrationsLoading,
   } = eventsContext;
 
   const getRegisteredRiders = async () => {
@@ -36,6 +38,7 @@ const ListTabs = (): JSX.Element => {
   
     const response = await fetchRegistrations(disciplineId, afterDate);
     setRegistrations(response);
+    setRegistrationsLoading(false);
   };
 
   const getEvents = async (disciplineId: string) => {
@@ -52,9 +55,12 @@ const ListTabs = (): JSX.Element => {
       // Cache the new data
       setEventsToCache(disciplineId, roadResponse.events);
     }
+    setEventsLoading(false);
   };
 
   const handleTabChange = (value: any) => {
+    setEventsLoading(true);
+    setRegistrationsLoading(true);
     const disciplineId = getDisciplineId(value);
     getRegisteredRiders();
     getEvents(disciplineId);
@@ -76,15 +82,27 @@ const ListTabs = (): JSX.Element => {
       </Tabs.List>
 
       <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
-        <EventsList discipline={DISCIPLINES.ROAD} />
+        {eventsLoading ? (
+          <div className={classes.loading}>Loading...</div>
+        ) : (
+          <EventsList discipline={DISCIPLINES.ROAD} />
+        )}
       </Tabs.Panel>
 
       <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
-        <EventsList discipline={DISCIPLINES.CX} />
+      {eventsLoading ? (
+          <div className={classes.loading}>Loading...</div>
+        ) : (
+          <EventsList discipline={DISCIPLINES.CX} />
+        )}
       </Tabs.Panel>
 
       <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
-        <EventsList discipline={DISCIPLINES.XC} />
+      {eventsLoading ? (
+          <div className={classes.loading}>Loading...</div>
+        ) : (
+          <EventsList discipline={DISCIPLINES.XC} />
+        )}
       </Tabs.Panel>
     </Tabs>
   );
