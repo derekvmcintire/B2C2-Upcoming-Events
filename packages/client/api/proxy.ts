@@ -1,5 +1,8 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { B2C2_API_BASE_URL } from './constants.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const allowedOrigins = ['https://b2-c2-upcoming-events.vercel.app', 'http://localhost:5173'];
 
@@ -44,9 +47,13 @@ function prepareRequest(req: VercelRequest, _res: VercelResponse, apiUrl: string
         body: req.method !== 'GET' && req.body ? JSON.stringify(req.body) : undefined, // Include body if not a GET request
     };
 
+    requestOptions && isSecuredApi(apiUrl) && console.log('should set header')
+    console.log('API Secret Key:', process.env.VITE_API_SECRET_KEY);
+
+
     // Add the x-api-key header only if it's necessary (for example, when the API URL is your own backend or a secured API)
     if (requestOptions && isSecuredApi(apiUrl)) {
-        (requestOptions.headers as Record<string, string>)['x-api-key'] = process.env.API_SECRET_KEY!; // Securely add your API key
+        (requestOptions.headers as Record<string, string>)['x-api-key'] = process.env.VITE_API_SECRET_KEY!; // Securely add your API key
     }
 
     return requestOptions;
@@ -60,8 +67,11 @@ function prepareRequest(req: VercelRequest, _res: VercelResponse, apiUrl: string
  * @returns A boolean indicating whether the API URL requires an API key.
  */
 function isSecuredApi(apiUrl: string) {
+    console.log('apiUrl is: ', apiUrl)
     const securedApis = [B2C2_API_BASE_URL, 'http://localhost:5173/'];
-    return securedApis.some((url) => apiUrl.startsWith(url));
+    const isSecured = securedApis.some((url) => apiUrl.startsWith(url));
+    console.log('apiUrl isSecutured: ', isSecured)
+    return isSecured;
 }
 
 /**
@@ -118,7 +128,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const requestOptions = prepareRequest(req, res, `${apiUrl}${queryParams}`, headers as string);
 
     try {
-        const data = await makeRequest(`${apiUrl}${queryParams}`, requestOptions);
+        const requestUrl = `${apiUrl}${queryParams}`;
+        console.log('making request with: ', requestUrl)
+        console.log('requestOptions are: ', requestOptions)
+        const data = await makeRequest(requestUrl, requestOptions);
         return res.status(200).json(data);
     } catch (error) {
         return res.status(500).json({ error: `Request failed: ${(error as Error).message}` });
