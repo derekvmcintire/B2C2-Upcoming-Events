@@ -41,6 +41,7 @@ export const fetchRegistrations = async (eventType: string, after: Date = new Da
     try {
         // Construct the URL to call the serverless proxy with the target API URL and query parameters
         const url = buildProxyRequestUrl(apiUrl, params)
+        console.log('fetching registrations with url: ', url)
         
         // Fetch the data from the proxy
         const response = await fetch(url);

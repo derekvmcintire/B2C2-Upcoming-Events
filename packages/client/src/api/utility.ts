@@ -17,7 +17,7 @@ const PROXY_BASE_URL = '/api/proxy';
  * console.log(url); // /api/proxy?apiUrl=https%3A%2F%2Fexample.com%2Fapi&params=%7B%22eventType%22%3A%22conference%22%2C%22after%22%3A%222025-01-01%22%7D
  */
 export const buildProxyRequestUrl = <T>(apiUrl: string, params?: T): string => {
-  const proxyUrl = `${PROXY_BASE_URL}?apiUrl=${encodeURIComponent(apiUrl)}`
+  const proxyUrl = `${window.location.origin}${PROXY_BASE_URL}?apiUrl=${encodeURIComponent(apiUrl)}`
 
   if (!params) {
     return proxyUrl;

@@ -1,9 +1,9 @@
 import { simple } from "simple-fetch-ts";
 import { GetEventsResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
-import { B2C2_API_BASE_URL } from "../constants";
+// import { B2C2_API_BASE_URL } from "../constants";
 
-const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
+// const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
 
 /**
  * Fetches events by their type from the backend API.
@@ -14,9 +14,10 @@ const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
  * @returns A promise that resolves to the response data of type `GetEventsResponse`.
  */
 export const fetchEventsByType = async (type: string): Promise<GetEventsResponse> => {
+  
   const params = { type };
-  const proxyUrl = buildProxyRequestUrl(url, params);
-
+  const proxyUrl = buildProxyRequestUrl('https://b2c2-events-api.vercel.app/api/getEventsByType', params);
+  console.log('getting events by type with url: ', proxyUrl)
   const response = await simple(proxyUrl)
     .fetch<GetEventsResponse>();
 
