@@ -8,6 +8,10 @@ import { DISCIPLINES } from '../../constants';
 import classes from './submit.module.css';
 import { clearEventCache } from '../../infrastructure/event-cache';
 
+interface RaceSubmissionFormProps {
+  vertical?: boolean;
+}
+
 /**
  * RaceSubmissionForm Component
  * 
@@ -25,7 +29,7 @@ import { clearEventCache } from '../../infrastructure/event-cache';
  * @returns A form with a text input for the BikeReg URL, a select dropdown for the race type, and a submit button.
  */
 
-const RaceSubmissionForm = (): JSX.Element => {
+const RaceSubmissionForm = ({ vertical = false }: RaceSubmissionFormProps): JSX.Element => {
   // State variables
   const [bikeregUrl, setBikeregUrl] = useState('');
   const [discipline, setDiscipline] = useState<string | null>('');
@@ -118,8 +122,40 @@ const RaceSubmissionForm = (): JSX.Element => {
     }
   };
 
+  const formCore = (
+    <>
+      <TextInput
+            className={classes.formInput}
+            placeholder="https://www.bikereg.com/..."
+            value={bikeregUrl}
+            onChange={(e) => setBikeregUrl(e.target.value)}
+          />
+
+          <Select
+            className={classes.formInput}
+            placeholder="Race Discipline"
+            value={discipline}
+            onChange={(value: string | null) => setDiscipline(value)}
+            data={[
+              { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
+              { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },
+              { value: DISCIPLINES.XC.id, label: DISCIPLINES.XC.text },
+            ]}
+          />
+
+          <Button 
+            onClick={handleSubmit}
+            loading={isSubmitting}
+            disabled={!isFormValid() || isSubmitting}
+          >
+            Submit Race
+          </Button>
+    </>
+  )
+
+const alignment = vertical ? "center" : "flex-start";
   return (
-    <Stack align="flex-start">
+    <Stack align={alignment}>
       <Text>Enter a BikeReg URL and select Race Type to submit a race.</Text>
 
       {error && (
@@ -142,34 +178,15 @@ const RaceSubmissionForm = (): JSX.Element => {
         </Alert>
       )}
 
-      <Flex align="center">
-        <TextInput
-          className={classes.formInput}
-          placeholder="https://www.bikereg.com/..."
-          value={bikeregUrl}
-          onChange={(e) => setBikeregUrl(e.target.value)}
-        />
-
-        <Select
-          className={classes.formInput}
-          placeholder="Race Discipline"
-          value={discipline}
-          onChange={(value: string | null) => setDiscipline(value)}
-          data={[
-            { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
-            { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },
-            { value: DISCIPLINES.XC.id, label: DISCIPLINES.XC.text },
-          ]}
-        />
-
-        <Button 
-          onClick={handleSubmit}
-          loading={isSubmitting}
-          disabled={!isFormValid() || isSubmitting}
-        >
-          Submit Race
-        </Button>
-      </Flex>
+      {vertical ? (
+        <Stack w="80%" justify="center">
+          {formCore}
+        </Stack>
+      ) : (
+        <Flex align="center">
+          {formCore}
+        </Flex>
+      )}
     </Stack>
   );
 };

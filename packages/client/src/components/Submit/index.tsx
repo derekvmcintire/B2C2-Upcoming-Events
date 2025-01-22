@@ -20,7 +20,7 @@ const Submit = (): JSX.Element => {
         <EventsProvider>
           <TopNav />
           <Container className={classes.formContainer}>
-            <RaceSubmissionForm />
+            <RaceSubmissionForm vertical={true} />
           </Container>
           <ColorSchemeToggle />
         </EventsProvider>
