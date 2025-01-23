@@ -17,14 +17,14 @@ export const formatEventDate = (dateString: string): string => {
 
   // You can adjust the options to match the desired format
   const options: Intl.DateTimeFormatOptions = {
-    weekday: 'long', // e.g. "Monday"
-    year: 'numeric', // e.g. "2025"
-    month: 'long',   // e.g. "March"
-    day: 'numeric',  // e.g. "2"
+    weekday: "long", // e.g. "Monday"
+    year: "numeric", // e.g. "2025"
+    month: "long", // e.g. "March"
+    day: "numeric", // e.g. "2"
   };
 
   // Format the date
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  return new Intl.DateTimeFormat("en-US", options).format(date);
 };
 
 /*
@@ -34,14 +34,12 @@ console.log(formatDateToYYYYMMDD(date)); // Outputs: YYYY-MM-DD
 */
 export const formatDateToString = (date: Date): string => {
   if (!(date instanceof Date)) {
-    throw new Error('Invalid input: Expected a Date object');
+    throw new Error("Invalid input: Expected a Date object");
   }
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+  const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
-}
-
-
+};

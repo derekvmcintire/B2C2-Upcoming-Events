@@ -41,7 +41,7 @@
   font-weight: 500;
   line-height: 1;
   font-weight: 500;
-  font-size: '1.1rem';
+  font-size: "1.1rem";
 }
 
 .eventLink {
@@ -50,7 +50,7 @@
   font-weight: 500;
   line-height: 1;
   font-weight: 500;
-  font-size: '1.1rem';
+  font-size: "1.1rem";
 }
 
 .registeredNameList {
@@ -65,7 +65,10 @@
 }
 
 .registeredName {
-  color: light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-3));
+  color: light-dark(
+    var(--mantine-color-orange-9),
+    var(--mantine-color-orange-3)
+  );
   letter-spacing: 1px;
   margin-right: 16px;
   white-space: normal;

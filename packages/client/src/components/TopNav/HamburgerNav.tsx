@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Burger, Popover } from '@mantine/core';
-import Nav from './nav';
+import { useState } from "react";
+import { Burger, Popover } from "@mantine/core";
+import Nav from "./nav";
 
 /**
  * HamburgerNav Component
- * 
+ *
  * A mobile navigation menu that opens and closes when the hamburger icon is clicked.
  * Displays the navigation items vertically within a popover when opened.
  */
@@ -17,7 +17,7 @@ export default function HamburgerNav(): JSX.Element {
           <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
         </Popover.Target>
         <Popover.Dropdown>
-        <Nav vertical />
+          <Nav vertical />
         </Popover.Dropdown>
       </Popover>
     </>

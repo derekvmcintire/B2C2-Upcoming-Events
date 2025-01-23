@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { FetchRegistrationsResponse, type EventType } from "../types";
 
 /**
@@ -9,9 +9,11 @@ interface EventsContextType {
   events: EventType[]; // List of road events
   setEvents: (events: EventType[]) => void; // Setter for road events
   registrations: FetchRegistrationsResponse | undefined; // API response for registrations
-  setRegistrations: (registrations: FetchRegistrationsResponse | undefined) => void; // Setter for registrations
-  registrationsLoading: boolean, // If registrations are loading
-  setRegistrationsLoading: (isLoading: boolean) => void, // Setter for registrationsLoading
+  setRegistrations: (
+    registrations: FetchRegistrationsResponse | undefined,
+  ) => void; // Setter for registrations
+  registrationsLoading: boolean; // If registrations are loading
+  setRegistrationsLoading: (isLoading: boolean) => void; // Setter for registrationsLoading
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
 }
@@ -62,9 +64,13 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
 }) => {
   // State management for different types of events and registrations
   const [events, setEvents] = useState<EventType[]>(initialRoadEvents);
-  const [registrations, setRegistrations] = useState<FetchRegistrationsResponse | undefined>(initialRegistrations);
+  const [registrations, setRegistrations] = useState<
+    FetchRegistrationsResponse | undefined
+  >(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
-  const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(initialRegistrationsLoading);
+  const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
+    initialRegistrationsLoading,
+  );
 
   return (
     <EventsContext.Provider
@@ -95,7 +101,7 @@ export const useEventsContext = (): EventsContextType => {
 
   // Throw an error if the hook is used outside of the provider
   if (!context) {
-    throw new Error('useEventsContext must be used within an EventsProvider');
+    throw new Error("useEventsContext must be used within an EventsProvider");
   }
 
   return context;

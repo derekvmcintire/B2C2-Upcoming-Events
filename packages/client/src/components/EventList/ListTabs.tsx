@@ -1,30 +1,35 @@
-import { Tabs } from '@mantine/core';
-import EventsList from './EventsList';
-import { useEffect, useState } from 'react';
-import { fetchRegistrations } from '../../api/fetchRegisteredRiders';
-import { useEventsContext } from '../../context/events-context';
-import { fetchEventsByType } from '../../api/fetchEventsByType';
-import { DISCIPLINES } from '../../constants';
-import { getDisciplineId } from '../../utils/discipline';
-import { getEventsFromCache, setEventsToCache } from '../../infrastructure/event-cache';
-import classes from './event-list.module.css';
+import { Tabs } from "@mantine/core";
+import EventsList from "./EventsList";
+import { useEffect, useState } from "react";
+import { fetchRegistrations } from "../../api/fetchRegisteredRiders";
+import { useEventsContext } from "../../context/events-context";
+import { fetchEventsByType } from "../../api/fetchEventsByType";
+import { DISCIPLINES } from "../../constants";
+import { getDisciplineId } from "../../utils/discipline";
+import {
+  getEventsFromCache,
+  setEventsToCache,
+} from "../../infrastructure/event-cache";
+import classes from "./event-list.module.css";
 
 /**
  * ListTabs Component
  *
- * Renders a tabbed interface for events categorized by discipline 
- * (Road, Cyclocross, Cross Country). Fetches and caches event data 
+ * Renders a tabbed interface for events categorized by discipline
+ * (Road, Cyclocross, Cross Country). Fetches and caches event data
  * per discipline, and fetches registrations for the "Road" discipline.
  *
  * - Defaults to the Road discipline on mount.
  * - Fetches data on tab change, using cached events when available.
  */
 const ListTabs = (): JSX.Element => {
-  const [activeTab, setActiveTab] = useState<string | null>(DISCIPLINES.ROAD.text);
+  const [activeTab, setActiveTab] = useState<string | null>(
+    DISCIPLINES.ROAD.text,
+  );
   const [eventsLoading, setEventsLoading] = useState<boolean>(true);
 
   const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
-  
+
   const eventsContext = useEventsContext();
   const {
     setRegistrations,
@@ -36,7 +41,7 @@ const ListTabs = (): JSX.Element => {
   const getRegisteredRiders = async () => {
     const disciplineId = DISCIPLINES.ROAD.queryParam;
     const afterDate = new Date(); // or pass a specific date if needed
-  
+
     const response = await fetchRegistrations(disciplineId, afterDate);
     setRegistrations(response);
     setRegistrationsLoading(false);
@@ -69,7 +74,7 @@ const ListTabs = (): JSX.Element => {
     getRegisteredRiders();
     getEvents(disciplineId);
     setActiveTab(value);
-  }
+  };
 
   // Fetch registrations on component mount
   useEffect(() => {
@@ -78,11 +83,25 @@ const ListTabs = (): JSX.Element => {
   }, []);
 
   return (
-    <Tabs value={activeTab} onChange={handleTabChange} defaultValue={DISCIPLINES.ROAD.text} className={classes.eventList}>
+    <Tabs
+      value={activeTab}
+      onChange={handleTabChange}
+      defaultValue={DISCIPLINES.ROAD.text}
+      className={classes.eventList}
+    >
       <Tabs.List>
-        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.ROAD.text}>Road</Tabs.Tab>
-        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.CX.text}>Cyclocross</Tabs.Tab>
-        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>Cross Country</Tabs.Tab>
+        <Tabs.Tab
+          className={classes.eventListTab}
+          value={DISCIPLINES.ROAD.text}
+        >
+          Road
+        </Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.CX.text}>
+          Cyclocross
+        </Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>
+          Cross Country
+        </Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
@@ -94,7 +113,7 @@ const ListTabs = (): JSX.Element => {
       </Tabs.Panel>
 
       <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
-      {eventsLoading ? (
+        {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
           <EventsList discipline={DISCIPLINES.CX} />
@@ -102,7 +121,7 @@ const ListTabs = (): JSX.Element => {
       </Tabs.Panel>
 
       <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
-      {eventsLoading ? (
+        {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
           <EventsList discipline={DISCIPLINES.XC} />

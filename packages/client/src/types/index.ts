@@ -5,38 +5,38 @@ export type EventType = {
   city: string;
   state: string;
   eventUrl: string;
-  eventType: 'road' | 'cx' | 'xc';
+  eventType: "road" | "cx" | "xc";
 };
 
 export const mockEvents: EventType[] = [
-      {
-          eventId: "69168",
-          name: "The Frozen Four 2025: Matt Catania Memorial",
-          date: "2025-03-02T00:00:00.000-05:00",
-          city: "Farmington",
-          state: "CT",
-          eventUrl: "https://www.bikereg.com/the-frozen-four-1-2025",
-          eventType: "road"
-      },
-      {
-          eventId: "68315",
-          name: "Buzz the Tower",
-          date: "2025-03-29T00:00:00.000-04:00",
-          city: "Charlestown",
-          state: "RI",
-          eventUrl: "https://www.bikereg.com/buzz-the-tower",
-          eventType: "road"
-      }
-  ];
+  {
+    eventId: "69168",
+    name: "The Frozen Four 2025: Matt Catania Memorial",
+    date: "2025-03-02T00:00:00.000-05:00",
+    city: "Farmington",
+    state: "CT",
+    eventUrl: "https://www.bikereg.com/the-frozen-four-1-2025",
+    eventType: "road",
+  },
+  {
+    eventId: "68315",
+    name: "Buzz the Tower",
+    date: "2025-03-29T00:00:00.000-04:00",
+    city: "Charlestown",
+    state: "RI",
+    eventUrl: "https://www.bikereg.com/buzz-the-tower",
+    eventType: "road",
+  },
+];
 
 export type GetEventsResponse = {
-  events: EventType[]
-}
+  events: EventType[];
+};
 
 export type EventSubmission = {
-  url: string,
-  eventType: string
-}
+  url: string;
+  eventType: string;
+};
 
 export type FetchRegistrationsResponse = {
   [key: string]: EventEntry | string; // Handles numbered keys and the 'query' string key
@@ -67,13 +67,13 @@ export type DateDetails = {
 };
 
 export type Discipline = {
-  queryParam: string,
-  text: string,
-  id: string,
-}
+  queryParam: string;
+  text: string;
+  id: string;
+};
 
 export type EventDisciplines = {
-  ROAD: Discipline,
-  CX: Discipline,
-  XC: Discipline,
-}
+  ROAD: Discipline;
+  CX: Discipline;
+  XC: Discipline;
+};
