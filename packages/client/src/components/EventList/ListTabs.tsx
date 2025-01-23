@@ -30,6 +30,7 @@ const ListTabs = (): JSX.Element => {
     setRegistrations,
     setEvents,
     setRegistrationsLoading,
+    registrationsLoading,
   } = eventsContext;
 
   const getRegisteredRiders = async () => {
@@ -59,8 +60,11 @@ const ListTabs = (): JSX.Element => {
   };
 
   const handleTabChange = (value: any) => {
+    if (eventsLoading || registrationsLoading) return;
+
     setEventsLoading(true);
     setRegistrationsLoading(true);
+
     const disciplineId = getDisciplineId(value);
     getRegisteredRiders();
     getEvents(disciplineId);
