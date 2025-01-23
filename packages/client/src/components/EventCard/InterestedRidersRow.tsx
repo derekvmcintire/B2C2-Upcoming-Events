@@ -26,8 +26,7 @@ export default function InterestedRidersRow({ riders }: { riders: string[] }) {
         <Flex justify="flex-start" align="flex-end">
           <Text size="lg" fw="600" className={classes.registeredLabel}>
             {numberOfRidersInterested > 0
-              ? riders.join(", ")
-              : "No B2C2 Riders Reg'd"}
+              && riders.join(", ")}
           </Text>
         </Flex>
       </Grid.Col>
