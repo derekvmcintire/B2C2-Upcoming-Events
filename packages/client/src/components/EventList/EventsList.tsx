@@ -1,6 +1,6 @@
 import { Text } from '@mantine/core';
 import { useEventsContext } from '../../context/events-context';
-import EventDetails from '../EventDetails';
+import EventCard from '../EventCard';
 import { type Discipline } from '../../types';
 import classes from './event-list.module.css';
 
@@ -30,7 +30,7 @@ export default function EventsList({ discipline }: EventsListProps): JSX.Element
             ) : (
                 <>
                     {events.map((event) => (
-                        <EventDetails 
+                        <EventCard 
                             key={event.eventId} 
                             event={event} 
                             registrations={registrations} 
