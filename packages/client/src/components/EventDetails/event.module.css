@@ -8,6 +8,7 @@
 }
 
 .eventDate {
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-5));
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 1;
@@ -42,6 +43,13 @@
 
 .registeredNameList {
   max-width: 600px;
+}
+
+.registeredLabel {
+  letter-spacing: 1px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: right;
 }
 
 .registeredName {

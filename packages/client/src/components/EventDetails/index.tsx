@@ -34,6 +34,9 @@ export default function EventDetails({
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
 
+  const numberOfRidersRegistered = registeredNames.length;
+  const registeredLabelText = numberOfRidersRegistered === 1 ? `${numberOfRidersRegistered} B2C2 Rider Reg'd: ` : `${numberOfRidersRegistered} B2C2 Riders Reg'd: `
+
   // Format the event date and split into weekday and date string
   const formattedDate = formatEventDate(date);
   const [weekday, dateString] = formattedDate.split(', ');
@@ -43,7 +46,7 @@ export default function EventDetails({
       <Grid w="100%" className={classes.eventGrid}>
         {/* Left column: Date */}
         <Grid.Col span={4}>
-          <Stack align="flex-start">
+          <Stack align="flex-end">
             <Text className={classes.eventDate}>
               {weekday}
             </Text>
@@ -79,19 +82,27 @@ export default function EventDetails({
                 Link to Reg
               </a>
             </Text>
-            {/* Registered Teammates */}
-            <Flex wrap="wrap" className={classes.registeredNameList}>
-              {registeredNames.length > 0 && (
-                <Text
+            
+          </Stack>
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <Flex justify="flex-end" align="flex-end">
+          <Text size="lg" fw="600" className={classes.registeredLabel}>
+            {numberOfRidersRegistered > 0 && registeredLabelText}
+            </Text>
+          </Flex>
+        </Grid.Col>
+        <Grid.Col span={8}>
+          {/* Registered Teammates */}
+            <Flex justify="flex-start" align="flex-end">
+          <Text
                 size="lg"
                 fw="600"
-                className={classes.registeredName} // Apply your custom styles here
+                className={numberOfRidersRegistered > 0 ? classes.registeredName: classes.registeredLabel}
               >
-                {[...new Set(registeredNames)].join(', ')}
+                {numberOfRidersRegistered > 0 ? registeredNames.join(', ') : ("No B2C2 Riders Reg'd")}
               </Text>
-              )}
-            </Flex>
-          </Stack>
+              </Flex>
         </Grid.Col>
       </Grid>
       <Divider />
