@@ -7,13 +7,26 @@
   padding: 30px;
 }
 
-.eventDate {
-  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-5));
-  font-size: 1.6rem;
-  font-weight: 600;
+.eventDay {
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-3));
+  font-size: rem(50px);
+  font-weight: 700;
+  letter-spacing: rem(-1px);
   line-height: 1;
-  font-weight: 600;
-  font-size: '1.8rem';
+  margin-left: 16px;
+  margin-right: 8px;
+  max-width: 300px;
+}
+
+.eventDate {
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-1));
+  font-size: rem(30px);
+  font-weight: 700;
+  letter-spacing: rem(-1px);
+  line-height: 1;
+  margin-left: 16px;
+  margin-right: 8px;
+  max-width: 300px;
 }
 
 .eventName {
@@ -21,7 +34,6 @@
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
-  font-size: '1.5rem';
 }
 
 .eventLocation {
@@ -53,7 +65,7 @@
 }
 
 .registeredName {
-  color: light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-5));
+  color: light-dark(var(--mantine-color-orange-9), var(--mantine-color-orange-3));
   letter-spacing: 1px;
   margin-bottom: 16px;
   margin-right: 16px;

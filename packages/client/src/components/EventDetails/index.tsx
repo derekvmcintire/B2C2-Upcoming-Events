@@ -1,4 +1,4 @@
-import { Container, Divider, Flex, Grid, Pill, Stack, Text } from "@mantine/core";
+import { Container, Divider, Flex, Grid, Pill, Stack, Text, Title } from "@mantine/core";
 import classes from './event.module.css';
 import type { EventType, FetchRegistrationsResponse } from "../../types";
 import { formatEventDate } from "../../utils/dates";
@@ -47,12 +47,14 @@ export default function EventDetails({
         {/* Left column: Date */}
         <Grid.Col span={4}>
           <Stack align="flex-end">
-            <Text className={classes.eventDate}>
+          <Title className={classes.title} ta="right">
+            <Text className={classes.eventDay}>
               {weekday}
             </Text>
             <Text className={classes.eventDate}>
               {dateString}
             </Text>
+            </Title>
           </Stack>
         </Grid.Col>
 
@@ -87,7 +89,7 @@ export default function EventDetails({
         </Grid.Col>
         <Grid.Col span={4}>
           <Flex justify="flex-end" align="flex-end">
-          <Text size="lg" fw="600" className={classes.registeredLabel}>
+          <Text size="lg" fw="600" fs="italic" className={classes.registeredLabel}>
             {numberOfRidersRegistered > 0 && registeredLabelText}
             </Text>
           </Flex>
