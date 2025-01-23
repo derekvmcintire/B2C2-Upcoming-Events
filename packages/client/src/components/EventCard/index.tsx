@@ -49,6 +49,16 @@ export default function EventCard({
     setHousingUrl(url);
   };
 
+  const handleRemoveHousing = () => {
+    setHousingUrl("");
+  };
+
+  const handleInterestedRemoveRider = (riderToRemove: string) => {
+    setInterestedRiders((prevRiders) =>
+      prevRiders.filter((interestedRider) => interestedRider !== riderToRemove),
+    );
+  };
+
   return (
     <Container className={classes.eventContainer}>
       {error && (
@@ -65,9 +75,16 @@ export default function EventCard({
         </Flex>
       )}
       <Grid w="100%" className={classes.eventGrid}>
-        <EventInformationRow event={event} housingUrl={housingUrl} />
+        <EventInformationRow
+          event={event}
+          housingUrl={housingUrl}
+          removeHousingUrl={handleRemoveHousing}
+        />
         <RegisteredRidersRow event={event} registrations={registrations} />
-        <InterestedRidersRow riders={interestedRiders} />
+        <InterestedRidersRow
+          riders={interestedRiders}
+          removeRider={handleInterestedRemoveRider}
+        />
         <FormRow
           openedLabel="Enter Rider Name"
           closedLabel="Add Interested Rider"

@@ -81,12 +81,19 @@
   text-align: left;
 }
 
-.plusIcon {
-  margin-right: 16px;
+.interestedRiders {
+  letter-spacing: 1px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
 }
 
-.xButton {
+.interestedRiderText {
   margin-right: 8px;
+}
+
+.plusIcon {
+  margin-right: 16px;
 }
 
 .formRowInput {

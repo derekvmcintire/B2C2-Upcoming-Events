@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { Button, Flex, Grid, Text, TextInput } from "@mantine/core";
 import { MdAdd, MdClose } from "react-icons/md";
 import classes from "./event.module.css";
+import RemoveButton from "../Shared/RemoveButton";
 
 type FormRowProps = {
   openedLabel: string;
@@ -44,15 +45,7 @@ export default function FormRow({
         <Flex justify="flex-end" align="center">
           {inputOpen ? (
             <>
-              <Button
-                className={classes.xButton}
-                onClick={handleClickClose}
-                variant="subtle"
-                size="compact-sm"
-              >
-                <MdClose />
-              </Button>
-
+              <RemoveButton clickHandler={handleClickClose} />
               <Text>{openedLabel}</Text>
             </>
           ) : (
