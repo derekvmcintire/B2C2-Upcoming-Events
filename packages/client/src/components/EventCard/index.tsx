@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Container, Divider, Grid } from "@mantine/core";
-import classes from "./event.module.css";
+import { Alert, Container, Divider, Flex, Grid } from "@mantine/core";
 import type { EventType, FetchRegistrationsResponse } from "../../types";
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./EventInformationRow";
 import FormRow from "./FormRow";
+import { MdOutlineWarning } from "react-icons/md";
+
+import classes from "./event.module.css";
 
 type EventProps = {
   event: EventType;
@@ -31,16 +33,39 @@ export default function EventCard({
   registrations,
 }: EventProps): JSX.Element {
   const [interestedRiders, setInterestedRiders] = useState<string[]>([]);
+  const [housingUrl, setHousingUrl] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const handleSubmitInterestedRider = (value: string) => {
-    console.log("value is: ", value);
     setInterestedRiders((prevState) => [...prevState, value]);
+  };
+
+  const handleSubmitHousing = (url: string) => {
+    setError("");
+    if (!url.startsWith("http")) {
+      setError("Housing URL must start with 'http'");
+      return;
+    }
+    setHousingUrl(url);
   };
 
   return (
     <Container className={classes.eventContainer}>
+      {error && (
+        <Flex justify="center">
+          <Alert
+            className={classes.alert}
+            variant="light"
+            color="red"
+            title="Error"
+            icon={<MdOutlineWarning />}
+          >
+            {error}
+          </Alert>
+        </Flex>
+      )}
       <Grid w="100%" className={classes.eventGrid}>
-        <EventInformationRow event={event} />
+        <EventInformationRow event={event} housingUrl={housingUrl} />
         <RegisteredRidersRow event={event} registrations={registrations} />
         <InterestedRidersRow riders={interestedRiders} />
         <FormRow
@@ -53,7 +78,7 @@ export default function EventCard({
           openedLabel="Please Provide a Link"
           closedLabel="Add Housing"
           placeholder="Enter a URL"
-          submitHandler={() => {}}
+          submitHandler={handleSubmitHousing}
         />
       </Grid>
       <Divider />
