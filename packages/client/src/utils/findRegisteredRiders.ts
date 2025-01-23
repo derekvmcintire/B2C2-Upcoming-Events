@@ -1,14 +1,14 @@
 import { FetchRegistrationsResponse, EventEntry } from "../types";
 
 /**
- * Retrieves all entries in the API response that match the given event ID, and returns a list of full names.
+ * Retrieves all entries in the API response that match the given event ID, and returns a list of unique full names.
  * 
  * @param response - The API response object
  * @param eventId - The event ID to match
- * @returns An array of full names pulled from matching entries
+ * @returns An array of unique full names pulled from matching entries
  */
 export function getEntriesByEventId(response: FetchRegistrationsResponse, eventId: number): string[] {
-  const matchingEntries: string[] = [];
+  const uniqueNames = new Set<string>();
 
   for (const key in response) {
     // Skip the "query" field and ensure it's a valid EventEntry
@@ -20,13 +20,14 @@ export function getEntriesByEventId(response: FetchRegistrationsResponse, eventI
 
     // Check if the EventID matches the given eventId
     if (entry.EventID === eventId) {
-      const { FirstName, LastName } = entry;
-      matchingEntries.push(`${FirstName} ${LastName}`);
+      const fullName = `${entry.FirstName} ${entry.LastName}`;
+      uniqueNames.add(fullName); // Add fullName to the Set to ensure uniqueness
     }
   }
 
-  return matchingEntries;
+  return Array.from(uniqueNames); // Convert the Set to an array
 }
+
 
 /*
 // Example usage
