@@ -3,7 +3,7 @@ import { EventSubmission } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
 
-const url = `${B2C2_API_BASE_URL}/api/submitEvent`
+const url = `${B2C2_API_BASE_URL}/api/submitEvent`;
 
 /**
  * Submits a new event to the backend API.
@@ -21,4 +21,4 @@ export const submitEvent = async (submission: EventSubmission) => {
     .post();
 
   return response.data;
-}
+};

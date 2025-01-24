@@ -2,12 +2,15 @@ import { FetchRegistrationsResponse, EventEntry } from "../types";
 
 /**
  * Retrieves all entries in the API response that match the given event ID, and returns a list of unique full names.
- * 
+ *
  * @param response - The API response object
  * @param eventId - The event ID to match
  * @returns An array of unique full names pulled from matching entries
  */
-export function getEntriesByEventId(response: FetchRegistrationsResponse, eventId: number): string[] {
+export function getEntriesByEventId(
+  response: FetchRegistrationsResponse,
+  eventId: number,
+): string[] {
   const uniqueNames = new Set<string>();
 
   for (const key in response) {
@@ -27,7 +30,6 @@ export function getEntriesByEventId(response: FetchRegistrationsResponse, eventI
 
   return Array.from(uniqueNames); // Convert the Set to an array
 }
-
 
 /*
 // Example usage

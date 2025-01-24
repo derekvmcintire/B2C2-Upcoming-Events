@@ -13,7 +13,7 @@ class Cache<T> {
 
   /**
    * Retrieves cached data for a given key if it is not expired.
-   * 
+   *
    * @param {string} key - The unique key for the cache.
    * @returns {T | null} - The cached data if found and not expired, or `null` if not found or expired.
    */
@@ -35,7 +35,7 @@ class Cache<T> {
 
   /**
    * Saves data to the cache with a specific key.
-   * 
+   *
    * @param {string} key - The unique key for the cache.
    * @param {T} data - The data to cache.
    */
@@ -48,7 +48,7 @@ class Cache<T> {
 
   /**
    * Clears the cached data for a specific key.
-   * 
+   *
    * @param {string} key - The unique key for the cache.
    */
   clear(key: string): void {

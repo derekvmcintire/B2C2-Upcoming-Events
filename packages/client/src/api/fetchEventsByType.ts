@@ -3,7 +3,7 @@ import { GetEventsResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
 
-const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
+const url = `${B2C2_API_BASE_URL}/api/getEventsByType`;
 
 /**
  * Fetches events by their type from the backend API.
@@ -13,12 +13,12 @@ const url = `${B2C2_API_BASE_URL}/api/getEventsByType`
  * @param type - The type of events to fetch (e.g., "upcoming", "past").
  * @returns A promise that resolves to the response data of type `GetEventsResponse`.
  */
-export const fetchEventsByType = async (type: string): Promise<GetEventsResponse> => {
-  
+export const fetchEventsByType = async (
+  type: string,
+): Promise<GetEventsResponse> => {
   const params = { type };
   const proxyUrl = buildProxyRequestUrl(url, params);
-  const response = await simple(proxyUrl)
-    .fetch<GetEventsResponse>();
+  const response = await simple(proxyUrl).fetch<GetEventsResponse>();
 
   return response.data;
-}
+};
