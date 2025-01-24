@@ -25,19 +25,11 @@ interface RaceSubmissionFormProps {
  * RaceSubmissionForm Component
  *
  * A form to submit a race by entering a BikeReg URL and selecting a race type. The form validates the URL input
- * and the race type selection. Upon successful submission, it updates the race events list and provides feedback
- * through success or error messages.
- *
- * State variables include:
- * - bikeregUrl: URL input for the race event from BikeReg
- * - discipline: Selected type of the event (e.g., road, CX, or XC)
- * - isSubmitting: Flag indicating if the form is in the process of submission
- * - error: Stores error messages if submission fails
- * - showSuccess: Flag indicating whether a success message should be displayed
+ * and the race type selection. Upon successful submission, it sends data to the API, which requests race data from the bikereg API
+ * and then updates the race events list in the database and provides feedback through success or error messages.
  *
  * @returns A form with a text input for the BikeReg URL, a select dropdown for the race type, and a submit button.
  */
-
 const RaceSubmissionForm = ({
   vertical = false,
 }: RaceSubmissionFormProps): JSX.Element => {

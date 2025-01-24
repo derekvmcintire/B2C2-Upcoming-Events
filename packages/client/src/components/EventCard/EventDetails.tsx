@@ -6,6 +6,13 @@ type EventDetailsProps = {
   event: EventType;
 };
 
+/**
+ * EventDetails Component
+ *
+ * Renders the main details for an event, including the name, location and eventUrl
+ *
+ * @param {EventDetailsProps} props
+ */
 export default function EventDetails({ event }: EventDetailsProps) {
   const { name, city, state, eventUrl } = event;
   return (

@@ -7,6 +7,14 @@ type RegisteredRidersRowProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
 };
+
+/**
+ * RegisteredRidersRow Component
+ *
+ * Renders a row that contains a list of riders that are registered for this event
+ *
+ * @param {RegisteredRidersRowProps} props
+ */
 export default function RegisteredRidersRow({
   event,
   registrations,

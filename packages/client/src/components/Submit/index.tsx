@@ -9,7 +9,7 @@ import SpecialEventSubmissionForm from "./SpecialEventForm";
 /**
  * Submit Component
  *
- * A page that contains the race submission form. It includes the top navigation, race submission form, and
+ * A page that contains the top navigation, race submission form, special event submission form and
  * color scheme toggle. The component is wrapped in Mantine and events context providers to manage state and
  * provide consistent styling.
  *

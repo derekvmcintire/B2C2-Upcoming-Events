@@ -9,6 +9,14 @@ import { EventDiscipline } from "../../types";
 import { DISCIPLINES } from "../../constants";
 import { submitSpecialEvent } from "../../api/submitSpecialEvent";
 
+/**
+ * SpecialEventSubmissionForm Component
+ *
+ * A form to submit a special event. This form collects all data relevant to an event and sends it to the API to be inserted into the database.
+ * Unlike the RaceSubmissionForm, this flow relies on no external APIs for data, all data is user submitted.
+ *
+ * @returns A form with a input to collect event information, and a submit button.
+ */
 const SpecialEventSubmissionForm = (): JSX.Element => {
   // State variables for required fields
   const [city, setCity] = useState("");
