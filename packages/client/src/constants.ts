@@ -16,6 +16,11 @@ export const DISCIPLINES: EventDisciplines = {
     text: "Cross Country",
     id: "xc",
   },
+  SPECIAL: {
+    queryParam: "special",
+    text: "Special Events",
+    id: "special",
+  },
 };
 
 export const LIGHT_COLOR_SCHEME = "light";

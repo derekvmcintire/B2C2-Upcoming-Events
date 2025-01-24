@@ -7,6 +7,7 @@ import {
   Text,
   Stack,
   Alert,
+  Anchor,
 } from "@mantine/core";
 import { EventSubmission } from "../../types";
 import { submitEvent } from "../../api/submitEvent";
@@ -132,7 +133,7 @@ const RaceSubmissionForm = ({
   };
 
   const formCore = (
-    <Stack>
+    <Stack w="80%" className={classes.formCore}>
       <TextInput
         className={`${classes.formInput} ${classes.urlInput}`}
         placeholder="https://www.bikereg.com/..."
@@ -165,8 +166,14 @@ const RaceSubmissionForm = ({
 
   const alignment = vertical ? "center" : "flex-start";
   return (
-    <Stack align={alignment} w="80%">
-      <Text>Submit a race</Text>
+    <Stack align={alignment} w="100%" className={classes.submissionForm}>
+      {vertical ? (
+        <Text>Submit a race</Text>
+      ) : (
+        <Text>
+          Submit a race or <Anchor href="/submit">Submit a Team Event</Anchor>
+        </Text>
+      )}
 
       {error && (
         <Alert color="red" withCloseButton onClose={() => setError("")}>
@@ -185,11 +192,13 @@ const RaceSubmissionForm = ({
       )}
 
       {vertical ? (
-        <Stack w="80%" justify="center">
+        <Stack w="100%" align="center">
           {formCore}
         </Stack>
       ) : (
-        <Flex align="center">{formCore}</Flex>
+        <Flex w="100%" justify="flex-start">
+          {formCore}
+        </Flex>
       )}
     </Stack>
   );

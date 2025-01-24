@@ -1,9 +1,10 @@
 import TopNav from "../TopNav";
 import ColorSchemeToggle from "../ColorSchemeToggle";
 import RaceSubmissionForm from "./RaceSubmissionForm";
-import { Container } from "@mantine/core";
+import { Container, Divider } from "@mantine/core";
 import { EventsProvider } from "../../context/events-context";
 import classes from "./submit.module.css";
+import SpecialEventSubmissionForm from "./SpecialEventForm";
 
 /**
  * Submit Component
@@ -21,6 +22,8 @@ const Submit = (): JSX.Element => {
         <TopNav />
         <Container className={classes.formContainer}>
           <RaceSubmissionForm vertical={true} />
+          <Divider />
+          <SpecialEventSubmissionForm />
         </Container>
         <ColorSchemeToggle />
       </EventsProvider>

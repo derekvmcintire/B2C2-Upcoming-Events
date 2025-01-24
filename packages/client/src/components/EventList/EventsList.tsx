@@ -1,11 +1,12 @@
 import { Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import EventCard from "../EventCard";
-import { type Discipline } from "../../types";
+import { EventDiscipline, type Discipline } from "../../types";
 import classes from "./event-list.module.css";
 
 interface EventsListProps {
   discipline: Discipline;
+  requestDataCallback: (eventType: EventDiscipline) => void;
 }
 
 /**
@@ -21,6 +22,7 @@ interface EventsListProps {
  */
 export default function EventsList({
   discipline,
+  requestDataCallback,
 }: EventsListProps): JSX.Element {
   const eventsContext = useEventsContext();
   const { events, registrations, registrationsLoading } = eventsContext;
@@ -35,6 +37,7 @@ export default function EventsList({
             key={event.eventId}
             event={event}
             registrations={registrations}
+            requestDataCallback={requestDataCallback}
           />
         ))}
       </>

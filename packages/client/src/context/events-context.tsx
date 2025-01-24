@@ -1,5 +1,9 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { FetchRegistrationsResponse, type EventType } from "../types";
+import {
+  EventDiscipline,
+  FetchRegistrationsResponse,
+  type EventType,
+} from "../types";
 
 /**
  * Type definition for the Events Context.
@@ -16,8 +20,8 @@ interface EventsContextType {
   setRegistrationsLoading: (isLoading: boolean) => void; // Setter for registrationsLoading
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
-  requestFreshData: boolean;
-  setRequestFreshData: (request: boolean) => void;
+  requestFreshData?: EventDiscipline;
+  setRequestFreshData: (discipline: EventDiscipline | undefined) => void;
 }
 
 /**
@@ -33,7 +37,7 @@ export const defaultEventsContext: EventsContextType = {
   setRegistrationsLoading: () => {},
   errors: [],
   setErrors: () => {},
-  requestFreshData: false,
+  requestFreshData: undefined,
   setRequestFreshData: () => {},
 };
 
@@ -52,7 +56,7 @@ interface EventsProviderProps {
   initialRoadEvents?: EventType[]; // Optional initial road events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
   initialRegistrationsLoading?: boolean;
-  initialRequestFreshData?: boolean;
+  initialRequestFreshData?: EventDiscipline;
 }
 
 /**
@@ -74,9 +78,9 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
     FetchRegistrationsResponse | undefined
   >(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
-  const [requestFreshData, setRequestFreshData] = useState<boolean>(
-    initialRequestFreshData,
-  );
+  const [requestFreshData, setRequestFreshData] = useState<
+    EventDiscipline | undefined
+  >(initialRequestFreshData);
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );

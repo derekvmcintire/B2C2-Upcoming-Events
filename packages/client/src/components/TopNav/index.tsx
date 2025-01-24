@@ -1,4 +1,4 @@
-import { Divider, Flex, Group, Text, Title } from "@mantine/core";
+import { Flex, Group, Text, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import HamburgerNav from "./HamburgerNav";
 import RaceSubmissionForm from "../Submit/RaceSubmissionForm";

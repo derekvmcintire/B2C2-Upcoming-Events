@@ -2,31 +2,36 @@ import { useState } from "react";
 import { Alert, Container, Divider, Flex, Grid } from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
-import type { EventType, FetchRegistrationsResponse } from "../../types";
+import type {
+  EventDiscipline,
+  EventType,
+  FetchRegistrationsResponse,
+} from "../../types";
 import { updateEvent } from "../../api/updateEvent";
-import { useEventsContext } from "../../context/events-context";
 import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./EventInformationRow";
 import FormRow from "./FormRow";
+import { DISCIPLINES } from "../../constants";
 
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
+  requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
 export default function EventCard({
   event,
   registrations,
+  requestDataCallback,
 }: EventProps): JSX.Element {
   const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] =
     useState(false);
   const [isSubmittingHousingUrl, setIsSubmittingHousingUrl] = useState(false);
   const [error, setError] = useState("");
 
-  const { setRequestFreshData } = useEventsContext();
   const { housingUrl, interestedRiders = [] } = event;
 
   const handleSubmit = async (
@@ -37,7 +42,7 @@ export default function EventCard({
     setter(true);
     const response = await updateFn(data);
     if (response.status === 200) {
-      setRequestFreshData(true);
+      requestDataCallback(event.eventType);
       setter(false);
     }
   };
@@ -99,7 +104,10 @@ export default function EventCard({
           housingUrl={housingUrl}
           removeHousingUrl={handleRemoveHousing}
         />
-        <RegisteredRidersRow event={event} registrations={registrations} />
+        {event.eventType !== DISCIPLINES.SPECIAL.id && (
+          <RegisteredRidersRow event={event} registrations={registrations} />
+        )}
+
         <InterestedRidersRow
           riders={interestedRiders}
           removeRider={handleRemoveInterestedRider}
