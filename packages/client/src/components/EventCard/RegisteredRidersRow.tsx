@@ -49,7 +49,6 @@ export default function RegisteredRidersRow({
       <Grid.Col span={8}>
         <Flex justify="flex-start" align="flex-end">
           <Text
-            size="lg"
             fw="600"
             className={
               numberOfRidersRegistered > 0

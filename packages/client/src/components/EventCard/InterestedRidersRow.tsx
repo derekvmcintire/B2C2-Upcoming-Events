@@ -44,12 +44,7 @@ export default function InterestedRidersRow({
             riders.map((rider: string) => (
               <div key={rider}>
                 <DismissButton clickHandler={() => removeRider(rider)} />
-                <Text
-                  span
-                  size="lg"
-                  fw="600"
-                  className={classes.interestedRiderText}
-                >
+                <Text span fw="600" className={classes.interestedRiderText}>
                   {rider}
                 </Text>
               </div>

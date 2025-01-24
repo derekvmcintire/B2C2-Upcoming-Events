@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Flex, Grid, Text, TextInput } from "@mantine/core";
+import { Button, Flex, Grid, Stack, Text, TextInput } from "@mantine/core";
 import { MdAdd } from "react-icons/md";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
+import { useMediaQuery } from "@mantine/hooks";
 
 type FormRowProps = {
   openedLabel: string;
@@ -30,6 +31,7 @@ export default function FormRow({
 }: FormRowProps) {
   const [inputOpen, setInputOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
+  const isMobile = useMediaQuery("(max-width: 950px)");
 
   const handleClickOpen = () => {
     setInputOpen(true);
@@ -51,39 +53,34 @@ export default function FormRow({
   };
   return (
     <>
-      <Grid.Col span={4}>
-        <Flex justify="flex-end" align="center">
+      <Grid.Col span={4}></Grid.Col>
+      <Grid.Col span={8}>
+        <Flex justify="flex-start" align="center" className={classes.formSide}>
+          {isSubmitting && !inputOpen && <Text>Loading...</Text>}
           {inputOpen ? (
             <>
               <DismissButton clickHandler={handleClickClose} />
-              <Text>{openedLabel}</Text>
+              <TextInput
+                value={inputValue}
+                onChange={handleInputChange}
+                className={classes.formRowInput}
+                placeholder={placeholder}
+              />
+              <Button onClick={handleClickSubmit}>
+                {submitLabel || "Submit"}
+              </Button>
             </>
           ) : (
             <Button
+              variant="transparent"
+              size="compact-md"
               leftSection={<MdAdd size={14} />}
-              variant="default"
               onClick={handleClickOpen}
             >
               {closedLabel}
             </Button>
           )}
         </Flex>
-      </Grid.Col>
-      <Grid.Col span={8}>
-        {isSubmitting && !inputOpen && <Text>Loading...</Text>}
-        {inputOpen && (
-          <Flex justify="flex-start">
-            <TextInput
-              value={inputValue}
-              onChange={handleInputChange}
-              className={classes.formRowInput}
-              placeholder={placeholder}
-            />
-            <Button onClick={handleClickSubmit}>
-              {submitLabel || "Submit"}
-            </Button>
-          </Flex>
-        )}
       </Grid.Col>
     </>
   );

@@ -63,6 +63,7 @@
 }
 
 .registeredLabel {
+  font-size: 1.2rem;
   letter-spacing: 1px;
   white-space: normal;
   word-wrap: break-word;
@@ -74,6 +75,7 @@
     var(--mantine-color-orange-9),
     var(--mantine-color-orange-3)
   );
+  font-size: 1.2rem;
   letter-spacing: 1px;
   margin-right: 16px;
   white-space: normal;
@@ -81,14 +83,8 @@
   text-align: left;
 }
 
-.interestedRiders {
-  letter-spacing: 1px;
-  white-space: normal;
-  word-wrap: break-word;
-  text-align: left;
-}
-
 .interestedRiderText {
+  font-size: 1.1rem;
   margin-right: 8px;
 }
 
@@ -98,6 +94,10 @@
 
 .formRowInput {
   margin-right: 8px;
+}
+
+.formSide {
+  min-width: 325px;
 }
 
 /* Make adjustments for smaller screens */
@@ -126,5 +126,17 @@
 
   .eventLink {
     font-size: 1rem; /* Adjust font size for link */
+  }
+
+  .registeredName {
+    font-size: 0.9rem;
+  }
+
+  .registeredLabel {
+    font-size: 0.9rem;
+  }
+
+  .interestedRiderText {
+    font-size: 0.9rem;
   }
 }
