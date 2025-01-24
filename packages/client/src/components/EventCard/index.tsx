@@ -7,7 +7,11 @@ import type {
   EventType,
   FetchRegistrationsResponse,
 } from "../../types";
-import { updateEvent } from "../../api/updateEvent";
+import {
+  updateEvent,
+  UpdateEventData,
+  UpdateEventResponse,
+} from "../../api/updateEvent";
 import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
@@ -15,6 +19,7 @@ import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./EventInformationRow";
 import FormRow from "./FormRow";
 import { DISCIPLINES } from "../../constants";
+import { SimpleResponse } from "simple-fetch-ts";
 
 type EventProps = {
   event: EventType;
@@ -34,21 +39,37 @@ export default function EventCard({
 
   const { housingUrl, interestedRiders = [] } = event;
 
-  const handleSubmit = async (
-    updateFn: (data: any) => Promise<any>,
-    setter: (value: boolean) => void,
-    data: any,
-  ) => {
+  // Define a generic type for update function parameters
+  type UpdateEventParams<T> = {
+    eventId: string;
+    eventType: EventDiscipline;
+  } & T;
+
+  const handleSubmit = async <T,>(
+    updateFn: (
+      data: UpdateEventParams<T>,
+    ) => Promise<SimpleResponse<UpdateEventResponse>>,
+    setter: React.Dispatch<React.SetStateAction<boolean>>,
+    data: T,
+  ): Promise<void> => {
     setter(true);
-    const response = await updateFn(data);
-    if (response.status === 200) {
-      requestDataCallback(event.eventType);
+    try {
+      const response = await updateFn({
+        eventId: event.eventId,
+        eventType: event.eventType,
+        ...data,
+      });
+
+      if (response.status === 200) {
+        requestDataCallback(event.eventType);
+      }
+    } finally {
       setter(false);
     }
   };
 
   const handleSubmitInterestedRider = (rider: string) =>
-    handleSubmit(updateEvent, setIsSubmittingInterestedRider, {
+    handleSubmit<UpdateEventData>(updateEvent, setIsSubmittingInterestedRider, {
       eventId: event.eventId,
       eventType: event.eventType,
       interestedRiders: [...interestedRiders, rider],
@@ -60,7 +81,7 @@ export default function EventCard({
       setError("Housing URL must start with 'http'");
       return;
     }
-    handleSubmit(updateEvent, setIsSubmittingHousingUrl, {
+    handleSubmit<UpdateEventData>(updateEvent, setIsSubmittingHousingUrl, {
       eventId: event.eventId,
       eventType: event.eventType,
       housingUrl: url,
