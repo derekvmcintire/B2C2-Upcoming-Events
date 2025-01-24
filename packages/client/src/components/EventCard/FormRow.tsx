@@ -62,9 +62,7 @@ export default function FormRow({
         </Flex>
       </Grid.Col>
       <Grid.Col span={8}>
-        {(isSubmitting && !inputOpen) && (
-          <Text>Loading...</Text>
-        )}
+        {isSubmitting && !inputOpen && <Text>Loading...</Text>}
         {inputOpen && (
           <Flex justify="flex-start">
             <TextInput

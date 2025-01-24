@@ -37,19 +37,33 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading,
     registrationsLoading,
     requestFreshData,
-    setRequestFreshData
+    setRequestFreshData,
   } = eventsContext;
 
-  const getRegisteredRiders = async ({ overrideCache = false }: { overrideCache?: boolean}) => {
+  const getRegisteredRiders = async ({
+    overrideCache = false,
+  }: {
+    overrideCache?: boolean;
+  }) => {
     const disciplineId = DISCIPLINES.ROAD.queryParam;
     const afterDate = new Date(); // or pass a specific date if needed
 
-    const response = await fetchRegistrations(disciplineId, afterDate, overrideCache);
+    const response = await fetchRegistrations(
+      disciplineId,
+      afterDate,
+      overrideCache,
+    );
     setRegistrations(response);
     setRegistrationsLoading(false);
   };
 
-  const getEvents = async ({disciplineId, overrideCache = false}: { disciplineId: string, overrideCache?: boolean }) => {
+  const getEvents = async ({
+    disciplineId,
+    overrideCache = false,
+  }: {
+    disciplineId: string;
+    overrideCache?: boolean;
+  }) => {
     // First, check cache
     const cachedEvents = getEventsFromCache(disciplineId);
 
@@ -74,25 +88,25 @@ const ListTabs = (): JSX.Element => {
 
     const disciplineId = getDisciplineId(value);
     getRegisteredRiders({});
-    getEvents({disciplineId});
+    getEvents({ disciplineId });
     setActiveTab(value);
   };
 
   // Fetch registrations on component mount
   useEffect(() => {
     getRegisteredRiders({});
-    getEvents({disciplineId: DEFAULT_DISCIPLINE.id});
+    getEvents({ disciplineId: DEFAULT_DISCIPLINE.id });
   }, []);
 
   useEffect(() => {
     if (requestFreshData) {
-      setEventsLoading(true)
-      console.log("requesting fresh data bb")
+      setEventsLoading(true);
+      console.log("requesting fresh data bb");
       getRegisteredRiders({ overrideCache: true });
-      getEvents({disciplineId: DEFAULT_DISCIPLINE.id, overrideCache: true});
+      getEvents({ disciplineId: DEFAULT_DISCIPLINE.id, overrideCache: true });
       setRequestFreshData(false);
     }
-  }, [requestFreshData])
+  }, [requestFreshData]);
 
   return (
     <Tabs

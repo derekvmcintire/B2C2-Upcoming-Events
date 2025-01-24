@@ -8,7 +8,7 @@ const url = `${B2C2_API_BASE_URL}/api/updateEvent`;
 type UpdateEventData = {
   eventId: string;
   eventType: EventDiscipline;
-  housingUrl?: string;
+  housingUrl?: string | null; // null for deleting
   interestedRiders?: string[];
 };
 

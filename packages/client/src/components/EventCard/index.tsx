@@ -34,9 +34,10 @@ export default function EventCard({
   event,
   registrations,
 }: EventProps): JSX.Element {
-  const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] = useState<boolean>(false);
-  const [isSubmittingHousingUrl, setIsSubmittingHousingUrl] = useState<boolean>(false);
-
+  const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] =
+    useState<boolean>(false);
+  const [isSubmittingHousingUrl, setIsSubmittingHousingUrl] =
+    useState<boolean>(false);
 
   const [error, setError] = useState<string>("");
 
@@ -44,11 +45,10 @@ export default function EventCard({
 
   const { setRequestFreshData } = eventsContext;
 
-  const { housingUrl, interestedRiders = [] } =  event;
-
+  const { housingUrl, interestedRiders = [] } = event;
 
   const handleSubmitInterestedRider = async (rider: string) => {
-    setIsSubmittingInterestedRider(true)
+    setIsSubmittingInterestedRider(true);
     const response: any = await updateEvent({
       eventId: event.eventId,
       eventType: event.eventType,
@@ -56,8 +56,8 @@ export default function EventCard({
     });
     if (response.status === 200) {
       setRequestFreshData(true);
-      setIsSubmittingInterestedRider(false)
-    }  
+      setIsSubmittingInterestedRider(false);
+    }
   };
 
   const handleSubmitHousing = async (url: string) => {
@@ -71,11 +71,11 @@ export default function EventCard({
       eventId: event.eventId,
       eventType: event.eventType,
       housingUrl: url,
-    })
+    });
     if (response.status === 200) {
       setRequestFreshData(true);
-      setIsSubmittingHousingUrl(false)
-    } 
+      setIsSubmittingHousingUrl(false);
+    }
   };
 
   const handleRemoveHousing = async () => {
@@ -83,16 +83,16 @@ export default function EventCard({
     const response = await updateEvent({
       eventId: event.eventId,
       eventType: event.eventType,
-      housingUrl: "",
+      housingUrl: null,
     });
     if (response.status === 200) {
       setRequestFreshData(true);
-      setIsSubmittingInterestedRider(false)
+      setIsSubmittingInterestedRider(false);
     }
   };
 
   const handleRemoveInterestedRider = async (riderToRemove: string) => {
-    setIsSubmittingInterestedRider(true)
+    setIsSubmittingInterestedRider(true);
     const response = await updateEvent({
       eventId: event.eventId,
       eventType: event.eventType,
@@ -102,8 +102,8 @@ export default function EventCard({
     });
     if (response.status === 200) {
       setRequestFreshData(true);
-      setIsSubmittingInterestedRider(false)
-    }  
+      setIsSubmittingInterestedRider(false);
+    }
   };
 
   return (

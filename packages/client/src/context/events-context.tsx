@@ -34,7 +34,7 @@ export const defaultEventsContext: EventsContextType = {
   errors: [],
   setErrors: () => {},
   requestFreshData: false,
-  setRequestFreshData: () => {}
+  setRequestFreshData: () => {},
 };
 
 /**
@@ -74,7 +74,9 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
     FetchRegistrationsResponse | undefined
   >(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
-  const [requestFreshData, setRequestFreshData] = useState<boolean>(initialRequestFreshData);
+  const [requestFreshData, setRequestFreshData] = useState<boolean>(
+    initialRequestFreshData,
+  );
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );
@@ -91,7 +93,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         errors,
         setErrors,
         requestFreshData,
-        setRequestFreshData
+        setRequestFreshData,
       }}
     >
       {children}
