@@ -139,13 +139,15 @@ export default function EventCard({
           isSubmitting={isSubmittingInterestedRider}
           submitHandler={handleSubmitInterestedRider}
         />
-        <FormRow
-          openedLabel="Please Provide a Link"
-          closedLabel="Add Housing"
-          placeholder="Enter a URL"
-          isSubmitting={isSubmittingHousingUrl}
-          submitHandler={handleSubmitHousing}
-        />
+        {!housingUrl && (
+          <FormRow
+            openedLabel="Please Provide a Link"
+            closedLabel="Add Housing"
+            placeholder="Enter a URL"
+            isSubmitting={isSubmittingHousingUrl}
+            submitHandler={handleSubmitHousing}
+          />
+        )}
       </Grid>
       <Divider />
     </Container>
