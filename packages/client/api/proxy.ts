@@ -110,7 +110,7 @@ async function makeRequest(apiUrl: string, requestOptions: RequestInit) {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   handleCORS(req, res);
 
-  const allowedMethods = ["GET", "POST"];
+  const allowedMethods = ["GET", "POST", "PATCH"];
   if (!allowedMethods.includes(req.method as string)) {
     return res.status(405).json({ error: "Method not allowed" });
   }

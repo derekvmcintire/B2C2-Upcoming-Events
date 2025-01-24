@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Button, Flex, Grid, Text, TextInput } from "@mantine/core";
-import { MdAdd, MdClose } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 import classes from "./event.module.css";
 import RemoveButton from "../Shared/RemoveButton";
 
@@ -8,6 +8,7 @@ type FormRowProps = {
   openedLabel: string;
   closedLabel: string;
   placeholder: string;
+  isSubmitting: boolean;
   submitLabel?: string;
   submitHandler: (e: any) => void;
 };
@@ -15,6 +16,7 @@ export default function FormRow({
   openedLabel,
   closedLabel,
   placeholder,
+  isSubmitting,
   submitLabel,
   submitHandler,
 }: FormRowProps) {
@@ -60,6 +62,9 @@ export default function FormRow({
         </Flex>
       </Grid.Col>
       <Grid.Col span={8}>
+        {(isSubmitting && !inputOpen) && (
+          <Text>Loading...</Text>
+        )}
         {inputOpen && (
           <Flex justify="flex-start">
             <TextInput

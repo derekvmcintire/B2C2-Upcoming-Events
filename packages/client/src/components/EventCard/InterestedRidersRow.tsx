@@ -1,6 +1,5 @@
-import { Button, Flex, Grid, Text } from "@mantine/core";
+import { Flex, Grid, Text } from "@mantine/core";
 import classes from "./event.module.css";
-import { MdClose } from "react-icons/md";
 import RemoveButton from "../Shared/RemoveButton";
 
 export default function InterestedRidersRow({
@@ -35,12 +34,12 @@ export default function InterestedRidersRow({
           <Text size="lg" fw="600" className={classes.interestedRiders}>
             {numberOfRidersInterested > 0 &&
               riders.map((rider: string) => (
-                <>
+                <div key={rider}>
                   <RemoveButton clickHandler={() => removeRider(rider)} />
                   <Text span className={classes.interestedRiderText}>
                     {rider}
                   </Text>
-                </>
+                </div>
               ))}
           </Text>
         </Flex>

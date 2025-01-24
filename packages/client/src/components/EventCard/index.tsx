@@ -8,6 +8,8 @@ import FormRow from "./FormRow";
 import { MdOutlineWarning } from "react-icons/md";
 
 import classes from "./event.module.css";
+import { updateEvent } from "../../api/updateEvent";
+import { useEventsContext } from "../../context/events-context";
 
 type EventProps = {
   event: EventType;
@@ -32,31 +34,76 @@ export default function EventCard({
   event,
   registrations,
 }: EventProps): JSX.Element {
-  const [interestedRiders, setInterestedRiders] = useState<string[]>([]);
-  const [housingUrl, setHousingUrl] = useState<string>("");
+  const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] = useState<boolean>(false);
+  const [isSubmittingHousingUrl, setIsSubmittingHousingUrl] = useState<boolean>(false);
+
+
   const [error, setError] = useState<string>("");
 
-  const handleSubmitInterestedRider = (value: string) => {
-    setInterestedRiders((prevState) => [...prevState, value]);
+  const eventsContext = useEventsContext();
+
+  const { setRequestFreshData } = eventsContext;
+
+  const { housingUrl, interestedRiders = [] } =  event;
+
+
+  const handleSubmitInterestedRider = async (rider: string) => {
+    setIsSubmittingInterestedRider(true)
+    const response: any = await updateEvent({
+      eventId: event.eventId,
+      eventType: event.eventType,
+      interestedRiders: [...interestedRiders, rider],
+    });
+    if (response.status === 200) {
+      setRequestFreshData(true);
+      setIsSubmittingInterestedRider(false)
+    }  
   };
 
-  const handleSubmitHousing = (url: string) => {
+  const handleSubmitHousing = async (url: string) => {
     setError("");
     if (!url.startsWith("http")) {
       setError("Housing URL must start with 'http'");
       return;
     }
-    setHousingUrl(url);
+    setIsSubmittingHousingUrl(true);
+    const response: any = await updateEvent({
+      eventId: event.eventId,
+      eventType: event.eventType,
+      housingUrl: url,
+    })
+    if (response.status === 200) {
+      setRequestFreshData(true);
+      setIsSubmittingHousingUrl(false)
+    } 
   };
 
-  const handleRemoveHousing = () => {
-    setHousingUrl("");
+  const handleRemoveHousing = async () => {
+    setIsSubmittingHousingUrl(true);
+    const response = await updateEvent({
+      eventId: event.eventId,
+      eventType: event.eventType,
+      housingUrl: "",
+    });
+    if (response.status === 200) {
+      setRequestFreshData(true);
+      setIsSubmittingInterestedRider(false)
+    }
   };
 
-  const handleInterestedRemoveRider = (riderToRemove: string) => {
-    setInterestedRiders((prevRiders) =>
-      prevRiders.filter((interestedRider) => interestedRider !== riderToRemove),
-    );
+  const handleRemoveInterestedRider = async (riderToRemove: string) => {
+    setIsSubmittingInterestedRider(true)
+    const response = await updateEvent({
+      eventId: event.eventId,
+      eventType: event.eventType,
+      interestedRiders: interestedRiders.filter(
+        (rider) => rider !== riderToRemove,
+      ),
+    });
+    if (response.status === 200) {
+      setRequestFreshData(true);
+      setIsSubmittingInterestedRider(false)
+    }  
   };
 
   return (
@@ -83,18 +130,20 @@ export default function EventCard({
         <RegisteredRidersRow event={event} registrations={registrations} />
         <InterestedRidersRow
           riders={interestedRiders}
-          removeRider={handleInterestedRemoveRider}
+          removeRider={handleRemoveInterestedRider}
         />
         <FormRow
           openedLabel="Enter Rider Name"
           closedLabel="Add Interested Rider"
           placeholder="Enter Rider Name"
+          isSubmitting={isSubmittingInterestedRider}
           submitHandler={handleSubmitInterestedRider}
         />
         <FormRow
           openedLabel="Please Provide a Link"
           closedLabel="Add Housing"
           placeholder="Enter a URL"
+          isSubmitting={isSubmittingHousingUrl}
           submitHandler={handleSubmitHousing}
         />
       </Grid>

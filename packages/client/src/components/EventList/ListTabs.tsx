@@ -36,22 +36,24 @@ const ListTabs = (): JSX.Element => {
     setEvents,
     setRegistrationsLoading,
     registrationsLoading,
+    requestFreshData,
+    setRequestFreshData
   } = eventsContext;
 
-  const getRegisteredRiders = async () => {
+  const getRegisteredRiders = async ({ overrideCache = false }: { overrideCache?: boolean}) => {
     const disciplineId = DISCIPLINES.ROAD.queryParam;
     const afterDate = new Date(); // or pass a specific date if needed
 
-    const response = await fetchRegistrations(disciplineId, afterDate);
+    const response = await fetchRegistrations(disciplineId, afterDate, overrideCache);
     setRegistrations(response);
     setRegistrationsLoading(false);
   };
 
-  const getEvents = async (disciplineId: string) => {
+  const getEvents = async ({disciplineId, overrideCache = false}: { disciplineId: string, overrideCache?: boolean }) => {
     // First, check cache
     const cachedEvents = getEventsFromCache(disciplineId);
 
-    if (cachedEvents) {
+    if (!overrideCache && cachedEvents) {
       // If cached data exists, use it
       setEvents(cachedEvents);
     } else {
@@ -71,16 +73,26 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading(true);
 
     const disciplineId = getDisciplineId(value);
-    getRegisteredRiders();
-    getEvents(disciplineId);
+    getRegisteredRiders({});
+    getEvents({disciplineId});
     setActiveTab(value);
   };
 
   // Fetch registrations on component mount
   useEffect(() => {
-    getRegisteredRiders();
-    getEvents(DEFAULT_DISCIPLINE.id);
+    getRegisteredRiders({});
+    getEvents({disciplineId: DEFAULT_DISCIPLINE.id});
   }, []);
+
+  useEffect(() => {
+    if (requestFreshData) {
+      setEventsLoading(true)
+      console.log("requesting fresh data bb")
+      getRegisteredRiders({ overrideCache: true });
+      getEvents({disciplineId: DEFAULT_DISCIPLINE.id, overrideCache: true});
+      setRequestFreshData(false);
+    }
+  }, [requestFreshData])
 
   return (
     <Tabs

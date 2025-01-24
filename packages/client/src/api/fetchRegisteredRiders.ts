@@ -22,13 +22,14 @@ import { buildProxyRequestUrl } from "./utility";
 export const fetchRegistrations = async (
   eventType: string,
   after: Date = new Date(),
+  overrideCache: boolean = false,
 ) => {
   // Normalize the date before using it in the cache
   const normalizedAfter = normalizeDate(after);
 
   // Check cache first
   const cachedData = getRegistrationsFromCache(eventType, normalizedAfter);
-  if (cachedData) {
+  if (!overrideCache && cachedData) {
     return cachedData;
   }
 

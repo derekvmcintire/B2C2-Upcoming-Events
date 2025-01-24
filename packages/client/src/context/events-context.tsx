@@ -16,6 +16,8 @@ interface EventsContextType {
   setRegistrationsLoading: (isLoading: boolean) => void; // Setter for registrationsLoading
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
+  requestFreshData: boolean;
+  setRequestFreshData: (request: boolean) => void;
 }
 
 /**
@@ -31,6 +33,8 @@ export const defaultEventsContext: EventsContextType = {
   setRegistrationsLoading: () => {},
   errors: [],
   setErrors: () => {},
+  requestFreshData: false,
+  setRequestFreshData: () => {}
 };
 
 /**
@@ -48,6 +52,7 @@ interface EventsProviderProps {
   initialRoadEvents?: EventType[]; // Optional initial road events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
   initialRegistrationsLoading?: boolean;
+  initialRequestFreshData?: boolean;
 }
 
 /**
@@ -61,6 +66,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   initialRoadEvents = defaultEventsContext.events,
   initialRegistrations = defaultEventsContext.registrations,
   initialRegistrationsLoading = defaultEventsContext.registrationsLoading,
+  initialRequestFreshData = defaultEventsContext.requestFreshData,
 }) => {
   // State management for different types of events and registrations
   const [events, setEvents] = useState<EventType[]>(initialRoadEvents);
@@ -68,6 +74,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
     FetchRegistrationsResponse | undefined
   >(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
+  const [requestFreshData, setRequestFreshData] = useState<boolean>(initialRequestFreshData);
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );
@@ -83,6 +90,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         setRegistrationsLoading,
         errors,
         setErrors,
+        requestFreshData,
+        setRequestFreshData
       }}
     >
       {children}

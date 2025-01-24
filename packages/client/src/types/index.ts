@@ -1,3 +1,5 @@
+export type EventDiscipline = "road" | "cx" | "xc";
+
 export type EventType = {
   eventId: string;
   name: string;
@@ -5,7 +7,9 @@ export type EventType = {
   city: string;
   state: string;
   eventUrl: string;
-  eventType: "road" | "cx" | "xc";
+  eventType: EventDiscipline;
+  interestedRiders?: string[];
+  housingUrl?: string;
 };
 
 export const mockEvents: EventType[] = [
