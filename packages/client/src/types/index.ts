@@ -1,4 +1,4 @@
-export type EventDiscipline = "road" | "cx" | "xc";
+export type EventDiscipline = "road" | "cx" | "xc" | "special";
 
 export type EventType = {
   eventId: string;
@@ -6,7 +6,7 @@ export type EventType = {
   date: string; // ISO 8601 date string (you can parse it into a Date object if needed)
   city: string;
   state: string;
-  eventUrl: string;
+  eventUrl?: string;
   eventType: EventDiscipline;
   interestedRiders?: string[];
   housingUrl?: string;
@@ -73,11 +73,12 @@ export type DateDetails = {
 export type Discipline = {
   queryParam: string;
   text: string;
-  id: string;
+  id: EventDiscipline;
 };
 
 export type EventDisciplines = {
   ROAD: Discipline;
   CX: Discipline;
   XC: Discipline;
+  SPECIAL: Discipline;
 };

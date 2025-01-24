@@ -15,3 +15,6 @@ preview:
 
 typecheck:
 	npm run typecheck
+
+format:
+	npm run format

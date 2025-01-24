@@ -3,7 +3,7 @@ import { EventType } from "../../types";
 import EventDate from "./EventDate";
 import EventDetails from "./EventDetails";
 import classes from "./event.module.css";
-import RemoveButton from "../Shared/RemoveButton";
+import DismissButton from "../Shared/DismissButton";
 
 type EventInformationRowProps = {
   event: EventType;
@@ -11,6 +11,14 @@ type EventInformationRowProps = {
   removeHousingUrl: () => void;
 };
 
+/**
+ * EventInformationRow Component
+ *
+ * Renders all information related to the event, including event date and details.
+ * Conditionally renders the housingUrl
+ *
+ * @param {EventInformationRowProps} props
+ */
 export default function EventInformationRow({
   event,
   housingUrl,
@@ -30,7 +38,7 @@ export default function EventInformationRow({
                 Link to Housing Information
               </a>
             </Text>
-            <RemoveButton clickHandler={removeHousingUrl} />
+            <DismissButton clickHandler={removeHousingUrl} />
           </Flex>
         )}
       </Grid.Col>

@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { Button, Flex, Grid, Text, TextInput } from "@mantine/core";
 import { MdAdd } from "react-icons/md";
 import classes from "./event.module.css";
-import RemoveButton from "../Shared/RemoveButton";
+import DismissButton from "../Shared/DismissButton";
 
 type FormRowProps = {
   openedLabel: string;
@@ -12,6 +12,14 @@ type FormRowProps = {
   submitLabel?: string;
   submitHandler: (e: any) => void;
 };
+
+/**
+ * FormRow Component
+ *
+ * Renders a form row, containing a button to open the form/close the form, and a text input and submit button
+ *
+ * @param {FormRowProps} props
+ */
 export default function FormRow({
   openedLabel,
   closedLabel,
@@ -47,7 +55,7 @@ export default function FormRow({
         <Flex justify="flex-end" align="center">
           {inputOpen ? (
             <>
-              <RemoveButton clickHandler={handleClickClose} />
+              <DismissButton clickHandler={handleClickClose} />
               <Text>{openedLabel}</Text>
             </>
           ) : (

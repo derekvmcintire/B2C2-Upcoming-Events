@@ -1,3 +1,12 @@
+.submissionForm {
+  margin: 16px;
+  margin-top: 32px;
+}
+
+.formCore {
+  max-width: 400px;
+}
+
 .formInput {
   margin-right: 8px;
 }
@@ -6,8 +15,12 @@
   min-width: 100%;
 }
 
+.formTextInput {
+  margin-right: 8px;
+}
+
 .disciplineInput {
-  width: 300px;
+  width: 250px;
 }
 
 .submitButton {

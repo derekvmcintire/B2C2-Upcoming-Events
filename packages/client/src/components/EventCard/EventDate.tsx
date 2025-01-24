@@ -7,6 +7,13 @@ type EventDateProps = {
   event: EventType;
 };
 
+/**
+ * EventsList Component
+ *
+ * Renders the date for an event
+ *
+ * @param {EventDateProps} props
+ */
 export default function EventDate({ event }: EventDateProps) {
   const { date } = event;
   // Format the event date and split into weekday and date string

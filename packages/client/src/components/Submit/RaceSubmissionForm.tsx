@@ -7,6 +7,7 @@ import {
   Text,
   Stack,
   Alert,
+  Anchor,
 } from "@mantine/core";
 import { EventSubmission } from "../../types";
 import { submitEvent } from "../../api/submitEvent";
@@ -24,19 +25,11 @@ interface RaceSubmissionFormProps {
  * RaceSubmissionForm Component
  *
  * A form to submit a race by entering a BikeReg URL and selecting a race type. The form validates the URL input
- * and the race type selection. Upon successful submission, it updates the race events list and provides feedback
- * through success or error messages.
- *
- * State variables include:
- * - bikeregUrl: URL input for the race event from BikeReg
- * - discipline: Selected type of the event (e.g., road, CX, or XC)
- * - isSubmitting: Flag indicating if the form is in the process of submission
- * - error: Stores error messages if submission fails
- * - showSuccess: Flag indicating whether a success message should be displayed
+ * and the race type selection. Upon successful submission, it sends data to the API, which requests race data from the bikereg API
+ * and then updates the race events list in the database and provides feedback through success or error messages.
  *
  * @returns A form with a text input for the BikeReg URL, a select dropdown for the race type, and a submit button.
  */
-
 const RaceSubmissionForm = ({
   vertical = false,
 }: RaceSubmissionFormProps): JSX.Element => {
@@ -132,7 +125,7 @@ const RaceSubmissionForm = ({
   };
 
   const formCore = (
-    <Stack>
+    <Stack w="80%" className={classes.formCore}>
       <TextInput
         className={`${classes.formInput} ${classes.urlInput}`}
         placeholder="https://www.bikereg.com/..."
@@ -165,8 +158,14 @@ const RaceSubmissionForm = ({
 
   const alignment = vertical ? "center" : "flex-start";
   return (
-    <Stack align={alignment} w="80%">
-      <Text>Submit a race</Text>
+    <Stack align={alignment} w="100%" className={classes.submissionForm}>
+      {vertical ? (
+        <Text>Submit a race</Text>
+      ) : (
+        <Text>
+          Submit a race or <Anchor href="/submit">Submit a Team Event</Anchor>
+        </Text>
+      )}
 
       {error && (
         <Alert color="red" withCloseButton onClose={() => setError("")}>
@@ -185,11 +184,13 @@ const RaceSubmissionForm = ({
       )}
 
       {vertical ? (
-        <Stack w="80%" justify="center">
+        <Stack w="100%" align="center">
           {formCore}
         </Stack>
       ) : (
-        <Flex align="center">{formCore}</Flex>
+        <Flex w="100%" justify="flex-start">
+          {formCore}
+        </Flex>
       )}
     </Stack>
   );

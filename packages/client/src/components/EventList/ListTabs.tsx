@@ -6,11 +6,13 @@ import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByType } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import { getDisciplineId } from "../../utils/discipline";
+import { clearEventCache } from "../../infrastructure/event-cache";
 import {
   getEventsFromCache,
   setEventsToCache,
 } from "../../infrastructure/event-cache";
 import classes from "./event-list.module.css";
+import { EventDiscipline } from "../../types";
 
 /**
  * ListTabs Component
@@ -23,12 +25,11 @@ import classes from "./event-list.module.css";
  * - Fetches data on tab change, using cached events when available.
  */
 const ListTabs = (): JSX.Element => {
+  const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
   const [activeTab, setActiveTab] = useState<string | null>(
-    DISCIPLINES.ROAD.text,
+    DEFAULT_DISCIPLINE.text,
   );
   const [eventsLoading, setEventsLoading] = useState<boolean>(true);
-
-  const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
 
   const eventsContext = useEventsContext();
   const {
@@ -36,38 +37,23 @@ const ListTabs = (): JSX.Element => {
     setEvents,
     setRegistrationsLoading,
     registrationsLoading,
-    requestFreshData,
     setRequestFreshData,
   } = eventsContext;
 
-  const getRegisteredRiders = async ({
-    overrideCache = false,
-  }: {
-    overrideCache?: boolean;
-  }) => {
+  const getRegisteredRiders = async () => {
     const disciplineId = DISCIPLINES.ROAD.queryParam;
     const afterDate = new Date(); // or pass a specific date if needed
 
-    const response = await fetchRegistrations(
-      disciplineId,
-      afterDate,
-      overrideCache,
-    );
+    const response = await fetchRegistrations(disciplineId, afterDate);
     setRegistrations(response);
     setRegistrationsLoading(false);
   };
 
-  const getEvents = async ({
-    disciplineId,
-    overrideCache = false,
-  }: {
-    disciplineId: string;
-    overrideCache?: boolean;
-  }) => {
+  const getEvents = async ({ disciplineId }: { disciplineId: string }) => {
     // First, check cache
     const cachedEvents = getEventsFromCache(disciplineId);
 
-    if (!overrideCache && cachedEvents) {
+    if (cachedEvents) {
       // If cached data exists, use it
       setEvents(cachedEvents);
     } else {
@@ -87,26 +73,23 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading(true);
 
     const disciplineId = getDisciplineId(value);
-    getRegisteredRiders({});
+    getRegisteredRiders();
     getEvents({ disciplineId });
     setActiveTab(value);
   };
 
   // Fetch registrations on component mount
   useEffect(() => {
-    getRegisteredRiders({});
+    getRegisteredRiders();
     getEvents({ disciplineId: DEFAULT_DISCIPLINE.id });
   }, []);
 
-  useEffect(() => {
-    if (requestFreshData) {
-      setEventsLoading(true);
-      console.log("requesting fresh data bb");
-      getRegisteredRiders({ overrideCache: true });
-      getEvents({ disciplineId: DEFAULT_DISCIPLINE.id, overrideCache: true });
-      setRequestFreshData(false);
-    }
-  }, [requestFreshData]);
+  const requestFreshDataForEventType = (eventType: EventDiscipline) => {
+    clearEventCache(eventType); // clear cache for the given event type
+    getRegisteredRiders(); // get registered riders just in case they changed
+    getEvents({ disciplineId: eventType }); // fetch new events for the given eventType (Also called discipline)
+    setRequestFreshData(undefined); // reset requestFreshData to undefined so we don't trigger an infinite loop
+  };
 
   return (
     <Tabs
@@ -128,13 +111,22 @@ const ListTabs = (): JSX.Element => {
         <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>
           Cross Country
         </Tabs.Tab>
+        <Tabs.Tab
+          className={classes.eventListTab}
+          value={DISCIPLINES.SPECIAL.text}
+        >
+          Team Events
+        </Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
-          <EventsList discipline={DISCIPLINES.ROAD} />
+          <EventsList
+            discipline={DISCIPLINES.ROAD}
+            requestDataCallback={requestFreshDataForEventType}
+          />
         )}
       </Tabs.Panel>
 
@@ -142,7 +134,10 @@ const ListTabs = (): JSX.Element => {
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
-          <EventsList discipline={DISCIPLINES.CX} />
+          <EventsList
+            discipline={DISCIPLINES.CX}
+            requestDataCallback={requestFreshDataForEventType}
+          />
         )}
       </Tabs.Panel>
 
@@ -150,7 +145,23 @@ const ListTabs = (): JSX.Element => {
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
-          <EventsList discipline={DISCIPLINES.XC} />
+          <EventsList
+            discipline={DISCIPLINES.XC}
+            requestDataCallback={requestFreshDataForEventType}
+          />
+        )}
+      </Tabs.Panel>
+      <Tabs.Panel
+        key={DISCIPLINES.SPECIAL.text}
+        value={DISCIPLINES.SPECIAL.text}
+      >
+        {eventsLoading ? (
+          <div className={classes.loading}>Loading...</div>
+        ) : (
+          <EventsList
+            discipline={DISCIPLINES.SPECIAL}
+            requestDataCallback={requestFreshDataForEventType}
+          />
         )}
       </Tabs.Panel>
     </Tabs>

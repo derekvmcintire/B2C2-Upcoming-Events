@@ -1,14 +1,23 @@
 import { Flex, Grid, Text } from "@mantine/core";
 import classes from "./event.module.css";
-import RemoveButton from "../Shared/RemoveButton";
+import DismissButton from "../Shared/DismissButton";
 
+type InterestedRidersRowProps = {
+  riders: string[];
+  removeRider: (rider: string) => void;
+};
+
+/**
+ * InterestedRidersRow Component
+ *
+ * Renders a row that contains a list of riders that are interested in this event
+ *
+ * @param {InterestedRidersRowProps} props
+ */
 export default function InterestedRidersRow({
   riders,
   removeRider,
-}: {
-  riders: string[];
-  removeRider: (rider: string) => void;
-}) {
+}: InterestedRidersRowProps) {
   const numberOfRidersInterested = riders.length;
   const interestedLabelText =
     numberOfRidersInterested === 1
@@ -31,17 +40,20 @@ export default function InterestedRidersRow({
       </Grid.Col>
       <Grid.Col span={8}>
         <Flex justify="flex-start" align="flex-end">
-          <Text size="lg" fw="600" className={classes.interestedRiders}>
-            {numberOfRidersInterested > 0 &&
-              riders.map((rider: string) => (
-                <div key={rider}>
-                  <RemoveButton clickHandler={() => removeRider(rider)} />
-                  <Text span className={classes.interestedRiderText}>
-                    {rider}
-                  </Text>
-                </div>
-              ))}
-          </Text>
+          {numberOfRidersInterested > 0 &&
+            riders.map((rider: string) => (
+              <div key={rider}>
+                <DismissButton clickHandler={() => removeRider(rider)} />
+                <Text
+                  span
+                  size="lg"
+                  fw="600"
+                  className={classes.interestedRiderText}
+                >
+                  {rider}
+                </Text>
+              </div>
+            ))}
         </Flex>
       </Grid.Col>
     </>
