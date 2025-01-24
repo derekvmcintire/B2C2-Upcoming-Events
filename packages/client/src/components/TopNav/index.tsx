@@ -10,6 +10,7 @@ import Nav from "./nav";
  * TopNav Component
  *
  * A header component to hold the web page title, as well as the race submission form, and hamburger nav on mobile
+ * 
  */
 export default function TopNav(): JSX.Element {
   const isMobile = useMediaQuery("(max-width: 950px)");
