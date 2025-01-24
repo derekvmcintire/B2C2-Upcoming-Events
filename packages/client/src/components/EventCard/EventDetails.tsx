@@ -19,7 +19,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
     <>
       <Stack align="flex-start">
         {/* Event Name */}
-        <Text className={classes.eventName} lineClamp={2}>
+        <Text td="underline" className={classes.eventName} lineClamp={2}>
           {name}
         </Text>
         {/* Event Location */}

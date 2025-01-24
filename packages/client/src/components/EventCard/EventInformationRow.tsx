@@ -26,10 +26,10 @@ export default function EventInformationRow({
 }: EventInformationRowProps) {
   return (
     <>
-      <Grid.Col span={4}>
+      <Grid.Col span={{ base: 12, xs: 4 }}>
         <EventDate event={event} />
       </Grid.Col>
-      <Grid.Col span={8}>
+      <Grid.Col span={{ base: 12, xs: 8 }}>
         <EventDetails event={event} />
         {housingUrl && (
           <Flex justify="flex-start">

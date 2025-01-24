@@ -134,7 +134,6 @@ export default function EventCard({
           removeRider={handleRemoveInterestedRider}
         />
         <FormRow
-          openedLabel="Enter Rider Name"
           closedLabel="Add Interested Rider"
           placeholder="Enter Rider Name"
           isSubmitting={isSubmittingInterestedRider}
@@ -142,9 +141,8 @@ export default function EventCard({
         />
         {!housingUrl && (
           <FormRow
-            openedLabel="Please Provide a Link"
             closedLabel="Add Housing"
-            placeholder="Enter a URL"
+            placeholder="Enter Houding URL"
             isSubmitting={isSubmittingHousingUrl}
             submitHandler={handleSubmitHousing}
           />

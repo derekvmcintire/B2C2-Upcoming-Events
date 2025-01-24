@@ -83,6 +83,12 @@
   text-align: left;
 }
 
+.interestedRiderFlex {
+  font-size: 1.2rem;
+  word-wrap: break-word;
+  text-align: left;
+}
+
 .interestedRiderText {
   font-size: 1.1rem;
   margin-right: 8px;

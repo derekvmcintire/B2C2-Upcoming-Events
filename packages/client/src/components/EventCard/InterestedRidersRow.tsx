@@ -39,17 +39,20 @@ export default function InterestedRidersRow({
         </Flex>
       </Grid.Col>
       <Grid.Col span={8}>
-        <Flex justify="flex-start" align="flex-end">
+        <>
           {numberOfRidersInterested > 0 &&
             riders.map((rider: string) => (
-              <div key={rider}>
+              <div key={rider} className={classes.interestedRiderFlex}>
+                <Flex justify="flex-start" align="flex-end">
                 <DismissButton clickHandler={() => removeRider(rider)} />
                 <Text span fw="600" className={classes.interestedRiderText}>
                   {rider}
                 </Text>
+                </Flex>
               </div>
+              
             ))}
-        </Flex>
+        </>
       </Grid.Col>
     </>
   );

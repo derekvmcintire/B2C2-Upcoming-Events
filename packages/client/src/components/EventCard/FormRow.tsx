@@ -1,12 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Flex, Grid, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Flex, Grid, Text, TextInput } from "@mantine/core";
 import { MdAdd } from "react-icons/md";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { useMediaQuery } from "@mantine/hooks";
 
 type FormRowProps = {
-  openedLabel: string;
   closedLabel: string;
   placeholder: string;
   isSubmitting: boolean;
@@ -22,7 +21,6 @@ type FormRowProps = {
  * @param {FormRowProps} props
  */
 export default function FormRow({
-  openedLabel,
   closedLabel,
   placeholder,
   isSubmitting,
@@ -31,7 +29,6 @@ export default function FormRow({
 }: FormRowProps) {
   const [inputOpen, setInputOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
-  const isMobile = useMediaQuery("(max-width: 950px)");
 
   const handleClickOpen = () => {
     setInputOpen(true);
@@ -51,35 +48,43 @@ export default function FormRow({
     setInputValue("");
     setInputOpen(false);
   };
+
+  const isMobile = useMediaQuery("(max-width: 650px)");
+
   return (
     <>
-      <Grid.Col span={4}></Grid.Col>
-      <Grid.Col span={8}>
+      <Grid.Col span={isMobile ? 0 : 4}></Grid.Col>
+      <Grid.Col span={isMobile ? 12 : 8}>
         <Flex justify="flex-start" align="center" className={classes.formSide}>
-          {isSubmitting && !inputOpen && <Text>Loading...</Text>}
-          {inputOpen ? (
-            <>
-              <DismissButton clickHandler={handleClickClose} />
-              <TextInput
-                value={inputValue}
-                onChange={handleInputChange}
-                className={classes.formRowInput}
-                placeholder={placeholder}
-              />
-              <Button onClick={handleClickSubmit}>
-                {submitLabel || "Submit"}
+          {isSubmitting ? (<Text>Loading...</Text>) : 
+            inputOpen ? (
+              <>
+                <DismissButton clickHandler={handleClickClose} />
+                <TextInput
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  className={classes.formRowInput}
+                  placeholder={placeholder}
+                />
+                <Button onClick={handleClickSubmit}>
+                  {submitLabel || "Submit"}
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="transparent"
+                size="compact-md"
+                leftSection={<MdAdd size={14} />}
+                disabled={isSubmitting}
+                onClick={handleClickOpen}
+              >
+                {closedLabel}
               </Button>
-            </>
-          ) : (
-            <Button
-              variant="transparent"
-              size="compact-md"
-              leftSection={<MdAdd size={14} />}
-              onClick={handleClickOpen}
-            >
-              {closedLabel}
-            </Button>
-          )}
+            )
+          }
+
+          
+
         </Flex>
       </Grid.Col>
     </>
