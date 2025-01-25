@@ -28,10 +28,9 @@ export default function InterestedRidersRow({
       ? `${numberOfRidersInterested} Rider Interested: `
       : `${numberOfRidersInterested} Riders Interested: `;
 
-  return (
-    <>
-      <Grid.Col span={isMobile ? 12 : 4}>
-        <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
+
+  const label = (
+    <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
           <Text
             size="lg"
             fw="300"
@@ -41,9 +40,10 @@ export default function InterestedRidersRow({
             {numberOfRidersInterested > 0 && interestedLabelText}
           </Text>
         </Flex>
-      </Grid.Col>
-      <Grid.Col span={isMobile ? 12 : 8}>
-        <>
+  );
+
+  const content = (
+    <>
           {numberOfRidersInterested > 0 &&
             riders.map((rider: string) => (
               <div key={rider} className={classes.interestedRiderFlex}>
@@ -55,6 +55,18 @@ export default function InterestedRidersRow({
                 </Flex>
               </div>
             ))}
+        </>
+  );
+
+  return (
+    <>
+      <Grid.Col span={isMobile ? 0 : 4}>
+        {!isMobile && label}
+      </Grid.Col>
+      <Grid.Col span={isMobile ? 12 : 8}>
+        <>
+        {isMobile && label}
+        {content}
         </>
       </Grid.Col>
     </>

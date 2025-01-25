@@ -68,6 +68,8 @@
   white-space: normal;
   word-wrap: break-word;
   text-align: right;
+  font-style: italic;
+  font-weight: 300;
 }
 
 .registeredName {

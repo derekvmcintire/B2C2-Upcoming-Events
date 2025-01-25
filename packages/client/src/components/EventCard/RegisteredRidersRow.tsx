@@ -42,9 +42,6 @@ export default function RegisteredRidersRow({
   const label = (
     <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
           <Text
-            size="lg"
-            fw="300"
-            fs="italic"
             className={classes.registeredLabel}
           >
             {numberOfRidersRegistered > 0 && registeredLabelText}
@@ -55,7 +52,6 @@ export default function RegisteredRidersRow({
   const content = (
     <Flex justify="flex-start" align="flex-end">
           <Text
-            fw="600"
             className={contentClassName}
           >
             {numberOfRidersRegistered > 0
