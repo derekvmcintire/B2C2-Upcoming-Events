@@ -1,4 +1,4 @@
-import { Flex, Group, Text, Title } from "@mantine/core";
+import { Flex, Group, LoadingOverlay, Text, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import HamburgerNav from "./HamburgerNav";
 import RaceSubmissionForm from "../Submit/RaceSubmissionForm";
@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import classes from "./top-nav.module.css";
 import Nav from "./nav";
 import { MOBILE_BREAK_POINT } from "../../constants";
+import { useEventsContext } from "../../context/events-context";
 
 /**
  * TopNav Component
@@ -14,14 +15,22 @@ import { MOBILE_BREAK_POINT } from "../../constants";
  *
  */
 export default function TopNav(): JSX.Element {
+  const eventsContext = useEventsContext();
+  const { isSubmitting } = eventsContext;
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const location = useLocation();
 
   const getNavbarContents =
     location.pathname !== "/submit" ? <RaceSubmissionForm /> : <Nav />;
+
   return (
     <div className={classes.topNavContainer}>
       <Flex justify="space-between" align="flex-start">
+        <LoadingOverlay
+          visible={isSubmitting}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
         {isMobile ? <HamburgerNav /> : getNavbarContents}
         <Group>
           <Title className={classes.title} ta="right">

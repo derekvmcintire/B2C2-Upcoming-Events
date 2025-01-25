@@ -12,7 +12,7 @@ type EventCardInputProps = {
 };
 
 /**
- * FormRow Component
+ * EventCardInput Component
  *
  * Renders a form row, containing a button to open the form/close the form, and a text input and submit button
  *

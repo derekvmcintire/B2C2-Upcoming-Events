@@ -22,6 +22,8 @@ interface EventsContextType {
   setErrors: (errors: string[]) => void; // Setter for error messages
   requestFreshData?: EventDiscipline;
   setRequestFreshData: (discipline: EventDiscipline | undefined) => void;
+  isSubmitting: boolean;
+  setIsSubmitting: (isSubmitting: boolean) => void;
 }
 
 /**
@@ -39,6 +41,8 @@ export const defaultEventsContext: EventsContextType = {
   setErrors: () => {},
   requestFreshData: undefined,
   setRequestFreshData: () => {},
+  isSubmitting: false,
+  setIsSubmitting: () => {},
 };
 
 /**
@@ -57,6 +61,7 @@ interface EventsProviderProps {
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
   initialRegistrationsLoading?: boolean;
   initialRequestFreshData?: EventDiscipline;
+  initialIsSubmitting?: boolean;
 }
 
 /**
@@ -71,6 +76,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   initialRegistrations = defaultEventsContext.registrations,
   initialRegistrationsLoading = defaultEventsContext.registrationsLoading,
   initialRequestFreshData = defaultEventsContext.requestFreshData,
+  initialIsSubmitting = defaultEventsContext.isSubmitting,
 }) => {
   // State management for different types of events and registrations
   const [events, setEvents] = useState<EventType[]>(initialRoadEvents);
@@ -84,6 +90,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );
+  const [isSubmitting, setIsSubmitting] =
+    useState<boolean>(initialIsSubmitting);
 
   return (
     <EventsContext.Provider
@@ -98,6 +106,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         setErrors,
         requestFreshData,
         setRequestFreshData,
+        isSubmitting,
+        setIsSubmitting,
       }}
     >
       {children}

@@ -38,6 +38,7 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading,
     registrationsLoading,
     setRequestFreshData,
+    setIsSubmitting,
   } = eventsContext;
 
   const getRegisteredRiders = async () => {
@@ -64,6 +65,7 @@ const ListTabs = (): JSX.Element => {
       setEventsToCache(disciplineId, roadResponse.events);
     }
     setEventsLoading(false);
+    setIsSubmitting(false);
   };
 
   const handleTabChange = (value: any) => {

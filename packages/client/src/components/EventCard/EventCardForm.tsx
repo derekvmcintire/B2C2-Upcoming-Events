@@ -3,16 +3,16 @@ import { useState } from "react";
 import EventCardButtons from "./EventCardButtons";
 import EventCardInput from "./EventCardInput";
 import { Stack } from "@mantine/core";
+import { useEventsContext } from "../../context/events-context";
 
 type EventCardForm = {
   hasHousingUrl: boolean;
-  isSubmitting: boolean;
   handleSubmitHousing: (value: any) => void;
   handleSubmitInterestedRider: (value: any) => void;
 };
 
 /**
- * FormRow Component
+ * EventCardForm Component
  *
  * Renders a form row, containing a button to open the form/close the form, and a text input and submit button
  *
@@ -20,10 +20,12 @@ type EventCardForm = {
  */
 export default function EventCardForm({
   hasHousingUrl,
-  isSubmitting,
   handleSubmitHousing,
   handleSubmitInterestedRider,
 }: EventCardForm) {
+  const eventsContext = useEventsContext();
+  const { isSubmitting } = eventsContext;
+
   const [interestedRiderInputOpen, setInterestedRiderInputOpen] =
     useState<boolean>(false);
   const [housingUrlInputOpen, setHousingUrlInputOpen] =
