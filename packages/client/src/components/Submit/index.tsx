@@ -1,10 +1,11 @@
 import TopNav from "../TopNav";
 import ColorSchemeToggle from "../ColorSchemeToggle";
 import RaceSubmissionForm from "./RaceSubmissionForm";
-import { Container, Divider } from "@mantine/core";
+import { Container, Divider, Flex, SegmentedControl } from "@mantine/core";
 import { EventsProvider } from "../../context/events-context";
 import classes from "./submit.module.css";
 import SpecialEventSubmissionForm from "./SpecialEventForm";
+import { useState } from "react";
 
 /**
  * Submit Component
@@ -16,14 +17,31 @@ import SpecialEventSubmissionForm from "./SpecialEventForm";
  * @returns A container for the race submission form, along with top navigation and color scheme toggle.
  */
 const Submit = (): JSX.Element => {
+  const [value, setValue] = useState<string>('team')
   return (
     <>
       <EventsProvider>
         <TopNav />
-        <Container className={classes.formContainer}>
-          <RaceSubmissionForm vertical={true} />
+        <Flex>
+        <SegmentedControl
+            mt="24"
+            value={value}
+            onChange={setValue}
+            data={[
+              { label: 'Submit Race by URL', value: 'race' },
+              { label: 'Submit Special Team Event', value: 'team' },
+            ]}
+          />
+          
+          </Flex>
           <Divider />
-          <SpecialEventSubmissionForm />
+        <Container className={classes.formContainer}>
+        
+          {value === 'race' ? (
+            <RaceSubmissionForm vertical={true} />
+          ) : (
+            <SpecialEventSubmissionForm />
+          )}
         </Container>
         <ColorSchemeToggle />
       </EventsProvider>
