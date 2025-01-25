@@ -5,10 +5,7 @@
 }
 
 .lightEventContainer {
-  background-color: light-dark(
-    var(--mantine-color-gray-1),
-    var(--mantine-color-gray-8)
-  );
+  background-color: light-dark(var(--mantine-color-gray-1), #202020);
 }
 
 .alert {
@@ -43,7 +40,7 @@
 
 .eventName {
   letter-spacing: rem(-1px);
-  font-size: rem(40px);
+  font-size: rem(30px);
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
@@ -125,7 +122,7 @@
 
   /* Make text smaller and more responsive */
   .eventName {
-    font-size: rem(30px);
+    font-size: rem(25px);
     word-wrap: break-word; /* Allow long event names to break */
     text-align: left;
   }
