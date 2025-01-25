@@ -3,16 +3,16 @@
   margin-top: 32px;
 }
 
-.formCore {
+/* .formCore {
   max-width: 400px;
-}
+} */
 
 .formInput {
   margin-right: 8px;
 }
 
 .urlInput {
-  min-width: 100%;
+  width: 100%;
 }
 
 .formTextInput {
@@ -32,7 +32,6 @@
 }
 
 .formDescription {
-  max-width: 500px;
   font-style: italic;
   text-align: left;
 }

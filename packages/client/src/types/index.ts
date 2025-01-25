@@ -101,7 +101,7 @@ export const FORMS: EventForms = {
     value: "race",
   },
   SPECIAL: {
-    label: "Submit Special Team Event",
+    label: "Submit Team Event",
     value: "special",
   },
 };
