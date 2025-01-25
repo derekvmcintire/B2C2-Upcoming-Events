@@ -5,7 +5,10 @@
 }
 
 .lightEventContainer {
-  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-gray-8));
+  background-color: light-dark(
+    var(--mantine-color-gray-1),
+    var(--mantine-color-gray-8)
+  );
 }
 
 .alert {

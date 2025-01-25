@@ -106,7 +106,9 @@ export default function EventCard({
       ),
     });
 
-  const containerClass = isLight ? `${classes.eventContainer} ${classes.lightEventContainer}` : classes.eventContainer;
+  const containerClass = isLight
+    ? `${classes.eventContainer} ${classes.lightEventContainer}`
+    : classes.eventContainer;
 
   return (
     <Container className={containerClass}>

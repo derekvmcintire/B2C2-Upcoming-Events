@@ -35,14 +35,15 @@ export default function EventsList({
         {events.map((event, i) => {
           const isLight = i % 2 === 0;
           return (
-          <EventCard
-            key={event.eventId}
-            event={event}
-            registrations={registrations}
-            requestDataCallback={requestDataCallback}
-            isLight={isLight}
-          />
-        )})}
+            <EventCard
+              key={event.eventId}
+              event={event}
+              registrations={registrations}
+              requestDataCallback={requestDataCallback}
+              isLight={isLight}
+            />
+          );
+        })}
       </>
     );
   };
