@@ -1,5 +1,11 @@
 .eventContainer {
   width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.lightEventContainer {
+  background-color: light-dark(var(--mantine-color-gray-1), #202020);
 }
 
 .alert {
@@ -34,7 +40,7 @@
 
 .eventName {
   letter-spacing: rem(-1px);
-  font-size: rem(40px);
+  font-size: rem(30px);
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
@@ -68,6 +74,8 @@
   white-space: normal;
   word-wrap: break-word;
   text-align: right;
+  font-style: italic;
+  font-weight: 300;
 }
 
 .registeredName {
@@ -106,6 +114,10 @@
   min-width: 325px;
 }
 
+.eventCardForm {
+  height: 50px;
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {
@@ -114,8 +126,9 @@
 
   /* Make text smaller and more responsive */
   .eventName {
-    font-size: rem(30px);
+    font-size: rem(25px);
     word-wrap: break-word; /* Allow long event names to break */
+    text-align: left;
   }
 
   .eventDay {

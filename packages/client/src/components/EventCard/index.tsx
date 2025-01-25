@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Alert, Container, Divider, Flex, Grid } from "@mantine/core";
+import {
+  Alert,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  LoadingOverlay,
+} from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
 import type {
@@ -20,21 +27,24 @@ import EventInformationRow from "./EventInformationRow";
 import { DISCIPLINES } from "../../constants";
 import { SimpleResponse } from "simple-fetch-ts";
 import EventCardForm from "./EventCardForm";
+import { useEventsContext } from "../../context/events-context";
 
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
+  isLight?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
 export default function EventCard({
   event,
   registrations,
+  isLight = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
-  const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] =
-    useState(false);
-  const [isSubmittingHousingUrl, setIsSubmittingHousingUrl] = useState(false);
+  const eventsContext = useEventsContext();
+  const { isSubmitting, setIsSubmitting } = eventsContext;
+
   const [error, setError] = useState("");
 
   const { housingUrl, interestedRiders = [] } = event;
@@ -49,27 +59,22 @@ export default function EventCard({
     updateFn: (
       data: UpdateEventParams<T>,
     ) => Promise<SimpleResponse<UpdateEventResponse>>,
-    setter: React.Dispatch<React.SetStateAction<boolean>>,
     data: T,
   ): Promise<void> => {
-    setter(true);
-    try {
-      const response = await updateFn({
-        eventId: event.eventId,
-        eventType: event.eventType,
-        ...data,
-      });
+    setIsSubmitting(true);
+    const response = await updateFn({
+      eventId: event.eventId,
+      eventType: event.eventType,
+      ...data,
+    });
 
-      if (response.status === 200) {
-        requestDataCallback(event.eventType);
-      }
-    } finally {
-      setter(false);
+    if (response.status === 200) {
+      requestDataCallback(event.eventType);
     }
   };
 
   const handleSubmitInterestedRider = (rider: string) =>
-    handleSubmit<UpdateEventData>(updateEvent, setIsSubmittingInterestedRider, {
+    handleSubmit<UpdateEventData>(updateEvent, {
       eventId: event.eventId,
       eventType: event.eventType,
       interestedRiders: [...interestedRiders, rider],
@@ -81,7 +86,7 @@ export default function EventCard({
       setError("Housing URL must start with 'http'");
       return;
     }
-    handleSubmit<UpdateEventData>(updateEvent, setIsSubmittingHousingUrl, {
+    handleSubmit<UpdateEventData>(updateEvent, {
       eventId: event.eventId,
       eventType: event.eventType,
       housingUrl: url,
@@ -89,14 +94,14 @@ export default function EventCard({
   };
 
   const handleRemoveHousing = () =>
-    handleSubmit(updateEvent, setIsSubmittingHousingUrl, {
+    handleSubmit(updateEvent, {
       eventId: event.eventId,
       eventType: event.eventType,
       housingUrl: null,
     });
 
   const handleRemoveInterestedRider = (riderToRemove: string) =>
-    handleSubmit(updateEvent, setIsSubmittingInterestedRider, {
+    handleSubmit(updateEvent, {
       eventId: event.eventId,
       eventType: event.eventType,
       interestedRiders: interestedRiders.filter(
@@ -104,8 +109,21 @@ export default function EventCard({
       ),
     });
 
+  const containerClass = isLight
+    ? `${classes.eventContainer} ${classes.lightEventContainer}`
+    : classes.eventContainer;
+
   return (
-    <Container className={classes.eventContainer}>
+    <Container className={containerClass} style={{ position: "relative" }}>
+      <LoadingOverlay
+        visible={isSubmitting}
+        zIndex={1000}
+        overlayProps={{
+          blur: 2,
+          fixed: false,
+          style: { position: "absolute" },
+        }}
+      />
       {error && (
         <Flex justify="center">
           <Alert
@@ -139,7 +157,6 @@ export default function EventCard({
       <Flex justify="center">
         <EventCardForm
           hasHousingUrl={!!housingUrl}
-          isSubmitting={isSubmittingHousingUrl || isSubmittingInterestedRider}
           handleSubmitHousing={handleSubmitHousing}
           handleSubmitInterestedRider={handleSubmitInterestedRider}
         />

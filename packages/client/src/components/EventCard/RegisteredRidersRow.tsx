@@ -35,35 +35,37 @@ export default function RegisteredRidersRow({
       ? `${numberOfRidersRegistered} B2C2 Rider Reg'd: `
       : `${numberOfRidersRegistered} B2C2 Riders Reg'd: `;
 
+  const contentClassName =
+    numberOfRidersRegistered > 0
+      ? classes.registeredName
+      : classes.registeredLabel;
+
+  const label = (
+    <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
+      <Text className={classes.registeredLabel}>
+        {numberOfRidersRegistered > 0 && registeredLabelText}
+      </Text>
+    </Flex>
+  );
+
+  const content = (
+    <Flex justify="flex-start" align="flex-end">
+      <Text className={contentClassName}>
+        {numberOfRidersRegistered > 0
+          ? registeredNames.join(", ")
+          : "No B2C2 Riders Reg'd"}
+      </Text>
+    </Flex>
+  );
+
   return (
     <>
-      <Grid.Col span={isMobile ? 12 : 4}>
-        <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
-          <Text
-            size="lg"
-            fw="300"
-            fs="italic"
-            className={classes.registeredLabel}
-          >
-            {numberOfRidersRegistered > 0 && registeredLabelText}
-          </Text>
-        </Flex>
-      </Grid.Col>
+      <Grid.Col span={isMobile ? 0 : 4}>{!isMobile && label}</Grid.Col>
       <Grid.Col span={isMobile ? 12 : 8}>
-        <Flex justify="flex-start" align="flex-end">
-          <Text
-            fw="600"
-            className={
-              numberOfRidersRegistered > 0
-                ? classes.registeredName
-                : classes.registeredLabel
-            }
-          >
-            {numberOfRidersRegistered > 0
-              ? registeredNames.join(", ")
-              : "No B2C2 Riders Reg'd"}
-          </Text>
-        </Flex>
+        <>
+          {isMobile && label}
+          {content}
+        </>
       </Grid.Col>
     </>
   );

@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Flex, Tabs } from "@mantine/core";
 import EventsList from "./EventsList";
 import { useEffect, useState } from "react";
 import { fetchRegistrations } from "../../api/fetchRegisteredRiders";
@@ -38,6 +38,7 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading,
     registrationsLoading,
     setRequestFreshData,
+    setIsSubmitting,
   } = eventsContext;
 
   const getRegisteredRiders = async () => {
@@ -64,6 +65,7 @@ const ListTabs = (): JSX.Element => {
       setEventsToCache(disciplineId, roadResponse.events);
     }
     setEventsLoading(false);
+    setIsSubmitting(false);
   };
 
   const handleTabChange = (value: any) => {
@@ -119,51 +121,53 @@ const ListTabs = (): JSX.Element => {
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
-        {eventsLoading ? (
-          <div className={classes.loading}>Loading...</div>
-        ) : (
-          <EventsList
-            discipline={DISCIPLINES.ROAD}
-            requestDataCallback={requestFreshDataForEventType}
-          />
-        )}
-      </Tabs.Panel>
+      <Flex w="100%" justify="center">
+        <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.ROAD}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
 
-      <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
-        {eventsLoading ? (
-          <div className={classes.loading}>Loading...</div>
-        ) : (
-          <EventsList
-            discipline={DISCIPLINES.CX}
-            requestDataCallback={requestFreshDataForEventType}
-          />
-        )}
-      </Tabs.Panel>
+        <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.CX}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
 
-      <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
-        {eventsLoading ? (
-          <div className={classes.loading}>Loading...</div>
-        ) : (
-          <EventsList
-            discipline={DISCIPLINES.XC}
-            requestDataCallback={requestFreshDataForEventType}
-          />
-        )}
-      </Tabs.Panel>
-      <Tabs.Panel
-        key={DISCIPLINES.SPECIAL.text}
-        value={DISCIPLINES.SPECIAL.text}
-      >
-        {eventsLoading ? (
-          <div className={classes.loading}>Loading...</div>
-        ) : (
-          <EventsList
-            discipline={DISCIPLINES.SPECIAL}
-            requestDataCallback={requestFreshDataForEventType}
-          />
-        )}
-      </Tabs.Panel>
+        <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.XC}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
+        <Tabs.Panel
+          key={DISCIPLINES.SPECIAL.text}
+          value={DISCIPLINES.SPECIAL.text}
+        >
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.SPECIAL}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
+      </Flex>
     </Tabs>
   );
 };

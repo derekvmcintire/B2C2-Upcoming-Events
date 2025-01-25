@@ -17,7 +17,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
   const { name, city, state, eventUrl } = event;
   return (
     <>
-      <Stack align="flex-start">
+      <Stack gap={4} align="flex-start">
         {/* Event Name */}
         <Text className={classes.eventName}>{name}</Text>
         {/* Event Location */}

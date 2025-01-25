@@ -28,33 +28,37 @@ export default function InterestedRidersRow({
       ? `${numberOfRidersInterested} Rider Interested: `
       : `${numberOfRidersInterested} Riders Interested: `;
 
+  const label = (
+    <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
+      <Text size="lg" fw="300" fs="italic" className={classes.registeredLabel}>
+        {numberOfRidersInterested > 0 && interestedLabelText}
+      </Text>
+    </Flex>
+  );
+
+  const content = (
+    <>
+      {numberOfRidersInterested > 0 &&
+        riders.map((rider: string) => (
+          <div key={rider} className={classes.interestedRiderFlex}>
+            <Flex justify="flex-start" align="flex-end">
+              <DismissButton clickHandler={() => removeRider(rider)} />
+              <Text span fw="600" className={classes.interestedRiderText}>
+                {rider}
+              </Text>
+            </Flex>
+          </div>
+        ))}
+    </>
+  );
+
   return (
     <>
-      <Grid.Col span={isMobile ? 12 : 4}>
-        <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
-          <Text
-            size="lg"
-            fw="300"
-            fs="italic"
-            className={classes.registeredLabel}
-          >
-            {numberOfRidersInterested > 0 && interestedLabelText}
-          </Text>
-        </Flex>
-      </Grid.Col>
+      <Grid.Col span={isMobile ? 0 : 4}>{!isMobile && label}</Grid.Col>
       <Grid.Col span={isMobile ? 12 : 8}>
         <>
-          {numberOfRidersInterested > 0 &&
-            riders.map((rider: string) => (
-              <div key={rider} className={classes.interestedRiderFlex}>
-                <Flex justify="flex-start" align="flex-end">
-                  <DismissButton clickHandler={() => removeRider(rider)} />
-                  <Text span fw="600" className={classes.interestedRiderText}>
-                    {rider}
-                  </Text>
-                </Flex>
-              </div>
-            ))}
+          {isMobile && label}
+          {content}
         </>
       </Grid.Col>
     </>

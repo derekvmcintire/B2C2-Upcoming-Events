@@ -1,4 +1,4 @@
-import { Text } from "@mantine/core";
+import { ScrollArea, Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import EventCard from "../EventCard";
 import { EventDiscipline, type Discipline } from "../../types";
@@ -31,16 +31,24 @@ export default function EventsList({
     return registrationsLoading ? (
       <div className={classes.loading}>Loading...</div>
     ) : (
-      <>
-        {events.map((event) => (
-          <EventCard
-            key={event.eventId}
-            event={event}
-            registrations={registrations}
-            requestDataCallback={requestDataCallback}
-          />
-        ))}
-      </>
+      <ScrollArea
+        h="100%"
+        type="scroll"
+        className={classes.eventListScrollArea}
+      >
+        {events.map((event, i) => {
+          const isLight = i % 2 === 0;
+          return (
+            <EventCard
+              key={event.eventId}
+              event={event}
+              registrations={registrations}
+              requestDataCallback={requestDataCallback}
+              isLight={isLight}
+            />
+          );
+        })}
+      </ScrollArea>
     );
   };
 

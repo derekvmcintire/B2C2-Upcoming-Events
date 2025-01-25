@@ -19,6 +19,7 @@ export default function TopNav(): JSX.Element {
 
   const getNavbarContents =
     location.pathname !== "/submit" ? <RaceSubmissionForm /> : <Nav />;
+
   return (
     <div className={classes.topNavContainer}>
       <Flex justify="space-between" align="flex-start">

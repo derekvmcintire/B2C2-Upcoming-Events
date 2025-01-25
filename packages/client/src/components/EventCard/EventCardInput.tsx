@@ -12,7 +12,7 @@ type EventCardInputProps = {
 };
 
 /**
- * FormRow Component
+ * EventCardInput Component
  *
  * Renders a form row, containing a button to open the form/close the form, and a text input and submit button
  *
@@ -43,16 +43,19 @@ export default function EventCardInput({
   };
 
   return (
-    <Flex justify="center">
+    <Flex m="8" justify="center">
       <DismissButton clickHandler={dismissInput} />
       <TextInput
+        size="xs"
         value={inputValue}
         onChange={handleChange}
         className={classes.formRowInput}
         placeholder={placeholder}
         error={error}
       />
-      <Button onClick={handleClickSubmit}>{submitLabel || "Submit"}</Button>
+      <Button size="xs" onClick={handleClickSubmit}>
+        {submitLabel || "Submit"}
+      </Button>
     </Flex>
   );
 }
