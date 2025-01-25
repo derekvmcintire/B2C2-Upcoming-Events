@@ -17,27 +17,25 @@ import { useState } from "react";
  * @returns A container for the race submission form, along with top navigation and color scheme toggle.
  */
 const Submit = (): JSX.Element => {
-  const [value, setValue] = useState<string>('team')
+  const [value, setValue] = useState<string>("team");
   return (
     <>
       <EventsProvider>
         <TopNav />
         <Flex>
-        <SegmentedControl
+          <SegmentedControl
             mt="24"
             value={value}
             onChange={setValue}
             data={[
-              { label: 'Submit Race by URL', value: 'race' },
-              { label: 'Submit Special Team Event', value: 'team' },
+              { label: "Submit Race by URL", value: "race" },
+              { label: "Submit Special Team Event", value: "team" },
             ]}
           />
-          
-          </Flex>
-          <Divider />
+        </Flex>
+        <Divider />
         <Container className={classes.formContainer}>
-        
-          {value === 'race' ? (
+          {value === "race" ? (
             <RaceSubmissionForm vertical={true} />
           ) : (
             <SpecialEventSubmissionForm />
