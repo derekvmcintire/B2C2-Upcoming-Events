@@ -121,7 +121,13 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
 
     const selectedDate = new Date(date); // date is in YYYY-MM-DD format
     selectedDate.setHours(0, 0, 0, 0); // Set time to midnight (00:00:00)
-    const formattedDate = selectedDate.toISOString(); // Returns in UTC format
+
+    // Get the timezone offset in minutes and adjust the date
+    const timezoneOffset = selectedDate.getTimezoneOffset(); // Offset in minutes
+    selectedDate.setMinutes(selectedDate.getMinutes() - timezoneOffset);
+
+    // Convert to ISO string and remove the 'Z' (to indicate local time)
+    const formattedDate = selectedDate.toISOString().slice(0, -1);
 
     try {
       const submission = {
@@ -217,6 +223,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   return (
     <Stack align="center" w="100%" className={classes.submissionForm}>
       <Text>Submit a Special Event</Text>
+      <Text className={classes.formDescription}>Submit a special event - or any event that isn't on BikeReg, to add it to the calendar.</Text>
 
       {error && (
         <Alert color="red" withCloseButton onClose={() => setError("")}>

@@ -6,6 +6,7 @@ import { EventsProvider } from "../../context/events-context";
 import classes from "./submit.module.css";
 import SpecialEventSubmissionForm from "./SpecialEventForm";
 import { useState } from "react";
+import { FORMS } from "../../types";
 
 /**
  * Submit Component
@@ -17,7 +18,7 @@ import { useState } from "react";
  * @returns A container for the race submission form, along with top navigation and color scheme toggle.
  */
 const Submit = (): JSX.Element => {
-  const [value, setValue] = useState<string>("team");
+  const [value, setValue] = useState<string>(FORMS.SPECIAL.value);
   return (
     <>
       <EventsProvider>
@@ -28,14 +29,14 @@ const Submit = (): JSX.Element => {
             value={value}
             onChange={setValue}
             data={[
-              { label: "Submit Race by URL", value: "race" },
-              { label: "Submit Special Team Event", value: "team" },
+              { label:FORMS.RACE.label, value: FORMS.RACE.value },
+              { label: FORMS.SPECIAL.label, value: FORMS.SPECIAL.value },
             ]}
           />
         </Flex>
         <Divider />
         <Container className={classes.formContainer}>
-          {value === "race" ? (
+          {value === FORMS.RACE.value ? (
             <RaceSubmissionForm vertical={true} />
           ) : (
             <SpecialEventSubmissionForm />

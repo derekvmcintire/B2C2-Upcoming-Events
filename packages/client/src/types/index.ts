@@ -82,3 +82,26 @@ export type EventDisciplines = {
   XC: Discipline;
   SPECIAL: Discipline;
 };
+
+export type FormValueType = "race" | "special";
+
+export type FormType = {
+  label: string,
+  value: FormValueType,
+}
+
+export type EventForms = {
+  RACE: FormType,
+  SPECIAL: FormType,
+}
+
+export const FORMS: EventForms = {
+  RACE: {
+    label: "Submit Race by URL",
+    value: "race"
+  },
+  SPECIAL: {
+    label: "Submit Special Team Event",
+    value: "special",
+  }
+}
