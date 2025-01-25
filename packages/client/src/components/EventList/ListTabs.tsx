@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Flex, Tabs } from "@mantine/core";
 import EventsList from "./EventsList";
 import { useEffect, useState } from "react";
 import { fetchRegistrations } from "../../api/fetchRegisteredRiders";
@@ -119,6 +119,7 @@ const ListTabs = (): JSX.Element => {
         </Tabs.Tab>
       </Tabs.List>
 
+      <Flex w="100%" justify="center">
       <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
@@ -164,6 +165,7 @@ const ListTabs = (): JSX.Element => {
           />
         )}
       </Tabs.Panel>
+      </Flex>
     </Tabs>
   );
 };

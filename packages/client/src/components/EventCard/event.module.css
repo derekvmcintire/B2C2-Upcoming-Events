@@ -1,5 +1,11 @@
 .eventContainer {
   width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.lightEventContainer {
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-gray-8));
 }
 
 .alert {
@@ -118,6 +124,7 @@
   .eventName {
     font-size: rem(30px);
     word-wrap: break-word; /* Allow long event names to break */
+    text-align: left;
   }
 
   .eventDay {

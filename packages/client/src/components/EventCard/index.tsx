@@ -24,12 +24,14 @@ import EventCardForm from "./EventCardForm";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
+  isLight?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
 export default function EventCard({
   event,
   registrations,
+  isLight = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
   const [isSubmittingInterestedRider, setIsSubmittingInterestedRider] =
@@ -104,8 +106,10 @@ export default function EventCard({
       ),
     });
 
+  const containerClass = isLight ? `${classes.eventContainer} ${classes.lightEventContainer}` : classes.eventContainer;
+
   return (
-    <Container className={classes.eventContainer}>
+    <Container className={containerClass}>
       {error && (
         <Flex justify="center">
           <Alert
