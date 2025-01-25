@@ -2,6 +2,8 @@ import { Flex, Grid, Text } from "@mantine/core";
 import { EventType, FetchRegistrationsResponse } from "../../types";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import classes from "./event.module.css";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 type RegisteredRidersRowProps = {
   event: EventType;
@@ -19,6 +21,7 @@ export default function RegisteredRidersRow({
   event,
   registrations,
 }: RegisteredRidersRowProps) {
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const { eventId } = event;
 
   // Retrieve registered names by event ID
@@ -34,11 +37,11 @@ export default function RegisteredRidersRow({
 
   return (
     <>
-      <Grid.Col span={4}>
-        <Flex justify="flex-end" align="flex-end">
+      <Grid.Col span={isMobile ? 12 : 4}>
+        <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
           <Text
             size="lg"
-            fw="600"
+            fw="300"
             fs="italic"
             className={classes.registeredLabel}
           >
@@ -46,10 +49,9 @@ export default function RegisteredRidersRow({
           </Text>
         </Flex>
       </Grid.Col>
-      <Grid.Col span={8}>
+      <Grid.Col span={isMobile ? 12 : 8}>
         <Flex justify="flex-start" align="flex-end">
           <Text
-            size="lg"
             fw="600"
             className={
               numberOfRidersRegistered > 0

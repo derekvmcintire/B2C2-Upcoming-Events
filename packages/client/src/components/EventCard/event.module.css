@@ -1,5 +1,4 @@
 .eventContainer {
-  margin-top: 30px;
   width: 100%;
 }
 
@@ -34,7 +33,8 @@
 }
 
 .eventName {
-  font-size: 1.5rem;
+  letter-spacing: rem(-1px);
+  font-size: rem(40px);
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
@@ -63,6 +63,7 @@
 }
 
 .registeredLabel {
+  font-size: 1.2rem;
   letter-spacing: 1px;
   white-space: normal;
   word-wrap: break-word;
@@ -74,6 +75,7 @@
     var(--mantine-color-orange-9),
     var(--mantine-color-orange-3)
   );
+  font-size: 1.2rem;
   letter-spacing: 1px;
   margin-right: 16px;
   white-space: normal;
@@ -81,14 +83,14 @@
   text-align: left;
 }
 
-.interestedRiders {
-  letter-spacing: 1px;
-  white-space: normal;
+.interestedRiderFlex {
+  font-size: 1.2rem;
   word-wrap: break-word;
   text-align: left;
 }
 
 .interestedRiderText {
+  font-size: 1.1rem;
   margin-right: 8px;
 }
 
@@ -100,6 +102,10 @@
   margin-right: 8px;
 }
 
+.formSide {
+  min-width: 325px;
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {
@@ -108,7 +114,7 @@
 
   /* Make text smaller and more responsive */
   .eventName {
-    font-size: 1.25rem; /* Smaller font for mobile */
+    font-size: rem(30px);
     word-wrap: break-word; /* Allow long event names to break */
   }
 
@@ -126,5 +132,17 @@
 
   .eventLink {
     font-size: 1rem; /* Adjust font size for link */
+  }
+
+  .registeredName {
+    font-size: 0.9rem;
+  }
+
+  .registeredLabel {
+    font-size: 0.9rem;
+  }
+
+  .interestedRiderText {
+    font-size: 0.9rem;
   }
 }

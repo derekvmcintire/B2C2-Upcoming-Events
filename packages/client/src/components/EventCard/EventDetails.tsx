@@ -19,9 +19,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
     <>
       <Stack align="flex-start">
         {/* Event Name */}
-        <Text className={classes.eventName} lineClamp={2}>
-          {name}
-        </Text>
+        <Text className={classes.eventName}>{name}</Text>
         {/* Event Location */}
         <Text className={classes.eventLocation}>{`${city}, ${state}`}</Text>
         {/* Event URL */}
