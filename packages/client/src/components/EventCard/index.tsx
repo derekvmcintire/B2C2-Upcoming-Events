@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Alert, Container, Divider, Flex, Grid } from "@mantine/core";
+import {
+  Alert,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  LoadingOverlay,
+} from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
 import type {
@@ -36,7 +43,7 @@ export default function EventCard({
   requestDataCallback,
 }: EventProps): JSX.Element {
   const eventsContext = useEventsContext();
-  const { setIsSubmitting } = eventsContext;
+  const { isSubmitting, setIsSubmitting } = eventsContext;
 
   const [error, setError] = useState("");
 
@@ -107,7 +114,16 @@ export default function EventCard({
     : classes.eventContainer;
 
   return (
-    <Container className={containerClass}>
+    <Container className={containerClass} style={{ position: "relative" }}>
+      <LoadingOverlay
+        visible={isSubmitting}
+        zIndex={1000}
+        overlayProps={{
+          blur: 2,
+          fixed: false,
+          style: { position: "absolute" },
+        }}
+      />
       {error && (
         <Flex justify="center">
           <Alert

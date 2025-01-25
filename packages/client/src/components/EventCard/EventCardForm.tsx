@@ -83,11 +83,13 @@ export default function EventCardForm({
           dismissInput={handleClickClose}
         />
       )}
-      <EventCardButtons
-        hasHousingUrl={hasHousingUrl}
-        isSubmitting={isSubmitting}
-        handleClickOpen={handleClickOpen}
-      />
+      {!interestedRiderInputOpen && !housingUrlInputOpen && (
+        <EventCardButtons
+          hasHousingUrl={hasHousingUrl}
+          isSubmitting={isSubmitting}
+          handleClickOpen={handleClickOpen}
+        />
+      )}
     </Stack>
   );
 }

@@ -46,13 +46,16 @@ export default function EventCardInput({
     <Flex justify="center">
       <DismissButton clickHandler={dismissInput} />
       <TextInput
+        size="xs"
         value={inputValue}
         onChange={handleChange}
         className={classes.formRowInput}
         placeholder={placeholder}
         error={error}
       />
-      <Button onClick={handleClickSubmit}>{submitLabel || "Submit"}</Button>
+      <Button size="xs" onClick={handleClickSubmit}>
+        {submitLabel || "Submit"}
+      </Button>
     </Flex>
   );
 }
