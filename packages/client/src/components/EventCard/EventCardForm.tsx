@@ -3,7 +3,7 @@ import { useState } from "react";
 import EventCardButtons from "./EventCardButtons";
 import EventCardInput from "./EventCardInput";
 import { Stack } from "@mantine/core";
-import { useEventsContext } from "../../context/events-context";
+import classes from "./event.module.css";
 
 type EventCardForm = {
   hasHousingUrl: boolean;
@@ -23,9 +23,6 @@ export default function EventCardForm({
   handleSubmitHousing,
   handleSubmitInterestedRider,
 }: EventCardForm) {
-  const eventsContext = useEventsContext();
-  const { isSubmitting } = eventsContext;
-
   const [interestedRiderInputOpen, setInterestedRiderInputOpen] =
     useState<boolean>(false);
   const [housingUrlInputOpen, setHousingUrlInputOpen] =
@@ -65,8 +62,10 @@ export default function EventCardForm({
     }
   };
 
+  const buttonsAreAvailable = !interestedRiderInputOpen && !housingUrlInputOpen;
+
   return (
-    <Stack align="center">
+    <Stack align="center" className={classes.eventCardForm}>
       {interestedRiderInputOpen && (
         <EventCardInput
           placeholder="Add Interested Rider"
@@ -83,10 +82,9 @@ export default function EventCardForm({
           dismissInput={handleClickClose}
         />
       )}
-      {!interestedRiderInputOpen && !housingUrlInputOpen && (
+      {buttonsAreAvailable && (
         <EventCardButtons
           hasHousingUrl={hasHousingUrl}
-          isSubmitting={isSubmitting}
           handleClickOpen={handleClickOpen}
         />
       )}

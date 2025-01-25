@@ -31,7 +31,11 @@ export default function EventsList({
     return registrationsLoading ? (
       <div className={classes.loading}>Loading...</div>
     ) : (
-      <ScrollArea h="100%" className={classes.eventListScrollArea}>
+      <ScrollArea
+        h="100%"
+        type="scroll"
+        className={classes.eventListScrollArea}
+      >
         {events.map((event, i) => {
           const isLight = i % 2 === 0;
           return (
