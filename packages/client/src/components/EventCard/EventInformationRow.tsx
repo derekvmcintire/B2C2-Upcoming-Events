@@ -4,6 +4,8 @@ import EventDate from "./EventDate";
 import EventDetails from "./EventDetails";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 type EventInformationRowProps = {
   event: EventType;
@@ -24,12 +26,14 @@ export default function EventInformationRow({
   housingUrl,
   removeHousingUrl,
 }: EventInformationRowProps) {
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
   return (
     <>
-      <Grid.Col span={{ base: 12, xs: 4 }}>
+      <Grid.Col span={isMobile ? 12 : 4}>
         <EventDate event={event} />
       </Grid.Col>
-      <Grid.Col span={{ base: 12, xs: 8 }}>
+      <Grid.Col span={isMobile ? 12 : 8}>
         <EventDetails event={event} />
         {housingUrl && (
           <Flex justify="flex-start">

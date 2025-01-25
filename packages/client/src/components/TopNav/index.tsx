@@ -5,6 +5,7 @@ import RaceSubmissionForm from "../Submit/RaceSubmissionForm";
 import { useLocation } from "react-router-dom";
 import classes from "./top-nav.module.css";
 import Nav from "./nav";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 /**
  * TopNav Component
@@ -13,7 +14,7 @@ import Nav from "./nav";
  *
  */
 export default function TopNav(): JSX.Element {
-  const isMobile = useMediaQuery("(max-width: 950px)");
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const location = useLocation();
 
   const getNavbarContents =

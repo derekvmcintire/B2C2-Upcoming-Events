@@ -1,6 +1,8 @@
 import { Flex, Grid, Text } from "@mantine/core";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
+import { MOBILE_BREAK_POINT } from "../../constants";
+import { useMediaQuery } from "@mantine/hooks";
 
 type InterestedRidersRowProps = {
   riders: string[];
@@ -18,6 +20,8 @@ export default function InterestedRidersRow({
   riders,
   removeRider,
 }: InterestedRidersRowProps) {
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
   const numberOfRidersInterested = riders.length;
   const interestedLabelText =
     numberOfRidersInterested === 1
@@ -26,11 +30,11 @@ export default function InterestedRidersRow({
 
   return (
     <>
-      <Grid.Col span={4}>
-        <Flex justify="flex-end" align="flex-end">
+      <Grid.Col span={isMobile ? 12 : 4}>
+        <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
           <Text
             size="lg"
-            fw="600"
+            fw="300"
             fs="italic"
             className={classes.registeredLabel}
           >
@@ -38,19 +42,18 @@ export default function InterestedRidersRow({
           </Text>
         </Flex>
       </Grid.Col>
-      <Grid.Col span={8}>
+      <Grid.Col span={isMobile ? 12 : 8}>
         <>
           {numberOfRidersInterested > 0 &&
             riders.map((rider: string) => (
               <div key={rider} className={classes.interestedRiderFlex}>
                 <Flex justify="flex-start" align="flex-end">
-                <DismissButton clickHandler={() => removeRider(rider)} />
-                <Text span fw="600" className={classes.interestedRiderText}>
-                  {rider}
-                </Text>
+                  <DismissButton clickHandler={() => removeRider(rider)} />
+                  <Text span fw="600" className={classes.interestedRiderText}>
+                    {rider}
+                  </Text>
                 </Flex>
               </div>
-              
             ))}
         </>
       </Grid.Col>

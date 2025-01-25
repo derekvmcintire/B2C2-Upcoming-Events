@@ -17,9 +17,9 @@ import classes from "./event.module.css";
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./EventInformationRow";
-import FormRow from "./FormRow";
 import { DISCIPLINES } from "../../constants";
 import { SimpleResponse } from "simple-fetch-ts";
+import EventCardForm from "./EventCardForm";
 
 type EventProps = {
   event: EventType;
@@ -113,6 +113,8 @@ export default function EventCard({
             variant="light"
             color="red"
             title="Error"
+            withCloseButton
+            onClose={() => setError("")}
             icon={<MdOutlineWarning />}
           >
             {error}
@@ -133,21 +135,15 @@ export default function EventCard({
           riders={interestedRiders}
           removeRider={handleRemoveInterestedRider}
         />
-        <FormRow
-          closedLabel="Add Interested Rider"
-          placeholder="Enter Rider Name"
-          isSubmitting={isSubmittingInterestedRider}
-          submitHandler={handleSubmitInterestedRider}
-        />
-        {!housingUrl && (
-          <FormRow
-            closedLabel="Add Housing"
-            placeholder="Enter Houding URL"
-            isSubmitting={isSubmittingHousingUrl}
-            submitHandler={handleSubmitHousing}
-          />
-        )}
       </Grid>
+      <Flex justify="center">
+        <EventCardForm
+          hasHousingUrl={!!housingUrl}
+          isSubmitting={isSubmittingHousingUrl || isSubmittingInterestedRider}
+          handleSubmitHousing={handleSubmitHousing}
+          handleSubmitInterestedRider={handleSubmitInterestedRider}
+        />
+      </Flex>
       <Divider />
     </Container>
   );

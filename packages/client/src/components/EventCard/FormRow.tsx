@@ -4,6 +4,7 @@ import { MdAdd } from "react-icons/md";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 type FormRowProps = {
   closedLabel: string;
@@ -49,43 +50,72 @@ export default function FormRow({
     setInputOpen(false);
   };
 
-  const isMobile = useMediaQuery("(max-width: 650px)");
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
+  const deskTopButton = (
+    <Flex justify="flex-end" align="center">
+      {inputOpen ? (
+        <>
+          <DismissButton clickHandler={handleClickClose} />
+          <Text>{placeholder}</Text>
+        </>
+      ) : (
+        <Button
+          leftSection={<MdAdd size={14} />}
+          variant="default"
+          onClick={handleClickOpen}
+        >
+          {closedLabel}
+        </Button>
+      )}
+    </Flex>
+  );
+
+  const deskTopInputContent = inputOpen && (
+    <Flex justify="flex-start">
+      <TextInput
+        value={inputValue}
+        onChange={handleInputChange}
+        className={classes.formRowInput}
+        placeholder={placeholder}
+      />
+      <Button onClick={handleClickSubmit}>{submitLabel || "Submit"}</Button>
+    </Flex>
+  );
+
+  const mobileInputContent = (
+    <Flex justify="flex-start" align="center" className={classes.formSide}>
+      {isSubmitting ? (
+        <Text>Loading...</Text>
+      ) : inputOpen ? (
+        <>
+          <DismissButton clickHandler={handleClickClose} />
+          <TextInput
+            value={inputValue}
+            onChange={handleInputChange}
+            className={classes.formRowInput}
+            placeholder={placeholder}
+          />
+          <Button onClick={handleClickSubmit}>{submitLabel || "Submit"}</Button>
+        </>
+      ) : (
+        <Button
+          variant="default"
+          leftSection={<MdAdd size={14} />}
+          disabled={isSubmitting}
+          onClick={handleClickOpen}
+        >
+          {closedLabel}
+        </Button>
+      )}
+    </Flex>
+  );
 
   return (
     <>
-      <Grid.Col span={isMobile ? 0 : 4}></Grid.Col>
+      <Grid.Col span={isMobile ? 0 : 4}>{!isMobile && deskTopButton}</Grid.Col>
       <Grid.Col span={isMobile ? 12 : 8}>
-        <Flex justify="flex-start" align="center" className={classes.formSide}>
-          {isSubmitting ? (<Text>Loading...</Text>) : 
-            inputOpen ? (
-              <>
-                <DismissButton clickHandler={handleClickClose} />
-                <TextInput
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  className={classes.formRowInput}
-                  placeholder={placeholder}
-                />
-                <Button onClick={handleClickSubmit}>
-                  {submitLabel || "Submit"}
-                </Button>
-              </>
-            ) : (
-              <Button
-                variant="transparent"
-                size="compact-md"
-                leftSection={<MdAdd size={14} />}
-                disabled={isSubmitting}
-                onClick={handleClickOpen}
-              >
-                {closedLabel}
-              </Button>
-            )
-          }
-
-          
-
-        </Flex>
+        {isMobile ? mobileInputContent : deskTopInputContent}
       </Grid.Col>
     </>
   );
