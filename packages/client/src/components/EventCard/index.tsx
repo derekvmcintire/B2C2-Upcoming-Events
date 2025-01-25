@@ -144,7 +144,7 @@ export default function EventCard({
           handleSubmitInterestedRider={handleSubmitInterestedRider}
         />
       </Flex>
-      <Divider />
+      <Divider mt="16" />
     </Container>
   );
 }

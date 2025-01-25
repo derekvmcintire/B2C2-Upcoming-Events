@@ -1,4 +1,4 @@
-import { Button, Group, useMantineColorScheme } from "@mantine/core";
+import { Button, Divider, Group, useMantineColorScheme } from "@mantine/core";
 import classes from "./color-scheme-toggle.module.css";
 import { LIGHT_COLOR_SCHEME, DARK_COLOR_SCHEME } from "../../constants";
 
@@ -19,6 +19,7 @@ function ColorSchemeToggle(): JSX.Element {
 
   return (
     <div className={classes.colorScheme}>
+      <Divider mt="78" mb="16" />
       <Group justify="center">
         <Button
           size="compact-sm"

@@ -29,7 +29,7 @@ const Submit = (): JSX.Element => {
             value={value}
             onChange={setValue}
             data={[
-              { label:FORMS.RACE.label, value: FORMS.RACE.value },
+              { label: FORMS.RACE.label, value: FORMS.RACE.value },
               { label: FORMS.SPECIAL.label, value: FORMS.SPECIAL.value },
             ]}
           />

@@ -223,7 +223,10 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   return (
     <Stack align="center" w="100%" className={classes.submissionForm}>
       <Text>Submit a Special Event</Text>
-      <Text className={classes.formDescription}>Submit a special event - or any event that isn't on BikeReg, to add it to the calendar.</Text>
+      <Text className={classes.formDescription}>
+        Submit a special event - or any event that isn't on BikeReg, to add it
+        to the calendar.
+      </Text>
 
       {error && (
         <Alert color="red" withCloseButton onClose={() => setError("")}>

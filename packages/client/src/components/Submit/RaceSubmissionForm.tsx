@@ -161,8 +161,11 @@ const RaceSubmissionForm = ({
     <Stack align={alignment} w="100%" className={classes.submissionForm}>
       {vertical ? (
         <>
-        <Text>Submit a race</Text>
-        <Text className={classes.formDescription}>Enter a valid BikeReg URL, select a race discipline and we will grab the race info from BikeReg and add it to the calendar.</Text>
+          <Text>Submit a race</Text>
+          <Text className={classes.formDescription}>
+            Enter a valid BikeReg URL, select a race discipline and we will grab
+            the race info from BikeReg and add it to the calendar.
+          </Text>
         </>
       ) : (
         <Text>
