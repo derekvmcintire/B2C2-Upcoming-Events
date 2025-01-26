@@ -5,10 +5,18 @@ interface EventCardButtonProps {
   hasHousingUrl: boolean;
   handleClickOpen: (action: "rider" | "url") => void;
 }
+/**
+ * Renders the buttons for the EventCard component.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.hasHousingUrl - Indicates whether the event has a housing URL.
+ * @param {Function} props.handleClickOpen - The click event handler for opening a dialog.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function EventCardButtons({
   hasHousingUrl,
   handleClickOpen,
-}: EventCardButtonProps) {
+}: EventCardButtonProps): JSX.Element {
   return (
     <Flex justify="space-between" wrap="wrap">
       <Button

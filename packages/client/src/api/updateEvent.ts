@@ -10,6 +10,7 @@ export type UpdateEventData = {
   eventType: EventDiscipline;
   housingUrl?: string | null; // null for deleting
   interestedRiders?: string[];
+  description?: string;
 };
 
 export type UpdateEventResponse = {

@@ -10,6 +10,7 @@ export type EventType = {
   eventType: EventDiscipline;
   interestedRiders?: string[];
   housingUrl?: string;
+  description?: string;
 };
 
 export const mockEvents: EventType[] = [

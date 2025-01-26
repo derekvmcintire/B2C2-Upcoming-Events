@@ -15,6 +15,7 @@ type EventDetailsProps = {
  */
 export default function EventDetails({ event }: EventDetailsProps) {
   const { name, city, state, eventUrl } = event;
+
   return (
     <>
       <Stack gap={4} align="flex-start">

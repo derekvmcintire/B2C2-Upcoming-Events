@@ -1,13 +1,10 @@
 import { Flex, Grid, Text } from "@mantine/core";
-import { EventType, FetchRegistrationsResponse } from "../../types";
-import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import classes from "./event.module.css";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
 
 type RegisteredRidersRowProps = {
-  event: EventType;
-  registrations?: FetchRegistrationsResponse;
+  registeredNames?: string[];
 };
 
 /**
@@ -18,16 +15,9 @@ type RegisteredRidersRowProps = {
  * @param {RegisteredRidersRowProps} props
  */
 export default function RegisteredRidersRow({
-  event,
-  registrations,
+  registeredNames = [],
 }: RegisteredRidersRowProps) {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
-  const { eventId } = event;
-
-  // Retrieve registered names by event ID
-  const registeredNames = registrations
-    ? getEntriesByEventId(registrations, Number(eventId))
-    : [];
 
   const numberOfRidersRegistered = registeredNames.length;
   const registeredLabelText =
@@ -40,6 +30,11 @@ export default function RegisteredRidersRow({
       ? classes.registeredName
       : classes.registeredLabel;
 
+  /**
+   * Renders the label component for the registered riders row.
+   *
+   * @returns The JSX element representing the label component.
+   */
   const label = (
     <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
       <Text className={classes.registeredLabel}>
@@ -48,6 +43,11 @@ export default function RegisteredRidersRow({
     </Flex>
   );
 
+  /**
+   * Renders the content of the RegisteredRidersRow component.
+   *
+   * @returns The JSX element representing the content.
+   */
   const content = (
     <Flex justify="flex-start" align="flex-end">
       <Text className={contentClassName}>

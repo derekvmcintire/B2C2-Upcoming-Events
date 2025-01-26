@@ -23,10 +23,10 @@ import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
-import EventInformationRow from "./EventInformationRow";
+import EventInformationRow from "./InformationRow";
 import { DISCIPLINES } from "../../constants";
 import { SimpleResponse } from "simple-fetch-ts";
-import EventCardForm from "./EventCardForm";
+import EventCardForm from "./Form";
 import { useEventsContext } from "../../context/events-context";
 import Hypometer from "./Hypometer";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
@@ -38,6 +38,15 @@ type EventProps = {
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
+/**
+ * Renders an event card component.
+ *
+ * @param event - The event object.
+ * @param registrations - The registrations for the event.
+ * @param isLight - Indicates if the card should have a light theme. Default is false.
+ * @param requestDataCallback - Callback function to request data for the event type.
+ * @returns The rendered event card component.
+ */
 export default function EventCard({
   event,
   registrations,
@@ -51,7 +60,6 @@ export default function EventCard({
 
   const { eventId, housingUrl, interestedRiders = [] } = event;
 
-  // Retrieve registered names by event ID
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
@@ -65,6 +73,15 @@ export default function EventCard({
     eventType: EventDiscipline;
   } & T;
 
+  /**
+   * Handles the form submission by calling the provided update function with the given data.
+   * @template T The type of data being submitted.
+   * @param {(
+   *   data: UpdateEventParams<T>,
+   * ) => Promise<SimpleResponse<UpdateEventResponse>>} updateFn The function to update the event.
+   * @param {T} data The data to be submitted.
+   * @returns {Promise<void>} A promise that resolves when the submission is complete.
+   */
   const handleSubmit = async <T,>(
     updateFn: (
       data: UpdateEventParams<T>,
@@ -83,6 +100,11 @@ export default function EventCard({
     }
   };
 
+  /**
+   * Handles the submission of an interested rider.
+   *
+   * @param rider - The rider to be submitted.
+   */
   const handleSubmitInterestedRider = (rider: string) =>
     handleSubmit<UpdateEventData>(updateEvent, {
       eventId: event.eventId,
@@ -90,6 +112,11 @@ export default function EventCard({
       interestedRiders: [...interestedRiders, rider],
     });
 
+  /**
+   * Handles the submission of a housing URL.
+   *
+   * @param url - The housing URL to be submitted.
+   */
   const handleSubmitHousing = (url: string) => {
     setError("");
     if (!url.startsWith("http")) {
@@ -103,6 +130,21 @@ export default function EventCard({
     });
   };
 
+  /**
+   * Handles the submission of the event description.
+   *
+   * @param description - The new description for the event.
+   */
+  const handleSubmitDescription = (description: string) =>
+    handleSubmit<UpdateEventData>(updateEvent, {
+      eventId: event.eventId,
+      eventType: event.eventType,
+      description,
+    });
+
+  /**
+   * Handles the removal of housing for an event.
+   */
   const handleRemoveHousing = () =>
     handleSubmit(updateEvent, {
       eventId: event.eventId,
@@ -110,6 +152,10 @@ export default function EventCard({
       housingUrl: null,
     });
 
+  /**
+   * Handles the removal of an interested rider from the event.
+   * @param {string} riderToRemove - The rider to be removed.
+   */
   const handleRemoveInterestedRider = (riderToRemove: string) =>
     handleSubmit(updateEvent, {
       eventId: event.eventId,
@@ -154,9 +200,10 @@ export default function EventCard({
           event={event}
           housingUrl={housingUrl}
           removeHousingUrl={handleRemoveHousing}
+          submitDescription={handleSubmitDescription}
         />
         {event.eventType !== DISCIPLINES.SPECIAL.id && (
-          <RegisteredRidersRow event={event} registrations={registrations} />
+          <RegisteredRidersRow registeredNames={registeredNames} />
         )}
 
         <InterestedRidersRow

@@ -20,5 +20,7 @@ export const fetchEventsByType = async (
   const proxyUrl = buildProxyRequestUrl(url, params);
   const response = await simple(proxyUrl).fetch<GetEventsResponse>();
 
+  console.log("fetched events: ", response.data);
+
   return response.data;
 };
