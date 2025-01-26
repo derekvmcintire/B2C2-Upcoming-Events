@@ -156,7 +156,7 @@ export default function EventCard({
           removeHousingUrl={handleRemoveHousing}
         />
         {event.eventType !== DISCIPLINES.SPECIAL.id && (
-          <RegisteredRidersRow event={event} registrations={registrations} />
+          <RegisteredRidersRow registeredNames={registeredNames} />
         )}
 
         <InterestedRidersRow
