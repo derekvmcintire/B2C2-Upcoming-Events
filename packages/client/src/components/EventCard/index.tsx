@@ -14,10 +14,7 @@ import type {
   EventType,
   FetchRegistrationsResponse,
 } from "../../types";
-import {
-  updateEvent,
-  UpdateEventData,
-} from "../../api/updateEvent";
+import { updateEvent, UpdateEventData } from "../../api/updateEvent";
 import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
@@ -78,7 +75,7 @@ export default function EventCard({
     if (response.success) {
       requestDataCallback(eventType);
     } else {
-      setError(`Error submiting event update: ${response.message}`)
+      setError(`Error submiting event update: ${response.message}`);
     }
   };
 

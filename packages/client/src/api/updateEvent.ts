@@ -37,15 +37,14 @@ export const updateEvent = async (
     .then((response: SimpleResponse<UpdateEventResponse>) => {
       return {
         message: response.data.message,
-        success: true
-      }
+        success: true,
+      };
     })
     .catch((error: Error) => {
       const message = error?.message || "Unknown Error";
       return {
         message,
-        success: false
-      }
-    })
-
+        success: false,
+      };
+    });
 };
