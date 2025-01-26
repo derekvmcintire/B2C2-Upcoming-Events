@@ -51,12 +51,13 @@ export default function EventCard({
 
   const { eventId, housingUrl, interestedRiders = [] } = event;
 
-    // Retrieve registered names by event ID
-    const registeredNames = registrations
+  // Retrieve registered names by event ID
+  const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
 
-  const numberOfRidersRegdOrInterested = registeredNames.length + interestedRiders.length;
+  const numberOfRidersRegdOrInterested =
+    registeredNames.length + interestedRiders.length;
 
   // Define a generic type for update function parameters
   type UpdateEventParams<T> = {

@@ -1,12 +1,9 @@
 import { Progress, Text } from "@mantine/core";
 
 interface HypometerProps {
-  numberOfRiders: number
+  numberOfRiders: number;
 }
-export default function Hypometer({
-  numberOfRiders,
-}: HypometerProps) {
-
+export default function Hypometer({ numberOfRiders }: HypometerProps) {
   const hypeLevel = numberOfRiders * 10;
 
   const getHypeColor = () => {
@@ -17,11 +14,16 @@ export default function Hypometer({
     if (numberOfRiders > 1) return "blue";
     return "purple";
   };
-  
+
   return (
     <>
       <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
-      <Progress radius="xs" size="xl" value={hypeLevel} color={getHypeColor()} />
+      <Progress
+        radius="xs"
+        size="xl"
+        value={hypeLevel}
+        color={getHypeColor()}
+      />
     </>
   );
 }
