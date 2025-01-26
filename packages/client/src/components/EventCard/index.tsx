@@ -103,6 +103,13 @@ export default function EventCard({
     });
   };
 
+  const handleSubmitDescription = (description: string) =>
+    handleSubmit<UpdateEventData>(updateEvent, {
+      eventId: event.eventId,
+      eventType: event.eventType,
+      description,
+    });
+
   const handleRemoveHousing = () =>
     handleSubmit(updateEvent, {
       eventId: event.eventId,
@@ -154,6 +161,7 @@ export default function EventCard({
           event={event}
           housingUrl={housingUrl}
           removeHousingUrl={handleRemoveHousing}
+          submitDescription={handleSubmitDescription}
         />
         {event.eventType !== DISCIPLINES.SPECIAL.id && (
           <RegisteredRidersRow registeredNames={registeredNames} />

@@ -1,7 +1,6 @@
 import { Stack, Text } from "@mantine/core";
 import classes from "./event.module.css";
 import { EventType } from "../../types";
-import Description from "./Description";
 
 type EventDetailsProps = {
   event: EventType;
@@ -32,12 +31,6 @@ export default function EventDetails({ event }: EventDetailsProps) {
             </a>
           </Text>
         )}
-        <Description
-          event={event}
-          submitFn={(value: string) => {
-            console.log(value);
-          }}
-        />
       </Stack>
     </>
   );
