@@ -36,6 +36,7 @@ export const mockEvents: EventType[] = [
 
 export type GetEventsResponse = {
   events: EventType[];
+  error?: string;
 };
 
 export type EventSubmission = {
@@ -44,8 +45,9 @@ export type EventSubmission = {
 };
 
 export type FetchRegistrationsResponse = {
-  [key: string]: EventEntry | string; // Handles numbered keys and the 'query' string key
-  query: string;
+  [key: string]: EventEntry | string | undefined; // Handles numbered keys and the 'query' and 'error' string key
+  query?: string;
+  error?: string;
 };
 
 export type EventEntry = {
@@ -71,8 +73,14 @@ export type DateDetails = {
   timezone: string; // Timezone string
 };
 
+export type EventDisciplineParam =
+  | "road%20race"
+  | "cyclocross"
+  | "mountain%20bike"
+  | "special";
+
 export type Discipline = {
-  queryParam: string;
+  queryParam: EventDisciplineParam;
   text: string;
   id: EventDiscipline;
 };

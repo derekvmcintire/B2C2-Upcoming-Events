@@ -113,6 +113,7 @@ export default function Description({
           label="Details"
           clickHandler={() => setIsOpen(true)}
           aria-label="Add event description"
+          m={[8, 0, 8, 0]}
         />
       ),
     [value, description, hasUnsavedChanges],

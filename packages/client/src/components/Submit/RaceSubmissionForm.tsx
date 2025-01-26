@@ -12,7 +12,7 @@ import {
 import { EventDiscipline, EventSubmission } from "../../types";
 import { submitEvent } from "../../api/submitEvent";
 import { useEventsContext } from "../../context/events-context";
-import { fetchEventsByType } from "../../api/fetchEventsByType";
+import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import classes from "./submit.module.css";
 import { clearEventCache } from "../../infrastructure/event-cache";
@@ -48,7 +48,7 @@ const RaceSubmissionForm = ({
    */
   const updateEvents = (discipline: EventDiscipline) => {
     const getEvents = async () => {
-      const response = await fetchEventsByType(discipline);
+      const response = await fetchEventsByDiscipline(discipline);
       setEvents(response.events);
     };
 

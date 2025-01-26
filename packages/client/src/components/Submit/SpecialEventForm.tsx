@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Flex, TextInput, Button, Text, Stack, Alert } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
-import { fetchEventsByType } from "../../api/fetchEventsByType";
+import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import classes from "./submit.module.css";
 import { clearEventCache } from "../../infrastructure/event-cache";
 import { v4 as uuidv4 } from "uuid";
@@ -41,7 +41,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
    */
   const updateEvents = () => {
     const getEvents = async () => {
-      const response = await fetchEventsByType(DISCIPLINES.SPECIAL.id);
+      const response = await fetchEventsByDiscipline(DISCIPLINES.SPECIAL.id);
       setEvents(response.events);
     };
 

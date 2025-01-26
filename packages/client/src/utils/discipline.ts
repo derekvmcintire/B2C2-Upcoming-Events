@@ -1,6 +1,7 @@
 import { DISCIPLINES } from "../constants";
+import { EventDiscipline } from "../types";
 
-export function getDisciplineId(disciplineText: string): string {
+export function getDisciplineId(disciplineText: string): EventDiscipline {
   switch (disciplineText) {
     case DISCIPLINES.ROAD.text:
       return DISCIPLINES.ROAD.id;
