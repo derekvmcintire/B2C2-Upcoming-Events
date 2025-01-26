@@ -34,6 +34,11 @@ export default function EventCardInput({
     validate: validate || (() => true),
   });
 
+  /**
+   * Handles the click event for the submit button.
+   * If there are no errors, it calls the submitHandler function with the inputValue,
+   * resets the input value, and dismisses the input.
+   */
   const handleClickSubmit = () => {
     if (error === "") {
       submitHandler(inputValue);

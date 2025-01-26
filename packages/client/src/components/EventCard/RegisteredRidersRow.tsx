@@ -30,6 +30,11 @@ export default function RegisteredRidersRow({
       ? classes.registeredName
       : classes.registeredLabel;
 
+  /**
+   * Renders the label component for the registered riders row.
+   *
+   * @returns The JSX element representing the label component.
+   */
   const label = (
     <Flex justify={isMobile ? "flex-start" : "flex-end"} align="flex-end">
       <Text className={classes.registeredLabel}>
@@ -38,6 +43,11 @@ export default function RegisteredRidersRow({
     </Flex>
   );
 
+  /**
+   * Renders the content of the RegisteredRidersRow component.
+   *
+   * @returns The JSX element representing the content.
+   */
   const content = (
     <Flex justify="flex-start" align="flex-end">
       <Text className={contentClassName}>
