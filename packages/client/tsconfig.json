@@ -11,7 +11,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowUmdGlobalAccess": false,
-    "types": ["react/jsx-runtime"]
+    "allowSyntheticDefaultImports": true,
+    "types": ["react/jsx-runtime", "react", "react-dom"]
   },
   "include": ["src"],
   "exclude": ["api"]

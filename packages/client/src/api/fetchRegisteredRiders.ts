@@ -1,5 +1,5 @@
 import { formatDateToString } from "../utils/dates";
-import { FetchRegistrationsResponse } from "../types";
+import { EventDiscipline, FetchRegistrationsResponse } from "../types";
 import {
   getRegistrationsFromCache,
   setRegistrationsToCache,
@@ -10,6 +10,12 @@ import { simple } from "simple-fetch-ts";
 
 const CROSS_RESULTS_API_BASE_URL = "https://www.crossresults.com";
 const url = `${CROSS_RESULTS_API_BASE_URL}/api/b2c2lookup.php`;
+
+type FetchRegistrationOptions = {
+  eventType: EventDiscipline;
+  after: Date;
+  skipCache: boolean;
+};
 
 /**
  * Fetches event registrations either from cache or by making a request to a third-party API via a proxy.
@@ -23,17 +29,19 @@ const url = `${CROSS_RESULTS_API_BASE_URL}/api/b2c2lookup.php`;
  *
  * @returns A promise that resolves with the event registration data, or logs an error if the request fails.
  */
-export const fetchRegistrations = async (
-  eventType: string,
-  after: Date = new Date(),
-) => {
+export const fetchRegistrations = async ({
+  eventType,
+  after = new Date(),
+  skipCache = false,
+}: FetchRegistrationOptions) => {
   // Normalize the date before using it in the cache
   const normalizedAfter = normalizeDate(after);
 
-  // Check cache first
-  const cachedData = getRegistrationsFromCache(eventType, normalizedAfter);
-  if (cachedData) {
-    return cachedData;
+  if (!skipCache) {
+    const cachedData = getRegistrationsFromCache(eventType, normalizedAfter);
+    if (cachedData) {
+      return cachedData;
+    }
   }
 
   // If not in cache, fetch from API
