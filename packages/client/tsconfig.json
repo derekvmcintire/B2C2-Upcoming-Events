@@ -11,7 +11,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "allowUmdGlobalAccess": false,
-    "types": ["react/jsx-runtime", "node"]
+    "types": ["react/jsx-runtime"]
   },
   "include": ["src"],
   "exclude": ["api"]

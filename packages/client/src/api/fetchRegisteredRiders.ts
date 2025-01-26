@@ -6,6 +6,10 @@ import {
 } from "../infrastructure/registration-cache";
 import { normalizeDate } from "../infrastructure/utility";
 import { buildProxyRequestUrl } from "./utility";
+import { simple } from "simple-fetch-ts";
+
+const CROSS_RESULTS_API_BASE_URL = "https://www.crossresults.com";
+const url = `${CROSS_RESULTS_API_BASE_URL}/api/b2c2lookup.php`;
 
 /**
  * Fetches event registrations either from cache or by making a request to a third-party API via a proxy.
@@ -34,32 +38,20 @@ export const fetchRegistrations = async (
 
   // If not in cache, fetch from API
   const afterAsString = formatDateToString(normalizedAfter);
-  const apiUrl = `https://www.crossresults.com/api/b2c2lookup.php`; // The base URL for your third-party API
+
   const params = {
     eventType,
     after: afterAsString,
   };
 
-  try {
-    // Construct the URL to call the serverless proxy with the target API URL and query parameters
-    const url = buildProxyRequestUrl(apiUrl, params);
+  const proxyUrl = buildProxyRequestUrl(url, params);
+  // const response = await fetch(proxyUrl);
+  const response = await simple(proxyUrl).fetch<FetchRegistrationsResponse>();
 
-    // Fetch the data from the proxy
-    const response = await fetch(url);
+  const data = response.data;
 
-    // Check for successful response
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
+  // Cache the fetched data for future use
+  setRegistrationsToCache(eventType, normalizedAfter, data);
 
-    // Parse and return the response JSON
-    const data: FetchRegistrationsResponse = await response.json();
-
-    // Cache the fetched data for future use
-    setRegistrationsToCache(eventType, normalizedAfter, data);
-
-    return data;
-  } catch (error) {
-    console.error("Failed to fetch event data:", error);
-  }
+  return data;
 };

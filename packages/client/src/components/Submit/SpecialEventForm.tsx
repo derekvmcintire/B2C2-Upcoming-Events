@@ -41,7 +41,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
    */
   const updateEvents = () => {
     const getEvents = async () => {
-      const response = await fetchEventsByType("special");
+      const response = await fetchEventsByType(DISCIPLINES.SPECIAL.id);
       setEvents(response.events);
     };
 

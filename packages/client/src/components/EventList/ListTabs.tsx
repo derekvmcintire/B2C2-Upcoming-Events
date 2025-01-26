@@ -7,10 +7,7 @@ import { fetchEventsByType } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import { getDisciplineId } from "../../utils/discipline";
 import { clearEventCache } from "../../infrastructure/event-cache";
-import {
-  getEventsFromCache,
-  setEventsToCache,
-} from "../../infrastructure/event-cache";
+import { getEventsFromCache } from "../../infrastructure/event-cache";
 import classes from "./event-list.module.css";
 import { EventDiscipline } from "../../types";
 
@@ -50,7 +47,11 @@ const ListTabs = (): JSX.Element => {
     setRegistrationsLoading(false);
   };
 
-  const getEvents = async ({ disciplineId }: { disciplineId: string }) => {
+  const getEvents = async ({
+    disciplineId,
+  }: {
+    disciplineId: EventDiscipline;
+  }) => {
     // First, check cache
     const cachedEvents = getEventsFromCache(disciplineId);
 
@@ -61,8 +62,6 @@ const ListTabs = (): JSX.Element => {
       // Otherwise, fetch new data from API
       const roadResponse = await fetchEventsByType(disciplineId);
       setEvents(roadResponse.events);
-      // Cache the new data
-      setEventsToCache(disciplineId, roadResponse.events);
     }
     setEventsLoading(false);
     setIsSubmitting(false);

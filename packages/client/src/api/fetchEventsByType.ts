@@ -1,7 +1,8 @@
 import { simple } from "simple-fetch-ts";
-import { GetEventsResponse } from "../types";
+import { EventDiscipline, GetEventsResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
+import { setEventsToCache } from "../infrastructure/event-cache";
 
 const url = `${B2C2_API_BASE_URL}/api/getEventsByType`;
 
@@ -10,17 +11,18 @@ const url = `${B2C2_API_BASE_URL}/api/getEventsByType`;
  * This function constructs a URL with the provided event type, makes a request to the backend API via the proxy,
  * and returns the response containing the event data.
  *
- * @param type - The type of events to fetch (e.g., "upcoming", "past").
+ * @param type - The type of events to fetch (e.g., "road", "cx").
  * @returns A promise that resolves to the response data of type `GetEventsResponse`.
  */
 export const fetchEventsByType = async (
-  type: string,
+  type: EventDiscipline,
 ): Promise<GetEventsResponse> => {
-  const params = { type };
-  const proxyUrl = buildProxyRequestUrl(url, params);
+  const proxyUrl = buildProxyRequestUrl(url, { type });
   const response = await simple(proxyUrl).fetch<GetEventsResponse>();
 
-  console.log("fetched events: ", response.data);
+  const data = response.data;
 
-  return response.data;
+  setEventsToCache(type, data.events);
+
+  return data;
 };

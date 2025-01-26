@@ -9,7 +9,7 @@ import {
   Alert,
   Anchor,
 } from "@mantine/core";
-import { EventSubmission } from "../../types";
+import { EventDiscipline, EventSubmission } from "../../types";
 import { submitEvent } from "../../api/submitEvent";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByType } from "../../api/fetchEventsByType";
@@ -46,7 +46,7 @@ const RaceSubmissionForm = ({
   /**
    * Updates the road events by fetching the latest list from the server.
    */
-  const updateEvents = (discipline: string) => {
+  const updateEvents = (discipline: EventDiscipline) => {
     const getEvents = async () => {
       const response = await fetchEventsByType(discipline);
       setEvents(response.events);
