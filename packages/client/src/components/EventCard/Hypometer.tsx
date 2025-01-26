@@ -12,8 +12,9 @@ interface HypometerProps {
  * @param {HypometerProps} props - The props for the Hypometer component.
  * @returns {JSX.Element} The rendered Hypometer component.
  */
-export default function Hypometer({ numberOfRiders }: HypometerProps): JSX.Element {
-
+export default function Hypometer({
+  numberOfRiders,
+}: HypometerProps): JSX.Element {
   const hypeLevel: number = numberOfRiders * 10;
 
   /**

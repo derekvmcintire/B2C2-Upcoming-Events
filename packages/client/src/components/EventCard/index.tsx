@@ -102,7 +102,7 @@ export default function EventCard({
 
   /**
    * Handles the submission of an interested rider.
-   * 
+   *
    * @param rider - The rider to be submitted.
    */
   const handleSubmitInterestedRider = (rider: string) =>
@@ -114,7 +114,7 @@ export default function EventCard({
 
   /**
    * Handles the submission of a housing URL.
-   * 
+   *
    * @param url - The housing URL to be submitted.
    */
   const handleSubmitHousing = (url: string) => {
@@ -132,7 +132,7 @@ export default function EventCard({
 
   /**
    * Handles the submission of the event description.
-   * 
+   *
    * @param description - The new description for the event.
    */
   const handleSubmitDescription = (description: string) =>
