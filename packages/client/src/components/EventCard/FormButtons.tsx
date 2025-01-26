@@ -1,4 +1,5 @@
 import { Button, Flex } from "@mantine/core";
+import { useCallback } from "react";
 import { MdAdd } from "react-icons/md";
 
 interface EventCardButtonProps {
@@ -17,13 +18,29 @@ export default function EventCardButtons({
   hasHousingUrl,
   handleClickOpen,
 }: EventCardButtonProps): JSX.Element {
+  /**
+   * Handles the click event for opening the "rider" form.
+   */
+  const handleClickOpenRider = useCallback(
+    () => handleClickOpen("rider"),
+    [handleClickOpen],
+  );
+
+  /**
+   * Handles the click event for opening the housing URL.
+   */
+  const handleClickOpenHousingUrl = useCallback(
+    () => handleClickOpen("url"),
+    [handleClickOpen],
+  );
+
   return (
     <Flex justify="space-between" wrap="wrap">
       <Button
         variant="default"
         size="compact-sm"
         leftSection={<MdAdd size={14} />}
-        onClick={() => handleClickOpen("rider")}
+        onClick={handleClickOpenRider}
         m="8"
       >
         I'm interested
@@ -33,7 +50,7 @@ export default function EventCardButtons({
           variant="default"
           size="compact-sm"
           leftSection={<MdAdd size={14} />}
-          onClick={() => handleClickOpen("url")}
+          onClick={handleClickOpenHousingUrl}
           m="8"
         >
           Housing

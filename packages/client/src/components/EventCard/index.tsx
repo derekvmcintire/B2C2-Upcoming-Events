@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Alert,
   Container,
@@ -29,7 +29,7 @@ import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
-  isLight?: boolean;
+  isStripe?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
@@ -38,14 +38,14 @@ type EventProps = {
  *
  * @param event - The event object.
  * @param registrations - The registrations for the event.
- * @param isLight - Indicates if the card should have a light theme. Default is false.
+ * @param isStripe - Used to determine the background color of the card to create a "striped" effect.
  * @param requestDataCallback - Callback function to request data for the event type.
  * @returns The rendered event card component.
  */
 export default function EventCard({
   event,
   registrations,
-  isLight = false,
+  isStripe = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
   const [error, setError] = useState("");
@@ -66,18 +66,19 @@ export default function EventCard({
    * @param {UpdateEventData} data The data to be submitted.
    * @returns {Promise<void>} A promise that resolves when the submission is complete.
    */
-  const handleSubmitEventUpdate = async (
-    data: UpdateEventData,
-  ): Promise<void> => {
-    setIsSubmitting(true);
-    const response = await updateEvent(data);
+  const handleSubmitEventUpdate = useCallback(
+    async (data: UpdateEventData): Promise<void> => {
+      setIsSubmitting(true);
+      const response = await updateEvent(data);
 
-    if (response.success) {
-      requestDataCallback(eventType);
-    } else {
-      setError(`Error submiting event update: ${response.message}`);
-    }
-  };
+      if (response.success) {
+        requestDataCallback(eventType);
+      } else {
+        setError(`Error submiting event update: ${response.message}`);
+      }
+    },
+    [requestDataCallback],
+  );
 
   /**
    * Handles the submission of an interested rider.
@@ -144,7 +145,7 @@ export default function EventCard({
       ),
     });
 
-  const containerClass = isLight
+  const containerClass = isStripe
     ? `${classes.eventContainer} ${classes.lightEventContainer}`
     : classes.eventContainer;
 

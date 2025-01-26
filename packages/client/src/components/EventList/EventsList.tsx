@@ -10,6 +10,13 @@ interface EventsListProps {
 }
 
 /**
+ * Determines if the card should be a strip - e.g. given a lighter or darker background to create a "stripe" effect.
+ * @param index - The index of the card.
+ * @returns True if the card should have a stripe, false otherwise.
+ */
+const isCardStripe = (index: number) => index % 2 === 0;
+
+/**
  * EventsList Component
  *
  * Renders a list of events based on the selected discipline, or a message indicating no events are available.
@@ -37,14 +44,13 @@ export default function EventsList({
         className={classes.eventListScrollArea}
       >
         {events.map((event, i) => {
-          const isLight = i % 2 === 0;
           return (
             <EventCard
               key={event.eventId}
               event={event}
               registrations={registrations}
               requestDataCallback={requestDataCallback}
-              isLight={isLight}
+              isStripe={isCardStripe(i)}
             />
           );
         })}

@@ -3,6 +3,7 @@ import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { MOBILE_BREAK_POINT } from "../../constants";
 import { useMediaQuery } from "@mantine/hooks";
+import { useCallback } from "react";
 
 type InterestedRidersRowProps = {
   riders: string[];
@@ -36,13 +37,18 @@ export default function InterestedRidersRow({
     </Flex>
   );
 
+  const handleRemoveRider = useCallback(
+    (rider: string) => removeRider(rider),
+    [removeRider],
+  );
+
   const content = (
     <>
       {numberOfRidersInterested > 0 &&
         riders.map((rider: string) => (
           <div key={rider} className={classes.interestedRiderFlex}>
             <Flex justify="flex-start" align="flex-end">
-              <DismissButton clickHandler={() => removeRider(rider)} />
+              <DismissButton clickHandler={() => handleRemoveRider(rider)} />
               <Text span fw="600" className={classes.interestedRiderText}>
                 {rider}
               </Text>

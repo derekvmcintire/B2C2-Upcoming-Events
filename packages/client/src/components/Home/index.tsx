@@ -1,5 +1,5 @@
 import TopNav from "../TopNav";
-import ListTabs from "../EventList/ListTabs";
+import EventsContainer from "../EventList/EventsContainer";
 import ColorSchemeToggle from "../ColorSchemeToggle";
 import { EventsProvider } from "../../context/events-context";
 
@@ -16,7 +16,7 @@ const Home = (): JSX.Element => {
     <>
       <EventsProvider>
         <TopNav />
-        <ListTabs />
+        <EventsContainer />
         <ColorSchemeToggle />
       </EventsProvider>
     </>

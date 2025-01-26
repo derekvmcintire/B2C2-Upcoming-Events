@@ -1,7 +1,7 @@
 import { Button, Flex, Stack, Text, Textarea } from "@mantine/core";
 import EditButton from "../Shared/EditButton";
 import AddButton from "../Shared/AddButton";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { EventType } from "../../types";
 import DismissButton from "../Shared/DismissButton";
 import { MdOutlineWarningAmber } from "react-icons/md";
@@ -41,82 +41,75 @@ export default function Description({
   /**
    * Memoized JSX for the input form to edit the event description.
    */
-  const input = useMemo(
-    () => (
-      <>
-        <Textarea
-          w="100%"
-          value={value}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          placeholder="Add event details."
-          aria-label="Event description input"
+  const input = (
+    <>
+      <Textarea
+        w="100%"
+        value={value}
+        onChange={(e) => setValue(e.currentTarget.value)}
+        placeholder="Add event details."
+        aria-label="Event description input"
+      />
+      <Flex w="90%" justify="left">
+        <Button
+          size="xs"
+          variant="default"
+          onClick={handleClickSubmit}
+          disabled={!isAbleToSave}
+          aria-label="Save event description"
+        >
+          Save
+        </Button>
+        <Button
+          size="xs"
+          ml="8"
+          mr="8"
+          variant="default"
+          onClick={() => setValue("")}
+          disabled={value === ""}
+          aria-label="Clear event description"
+        >
+          Clear
+        </Button>
+        <DismissButton
+          clickHandler={() => setIsOpen(false)}
+          aria-label="Cancel editing description"
         />
-        <Flex w="90%" justify="left">
-          <Button
-            size="xs"
-            variant="default"
-            onClick={handleClickSubmit}
-            disabled={!isAbleToSave}
-            aria-label="Save event description"
-          >
-            Save
-          </Button>
-          <Button
-            size="xs"
-            ml="8"
-            mr="8"
-            variant="default"
-            onClick={() => setValue("")}
-            disabled={value === ""}
-            aria-label="Clear event description"
-          >
-            Clear
-          </Button>
-          <DismissButton
-            clickHandler={() => setIsOpen(false)}
-            aria-label="Cancel editing description"
-          />
-        </Flex>
-      </>
-    ),
-    [value, handleClickSubmit, isAbleToSave],
+      </Flex>
+    </>
   );
 
   /**
    * Memoized JSX for displaying the event description or controls to edit/add it.
    */
-  const descriptionContent = useMemo(
-    () =>
-      value ? (
-        <Stack gap={1} align="flex-start" mt="16">
-          {hasUnsavedChanges && (
-            <Flex>
-              <MdOutlineWarningAmber color="orange" />
-              <Text ml="8" size="xs" fs="italic">
-                Unsaved changes
-              </Text>
-            </Flex>
-          )}
-          <Flex align="center">
-            <Text size="xs" fs="italic" ta="left">
-              Event Details
-            </Text>
-            <EditButton
-              clickHandler={() => setIsOpen(true)}
-              aria-label="Edit event description"
-            />
-          </Flex>
-          <Text ta="left">{description || ""}</Text>
-        </Stack>
-      ) : (
-        <AddButton
-          label="Details"
+  const descriptionContent = value ? (
+    <Stack gap={1} align="flex-start" mt="16">
+      {hasUnsavedChanges && (
+        <Flex>
+          <MdOutlineWarningAmber color="orange" />
+          <Text ml="8" size="xs" fs="italic">
+            Unsaved changes
+          </Text>
+        </Flex>
+      )}
+      <Flex align="center">
+        <Text size="xs" fs="italic" ta="left">
+          Event Details
+        </Text>
+        <EditButton
           clickHandler={() => setIsOpen(true)}
-          aria-label="Add event description"
-          m={[8, 0, 8, 0]}
+          aria-label="Edit event description"
         />
-      ),
-    [value, description, hasUnsavedChanges],
+      </Flex>
+      <Text ta="left">{description || ""}</Text>
+    </Stack>
+  ) : (
+    <AddButton
+      label="Details"
+      clickHandler={() => setIsOpen(true)}
+      aria-label="Add event description"
+      m={[8, 0, 8, 0]}
+    />
   );
 
   /**
