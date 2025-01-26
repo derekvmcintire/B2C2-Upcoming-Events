@@ -114,3 +114,9 @@ export const FORMS: EventForms = {
     value: "special",
   },
 };
+
+export type SubmitResponse = {
+  eventId?: string;
+  message: string;
+  success: boolean;
+};

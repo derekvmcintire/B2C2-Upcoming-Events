@@ -1,15 +1,9 @@
 import { simple } from "simple-fetch-ts";
-import { EventSubmission } from "../types";
+import { EventSubmission, SubmitResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
 
 const url = `${B2C2_API_BASE_URL}/api/submitEvent`;
-
-type SubmitResponse = {
-  eventId?: string;
-  message: string;
-  success: boolean;
-};
 
 /**
  * Submits a new event to the backend API.

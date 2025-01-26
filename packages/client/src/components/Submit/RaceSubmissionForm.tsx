@@ -15,7 +15,6 @@ import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import classes from "./submit.module.css";
-import { clearEventCache } from "../../infrastructure/event-cache";
 
 interface RaceSubmissionFormProps {
   vertical?: boolean;
@@ -46,9 +45,12 @@ const RaceSubmissionForm = ({
   /**
    * Updates the road events by fetching the latest list from the server.
    */
-  const updateEvents = (discipline: EventDiscipline) => {
+  const updateEventsAfterSubmit = (discipline: EventDiscipline) => {
     const getEvents = async () => {
-      const response = await fetchEventsByDiscipline({ discipline });
+      const response = await fetchEventsByDiscipline({
+        discipline,
+        skipCache: true,
+      });
       setEvents(response.events);
     };
 
@@ -116,8 +118,7 @@ const RaceSubmissionForm = ({
         setShowSuccess(true);
         setBikeregUrl("");
         setDiscipline(null);
-        clearEventCache(discipline);
-        updateEvents(discipline);
+        updateEventsAfterSubmit(discipline);
       } else {
         setError(
           `FAILED TO SUBMIT RACE:  ${response.message || "Unknown Error"}`,

@@ -3,7 +3,6 @@ import { Flex, TextInput, Button, Text, Stack, Alert } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import classes from "./submit.module.css";
-import { clearEventCache } from "../../infrastructure/event-cache";
 import { v4 as uuidv4 } from "uuid";
 import { EventDiscipline } from "../../types";
 import { DISCIPLINES } from "../../constants";
@@ -39,9 +38,12 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   /**
    * Updates the special events by fetching the latest list from the server.
    */
-  const updateEvents = () => {
+  const updateEventsAfterSubmit = () => {
     const getEvents = async () => {
-      const response = await fetchEventsByDiscipline(DISCIPLINES.SPECIAL.id);
+      const response = await fetchEventsByDiscipline({
+        discipline: DISCIPLINES.SPECIAL.id,
+        skipCache: true,
+      });
       setEvents(response.events);
     };
 
@@ -105,6 +107,18 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   };
 
   /**
+   * Resets the form fields to their initial values.
+   */
+  const resetFormFields = () => {
+    setCity("");
+    setDate("");
+    setName("");
+    setState("");
+    setEventUrl("");
+    setHousingUrl("");
+  };
+
+  /**
    * Handles form submission by validating input, submitting data, and updating the UI accordingly.
    */
   const handleSubmit = async () => {
@@ -141,26 +155,19 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
         housingUrl: housingUrl || undefined,
       };
 
-      const success = await submitSpecialEvent(submission);
+      const response = await submitSpecialEvent(submission);
 
-      if (success) {
+      if (response.success) {
         setShowSuccess(true);
-        // Reset form fields
-        setCity("");
-        setDate("");
-        setName("");
-        setState("");
-        setEventUrl("");
-        setHousingUrl("");
-
-        // Clear cache and update events
-        clearEventCache("special");
-        updateEvents();
+        resetFormFields();
+        updateEventsAfterSubmit();
       } else {
-        setError("Failed to submit special event");
+        setError(
+          `FAILED TO SUBMIT TEAM EVENT:  ${response.message || "Unknown Error"}`,
+        );
       }
     } catch (err) {
-      setError("An error occurred while submitting the special event");
+      setError(`Unknown Error when submitting team event: ${error}`);
     } finally {
       setIsSubmitting(false);
     }
