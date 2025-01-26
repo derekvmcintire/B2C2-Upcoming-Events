@@ -1,4 +1,4 @@
-import { Flex, Group, Text, Title } from "@mantine/core";
+import { Alert, Flex, Group, Text, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import HamburgerNav from "./HamburgerNav";
 import RaceSubmissionForm from "../Submit/RaceSubmissionForm";
@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import classes from "./top-nav.module.css";
 import Nav from "./nav";
 import { MOBILE_BREAK_POINT } from "../../constants";
+import { useEventsContext } from "../../context/events-context";
 
 /**
  * TopNav Component
@@ -14,6 +15,9 @@ import { MOBILE_BREAK_POINT } from "../../constants";
  *
  */
 export default function TopNav(): JSX.Element {
+  const eventsContext = useEventsContext();
+  const { errors, setErrors } = eventsContext;
+
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const location = useLocation();
 
@@ -37,6 +41,20 @@ export default function TopNav(): JSX.Element {
           </Title>
         </Group>
       </Flex>
+      {errors &&
+        errors.map((error) => (
+          <Flex justify="center">
+            <Alert
+              w="80%"
+              className={classes.errorAlert}
+              color="red"
+              withCloseButton
+              onClose={() => setErrors([])}
+            >
+              {error}
+            </Alert>
+          </Flex>
+        ))}
     </div>
   );
 }

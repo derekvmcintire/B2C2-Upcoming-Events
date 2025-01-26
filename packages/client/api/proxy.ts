@@ -88,11 +88,17 @@ function isSecuredApi(apiUrl: string) {
 async function makeRequest(apiUrl: string, requestOptions: RequestInit) {
   try {
     const response = await fetch(apiUrl, requestOptions);
+
+    if (response.status === 404) {
+      return null; // Return null for 404 instead of throwing an error
+    }
+
     if (!response.ok) {
       throw new Error(
         `API request failed with status ${response.status}: ${response.statusText}`,
       );
     }
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -143,8 +149,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const requestUrl = `${apiUrl}${queryParams}`;
-    const data = await makeRequest(requestUrl, requestOptions);
-    return res.status(200).json(data);
+    const result = await makeRequest(requestUrl, requestOptions);
+
+    if (result === null) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+
+    return res.status(200).json(result);
   } catch (error) {
     return res
       .status(500)

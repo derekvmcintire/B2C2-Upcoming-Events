@@ -35,7 +35,7 @@ const RaceSubmissionForm = ({
 }: RaceSubmissionFormProps): JSX.Element => {
   // State variables
   const [bikeregUrl, setBikeregUrl] = useState("");
-  const [discipline, setDiscipline] = useState<string | null>("");
+  const [discipline, setDiscipline] = useState<EventDiscipline | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -48,7 +48,7 @@ const RaceSubmissionForm = ({
    */
   const updateEvents = (discipline: EventDiscipline) => {
     const getEvents = async () => {
-      const response = await fetchEventsByDiscipline(discipline);
+      const response = await fetchEventsByDiscipline({ discipline });
       setEvents(response.events);
     };
 
@@ -78,7 +78,7 @@ const RaceSubmissionForm = ({
    * @returns True if valid, false otherwise.
    */
   const isFormValid = () => {
-    return !validateUrl(bikeregUrl) && discipline !== null && discipline !== "";
+    return !validateUrl(bikeregUrl) && discipline !== null;
   };
 
   /**
@@ -93,12 +93,16 @@ const RaceSubmissionForm = ({
       return;
     }
 
+    if (!discipline) {
+      setError("Must select a discipline");
+    }
+
     setIsSubmitting(true);
 
     try {
       const submission: EventSubmission = {
         url: bikeregUrl,
-        eventType: discipline || "",
+        eventType: discipline as EventDiscipline,
       };
 
       if (!discipline) {
@@ -106,23 +110,46 @@ const RaceSubmissionForm = ({
         return;
       }
 
-      const success = await submitEvent(submission);
+      const response = await submitEvent(submission);
 
-      if (success) {
+      if (response.success) {
         setShowSuccess(true);
         setBikeregUrl("");
         setDiscipline(null);
         clearEventCache(discipline);
         updateEvents(discipline);
       } else {
-        setError("Failed to submit race");
+        setError(
+          `FAILED TO SUBMIT RACE:  ${response.message || "Unknown Error"}`,
+        );
       }
-    } catch (err) {
-      setError("An error occurred while submitting the race");
+    } catch (error) {
+      setError(`Unknown Error when submitting race: ${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const isEventDiscipline = (
+    value: string | null,
+  ): value is EventDiscipline => {
+    return (
+      value !== null && Object.values(DISCIPLINES).some((d) => d.id === value)
+    );
+  };
+
+  const handleOnChangeSelect = (value: string | null) => {
+    if (isEventDiscipline(value)) {
+      setDiscipline(value); // Safely call setDiscipline
+    } else {
+      console.error("Invalid value selected:", value);
+    }
+  };
+
+  const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
+    value: d.id,
+    label: d.text,
+  }));
 
   const formCore = (
     <Stack w="80%" className={classes.formCore}>
@@ -137,12 +164,8 @@ const RaceSubmissionForm = ({
           className={`${classes.formInput} ${classes.disciplineInput}`}
           placeholder="Race Discipline"
           value={discipline}
-          onChange={(value: string | null) => setDiscipline(value)}
-          data={[
-            { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
-            { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },
-            { value: DISCIPLINES.XC.id, label: DISCIPLINES.XC.text },
-          ]}
+          onChange={handleOnChangeSelect}
+          data={disciplineOptions}
         />
 
         <Button

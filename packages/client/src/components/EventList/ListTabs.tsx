@@ -1,4 +1,4 @@
-import { Alert, Flex, Tabs } from "@mantine/core";
+import { Flex, Tabs } from "@mantine/core";
 import EventsList from "./EventsList";
 import { useEffect, useState } from "react";
 import { fetchRegistrations } from "../../api/fetchRegisteredRiders";
@@ -112,103 +112,81 @@ const ListTabs = (): JSX.Element => {
   };
 
   return (
-    <>
-      {errors &&
-        errors.map((error) => (
-          <Flex justify="center">
-            <Alert
-              w="80%"
-              className={classes.errorAlert}
-              color="red"
-              withCloseButton
-              onClose={() => setErrors([])}
-            >
-              {error}
-            </Alert>
-          </Flex>
-        ))}
-      <Tabs
-        value={activeTab}
-        onChange={handleTabChange}
-        defaultValue={DISCIPLINES.ROAD.text}
-        className={classes.eventList}
-      >
-        <Tabs.List>
-          <Tabs.Tab
-            className={classes.eventListTab}
-            value={DISCIPLINES.ROAD.text}
-          >
-            Road
-          </Tabs.Tab>
-          <Tabs.Tab
-            className={classes.eventListTab}
-            value={DISCIPLINES.CX.text}
-          >
-            Cyclocross
-          </Tabs.Tab>
-          <Tabs.Tab
-            className={classes.eventListTab}
-            value={DISCIPLINES.XC.text}
-          >
-            Cross Country
-          </Tabs.Tab>
-          <Tabs.Tab
-            className={classes.eventListTab}
-            value={DISCIPLINES.SPECIAL.text}
-          >
-            Team Events
-          </Tabs.Tab>
-        </Tabs.List>
+    <Tabs
+      value={activeTab}
+      onChange={handleTabChange}
+      defaultValue={DISCIPLINES.ROAD.text}
+      className={classes.eventList}
+    >
+      <Tabs.List>
+        <Tabs.Tab
+          className={classes.eventListTab}
+          value={DISCIPLINES.ROAD.text}
+        >
+          Road
+        </Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.CX.text}>
+          Cyclocross
+        </Tabs.Tab>
+        <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>
+          Cross Country
+        </Tabs.Tab>
+        <Tabs.Tab
+          className={classes.eventListTab}
+          value={DISCIPLINES.SPECIAL.text}
+        >
+          Team Events
+        </Tabs.Tab>
+      </Tabs.List>
 
-        <Flex w="100%" justify="center">
-          <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
-            {eventsLoading ? (
-              <div className={classes.loading}>Loading...</div>
-            ) : (
-              <EventsList
-                discipline={DISCIPLINES.ROAD}
-                requestDataCallback={requestFreshDataForEventType}
-              />
-            )}
-          </Tabs.Panel>
+      <Flex w="100%" justify="center">
+        <Tabs.Panel key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.ROAD}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
 
-          <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
-            {eventsLoading ? (
-              <div className={classes.loading}>Loading...</div>
-            ) : (
-              <EventsList
-                discipline={DISCIPLINES.CX}
-                requestDataCallback={requestFreshDataForEventType}
-              />
-            )}
-          </Tabs.Panel>
+        <Tabs.Panel key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.CX}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
 
-          <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
-            {eventsLoading ? (
-              <div className={classes.loading}>Loading...</div>
-            ) : (
-              <EventsList
-                discipline={DISCIPLINES.XC}
-                requestDataCallback={requestFreshDataForEventType}
-              />
-            )}
-          </Tabs.Panel>
-          <Tabs.Panel
-            key={DISCIPLINES.SPECIAL.text}
-            value={DISCIPLINES.SPECIAL.text}
-          >
-            {eventsLoading ? (
-              <div className={classes.loading}>Loading...</div>
-            ) : (
-              <EventsList
-                discipline={DISCIPLINES.SPECIAL}
-                requestDataCallback={requestFreshDataForEventType}
-              />
-            )}
-          </Tabs.Panel>
-        </Flex>
-      </Tabs>
-    </>
+        <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.XC}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
+        <Tabs.Panel
+          key={DISCIPLINES.SPECIAL.text}
+          value={DISCIPLINES.SPECIAL.text}
+        >
+          {eventsLoading ? (
+            <div className={classes.loading}>Loading...</div>
+          ) : (
+            <EventsList
+              discipline={DISCIPLINES.SPECIAL}
+              requestDataCallback={requestFreshDataForEventType}
+            />
+          )}
+        </Tabs.Panel>
+      </Flex>
+    </Tabs>
   );
 };
 
