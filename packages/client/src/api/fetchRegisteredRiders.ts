@@ -1,11 +1,21 @@
 import { formatDateToString } from "../utils/dates";
-import { FetchRegistrationsResponse } from "../types";
+import { EventDisciplineParam, FetchRegistrationsResponse } from "../types";
 import {
   getRegistrationsFromCache,
   setRegistrationsToCache,
 } from "../infrastructure/registration-cache";
 import { normalizeDate } from "../infrastructure/utility";
 import { buildProxyRequestUrl } from "./utility";
+import { simple, SimpleResponse } from "simple-fetch-ts";
+
+const CROSS_RESULTS_API_BASE_URL = "https://www.crossresults.com";
+const url = `${CROSS_RESULTS_API_BASE_URL}/api/b2c2lookup.php`;
+
+type FetchRegistrationsOptions = {
+  discipline: EventDisciplineParam;
+  after: Date;
+  skipCache?: boolean;
+};
 
 /**
  * Fetches event registrations either from cache or by making a request to a third-party API via a proxy.
@@ -14,52 +24,61 @@ import { buildProxyRequestUrl } from "./utility";
  * If not found, it constructs a request to a third-party API using the proxy server to fetch the data.
  * The result is then cached for future use.
  *
- * @param eventType - The type of event to fetch registrations for.
- * @param after - The date after which to fetch the event registrations (defaults to the current date).
+ * @param {FetchRegistrationsOptions} options - Options for fetching event registrations.
+ * @param {EventDisciplineParam} options.discipline - The type of event to fetch registrations for.
+ * @param {Date} options.after - The date after which to fetch the event registrations (defaults to the current date).
+ * @param {boolean} [options.skipCache=false] - Whether to skip the cache and fetch data directly from the API.
  *
- * @returns A promise that resolves with the event registration data, or logs an error if the request fails.
+ * @returns {Promise<FetchRegistrationsResponse>} A promise that resolves with the event registration data, or logs an error if the request fails.
  */
-export const fetchRegistrations = async (
-  eventType: string,
-  after: Date = new Date(),
-) => {
+export const fetchRegistrations = async ({
+  discipline,
+  after = new Date(),
+  skipCache = false,
+}: FetchRegistrationsOptions): Promise<FetchRegistrationsResponse> => {
   // Normalize the date before using it in the cache
   const normalizedAfter = normalizeDate(after);
 
-  // Check cache first
-  const cachedData = getRegistrationsFromCache(eventType, normalizedAfter);
-  if (cachedData) {
-    return cachedData;
+  if (!skipCache) {
+    const cachedData = getRegistrationsFromCache(discipline, normalizedAfter);
+    if (cachedData) {
+      return cachedData;
+    }
   }
 
-  // If not in cache, fetch from API
   const afterAsString = formatDateToString(normalizedAfter);
-  const apiUrl = `https://www.crossresults.com/api/b2c2lookup.php`; // The base URL for your third-party API
   const params = {
-    eventType,
+    discipline,
     after: afterAsString,
   };
+  const proxyUrl = buildProxyRequestUrl(url, params);
 
-  try {
-    // Construct the URL to call the serverless proxy with the target API URL and query parameters
-    const url = buildProxyRequestUrl(apiUrl, params);
-
-    // Fetch the data from the proxy
-    const response = await fetch(url);
-
-    // Check for successful response
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    // Parse and return the response JSON
-    const data: FetchRegistrationsResponse = await response.json();
-
-    // Cache the fetched data for future use
-    setRegistrationsToCache(eventType, normalizedAfter, data);
-
+  /**
+   * Handles the response from the third-party API.
+   *
+   * @param {SimpleResponse<FetchRegistrationsResponse>} response - The API response.
+   * @returns {FetchRegistrationsResponse} The processed registration data.
+   */
+  const handleResponse = (
+    response: SimpleResponse<FetchRegistrationsResponse>,
+  ): FetchRegistrationsResponse => {
+    const data = response.data;
+    setRegistrationsToCache(discipline, normalizedAfter, data);
     return data;
-  } catch (error) {
-    console.error("Failed to fetch event data:", error);
-  }
+  };
+
+  /**
+   * Handles errors during the fetch operation.
+   *
+   * @param {unknown} error - The error encountered during the fetch operation.
+   * @returns {FetchRegistrationsResponse} The default error response.
+   */
+  const handleError = (error: unknown): FetchRegistrationsResponse => {
+    return { error: `${error}` };
+  };
+
+  return simple(proxyUrl)
+    .fetch<FetchRegistrationsResponse>()
+    .then(handleResponse)
+    .catch(handleError);
 };

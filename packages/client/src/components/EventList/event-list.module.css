@@ -15,6 +15,11 @@
   margin-top: 16px;
 }
 
+.errorAlert {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 @media (max-width: 768px) {
   .eventListTab {
     font-size: 1rem;

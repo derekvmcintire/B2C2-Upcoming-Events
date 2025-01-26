@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Alert,
   Container,
@@ -14,18 +14,13 @@ import type {
   EventType,
   FetchRegistrationsResponse,
 } from "../../types";
-import {
-  updateEvent,
-  UpdateEventData,
-  UpdateEventResponse,
-} from "../../api/updateEvent";
+import { updateEvent, UpdateEventData } from "../../api/updateEvent";
 import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./InformationRow";
 import { DISCIPLINES } from "../../constants";
-import { SimpleResponse } from "simple-fetch-ts";
 import EventCardForm from "./Form";
 import { useEventsContext } from "../../context/events-context";
 import Hypometer from "./Hypometer";
@@ -34,7 +29,7 @@ import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
-  isLight?: boolean;
+  isStripe?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
@@ -43,22 +38,21 @@ type EventProps = {
  *
  * @param event - The event object.
  * @param registrations - The registrations for the event.
- * @param isLight - Indicates if the card should have a light theme. Default is false.
+ * @param isStripe - Used to determine the background color of the card to create a "striped" effect.
  * @param requestDataCallback - Callback function to request data for the event type.
  * @returns The rendered event card component.
  */
 export default function EventCard({
   event,
   registrations,
-  isLight = false,
+  isStripe = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
-  const eventsContext = useEventsContext();
-  const { isSubmitting, setIsSubmitting } = eventsContext;
-
   const [error, setError] = useState("");
 
-  const { eventId, housingUrl, interestedRiders = [] } = event;
+  const eventsContext = useEventsContext();
+  const { isSubmitting, setIsSubmitting } = eventsContext;
+  const { eventId, eventType, housingUrl, interestedRiders = [] } = event;
 
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
@@ -67,38 +61,24 @@ export default function EventCard({
   const numberOfRidersRegdOrInterested =
     registeredNames.length + interestedRiders.length;
 
-  // Define a generic type for update function parameters
-  type UpdateEventParams<T> = {
-    eventId: string;
-    eventType: EventDiscipline;
-  } & T;
-
   /**
    * Handles the form submission by calling the provided update function with the given data.
-   * @template T The type of data being submitted.
-   * @param {(
-   *   data: UpdateEventParams<T>,
-   * ) => Promise<SimpleResponse<UpdateEventResponse>>} updateFn The function to update the event.
-   * @param {T} data The data to be submitted.
+   * @param {UpdateEventData} data The data to be submitted.
    * @returns {Promise<void>} A promise that resolves when the submission is complete.
    */
-  const handleSubmit = async <T,>(
-    updateFn: (
-      data: UpdateEventParams<T>,
-    ) => Promise<SimpleResponse<UpdateEventResponse>>,
-    data: T,
-  ): Promise<void> => {
-    setIsSubmitting(true);
-    const response = await updateFn({
-      eventId: event.eventId,
-      eventType: event.eventType,
-      ...data,
-    });
+  const handleSubmitEventUpdate = useCallback(
+    async (data: UpdateEventData): Promise<void> => {
+      setIsSubmitting(true);
+      const response = await updateEvent(data);
 
-    if (response.status === 200) {
-      requestDataCallback(event.eventType);
-    }
-  };
+      if (response.success) {
+        requestDataCallback(eventType);
+      } else {
+        setError(`Error submiting event update: ${response.message}`);
+      }
+    },
+    [requestDataCallback],
+  );
 
   /**
    * Handles the submission of an interested rider.
@@ -106,9 +86,9 @@ export default function EventCard({
    * @param rider - The rider to be submitted.
    */
   const handleSubmitInterestedRider = (rider: string) =>
-    handleSubmit<UpdateEventData>(updateEvent, {
-      eventId: event.eventId,
-      eventType: event.eventType,
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
       interestedRiders: [...interestedRiders, rider],
     });
 
@@ -123,9 +103,9 @@ export default function EventCard({
       setError("Housing URL must start with 'http'");
       return;
     }
-    handleSubmit<UpdateEventData>(updateEvent, {
-      eventId: event.eventId,
-      eventType: event.eventType,
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
       housingUrl: url,
     });
   };
@@ -136,9 +116,9 @@ export default function EventCard({
    * @param description - The new description for the event.
    */
   const handleSubmitDescription = (description: string) =>
-    handleSubmit<UpdateEventData>(updateEvent, {
-      eventId: event.eventId,
-      eventType: event.eventType,
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
       description,
     });
 
@@ -146,9 +126,9 @@ export default function EventCard({
    * Handles the removal of housing for an event.
    */
   const handleRemoveHousing = () =>
-    handleSubmit(updateEvent, {
-      eventId: event.eventId,
-      eventType: event.eventType,
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
       housingUrl: null,
     });
 
@@ -157,15 +137,15 @@ export default function EventCard({
    * @param {string} riderToRemove - The rider to be removed.
    */
   const handleRemoveInterestedRider = (riderToRemove: string) =>
-    handleSubmit(updateEvent, {
-      eventId: event.eventId,
-      eventType: event.eventType,
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
       interestedRiders: interestedRiders.filter(
         (rider) => rider !== riderToRemove,
       ),
     });
 
-  const containerClass = isLight
+  const containerClass = isStripe
     ? `${classes.eventContainer} ${classes.lightEventContainer}`
     : classes.eventContainer;
 
@@ -202,7 +182,7 @@ export default function EventCard({
           removeHousingUrl={handleRemoveHousing}
           submitDescription={handleSubmitDescription}
         />
-        {event.eventType !== DISCIPLINES.SPECIAL.id && (
+        {eventType !== DISCIPLINES.SPECIAL.id && (
           <RegisteredRidersRow registeredNames={registeredNames} />
         )}
 

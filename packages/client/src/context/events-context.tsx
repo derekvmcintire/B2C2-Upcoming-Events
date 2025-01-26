@@ -18,6 +18,8 @@ interface EventsContextType {
   ) => void; // Setter for registrations
   registrationsLoading: boolean; // If registrations are loading
   setRegistrationsLoading: (isLoading: boolean) => void; // Setter for registrationsLoading
+  eventsLoading: boolean;
+  setEventsLoading: (isLoading: boolean) => void;
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
   requestFreshData?: EventDiscipline;
@@ -37,6 +39,8 @@ export const defaultEventsContext: EventsContextType = {
   setRegistrations: () => {},
   registrationsLoading: true,
   setRegistrationsLoading: () => {},
+  eventsLoading: true,
+  setEventsLoading: () => {},
   errors: [],
   setErrors: () => {},
   requestFreshData: undefined,
@@ -60,6 +64,7 @@ interface EventsProviderProps {
   initialRoadEvents?: EventType[]; // Optional initial road events
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
   initialRegistrationsLoading?: boolean;
+  initialEventsLoading?: boolean;
   initialRequestFreshData?: EventDiscipline;
   initialIsSubmitting?: boolean;
 }
@@ -75,6 +80,7 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   initialRoadEvents = defaultEventsContext.events,
   initialRegistrations = defaultEventsContext.registrations,
   initialRegistrationsLoading = defaultEventsContext.registrationsLoading,
+  initialEventsLoading = defaultEventsContext.eventsLoading,
   initialRequestFreshData = defaultEventsContext.requestFreshData,
   initialIsSubmitting = defaultEventsContext.isSubmitting,
 }) => {
@@ -90,6 +96,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );
+  const [eventsLoading, setEventsLoading] =
+    useState<boolean>(initialEventsLoading);
   const [isSubmitting, setIsSubmitting] =
     useState<boolean>(initialIsSubmitting);
 
@@ -102,6 +110,8 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         setRegistrations,
         registrationsLoading,
         setRegistrationsLoading,
+        eventsLoading,
+        setEventsLoading,
         errors,
         setErrors,
         requestFreshData,

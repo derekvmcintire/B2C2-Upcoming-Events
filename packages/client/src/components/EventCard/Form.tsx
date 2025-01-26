@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import EventCardButtons from "./FormButtons";
 import EventCardInput from "./FormInput";
@@ -7,8 +7,8 @@ import classes from "./event.module.css";
 
 type EventCardForm = {
   hasHousingUrl: boolean;
-  handleSubmitHousing: (value: any) => void;
-  handleSubmitInterestedRider: (value: any) => void;
+  handleSubmitHousing: (value: string) => void;
+  handleSubmitInterestedRider: (value: string) => void;
 };
 
 /**
@@ -43,15 +43,18 @@ export default function EventCardForm({
     setHousingUrlInputOpen(false);
   };
 
-  const handleClickSubmit = (value: any, action: "rider" | "url") => {
-    if (action === "rider") {
-      handleSubmitInterestedRider(value);
-    } else if (action === "url") {
-      handleSubmitHousing(value);
-    }
-    setInterestedRiderInputOpen(false);
-    setHousingUrlInputOpen(false);
-  };
+  const handleClickSubmit = useCallback(
+    (value: string, action: "rider" | "url") => {
+      if (action === "rider") {
+        handleSubmitInterestedRider(value);
+      } else if (action === "url") {
+        handleSubmitHousing(value);
+      }
+      setInterestedRiderInputOpen(false);
+      setHousingUrlInputOpen(false);
+    },
+    [handleSubmitHousing, handleSubmitInterestedRider],
+  );
 
   const validateHousingUrl = (value: string) => {
     try {

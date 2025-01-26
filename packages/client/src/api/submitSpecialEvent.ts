@@ -1,5 +1,5 @@
 import { simple } from "simple-fetch-ts";
-import { EventType } from "../types";
+import { EventType, SubmitResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
 
@@ -16,7 +16,17 @@ const url = `${B2C2_API_BASE_URL}/api/submitSpecialEvent`;
 export const submitSpecialEvent = async (submission: EventType) => {
   const proxyUrl = buildProxyRequestUrl(url);
 
-  const response = await simple(proxyUrl).body<EventType>(submission).post();
+  const handleError = (error: Error): SubmitResponse => {
+    const message = error?.message ? `${error?.message}` : "Unknown Error";
+    return {
+      message,
+      success: false,
+    };
+  };
 
-  return response.data;
+  return simple(proxyUrl)
+    .body<EventType>(submission)
+    .post<SubmitResponse>()
+    .then((response) => response.data)
+    .catch(handleError);
 };

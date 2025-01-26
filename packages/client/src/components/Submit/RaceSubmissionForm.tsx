@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -9,46 +9,57 @@ import {
   Alert,
   Anchor,
 } from "@mantine/core";
-import { EventSubmission } from "../../types";
+import { EventDiscipline, EventSubmission } from "../../types";
 import { submitEvent } from "../../api/submitEvent";
 import { useEventsContext } from "../../context/events-context";
-import { fetchEventsByType } from "../../api/fetchEventsByType";
+import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import classes from "./submit.module.css";
-import { clearEventCache } from "../../infrastructure/event-cache";
+import { useDebounce } from "../../hooks/useDebounce";
 
 interface RaceSubmissionFormProps {
   vertical?: boolean;
+  validateDelay?: number;
 }
 
 /**
  * RaceSubmissionForm Component
  *
- * A form to submit a race by entering a BikeReg URL and selecting a race type. The form validates the URL input
- * and the race type selection. Upon successful submission, it sends data to the API, which requests race data from the bikereg API
- * and then updates the race events list in the database and provides feedback through success or error messages.
+ * A form to submit a race by entering a BikeReg URL and selecting a race type.
+ * The form validates the URL input and the race type selection. Upon successful
+ * submission, it sends data to the API, updates the race events list, and provides
+ * feedback through success or error messages.
  *
  * @returns A form with a text input for the BikeReg URL, a select dropdown for the race type, and a submit button.
  */
 const RaceSubmissionForm = ({
   vertical = false,
+  validateDelay = 500,
 }: RaceSubmissionFormProps): JSX.Element => {
   // State variables
   const [bikeregUrl, setBikeregUrl] = useState("");
-  const [discipline, setDiscipline] = useState<string | null>("");
+  const [discipline, setDiscipline] = useState<EventDiscipline | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   const eventsContext = useEventsContext();
   const { setEvents } = eventsContext;
 
+  const debouncedValue = useDebounce(bikeregUrl, validateDelay);
+
   /**
-   * Updates the road events by fetching the latest list from the server.
+   * Updates the race events list after a successful submission.
+   *
+   * @param discipline - The selected event discipline.
    */
-  const updateEvents = (discipline: string) => {
+  const updateEventsAfterSubmit = (discipline: EventDiscipline) => {
     const getEvents = async () => {
-      const response = await fetchEventsByType(discipline);
+      const response = await fetchEventsByDiscipline({
+        discipline,
+        skipCache: true,
+      });
       setEvents(response.events);
     };
 
@@ -56,9 +67,10 @@ const RaceSubmissionForm = ({
   };
 
   /**
-   * Validates the BikeReg URL.
+   * Validates the provided BikeReg URL.
+   *
    * @param url - The URL to validate.
-   * @returns Error message if invalid, otherwise an empty string.
+   * @returns An error message if the URL is invalid, otherwise an empty string.
    */
   const validateUrl = (url: string) => {
     if (!url) return "URL is required";
@@ -74,31 +86,37 @@ const RaceSubmissionForm = ({
   };
 
   /**
-   * Checks if the form is valid for submission.
-   * @returns True if valid, false otherwise.
+   * Determines whether the form is valid for submission.
+   *
+   * @returns True if the form is valid, otherwise false.
    */
   const isFormValid = () => {
-    return !validateUrl(bikeregUrl) && discipline !== null && discipline !== "";
+    return !validateUrl(bikeregUrl) && discipline !== null;
   };
 
+  useEffect(() => {
+    if (isTyping) {
+      if (debouncedValue && validateUrl(debouncedValue)) {
+        setError("Invalid URL. URL must be from https://www.bikereg.com");
+      } else {
+        setError("");
+      }
+      setIsTyping(false);
+    }
+  }, [debouncedValue, validateUrl, isTyping]);
+
   /**
-   * Handles form submission by validating input, submitting data, and updating the UI accordingly.
+   * Handles form submission, including validation, API call, and UI updates.
    */
   const handleSubmit = async () => {
     setError("");
     setShowSuccess(false);
-
-    if (!isFormValid()) {
-      setError("Please fill in all fields correctly");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
       const submission: EventSubmission = {
         url: bikeregUrl,
-        eventType: discipline || "",
+        eventType: discipline as EventDiscipline,
       };
 
       if (!discipline) {
@@ -106,23 +124,66 @@ const RaceSubmissionForm = ({
         return;
       }
 
-      const success = await submitEvent(submission);
+      const response = await submitEvent(submission);
 
-      if (success) {
+      if (response.success) {
         setShowSuccess(true);
         setBikeregUrl("");
         setDiscipline(null);
-        clearEventCache(discipline);
-        updateEvents(discipline);
+        updateEventsAfterSubmit(discipline);
       } else {
-        setError("Failed to submit race");
+        setError(
+          `FAILED TO SUBMIT RACE:  ${response.message || "Unknown Error"}`,
+        );
       }
-    } catch (err) {
-      setError("An error occurred while submitting the race");
+    } catch (error) {
+      setError(`Unknown Error when submitting race: ${error}`);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  /**
+   * Validates if the selected value is a valid EventDiscipline.
+   *
+   * @param value - The selected value from the dropdown.
+   * @returns True if the value is a valid EventDiscipline, otherwise false.
+   */
+  const isEventDiscipline = (
+    value: string | null,
+  ): value is EventDiscipline => {
+    return (
+      value !== null && Object.values(DISCIPLINES).some((d) => d.id === value)
+    );
+  };
+
+  /**
+   * Handles the change event for the race discipline dropdown.
+   *
+   * @param value - The selected discipline value.
+   */
+  const handleOnChangeSelect = (value: string | null) => {
+    if (isEventDiscipline(value)) {
+      setDiscipline(value); // Safely call setDiscipline
+    } else {
+      console.error("Invalid value selected:", value);
+    }
+  };
+
+  /**
+   * Handles the change event for the BikeReg URL input.
+   *
+   * @param e - The change event from the input.
+   */
+  const handleUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsTyping(true);
+    setBikeregUrl(e.target.value);
+  };
+
+  const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
+    value: d.id,
+    label: d.text,
+  }));
 
   const formCore = (
     <Stack w="80%" className={classes.formCore}>
@@ -130,19 +191,15 @@ const RaceSubmissionForm = ({
         className={`${classes.formInput} ${classes.urlInput}`}
         placeholder="https://www.bikereg.com/..."
         value={bikeregUrl}
-        onChange={(e) => setBikeregUrl(e.target.value)}
+        onChange={handleUrlChange}
       />
       <Flex w="100%" justify="space-between">
         <Select
           className={`${classes.formInput} ${classes.disciplineInput}`}
           placeholder="Race Discipline"
           value={discipline}
-          onChange={(value: string | null) => setDiscipline(value)}
-          data={[
-            { value: DISCIPLINES.ROAD.id, label: DISCIPLINES.ROAD.text },
-            { value: DISCIPLINES.CX.id, label: DISCIPLINES.CX.text },
-            { value: DISCIPLINES.XC.id, label: DISCIPLINES.XC.text },
-          ]}
+          onChange={handleOnChangeSelect}
+          data={disciplineOptions}
         />
 
         <Button

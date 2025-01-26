@@ -7,7 +7,7 @@ const eventCache = new Cache<EventType[]>(TTL_FIVE_MINUTES);
 /**
  * Retrieves cached event data for a given discipline ID.
  *
- * @param {string} disciplineId - The unique identifier for the discipline.
+ * @param {EventDiscipline} disciplineId - The unique identifier for the discipline.
  * @returns {EventType[] | null} - The cached events for the discipline if found and not expired, or `null` if not found or expired.
  */
 export function getEventsFromCache(disciplineId: string): EventType[] | null {

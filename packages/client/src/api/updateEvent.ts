@@ -15,6 +15,7 @@ export type UpdateEventData = {
 
 export type UpdateEventResponse = {
   message: string;
+  success?: boolean;
 };
 
 /**
@@ -27,12 +28,23 @@ export type UpdateEventResponse = {
  */
 export const updateEvent = async (
   data: UpdateEventData,
-): Promise<SimpleResponse<UpdateEventResponse>> => {
+): Promise<UpdateEventResponse> => {
   const proxyUrl = buildProxyRequestUrl(url);
 
-  const response = await simple(proxyUrl)
+  return simple(proxyUrl)
     .body<UpdateEventData>(data)
-    .patch<UpdateEventResponse>();
-
-  return response;
+    .patch<UpdateEventResponse>()
+    .then((response: SimpleResponse<UpdateEventResponse>) => {
+      return {
+        message: response.data.message,
+        success: true,
+      };
+    })
+    .catch((error: Error) => {
+      const message = error?.message || "Unknown Error";
+      return {
+        message,
+        success: false,
+      };
+    });
 };

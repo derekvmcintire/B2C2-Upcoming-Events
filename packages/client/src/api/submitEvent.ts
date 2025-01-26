@@ -1,5 +1,5 @@
 import { simple } from "simple-fetch-ts";
-import { EventSubmission } from "../types";
+import { EventSubmission, SubmitResponse } from "../types";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
 
@@ -13,12 +13,22 @@ const url = `${B2C2_API_BASE_URL}/api/submitEvent`;
  * @param submission - The event submission data to send to the backend API.
  * @returns A promise that resolves to the response data from the API, which may contain success or error details.
  */
-export const submitEvent = async (submission: EventSubmission) => {
+export const submitEvent = async (
+  submission: EventSubmission,
+): Promise<SubmitResponse> => {
   const proxyUrl = buildProxyRequestUrl(url);
 
-  const response = await simple(proxyUrl)
-    .body<EventSubmission>(submission)
-    .post();
+  const handleError = (error: Error): SubmitResponse => {
+    const message = error?.message ? `${error?.message}` : "Unknown Error";
+    return {
+      message,
+      success: false,
+    };
+  };
 
-  return response.data;
+  return simple(proxyUrl)
+    .body<EventSubmission>(submission)
+    .post<SubmitResponse>()
+    .then((response) => response.data)
+    .catch(handleError);
 };

@@ -2,11 +2,12 @@ import { Button, Flex, TextInput } from "@mantine/core";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { useFormInput } from "../../hooks/useFormInput";
+import { useCallback } from "react";
 
 type EventCardInputProps = {
   placeholder: string;
   submitLabel?: string;
-  submitHandler: (e: any) => void;
+  submitHandler: (e: string) => void;
   dismissInput: () => void;
   validate: (value: string) => boolean;
 };
@@ -39,13 +40,13 @@ export default function EventCardInput({
    * If there are no errors, it calls the submitHandler function with the inputValue,
    * resets the input value, and dismisses the input.
    */
-  const handleClickSubmit = () => {
+  const handleClickSubmit = useCallback(() => {
     if (error === "") {
       submitHandler(inputValue);
       reset();
       dismissInput();
     }
-  };
+  }, [submitHandler, reset, dismissInput]);
 
   return (
     <Flex m="8" justify="center">
