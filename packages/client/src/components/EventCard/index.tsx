@@ -28,6 +28,8 @@ import { DISCIPLINES } from "../../constants";
 import { SimpleResponse } from "simple-fetch-ts";
 import EventCardForm from "./EventCardForm";
 import { useEventsContext } from "../../context/events-context";
+import Hypometer from "./Hypometer";
+import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 
 type EventProps = {
   event: EventType;
@@ -47,7 +49,15 @@ export default function EventCard({
 
   const [error, setError] = useState("");
 
-  const { housingUrl, interestedRiders = [] } = event;
+  const { eventId, housingUrl, interestedRiders = [] } = event;
+
+  // Retrieve registered names by event ID
+  const registeredNames = registrations
+    ? getEntriesByEventId(registrations, Number(eventId))
+    : [];
+
+  const numberOfRidersRegdOrInterested =
+    registeredNames.length + interestedRiders.length;
 
   // Define a generic type for update function parameters
   type UpdateEventParams<T> = {
@@ -161,6 +171,7 @@ export default function EventCard({
           handleSubmitInterestedRider={handleSubmitInterestedRider}
         />
       </Flex>
+      <Hypometer numberOfRiders={numberOfRidersRegdOrInterested} />
       <Divider mt="16" />
     </Container>
   );
