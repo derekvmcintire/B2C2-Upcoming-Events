@@ -24,10 +24,12 @@ type FetchRegistrationsOptions = {
  * If not found, it constructs a request to a third-party API using the proxy server to fetch the data.
  * The result is then cached for future use.
  *
- * @param discipline - The type of event to fetch registrations for.
- * @param after - The date after which to fetch the event registrations (defaults to the current date).
+ * @param {FetchRegistrationsOptions} options - Options for fetching event registrations.
+ * @param {EventDisciplineParam} options.discipline - The type of event to fetch registrations for.
+ * @param {Date} options.after - The date after which to fetch the event registrations (defaults to the current date).
+ * @param {boolean} [options.skipCache=false] - Whether to skip the cache and fetch data directly from the API.
  *
- * @returns A promise that resolves with the event registration data, or logs an error if the request fails.
+ * @returns {Promise<FetchRegistrationsResponse>} A promise that resolves with the event registration data, or logs an error if the request fails.
  */
 export const fetchRegistrations = async ({
   discipline,
@@ -51,6 +53,12 @@ export const fetchRegistrations = async ({
   };
   const proxyUrl = buildProxyRequestUrl(url, params);
 
+  /**
+   * Handles the response from the third-party API.
+   *
+   * @param {SimpleResponse<FetchRegistrationsResponse>} response - The API response.
+   * @returns {FetchRegistrationsResponse} The processed registration data.
+   */
   const handleResponse = (
     response: SimpleResponse<FetchRegistrationsResponse>,
   ): FetchRegistrationsResponse => {
@@ -59,6 +67,12 @@ export const fetchRegistrations = async ({
     return data;
   };
 
+  /**
+   * Handles errors during the fetch operation.
+   *
+   * @param {unknown} error - The error encountered during the fetch operation.
+   * @returns {FetchRegistrationsResponse} The default error response.
+   */
   const handleError = (error: unknown): FetchRegistrationsResponse => {
     return { error: `${error}` };
   };
