@@ -23,10 +23,10 @@ import classes from "./event.module.css";
 
 import RegisteredRidersRow from "./RegisteredRidersRow";
 import InterestedRidersRow from "./InterestedRidersRow";
-import EventInformationRow from "./EventInformationRow";
+import EventInformationRow from "./InformationRow";
 import { DISCIPLINES } from "../../constants";
 import { SimpleResponse } from "simple-fetch-ts";
-import EventCardForm from "./EventCardForm";
+import EventCardForm from "./Form";
 import { useEventsContext } from "../../context/events-context";
 
 type EventProps = {

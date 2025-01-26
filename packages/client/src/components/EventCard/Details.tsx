@@ -1,6 +1,7 @@
 import { Stack, Text } from "@mantine/core";
 import classes from "./event.module.css";
 import { EventType } from "../../types";
+import Description from "./Description";
 
 type EventDetailsProps = {
   event: EventType;
@@ -15,6 +16,7 @@ type EventDetailsProps = {
  */
 export default function EventDetails({ event }: EventDetailsProps) {
   const { name, city, state, eventUrl } = event;
+
   return (
     <>
       <Stack gap={4} align="flex-start">
@@ -30,6 +32,12 @@ export default function EventDetails({ event }: EventDetailsProps) {
             </a>
           </Text>
         )}
+        <Description
+          event={event}
+          submitFn={(value: string) => {
+            console.log(value);
+          }}
+        />
       </Stack>
     </>
   );

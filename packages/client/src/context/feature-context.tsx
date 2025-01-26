@@ -39,7 +39,7 @@ export const FeatureProvider: React.FC<FeatureProviderProps> = ({
 }) => {
   const featureFlags: FeatureContextType = {
     eventDescriptionFeature:
-      process.env.REACT_APP_EVENT_DESCRIPTION_FEATURE === "true",
+      import.meta.env.VITE_EVENT_DESCRIPTION_FEATURE === "true",
   };
 
   return (

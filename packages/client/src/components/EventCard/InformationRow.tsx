@@ -1,7 +1,7 @@
 import { Flex, Grid, Text } from "@mantine/core";
 import { EventType } from "../../types";
-import EventDate from "./EventDate";
-import EventDetails from "./EventDetails";
+import EventDate from "./Date";
+import EventDetails from "./Details";
 import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { useMediaQuery } from "@mantine/hooks";

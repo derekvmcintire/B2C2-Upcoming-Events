@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import EventCardButtons from "./EventCardButtons";
-import EventCardInput from "./EventCardInput";
+import EventCardButtons from "./FormButtons";
+import EventCardInput from "./FormInput";
 import { Stack } from "@mantine/core";
 import classes from "./event.module.css";
 
