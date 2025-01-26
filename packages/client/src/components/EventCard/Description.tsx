@@ -5,6 +5,8 @@ import { useState, useCallback } from "react";
 import { EventType } from "../../types";
 import DismissButton from "../Shared/DismissButton";
 import { MdOutlineWarningAmber } from "react-icons/md";
+import DeleteButton from "../Shared/DeleteButton";
+import classes from "./event.module.css";
 
 interface DescriptionProps {
   event: EventType;
@@ -39,7 +41,77 @@ export default function Description({
   const isAbleToSave = hasUnsavedChanges && value !== "";
 
   /**
-   * Memoized JSX for the input form to edit the event description.
+   * Handles the delete action for the event card.
+   * Clears the submitted value and resets the input value.
+   */
+  const handleDelete = () => {
+    submitFn("");
+    setValue("");
+    setIsOpen(false);
+  };
+
+  /**
+   * Handles the dismiss action for the event description.
+   * If the text area input is empty and the user clicks the dismiss button,
+   * it sets the value to the saved description.
+   */
+  const handleDismiss = () => {
+    setIsOpen(false);
+    if (value === "") {
+      setValue(description);
+    }
+  };
+
+  /**
+   * Renders the input buttons for the event description.
+   *
+   * @returns The JSX element representing the input buttons.
+   */
+  const inputButtonsLeft = (
+    <Flex w="100%" justify="left">
+      <Button
+        size="xs"
+        variant="default"
+        onClick={handleClickSubmit}
+        disabled={!isAbleToSave}
+        aria-label="Save event description"
+      >
+        Save
+      </Button>
+      <Button
+        size="xs"
+        ml="8"
+        mr="8"
+        variant="default"
+        onClick={() => setValue("")}
+        disabled={value === ""}
+        aria-label="Clear event description"
+      >
+        Clear
+      </Button>
+      <DismissButton
+        clickHandler={handleDismiss}
+        aria-label="Cancel editing description"
+      />
+    </Flex>
+  );
+
+  /**
+   * The right-aligned container for input buttons.
+   */
+  const inputButtonsRight = (
+    <Flex className={classes.deleteContainer} justify="right">
+      <DeleteButton
+        clickHandler={handleDelete}
+        aria-label="Delete event description"
+      />
+    </Flex>
+  );
+
+  /**
+   * Renders the input field for event description.
+   *
+   * @returns The JSX element representing the input field.
    */
   const input = (
     <>
@@ -50,37 +122,17 @@ export default function Description({
         placeholder="Add event details."
         aria-label="Event description input"
       />
-      <Flex w="90%" justify="left">
-        <Button
-          size="xs"
-          variant="default"
-          onClick={handleClickSubmit}
-          disabled={!isAbleToSave}
-          aria-label="Save event description"
-        >
-          Save
-        </Button>
-        <Button
-          size="xs"
-          ml="8"
-          mr="8"
-          variant="default"
-          onClick={() => setValue("")}
-          disabled={value === ""}
-          aria-label="Clear event description"
-        >
-          Clear
-        </Button>
-        <DismissButton
-          clickHandler={() => setIsOpen(false)}
-          aria-label="Cancel editing description"
-        />
+      <Flex w="100%" justify="space-between">
+        {inputButtonsLeft}
+        {inputButtonsRight}
       </Flex>
     </>
   );
 
   /**
-   * Memoized JSX for displaying the event description or controls to edit/add it.
+   * Represents the content of the event description.
+   * If a value is provided, it displays the event details along with an edit button.
+   * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
     <Stack gap={1} align="flex-start" mt="16">
