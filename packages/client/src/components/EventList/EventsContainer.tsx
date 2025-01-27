@@ -51,6 +51,7 @@ const EventsContainer = (): JSX.Element => {
         onChange={handleTabChange}
         defaultValue={DISCIPLINES.ROAD.text}
         className={classes.eventList}
+        mb="64"
       >
         <EventTabs />
         <EventPanels

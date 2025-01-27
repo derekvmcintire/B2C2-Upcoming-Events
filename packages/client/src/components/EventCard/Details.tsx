@@ -1,4 +1,4 @@
-import { Stack, Text } from "@mantine/core";
+import { Divider, Stack, Text } from "@mantine/core";
 import classes from "./event.module.css";
 import { EventType } from "../../types";
 
@@ -18,14 +18,15 @@ export default function EventDetails({ event }: EventDetailsProps) {
 
   return (
     <>
-      <Stack gap={4} align="flex-start">
+      <Stack w="100%" gap={4} align="flex-start">
         {/* Event Name */}
-        <Text className={classes.eventName}>{name}</Text>
+        <Text w="100%" ta="right" className={classes.eventName}>{name}</Text>
+        <Divider w="100%" mt="8" mb="8" />
         {/* Event Location */}
-        <Text className={classes.eventLocation}>{`${city}, ${state}`}</Text>
+        <Text w="100%" ta="right" className={classes.eventLocation}>{`${city}, ${state}`}</Text>
         {/* Event URL */}
         {eventUrl && (
-          <Text className={classes.eventLink}>
+          <Text w="100%" ta="right" className={classes.eventLink}>
             <a href={eventUrl} target="_blank" rel="noopener noreferrer">
               Event Details
             </a>
