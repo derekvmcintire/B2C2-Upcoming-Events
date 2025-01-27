@@ -19,7 +19,6 @@ export default function EventDate({ event }: EventDateProps) {
   // Format the event date and split into weekday and date string
   const formattedDate = formatEventDate(date);
   const [weekday, dateString, year] = formattedDate.split(", ");
-  console.log("year is: ", year);
   return (
     <>
       <Stack align="flex-end">

@@ -1,8 +1,11 @@
-import { ScrollArea, Text } from "@mantine/core";
+import { Button, ScrollArea, Table, Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import EventCard from "../EventCard";
 import { EventDiscipline, type Discipline } from "../../types";
 import classes from "./event-list.module.css";
+import ExpandableTable from "./ExpandableTable";
+import { request } from "http";
+import { useState } from "react";
 
 interface EventsListProps {
   discipline: Discipline;
@@ -35,26 +38,13 @@ export default function EventsList({
   const { events, registrations, registrationsLoading } = eventsContext;
 
   const getEventDetails = () => {
+
     return registrationsLoading ? (
       <div className={classes.loading}>Loading...</div>
     ) : (
-      <ScrollArea
-        h="100%"
-        type="scroll"
-        className={classes.eventListScrollArea}
-      >
-        {events.map((event, i) => {
-          return (
-            <EventCard
-              key={event.eventId}
-              event={event}
-              registrations={registrations}
-              requestDataCallback={requestDataCallback}
-              isStripe={isCardStripe(i)}
-            />
-          );
-        })}
-      </ScrollArea>
+      <>
+       <ExpandableTable events={events} registrations={registrations} requestDataCallback={requestDataCallback}/>
+      </>
     );
   };
 

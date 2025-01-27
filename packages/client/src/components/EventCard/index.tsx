@@ -145,12 +145,8 @@ export default function EventCard({
       ),
     });
 
-  const containerClass = isStripe
-    ? `${classes.eventContainer} ${classes.lightEventContainer}`
-    : classes.eventContainer;
-
   return (
-    <Container className={containerClass} style={{ position: "relative" }}>
+    <Container className={classes.eventContainer} style={{ position: "relative" }}>
       <LoadingOverlay
         visible={isSubmitting}
         zIndex={1000}

@@ -4,10 +4,6 @@
   padding: 16px;
 }
 
-.lightEventContainer {
-  background-color: light-dark(var(--mantine-color-gray-1), #202020);
-}
-
 .alert {
   max-width: 400px;
 }
