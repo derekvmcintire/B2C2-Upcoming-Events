@@ -3,10 +3,6 @@
   margin-top: 32px;
 }
 
-/* .formCore {
-  max-width: 400px;
-} */
-
 .formInput {
   margin-right: 8px;
 }
@@ -23,10 +19,6 @@
   width: 250px;
 }
 
-.submitButton {
-  width: 150px;
-}
-
 .formContainer {
   margin-top: 25px;
 }
@@ -34,4 +26,8 @@
 .formDescription {
   font-style: italic;
   text-align: left;
+}
+
+.drawerButton {
+  color: light-dark(var(--mantine-color-black-9), var(--mantine-color-white-3));
 }

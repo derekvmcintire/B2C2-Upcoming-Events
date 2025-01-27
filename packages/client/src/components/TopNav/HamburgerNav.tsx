@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Burger, Popover } from "@mantine/core";
-import Nav from "./nav";
+import Nav from "./NavBar";
 
 /**
  * HamburgerNav Component

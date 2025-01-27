@@ -37,21 +37,28 @@ const EventsContainer = (): JSX.Element => {
   useEffect(() => {
     getRegisteredRiders({ disciplineParam: DEFAULT_DISCIPLINE.queryParam });
     getEvents({ disciplineId: DEFAULT_DISCIPLINE.id });
-  }, [getRegisteredRiders, getEvents]);
+  }, [
+    getRegisteredRiders,
+    getEvents,
+    DEFAULT_DISCIPLINE.id,
+    DEFAULT_DISCIPLINE.queryParam,
+  ]);
 
   return (
-    <Tabs
-      value={activeTab}
-      onChange={handleTabChange}
-      defaultValue={DISCIPLINES.ROAD.text}
-      className={classes.eventList}
-    >
-      <EventTabs />
-      <EventPanels
-        eventsLoading={eventsLoading}
-        requestFreshDataForEventType={requestFreshDataForEventType}
-      />
-    </Tabs>
+    <>
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        defaultValue={DISCIPLINES.ROAD.text}
+        className={classes.eventList}
+      >
+        <EventTabs />
+        <EventPanels
+          eventsLoading={eventsLoading}
+          requestFreshDataForEventType={requestFreshDataForEventType}
+        />
+      </Tabs>
+    </>
   );
 };
 

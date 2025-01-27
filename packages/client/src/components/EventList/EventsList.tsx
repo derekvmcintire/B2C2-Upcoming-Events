@@ -1,20 +1,13 @@
-import { ScrollArea, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
-import EventCard from "../EventCard";
 import { EventDiscipline, type Discipline } from "../../types";
 import classes from "./event-list.module.css";
+import ExpandableTable from "../ExpandableEventsTable/ExpandableTable";
 
 interface EventsListProps {
   discipline: Discipline;
   requestDataCallback: (eventType: EventDiscipline) => void;
 }
-
-/**
- * Determines if the card should be a strip - e.g. given a lighter or darker background to create a "stripe" effect.
- * @param index - The index of the card.
- * @returns True if the card should have a stripe, false otherwise.
- */
-const isCardStripe = (index: number) => index % 2 === 0;
 
 /**
  * EventsList Component
@@ -34,27 +27,21 @@ export default function EventsList({
   const eventsContext = useEventsContext();
   const { events, registrations, registrationsLoading } = eventsContext;
 
+  /**
+   * Retrieves the event details.
+   * @returns JSX.Element representing the event details.
+   */
   const getEventDetails = () => {
     return registrationsLoading ? (
       <div className={classes.loading}>Loading...</div>
     ) : (
-      <ScrollArea
-        h="100%"
-        type="scroll"
-        className={classes.eventListScrollArea}
-      >
-        {events.map((event, i) => {
-          return (
-            <EventCard
-              key={event.eventId}
-              event={event}
-              registrations={registrations}
-              requestDataCallback={requestDataCallback}
-              isStripe={isCardStripe(i)}
-            />
-          );
-        })}
-      </ScrollArea>
+      <>
+        <ExpandableTable
+          events={events}
+          registrations={registrations}
+          requestDataCallback={requestDataCallback}
+        />
+      </>
     );
   };
 

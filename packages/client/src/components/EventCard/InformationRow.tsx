@@ -1,4 +1,4 @@
-import { Flex, Grid, Stack, Text } from "@mantine/core";
+import { Divider, Flex, Grid, Stack, Text } from "@mantine/core";
 import { EventType } from "../../types";
 import EventDate from "./Date";
 import EventDetails from "./Details";
@@ -35,8 +35,13 @@ export default function EventInformationRow({
     <>
       <Grid.Col span={isMobile ? 12 : 4}>
         <EventDate event={event} />
+        <Divider mt="8" />
       </Grid.Col>
-      <Grid.Col span={isMobile ? 12 : 8}>
+      <Grid.Col
+        p="16"
+        span={isMobile ? 12 : 8}
+        className={classes.lightSection}
+      >
         <Stack gap={4} align="flex-start">
           <EventDetails event={event} />
           {housingUrl && (

@@ -61,7 +61,11 @@ export default function InterestedRidersRow({
   return (
     <>
       <Grid.Col span={isMobile ? 0 : 4}>{!isMobile && label}</Grid.Col>
-      <Grid.Col span={isMobile ? 12 : 8}>
+      <Grid.Col
+        p="16"
+        span={isMobile ? 12 : 8}
+        className={classes.lightSection}
+      >
         <>
           {isMobile && label}
           {content}

@@ -46,3 +46,17 @@ export function getDisciplineParamFromTextOrId(
       return DISCIPLINES.ROAD.queryParam;
   }
 }
+
+/**
+ * Validates if the selected value is a valid EventDiscipline.
+ *
+ * @param value - The selected value from the dropdown.
+ * @returns True if the value is a valid EventDiscipline, otherwise false.
+ */
+export const isEventDiscipline = (
+  value: string | null,
+): value is EventDiscipline => {
+  return (
+    value !== null && Object.values(DISCIPLINES).some((d) => d.id === value)
+  );
+};

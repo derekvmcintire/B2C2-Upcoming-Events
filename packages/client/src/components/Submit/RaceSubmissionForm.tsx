@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -16,6 +16,7 @@ import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import { DISCIPLINES } from "../../constants";
 import classes from "./submit.module.css";
 import { useDebounce } from "../../hooks/useDebounce";
+import { isEventDiscipline } from "../../utils/discipline";
 
 interface RaceSubmissionFormProps {
   vertical?: boolean;
@@ -72,7 +73,7 @@ const RaceSubmissionForm = ({
    * @param url - The URL to validate.
    * @returns An error message if the URL is invalid, otherwise an empty string.
    */
-  const validateUrl = (url: string) => {
+  const validateUrl = useCallback((url: string) => {
     if (!url) return "URL is required";
     try {
       const urlObj = new URL(url);
@@ -83,7 +84,7 @@ const RaceSubmissionForm = ({
     } catch {
       return "Invalid URL format";
     }
-  };
+  }, []);
 
   /**
    * Determines whether the form is valid for submission.
@@ -144,20 +145,6 @@ const RaceSubmissionForm = ({
   };
 
   /**
-   * Validates if the selected value is a valid EventDiscipline.
-   *
-   * @param value - The selected value from the dropdown.
-   * @returns True if the value is a valid EventDiscipline, otherwise false.
-   */
-  const isEventDiscipline = (
-    value: string | null,
-  ): value is EventDiscipline => {
-    return (
-      value !== null && Object.values(DISCIPLINES).some((d) => d.id === value)
-    );
-  };
-
-  /**
    * Handles the change event for the race discipline dropdown.
    *
    * @param value - The selected discipline value.
@@ -183,6 +170,7 @@ const RaceSubmissionForm = ({
   const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
     value: d.id,
     label: d.text,
+    disabled: d.id === DISCIPLINES.SPECIAL.id,
   }));
 
   const formCore = (

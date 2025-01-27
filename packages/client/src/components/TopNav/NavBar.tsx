@@ -13,7 +13,7 @@ type NavProps = {
  *
  * @param {boolean} [vertical=false] - Whether the navigation should be displayed vertically or horizontally.
  */
-export default function Nav({ vertical = false }: NavProps): JSX.Element {
+export default function NavBar({ vertical = false }: NavProps): JSX.Element {
   const HomeAnchor = ({ className }: { className: string }): JSX.Element => (
     <Anchor href="/" className={className}>
       Home

@@ -8,17 +8,17 @@ export const DISCIPLINES: EventDisciplines = {
   },
   CX: {
     queryParam: "cyclocross",
-    text: "Cyclocross",
+    text: "CX",
     id: "cx",
   },
   XC: {
     queryParam: "mountain%20bike",
-    text: "Cross Country",
+    text: "XC",
     id: "xc",
   },
   SPECIAL: {
     queryParam: "special",
-    text: "Special Events",
+    text: "Team",
     id: "special",
   },
 };

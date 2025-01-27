@@ -1,11 +1,7 @@
 .eventContainer {
   width: 100%;
-  margin-top: 16px;
-  padding: 16px;
-}
-
-.lightEventContainer {
-  background-color: light-dark(var(--mantine-color-gray-1), #202020);
+  margin-top: 8px;
+  padding: 8px;
 }
 
 .alert {
@@ -22,7 +18,6 @@
   font-weight: 700;
   letter-spacing: rem(-1px);
   line-height: 1;
-  margin-left: 16px;
   margin-right: 8px;
   max-width: 300px;
 }
@@ -33,7 +28,6 @@
   font-weight: 700;
   letter-spacing: rem(-1px);
   line-height: 1;
-  margin-left: 16px;
   margin-right: 8px;
   max-width: 300px;
 }
@@ -44,9 +38,13 @@
   font-weight: 700;
   letter-spacing: rem(-1px);
   line-height: 1;
-  margin-left: 16px;
   margin-right: 8px;
   max-width: 300px;
+}
+
+.lightSection {
+  background-color: #363636;
+  border-radius: 4px;
 }
 
 .eventName {
@@ -73,10 +71,6 @@
   font-weight: 500;
   font-size: "1.1rem";
   margin-bottom: 8px;
-}
-
-.registeredNameList {
-  max-width: 600px;
 }
 
 .registeredLabel {
@@ -113,16 +107,8 @@
   margin-right: 8px;
 }
 
-.plusIcon {
-  margin-right: 16px;
-}
-
 .formRowInput {
   margin-right: 8px;
-}
-
-.formSide {
-  min-width: 325px;
 }
 
 .eventCardForm {

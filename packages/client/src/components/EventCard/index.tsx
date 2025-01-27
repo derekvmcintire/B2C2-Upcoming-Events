@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import {
   Alert,
-  Container,
   Divider,
   Flex,
   Grid,
   LoadingOverlay,
+  Stack,
 } from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
@@ -29,7 +29,6 @@ import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
-  isStripe?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
@@ -45,7 +44,6 @@ type EventProps = {
 export default function EventCard({
   event,
   registrations,
-  isStripe = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
   const [error, setError] = useState("");
@@ -57,9 +55,6 @@ export default function EventCard({
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
-
-  const numberOfRidersRegdOrInterested =
-    registeredNames.length + interestedRiders.length;
 
   /**
    * Handles the form submission by calling the provided update function with the given data.
@@ -77,7 +72,7 @@ export default function EventCard({
         setError(`Error submiting event update: ${response.message}`);
       }
     },
-    [requestDataCallback],
+    [requestDataCallback, eventType, setIsSubmitting],
   );
 
   /**
@@ -145,12 +140,12 @@ export default function EventCard({
       ),
     });
 
-  const containerClass = isStripe
-    ? `${classes.eventContainer} ${classes.lightEventContainer}`
-    : classes.eventContainer;
-
   return (
-    <Container className={containerClass} style={{ position: "relative" }}>
+    <Stack
+      gap={0}
+      className={classes.eventContainer}
+      style={{ position: "relative" }}
+    >
       <LoadingOverlay
         visible={isSubmitting}
         zIndex={1000}
@@ -198,8 +193,11 @@ export default function EventCard({
           handleSubmitInterestedRider={handleSubmitInterestedRider}
         />
       </Flex>
-      <Hypometer numberOfRiders={numberOfRidersRegdOrInterested} />
+      <Hypometer
+        numberOfInterestedRiders={interestedRiders.length}
+        numberOfRegisteredRiders={registeredNames.length}
+      />
       <Divider mt="16" />
-    </Container>
+    </Stack>
   );
 }

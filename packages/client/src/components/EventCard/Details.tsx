@@ -27,7 +27,7 @@ export default function EventDetails({ event }: EventDetailsProps) {
         {eventUrl && (
           <Text className={classes.eventLink}>
             <a href={eventUrl} target="_blank" rel="noopener noreferrer">
-              Link to Reg
+              Event Details
             </a>
           </Text>
         )}
