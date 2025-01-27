@@ -18,3 +18,9 @@ typecheck:
 
 format:
 	npm run format
+
+add:
+	npm run format; git add .
+
+clean:
+	npm run format; npm run typecheck; npm run lint

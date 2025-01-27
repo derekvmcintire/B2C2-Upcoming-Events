@@ -72,7 +72,7 @@ export default function EventCard({
         setError(`Error submiting event update: ${response.message}`);
       }
     },
-    [requestDataCallback],
+    [requestDataCallback, eventType, setIsSubmitting],
   );
 
   /**

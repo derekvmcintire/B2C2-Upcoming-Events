@@ -23,9 +23,7 @@ export default function DismissButton({
 }: DismissButtonProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
-  const handleClick = () => {
-    withoutModal ? clickHandler() : open();
-  };
+  const handleClick = () => (withoutModal ? clickHandler() : open());
 
   return (
     <>

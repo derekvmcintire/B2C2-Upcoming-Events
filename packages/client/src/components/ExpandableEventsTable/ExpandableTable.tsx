@@ -31,7 +31,7 @@ const ExpandableTable = ({
 
   const eventIds = useMemo(() => {
     return events.map((event) => event.eventId);
-  }, events);
+  }, [events]);
 
   const [expandedRows, setExpandedRows] = useState<Set<string>>(
     new Set(eventIds),

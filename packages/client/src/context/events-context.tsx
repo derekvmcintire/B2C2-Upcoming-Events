@@ -5,6 +5,10 @@ import {
   type EventType,
 } from "../types";
 
+// react-refresh only affects components that render UI, since this is triggered by the context
+// provider below, which only manages state and renders no UI, we can safely ignore this
+/* eslint-disable react-refresh/only-export-components */
+
 /**
  * Type definition for the Events Context.
  * Describes the shape of the state and its associated setters for event-related data.

@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { clearEventCache } from "../infrastructure/event-cache";
 import { fetchRegistrations } from "../api/fetchRegisteredRiders";
 import { fetchEventsByDiscipline } from "../api/fetchEventsByType";
 import { useEventsContext } from "../context/events-context";
@@ -135,7 +134,7 @@ export const useEventData = (): UseEventDataReturn => {
       getEvents({ disciplineId, skipCache: true });
       setRequestFreshData(undefined);
     },
-    [clearEventCache, getRegisteredRiders, getEvents, setRequestFreshData],
+    [getRegisteredRiders, getEvents, setRequestFreshData],
   );
 
   return {

@@ -46,7 +46,7 @@ export default function EventCardInput({
       reset();
       dismissInput();
     }
-  }, [submitHandler, reset, dismissInput]);
+  }, [submitHandler, reset, dismissInput, error, inputValue]);
 
   return (
     <Flex m="8" justify="center">

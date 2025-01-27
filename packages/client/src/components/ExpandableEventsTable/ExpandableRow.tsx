@@ -1,4 +1,4 @@
-import { Collapse, Progress, Table, Text } from "@mantine/core";
+import { Collapse, Progress, Table } from "@mantine/core";
 import React, { useMemo } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../EventCard";
@@ -44,7 +44,7 @@ export default function ExpandableRow({
   const registeredNames = useMemo(
     () =>
       registrations ? getEntriesByEventId(registrations, Number(eventId)) : [],
-    [registrations],
+    [registrations, eventId],
   );
   const formattedDate = useMemo(() => formatEventDate(date), [date]);
 

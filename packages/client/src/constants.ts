@@ -18,7 +18,7 @@ export const DISCIPLINES: EventDisciplines = {
   },
   SPECIAL: {
     queryParam: "special",
-    text: "Special Events",
+    text: "Team Events",
     id: "special",
   },
 };

@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Flex, TextInput, Button, Text, Stack, Alert } from "@mantine/core";
+import {
+  Flex,
+  TextInput,
+  Button,
+  Text,
+  Stack,
+  Alert,
+  Select,
+} from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import classes from "./submit.module.css";
@@ -7,6 +15,8 @@ import { v4 as uuidv4 } from "uuid";
 import { EventDiscipline } from "../../types";
 import { DISCIPLINES } from "../../constants";
 import { submitSpecialEvent } from "../../api/submitSpecialEvent";
+import { isEventDiscipline } from "../../utils/discipline";
+import { formatDateForStorage } from "../../utils/dates";
 
 /**
  * SpecialEventSubmissionForm Component
@@ -22,6 +32,14 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   const [date, setDate] = useState("");
   const [name, setName] = useState("");
   const [state, setState] = useState("");
+  const [discipline, setDiscipline] = useState<EventDiscipline>(
+    DISCIPLINES.SPECIAL.id,
+  );
+
+  const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
+    value: d.id,
+    label: d.text,
+  }));
 
   // State variables for optional fields
   const [eventUrl, setEventUrl] = useState("");
@@ -36,12 +54,25 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   const { setEvents } = eventsContext;
 
   /**
+   * Handles the change event for the race discipline dropdown.
+   *
+   * @param value - The selected discipline value.
+   */
+  const handleOnChangeSelect = (value: string | null) => {
+    if (isEventDiscipline(value)) {
+      setDiscipline(value); // Safely call setDiscipline
+    } else {
+      console.error("Invalid value selected:", value);
+    }
+  };
+
+  /**
    * Updates the special events by fetching the latest list from the server.
    */
   const updateEventsAfterSubmit = () => {
     const getEvents = async () => {
       const response = await fetchEventsByDiscipline({
-        discipline: DISCIPLINES.SPECIAL.id,
+        discipline: discipline,
         skipCache: true,
       });
       setEvents(response.events);
@@ -116,6 +147,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
     setState("");
     setEventUrl("");
     setHousingUrl("");
+    setDiscipline(DISCIPLINES.SPECIAL.id);
   };
 
   /**
@@ -133,22 +165,12 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
 
     setIsSubmitting(true);
 
-    const selectedDate = new Date(date); // date is in YYYY-MM-DD format
-    selectedDate.setHours(0, 0, 0, 0); // Set time to midnight (00:00:00)
-
-    // Get the timezone offset in minutes and adjust the date
-    const timezoneOffset = selectedDate.getTimezoneOffset(); // Offset in minutes
-    selectedDate.setMinutes(selectedDate.getMinutes() - timezoneOffset);
-
-    // Convert to ISO string and remove the 'Z' (to indicate local time)
-    const formattedDate = selectedDate.toISOString().slice(0, -1);
-
     try {
       const submission = {
         eventId: uuidv4(),
-        eventType: DISCIPLINES.SPECIAL.id as EventDiscipline,
+        eventType: discipline,
         city,
-        date: formattedDate,
+        date: formatDateForStorage(date),
         name,
         state,
         eventUrl: eventUrl || undefined,
@@ -166,7 +188,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
           `FAILED TO SUBMIT TEAM EVENT:  ${response.message || "Unknown Error"}`,
         );
       }
-    } catch (err) {
+    } catch (error) {
       setError(`Unknown Error when submitting team event: ${error}`);
     } finally {
       setIsSubmitting(false);
@@ -204,6 +226,13 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
         onChange={(e) => setState(e.target.value)}
         required
       />
+      <Select
+        className={`${classes.formInput} ${classes.disciplineInput}`}
+        placeholder="Race Discipline"
+        value={discipline}
+        onChange={handleOnChangeSelect}
+        data={disciplineOptions}
+      />
       <TextInput
         className={classes.formInput}
         placeholder="Event URL (optional)"
@@ -223,7 +252,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
         loading={isSubmitting}
         disabled={!isFormValid() || isSubmitting}
       >
-        Submit Special Event
+        Submit Event
       </Button>
     </Stack>
   );
@@ -232,7 +261,8 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
     <Stack align="center" w="100%" className={classes.submissionForm}>
       <Text className={classes.formDescription}>
         Submit a special event - or any event that isn't on BikeReg, to add it
-        to the calendar.
+        to the calendar. Discipline will default to "Team Events" - but you can
+        select another discipline if you want.
       </Text>
 
       {error && (
@@ -247,7 +277,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
           withCloseButton
           onClose={() => setShowSuccess(false)}
         >
-          Special event submitted successfully!
+          Event submitted successfully!
         </Alert>
       )}
       <Flex w="100%" justify="center">
