@@ -2,6 +2,7 @@ import { Button, Drawer } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import DrawerContent from "./DrawerContent";
 import { MdFormatAlignJustify } from "react-icons/md";
+import classes from "./submit.module.css";
 
 export default function SubmissionDrawer() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -14,7 +15,7 @@ export default function SubmissionDrawer() {
       </Drawer>
 
       <Button
-        c="white"
+        className={classes.drawerButton}
         size="xl"
         variant="outline"
         onClick={open}

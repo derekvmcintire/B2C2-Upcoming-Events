@@ -35,3 +35,7 @@
   font-style: italic;
   text-align: left;
 }
+
+.drawerButton {
+  color: light-dark(var(--mantine-color-black-9), var(--mantine-color-white-3));
+}

@@ -56,9 +56,6 @@ export default function EventCard({
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
 
-  const numberOfRidersRegdOrInterested =
-    registeredNames.length + interestedRiders.length;
-
   /**
    * Handles the form submission by calling the provided update function with the given data.
    * @param {UpdateEventData} data The data to be submitted.
@@ -195,7 +192,10 @@ export default function EventCard({
           handleSubmitInterestedRider={handleSubmitInterestedRider}
         />
       </Flex>
-      <Hypometer numberOfRiders={numberOfRidersRegdOrInterested} />
+      <Hypometer
+        numberOfInterestedRiders={interestedRiders.length}
+        numberOfRegisteredRiders={registeredNames.length}
+      />
       <Divider mt="16" />
     </Container>
   );

@@ -27,6 +27,10 @@ export default function EventsList({
   const eventsContext = useEventsContext();
   const { events, registrations, registrationsLoading } = eventsContext;
 
+  /**
+   * Retrieves the event details.
+   * @returns JSX.Element representing the event details.
+   */
   const getEventDetails = () => {
     return registrationsLoading ? (
       <div className={classes.loading}>Loading...</div>

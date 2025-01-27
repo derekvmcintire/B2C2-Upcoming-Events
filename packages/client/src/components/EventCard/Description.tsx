@@ -100,7 +100,7 @@ export default function Description({
   /**
    * The right-aligned container for input buttons.
    */
-  const inputButtonsRight = (
+  const inputButtonsRight = description && (
     <Flex className={classes.deleteContainer} justify="right">
       <DeleteButton
         clickHandler={handleDelete}

@@ -1,24 +1,44 @@
 import { useMemo, useState } from "react";
 import { Table, Card, Button } from "@mantine/core";
-import { EventType } from "../../types";
+import {
+  EventDiscipline,
+  EventType,
+  FetchRegistrationsResponse,
+} from "../../types";
 import ExpandableRow from "./ExpandableRow";
 
+interface ExpandableTableProps {
+  events: EventType[];
+  registrations: FetchRegistrationsResponse | undefined;
+  requestDataCallback: (eventType: EventDiscipline) => void;
+}
+
+/**
+ * ExpandableTable component displays a table with expandable rows.
+ *
+ * @param events - An array of events to be displayed in the table.
+ * @param registrations - An array of registrations associated with the events.
+ * @param requestDataCallback - A callback function to request additional data.
+ */
 const ExpandableTable = ({
   events,
   registrations,
   requestDataCallback,
-}: {
-  events: EventType[];
-  registrations: any;
-  requestDataCallback: any;
-}) => {
+}: ExpandableTableProps) => {
   const eventIds = useMemo(() => {
     return events.map((event) => event.eventId);
   }, events);
 
-  const [expandedRows, setExpandedRows] = useState(new Set(eventIds));
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(
+    new Set(eventIds),
+  );
 
-  const toggleRow = (id: any) => {
+  /**
+   * Toggles the row with the specified ID in the expandedRows set.
+   * If the row is already expanded, it will be collapsed. If it is collapsed, it will be expanded.
+   * @param id - The ID of the row to toggle.
+   */
+  const toggleRow = (id: string) => {
     const newExpandedRows = new Set(expandedRows);
     if (newExpandedRows.has(id)) {
       newExpandedRows.delete(id);
@@ -28,7 +48,12 @@ const ExpandableTable = ({
     setExpandedRows(newExpandedRows);
   };
 
-  const rows = events.map((row) => (
+  /**
+   * Represents the rows of the expandable events table.
+   *
+   * @type {JSX.Element[]}
+   */
+  const rows: JSX.Element[] = events.map((row) => (
     <ExpandableRow
       event={row}
       toggleRow={toggleRow}
@@ -52,8 +77,7 @@ const ExpandableTable = ({
           Collapse All
         </Button>
       )}
-
-      <Table striped highlightOnHover>
+      <Table striped highlightOnHover verticalSpacing="lg">
         <Table.Thead>
           <Table.Tr>
             <Table.Th></Table.Th>

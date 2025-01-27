@@ -1,8 +1,9 @@
 import { Progress, Text } from "@mantine/core";
-import { getHypeColor } from "./utility";
+import { getHypeColor, getHypeLevel } from "../../utils/hype";
 
 interface HypometerProps {
-  numberOfRiders: number;
+  numberOfRegisteredRiders: number;
+  numberOfInterestedRiders: number;
 }
 
 /**
@@ -14,9 +15,13 @@ interface HypometerProps {
  * @returns {JSX.Element} The rendered Hypometer component.
  */
 export default function Hypometer({
-  numberOfRiders,
+  numberOfRegisteredRiders,
+  numberOfInterestedRiders,
 }: HypometerProps): JSX.Element {
-  const hypeLevel: number = numberOfRiders * 10;
+  const hypeLevel: number = getHypeLevel(
+    numberOfRegisteredRiders,
+    numberOfInterestedRiders,
+  );
 
   /**
    * Renders the hype level as text and a progress bar with dynamic coloring.
@@ -28,7 +33,7 @@ export default function Hypometer({
         radius="xs"
         size="xl"
         value={hypeLevel}
-        color={getHypeColor(numberOfRiders)}
+        color={getHypeColor(hypeLevel)}
       />
     </>
   );

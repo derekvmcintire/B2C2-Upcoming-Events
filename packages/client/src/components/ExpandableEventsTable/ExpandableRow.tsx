@@ -2,9 +2,13 @@ import { Collapse, Progress, Table } from "@mantine/core";
 import React from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../EventCard";
-import { getHypeColor } from "../EventCard/utility";
+import { getHypeColor, getHypeLevel } from "../../utils/hype";
 import { formatEventDate } from "../../utils/dates";
-import { EventType } from "../../types";
+import {
+  EventDiscipline,
+  EventType,
+  FetchRegistrationsResponse,
+} from "../../types";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
@@ -12,11 +16,21 @@ import { MOBILE_BREAK_POINT } from "../../constants";
 interface ExpandableRowProps {
   event: EventType;
   toggleRow: (id: string) => void;
-  expandedRows: any;
-  registrations: any;
-  requestDataCallback: any;
+  expandedRows: Set<string>;
+  registrations: FetchRegistrationsResponse | undefined;
+  requestDataCallback: (eventType: EventDiscipline) => void;
 }
 
+/**
+ * Renders an expandable row for an event in the table.
+ *
+ * @param event - The event object.
+ * @param toggleRow - Function to toggle the expanded state of the row.
+ * @param expandedRows - Set of expanded row IDs.
+ * @param registrations - Array of registrations for the event.
+ * @param requestDataCallback - Callback function to request data.
+ * @returns The JSX element representing the expandable row.
+ */
 export default function ExpandableRow({
   event,
   toggleRow,
@@ -24,52 +38,49 @@ export default function ExpandableRow({
   registrations,
   requestDataCallback,
 }: ExpandableRowProps) {
-  const { date } = event;
-  // Format the event date and split into weekday and date string
+  const { city, date, eventId, interestedRiders, name, state } = event;
   const formattedDate = formatEventDate(date);
-  const [_weekday, dateString, _year] = formattedDate.split(", ");
+  const [weekday, dateString] = formattedDate.split(", ");
 
   const registeredNames = registrations
-    ? getEntriesByEventId(registrations, Number(event.eventId))
+    ? getEntriesByEventId(registrations, Number(eventId))
     : [];
 
-  const interestedRiders = event.interestedRiders?.length || 0;
-
+  const numberOfIntRiders = interestedRiders?.length || 0;
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
-  const location = isMobile ? event.state : `${event.city}, ${event.state}`;
-
-  const hypeLevel = registeredNames.length + interestedRiders;
+  const location = isMobile ? state : `${city}, ${state}`;
+  const hypeLevel = getHypeLevel(registeredNames.length, numberOfIntRiders);
 
   return (
-    <React.Fragment key={event.eventId}>
+    <React.Fragment key={eventId}>
       <Table.Tr
         style={{ cursor: "pointer" }}
-        onClick={() => toggleRow(event.eventId)}
+        onClick={() => toggleRow(eventId)}
       >
         <Table.Td ta="left">
-          {expandedRows.has(event.eventId) ? (
+          {expandedRows.has(eventId) ? (
             <FaChevronDown size={16} />
           ) : (
             <FaChevronRight size={16} />
           )}
         </Table.Td>
         <Table.Td ta="left" fw="600">
-          {dateString}
+          {`${weekday} ${dateString}`}
         </Table.Td>
-        <Table.Td ta="left">{event.name}</Table.Td>
+        <Table.Td ta="left">{name}</Table.Td>
         <Table.Td ta="left">{location}</Table.Td>
         <Table.Td ta="left">
           <Progress
             radius="xs"
             size="md"
-            value={hypeLevel * 10}
+            value={hypeLevel}
             color={getHypeColor(hypeLevel)}
           />
         </Table.Td>
       </Table.Tr>
       <Table.Tr>
         <Table.Td colSpan={5} p={0}>
-          <Collapse in={expandedRows.has(event.eventId)}>
+          <Collapse in={expandedRows.has(eventId)}>
             <EventCard
               key={event.eventId}
               event={event}
