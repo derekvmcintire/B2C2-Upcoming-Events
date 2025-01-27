@@ -6,6 +6,8 @@ import {
   FetchRegistrationsResponse,
 } from "../../types";
 import ExpandableRow from "./ExpandableRow";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 interface ExpandableTableProps {
   events: EventType[];
@@ -25,6 +27,8 @@ const ExpandableTable = ({
   registrations,
   requestDataCallback,
 }: ExpandableTableProps) => {
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
   const eventIds = useMemo(() => {
     return events.map((event) => event.eventId);
   }, events);
@@ -83,8 +87,8 @@ const ExpandableTable = ({
             <Table.Th></Table.Th>
             <Table.Th>Date</Table.Th>
             <Table.Th>Name</Table.Th>
-            <Table.Th>Location</Table.Th>
-            <Table.Th>Hype Level</Table.Th>
+            {!isMobile && <Table.Th>Location</Table.Th>}
+            <Table.Th>{isMobile ? "Hype" : "Hype Level"}</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

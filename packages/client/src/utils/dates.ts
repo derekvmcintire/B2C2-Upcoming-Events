@@ -43,3 +43,14 @@ export const formatDateToString = (date: Date): string => {
 
   return `${year}-${month}-${day}`;
 };
+
+export const formatShortDate = (date: Date): string => {
+  if (!(date instanceof Date)) {
+    throw new Error("Invalid input: Expected a Date object");
+  }
+
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed, so add 1
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${month}/${day}`;
+};

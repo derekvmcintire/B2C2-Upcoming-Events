@@ -1,9 +1,9 @@
-import { Collapse, Progress, Table } from "@mantine/core";
-import React from "react";
+import { Collapse, Progress, Table, Text } from "@mantine/core";
+import React, { useMemo } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../EventCard";
 import { getHypeColor, getHypeLevel } from "../../utils/hype";
-import { formatEventDate } from "../../utils/dates";
+import { formatEventDate, formatShortDate } from "../../utils/dates";
 import {
   EventDiscipline,
   EventType,
@@ -39,17 +39,24 @@ export default function ExpandableRow({
   requestDataCallback,
 }: ExpandableRowProps) {
   const { city, date, eventId, interestedRiders, name, state } = event;
-  const formattedDate = formatEventDate(date);
-  const [weekday, dateString] = formattedDate.split(", ");
 
-  const registeredNames = registrations
-    ? getEntriesByEventId(registrations, Number(eventId))
-    : [];
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+  const registeredNames = useMemo(
+    () =>
+      registrations ? getEntriesByEventId(registrations, Number(eventId)) : [],
+    [registrations],
+  );
+  const formattedDate = useMemo(() => formatEventDate(date), [date]);
+
+  const [weekday, dateString] = formattedDate.split(", ");
+  const eventDate = isMobile
+    ? formatShortDate(new Date(date))
+    : `${weekday} ${dateString}`;
 
   const numberOfIntRiders = interestedRiders?.length || 0;
-  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
-  const location = isMobile ? state : `${city}, ${state}`;
   const hypeLevel = getHypeLevel(registeredNames.length, numberOfIntRiders);
+
+  const chevronSize = isMobile ? 8 : 16;
 
   return (
     <React.Fragment key={eventId}>
@@ -59,16 +66,16 @@ export default function ExpandableRow({
       >
         <Table.Td ta="left">
           {expandedRows.has(eventId) ? (
-            <FaChevronDown size={16} />
+            <FaChevronDown size={chevronSize} />
           ) : (
-            <FaChevronRight size={16} />
+            <FaChevronRight size={chevronSize} />
           )}
         </Table.Td>
         <Table.Td ta="left" fw="600">
-          {`${weekday} ${dateString}`}
+          {eventDate}
         </Table.Td>
         <Table.Td ta="left">{name}</Table.Td>
-        <Table.Td ta="left">{location}</Table.Td>
+        {!isMobile && <Table.Td ta="left">{`${city}, ${state}`}</Table.Td>}
         <Table.Td ta="left">
           <Progress
             radius="xs"

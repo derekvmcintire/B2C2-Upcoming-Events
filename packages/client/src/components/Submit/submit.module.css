@@ -3,10 +3,6 @@
   margin-top: 32px;
 }
 
-/* .formCore {
-  max-width: 400px;
-} */
-
 .formInput {
   margin-right: 8px;
 }
@@ -21,10 +17,6 @@
 
 .disciplineInput {
   width: 250px;
-}
-
-.submitButton {
-  width: 150px;
 }
 
 .formContainer {

@@ -71,10 +71,6 @@
   margin-bottom: 8px;
 }
 
-.registeredNameList {
-  max-width: 600px;
-}
-
 .registeredLabel {
   font-size: 1.2rem;
   letter-spacing: 1px;
@@ -109,16 +105,8 @@
   margin-right: 8px;
 }
 
-.plusIcon {
-  margin-right: 16px;
-}
-
 .formRowInput {
   margin-right: 8px;
-}
-
-.formSide {
-  min-width: 325px;
 }
 
 .eventCardForm {
