@@ -6,7 +6,7 @@ import classes from "./top-nav.module.css";
 import { MOBILE_BREAK_POINT } from "../../constants";
 import { useEventsContext } from "../../context/events-context";
 import SubmissionDrawer from "../Submit/Drawer";
-import Nav from "./Nav";
+import Nav from "./NavBar";
 
 /**
  * TopNav Component
