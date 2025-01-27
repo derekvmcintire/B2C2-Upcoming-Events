@@ -50,7 +50,7 @@ export default function EventCardInput({
 
   return (
     <Flex m="8" justify="center">
-      <DismissButton clickHandler={dismissInput} />
+      <DismissButton clickHandler={dismissInput} withoutModal />
       <TextInput
         size="xs"
         value={inputValue}
