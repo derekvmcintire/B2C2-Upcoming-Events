@@ -91,6 +91,7 @@ export default function Description({
       </Button>
       <DismissButton
         clickHandler={handleDismiss}
+        withoutModal
         aria-label="Cancel editing description"
       />
     </Flex>

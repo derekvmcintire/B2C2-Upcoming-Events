@@ -38,6 +38,17 @@
   max-width: 300px;
 }
 
+.eventYear {
+  color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-3));
+  font-size: rem(20px);
+  font-weight: 700;
+  letter-spacing: rem(-1px);
+  line-height: 1;
+  margin-left: 16px;
+  margin-right: 8px;
+  max-width: 300px;
+}
+
 .eventName {
   letter-spacing: rem(-1px);
   font-size: rem(30px);

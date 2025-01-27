@@ -18,13 +18,15 @@ export default function EventDate({ event }: EventDateProps) {
   const { date } = event;
   // Format the event date and split into weekday and date string
   const formattedDate = formatEventDate(date);
-  const [weekday, dateString] = formattedDate.split(", ");
+  const [weekday, dateString, year] = formattedDate.split(", ");
+  console.log("year is: ", year);
   return (
     <>
       <Stack align="flex-end">
         <Title ta="right">
           <Text className={classes.eventDay}>{weekday}</Text>
           <Text className={classes.eventDate}>{dateString}</Text>
+          <Text className={classes.eventYear}>{year}</Text>
         </Title>
       </Stack>
     </>
