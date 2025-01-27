@@ -37,6 +37,7 @@ export const fetchRegistrations = async ({
   skipCache = false,
 }: FetchRegistrationsOptions): Promise<FetchRegistrationsResponse> => {
   // Normalize the date before using it in the cache
+  after.setDate(after.getDate() - 1); // start from yesterday just to be sure we get registrations for today
   const normalizedAfter = normalizeDate(after);
 
   if (!skipCache) {
