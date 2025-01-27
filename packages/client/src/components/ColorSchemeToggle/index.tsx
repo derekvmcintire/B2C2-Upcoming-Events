@@ -19,7 +19,7 @@ function ColorSchemeToggle(): JSX.Element {
 
   return (
     <div className={classes.colorScheme}>
-      <Divider mt="78" mb="16" />
+      <Divider mb="16" />
       <Group justify="center">
         <Button
           size="compact-sm"

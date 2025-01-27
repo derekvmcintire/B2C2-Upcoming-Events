@@ -15,7 +15,11 @@ export default function EventPanels({
 }: EventPanelsProps) {
   return (
     <Flex justify="center">
-      <Tabs.Panel w="100%" key={DISCIPLINES.ROAD.text} value={DISCIPLINES.ROAD.text}>
+      <Tabs.Panel
+        w="100%"
+        key={DISCIPLINES.ROAD.text}
+        value={DISCIPLINES.ROAD.text}
+      >
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
@@ -26,7 +30,11 @@ export default function EventPanels({
         )}
       </Tabs.Panel>
 
-      <Tabs.Panel w="100%" key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+      <Tabs.Panel
+        w="100%"
+        key={DISCIPLINES.CX.text}
+        value={DISCIPLINES.CX.text}
+      >
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
@@ -37,7 +45,11 @@ export default function EventPanels({
         )}
       </Tabs.Panel>
 
-      <Tabs.Panel key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+      <Tabs.Panel
+        w="100%"
+        key={DISCIPLINES.XC.text}
+        value={DISCIPLINES.XC.text}
+      >
         {eventsLoading ? (
           <div className={classes.loading}>Loading...</div>
         ) : (
@@ -48,6 +60,7 @@ export default function EventPanels({
         )}
       </Tabs.Panel>
       <Tabs.Panel
+        w="100%"
         key={DISCIPLINES.SPECIAL.text}
         value={DISCIPLINES.SPECIAL.text}
       >

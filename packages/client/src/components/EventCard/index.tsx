@@ -29,7 +29,6 @@ import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
-  isStripe?: boolean;
   requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
@@ -45,7 +44,6 @@ type EventProps = {
 export default function EventCard({
   event,
   registrations,
-  isStripe = false,
   requestDataCallback,
 }: EventProps): JSX.Element {
   const [error, setError] = useState("");
@@ -146,7 +144,10 @@ export default function EventCard({
     });
 
   return (
-    <Container className={classes.eventContainer} style={{ position: "relative" }}>
+    <Container
+      className={classes.eventContainer}
+      style={{ position: "relative" }}
+    >
       <LoadingOverlay
         visible={isSubmitting}
         zIndex={1000}

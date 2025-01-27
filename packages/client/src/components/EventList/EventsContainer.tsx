@@ -7,7 +7,6 @@ import EventTabs from "../EventListTabs.tsx/EventTabs";
 import EventPanels from "../EventListTabs.tsx/EventPanels";
 import { useEventData } from "../../hooks/useEventData";
 import { useTabState } from "../../hooks/useTabState";
-import SubmissionDrawer from "../Submit/Drawer";
 
 /**
  * EventsContainer Component
