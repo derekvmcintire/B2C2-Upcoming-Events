@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import {
   Alert,
-  Container,
   Divider,
   Flex,
   Grid,
   LoadingOverlay,
+  Stack,
 } from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
@@ -141,7 +141,8 @@ export default function EventCard({
     });
 
   return (
-    <Container
+    <Stack
+      gap={0}
       className={classes.eventContainer}
       style={{ position: "relative" }}
     >
@@ -197,6 +198,6 @@ export default function EventCard({
         numberOfRegisteredRiders={registeredNames.length}
       />
       <Divider mt="16" />
-    </Container>
+    </Stack>
   );
 }

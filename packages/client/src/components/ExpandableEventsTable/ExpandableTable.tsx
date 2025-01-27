@@ -81,7 +81,7 @@ const ExpandableTable = ({
           Collapse All
         </Button>
       )}
-      <Table striped highlightOnHover verticalSpacing="lg">
+      <Table striped verticalSpacing="lg">
         <Table.Thead>
           <Table.Tr>
             <Table.Th></Table.Th>
