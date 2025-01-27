@@ -43,7 +43,7 @@
 }
 
 .lightSection {
-  background-color: #363636;
+  background-color: light-dark(#f4f4f4, #363636);
   border-radius: 4px;
 }
 
