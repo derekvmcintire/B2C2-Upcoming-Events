@@ -7,6 +7,7 @@ import EventTabs from "../EventListTabs.tsx/EventTabs";
 import EventPanels from "../EventListTabs.tsx/EventPanels";
 import { useEventData } from "../../hooks/useEventData";
 import { useTabState } from "../../hooks/useTabState";
+import SubmissionDrawer from "../Submit/Drawer";
 
 /**
  * EventsContainer Component
@@ -40,18 +41,20 @@ const EventsContainer = (): JSX.Element => {
   }, [getRegisteredRiders, getEvents]);
 
   return (
-    <Tabs
-      value={activeTab}
-      onChange={handleTabChange}
-      defaultValue={DISCIPLINES.ROAD.text}
-      className={classes.eventList}
-    >
-      <EventTabs />
-      <EventPanels
-        eventsLoading={eventsLoading}
-        requestFreshDataForEventType={requestFreshDataForEventType}
-      />
-    </Tabs>
+    <>
+      <Tabs
+        value={activeTab}
+        onChange={handleTabChange}
+        defaultValue={DISCIPLINES.ROAD.text}
+        className={classes.eventList}
+      >
+        <EventTabs />
+        <EventPanels
+          eventsLoading={eventsLoading}
+          requestFreshDataForEventType={requestFreshDataForEventType}
+        />
+      </Tabs>
+    </>
   );
 };
 

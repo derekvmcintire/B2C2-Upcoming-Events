@@ -174,7 +174,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
   };
 
   const formCore = (
-    <Stack w="80%" className={classes.formCore}>
+    <Stack w="100%" className={classes.formCore}>
       <TextInput
         className={classes.formInput}
         placeholder="Name*"
@@ -218,6 +218,7 @@ const SpecialEventSubmissionForm = (): JSX.Element => {
       />
 
       <Button
+        className={classes.formInput}
         onClick={handleSubmit}
         loading={isSubmitting}
         disabled={!isFormValid() || isSubmitting}

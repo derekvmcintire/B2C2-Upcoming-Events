@@ -4,9 +4,10 @@ import HamburgerNav from "./HamburgerNav";
 import RaceSubmissionForm from "../Submit/RaceSubmissionForm";
 import { useLocation } from "react-router-dom";
 import classes from "./top-nav.module.css";
-import Nav from "./nav";
+import Nav from "./Nav";
 import { MOBILE_BREAK_POINT } from "../../constants";
 import { useEventsContext } from "../../context/events-context";
+import SubmissionDrawer from "../Submit/Drawer";
 
 /**
  * TopNav Component
@@ -22,11 +23,11 @@ export default function TopNav(): JSX.Element {
   const location = useLocation();
 
   const getNavbarContents =
-    location.pathname !== "/submit" ? <RaceSubmissionForm /> : <Nav />;
+    location.pathname !== "/submit" ? <SubmissionDrawer /> : <Nav />;
 
   return (
     <div className={classes.topNavContainer}>
-      <Flex justify="space-between" align="flex-start">
+      <Flex justify="space-between" align="flex-end">
         {isMobile ? <HamburgerNav /> : getNavbarContents}
         <Group>
           <Title className={classes.title} ta="right">

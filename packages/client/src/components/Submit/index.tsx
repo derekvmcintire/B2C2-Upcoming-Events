@@ -18,7 +18,7 @@ import { FORMS } from "../../types";
  * @returns A container for the race submission form, along with top navigation and color scheme toggle.
  */
 const Submit = (): JSX.Element => {
-  const [value, setValue] = useState<string>(FORMS.SPECIAL.value);
+  const [value, setValue] = useState<string>(FORMS.RACE.value);
   return (
     <>
       <EventsProvider>
