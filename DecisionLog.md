@@ -96,10 +96,10 @@ Storage options:
 **Decision:** In-memory caching with JavaScript Map
 
 **Rationale:**
-- Client-side caching: The nature of your app suggests that the events data for each discipline is relatively small and temporary. Storing it in the client app avoids multiple network requests for the same data, and you don’t need a serverless function or additional infrastructure.
-- Lightweight: Map is built into JavaScript, so you don’t need to introduce new dependencies or complex architecture to handle this caching.
-- Local and fast: By keeping the data in the browser's memory, access times are very fast, as you are not relying on an external cache (like Memcached or Redis).
-- Avoid unnecessary complexity: You're already using React context to manage your data. By adding a simple in-memory cache layer within the app, you can keep your architecture simple and avoid potential issues with server-side state.
+- Client-side caching: Events data for each discipline is relatively small. Storing it in the client avoids multiple network requests for the same data, no need for a serverless function or additional infrastructure.
+- Lightweight: Map is built into JavaScript, so no need to introduce new dependencies or complex architecture to handle this caching.
+- Local and fast: By keeping the data in the browser's memory, access times are very fast. No dependency on an external cache (like Memcached or Redis).
+- Avoid unnecessary complexity: I am already using React context to manage data. By adding a simple in-memory cache layer within the app, it keeps your architecture simple and avoids potential issues with server-side state.
 
 ---
 
