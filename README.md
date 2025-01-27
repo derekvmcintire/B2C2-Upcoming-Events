@@ -14,7 +14,8 @@ A React-based web application for managing and displaying cycling events. Users 
 ### Backend  
 - **Proxy**: A serverless function facilitating UI-to-third-party API communication  
 - **API**: Serverless functions managing database operations and third-party API interactions  
-- **Database**: Firebase Firestore for event storage  
+- **Database**: Firebase Firestore for event storage
+- **GitHub Link**: [Backend Repository](https://github.com/derekvmcintire/B2C2-Upcoming-Events-API)
 
 ### Deployment  
 - UI and proxy are deployed together on Vercel  
