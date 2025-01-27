@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Container, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useEventsContext } from "../../context/events-context";
 import { DISCIPLINES } from "../../constants";
@@ -45,7 +45,7 @@ const EventsContainer = (): JSX.Element => {
   ]);
 
   return (
-    <>
+    <Container h="100%">
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
@@ -59,7 +59,7 @@ const EventsContainer = (): JSX.Element => {
           requestFreshDataForEventType={requestFreshDataForEventType}
         />
       </Tabs>
-    </>
+    </Container>
   );
 };
 
