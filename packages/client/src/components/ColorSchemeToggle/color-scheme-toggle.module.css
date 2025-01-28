@@ -1,5 +1,5 @@
 .colorScheme {
-  background-color: #242424;
+  background-color: light-dark(var(--bg-light), var(--bg-dark));
   position: fixed;
   bottom: 20px;
   right: 20px;
