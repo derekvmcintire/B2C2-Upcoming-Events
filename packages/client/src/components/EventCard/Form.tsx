@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import EventCardButtons from "./FormButtons";
+import FormButtons from "./FormButtons";
 import EventCardInput from "./FormInput";
 import { Stack } from "@mantine/core";
 import classes from "./event.module.css";
@@ -86,7 +86,7 @@ export default function EventCardForm({
         />
       )}
       {buttonsAreAvailable && (
-        <EventCardButtons
+        <FormButtons
           hasHousingUrl={hasHousingUrl}
           handleClickOpen={handleClickOpen}
         />

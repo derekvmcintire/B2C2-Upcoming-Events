@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Container, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useEventsContext } from "../../context/events-context";
 import { DISCIPLINES } from "../../constants";
@@ -45,12 +45,13 @@ const EventsContainer = (): JSX.Element => {
   ]);
 
   return (
-    <>
+    <Container h="100%">
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
         defaultValue={DISCIPLINES.ROAD.text}
         className={classes.eventList}
+        mb="64"
       >
         <EventTabs />
         <EventPanels
@@ -58,7 +59,7 @@ const EventsContainer = (): JSX.Element => {
           requestFreshDataForEventType={requestFreshDataForEventType}
         />
       </Tabs>
-    </>
+    </Container>
   );
 };
 

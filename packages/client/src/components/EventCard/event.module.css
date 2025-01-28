@@ -1,7 +1,9 @@
 .eventContainer {
   width: 100%;
   margin-top: 8px;
-  padding: 8px;
+  padding: 16px;
+  border: 1px solid #868686;
+  border-radius: 12px 2px 2px 2px;
 }
 
 .alert {
@@ -49,7 +51,7 @@
 
 .eventName {
   letter-spacing: rem(-1px);
-  font-size: rem(30px);
+  font-size: rem(40px);
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
@@ -111,10 +113,6 @@
   margin-right: 8px;
 }
 
-.eventCardForm {
-  height: 50px;
-}
-
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {
@@ -123,7 +121,7 @@
 
   /* Make text smaller and more responsive */
   .eventName {
-    font-size: rem(25px);
+    font-size: rem(30px);
     word-wrap: break-word; /* Allow long event names to break */
     text-align: left;
   }
