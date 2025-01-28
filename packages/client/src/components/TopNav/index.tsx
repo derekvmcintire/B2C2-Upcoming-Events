@@ -1,4 +1,4 @@
-import { Alert, Flex, Group, Text, Title } from "@mantine/core";
+import { Alert, Flex, Text, Title } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import HamburgerNav from "./HamburgerNav";
 import { useLocation } from "react-router-dom";
@@ -28,7 +28,7 @@ export default function TopNav(): JSX.Element {
     <div className={classes.topNavContainer}>
       <Flex justify="space-between" align="flex-end">
         {isMobile ? <HamburgerNav /> : getNavbarContents}
-        <Group>
+        <>
           <Title className={classes.title} ta="right">
             <Text
               inherit
@@ -39,7 +39,7 @@ export default function TopNav(): JSX.Element {
               B2C2 Event Calendar
             </Text>
           </Title>
-        </Group>
+        </>
       </Flex>
       {errors &&
         errors.map((error) => (

@@ -7,6 +7,7 @@ type DismissButtonProps = {
   clickHandler: () => void;
   withoutModal?: boolean;
   xs?: boolean;
+  disabled?: boolean;
 };
 
 /**
@@ -22,6 +23,7 @@ export default function DismissButton({
   clickHandler,
   withoutModal = false,
   xs = false,
+  disabled = false,
 }: DismissButtonProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -50,6 +52,7 @@ export default function DismissButton({
         onClick={handleClick}
         variant="subtle"
         size={size}
+        disabled={disabled}
       >
         <MdClose />
       </Button>

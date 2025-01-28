@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Burger, Popover } from "@mantine/core";
 import Nav from "./NavBar";
+import classes from "./top-nav.module.css";
 
 /**
  * HamburgerNav Component
@@ -14,7 +15,11 @@ export default function HamburgerNav(): JSX.Element {
     <>
       <Popover position="bottom">
         <Popover.Target>
-          <Burger opened={opened} onClick={() => setOpened((o) => !o)} />
+          <Burger
+            className={classes.burgerPopover}
+            opened={opened}
+            onClick={() => setOpened((o) => !o)}
+          />
         </Popover.Target>
         <Popover.Dropdown>
           <Nav vertical />

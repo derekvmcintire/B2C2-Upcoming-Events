@@ -57,9 +57,7 @@ export default function Description({
    */
   const handleDismiss = () => {
     setIsOpen(false);
-    if (value === "") {
-      setValue(description);
-    }
+    setValue(description);
   };
 
   /**
@@ -110,12 +108,29 @@ export default function Description({
   );
 
   /**
+   * Renders a label indicating unsaved changes.
+   */
+  const UnsavedChangesLabel = () => (
+    <Flex align="flex-end" w="90%" h="40">
+      {hasUnsavedChanges && (
+        <Flex mr="16" align="center" w="100%" justify="flex-start">
+          <MdOutlineWarningAmber color="orange" />
+          <Text ta="right" ml="8" size="xs" fs="italic">
+            Unsaved changes
+          </Text>
+        </Flex>
+      )}
+    </Flex>
+  );
+
+  /**
    * Renders the input field for event description.
    *
    * @returns The JSX element representing the input field.
    */
   const input = (
-    <>
+    <Stack gap={1} w="90%">
+      <UnsavedChangesLabel />
       <Textarea
         w="100%"
         value={value}
@@ -127,7 +142,7 @@ export default function Description({
         {inputButtonsLeft}
         {inputButtonsRight}
       </Flex>
-    </>
+    </Stack>
   );
 
   /**
@@ -135,10 +150,9 @@ export default function Description({
    */
   const EditLabel = () => (
     <Flex
-      ml="8"
       align="center"
-      justify="flex-start"
-      w="50%"
+      justify="flex-end"
+      w="100%"
       className={classes.editLabel}
     >
       <Text size="xs" fs="italic" ta="left">
@@ -152,29 +166,13 @@ export default function Description({
   );
 
   /**
-   * Renders a label indicating unsaved changes.
-   */
-  const UnsavedChangesLabel = () => (
-    <Flex align="center" w="100%">
-      <EditLabel />
-      <Flex mr="16" align="center" w="50%" justify="flex-end">
-        <MdOutlineWarningAmber color="orange" />
-        <Text ta="right" ml="8" size="xs" fs="italic">
-          Unsaved changes
-        </Text>
-      </Flex>
-    </Flex>
-  );
-
-  /**
    * Represents the content of the event description.
    * If a value is provided, it displays the event details along with an edit button.
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack w="100%" gap={1} align="flex-start" mt="16">
-      {hasUnsavedChanges ? <UnsavedChangesLabel /> : <EditLabel />}
-
+    <Stack w="100%" gap={1} align="center" mt="16">
+      <EditLabel />
       <Text className={classes.descriptionContainer}>{description || ""}</Text>
     </Stack>
   ) : (

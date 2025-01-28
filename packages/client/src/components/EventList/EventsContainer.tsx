@@ -1,4 +1,4 @@
-import { Container, Stack, Tabs } from "@mantine/core";
+import { Stack, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useEventsContext } from "../../context/events-context";
 import { DISCIPLINES } from "../../constants";
