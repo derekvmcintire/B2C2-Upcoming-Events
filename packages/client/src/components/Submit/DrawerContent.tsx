@@ -22,6 +22,7 @@ const DrawerContent = (): JSX.Element => {
           <Stack>
             <Title fw="600">Submit an Event</Title>
             <SegmentedControl
+              data-testid="sub-control"
               value={value}
               onChange={setValue}
               data={[

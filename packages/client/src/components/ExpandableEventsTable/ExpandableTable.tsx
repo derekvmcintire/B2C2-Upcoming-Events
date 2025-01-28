@@ -71,14 +71,19 @@ const ExpandableTable = ({
     <Card p="md">
       {!expandedRows.size ? (
         <Button
+          data-testid="detail-view-button"
           variant="subtle"
           onClick={() => setExpandedRows(new Set(eventIds))}
         >
-          Expand All
+          Detail View
         </Button>
       ) : (
-        <Button variant="subtle" onClick={() => setExpandedRows(new Set())}>
-          Collapse All
+        <Button
+          data-testid="quick-view-button"
+          variant="subtle"
+          onClick={() => setExpandedRows(new Set())}
+        >
+          Quick View
         </Button>
       )}
       <Table striped verticalSpacing="lg">

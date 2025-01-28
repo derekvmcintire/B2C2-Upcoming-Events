@@ -15,6 +15,7 @@ export default function SubmissionDrawer() {
       </Drawer>
 
       <Button
+        data-testid="sub-drawer-button"
         className={classes.drawerButton}
         size="md"
         variant="outline"

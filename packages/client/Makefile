@@ -1,5 +1,5 @@
 run:
-	npm run dev
+	npm run dev -- --host
 
 run-api:
 	vercel dev --yes
