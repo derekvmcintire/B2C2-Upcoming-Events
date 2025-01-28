@@ -1,50 +1,53 @@
 name: CI
 on: [push, pull_request]
-
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout the code
       - uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js
+      
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+      
+      # Install dependencies in the 'packages/client' directory
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: packages/client
 
-      # Step 3: Install dependencies
-      - run: npm ci
+      # Build the project
+      - name: Build Project
+        run: npm run build
+        working-directory: packages/client
 
-      # Step 4: Deploy to Vercel
+      # Deploy to Vercel
       - name: Deploy to Vercel
         id: vercel-deploy
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-args: '--prod=false'
-          working-directory: .
+          working-directory: packages/client  # Correct working directory for Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # Step 5: Set Cypress base URL from Vercel preview
-      - name: Set Base URL
+      # Debug step to see the URL
+      - name: Debug Preview URL
+        run: |
+          echo "Preview URL from Vercel: ${{ steps.vercel-deploy.outputs.preview-url }}"
+          echo "Current API_URL: ${{ env.API_URL }}"
+
+      # Set Preview URL with https if needed
+      - name: Set Preview URL
         run: |
           PREVIEW_URL="${{ steps.vercel-deploy.outputs.preview-url }}"
           if [[ ! $PREVIEW_URL =~ ^https:// ]]; then
             PREVIEW_URL="https://$PREVIEW_URL"
           fi
-          echo "CYPRESS_BASE_URL=$PREVIEW_URL" >> $GITHUB_ENV
-          echo "Preview URL for Cypress: $PREVIEW_URL"
+          echo "API_URL=$PREVIEW_URL" >> $GITHUB_ENV
 
-      # Step 6: Install Cypress dependencies
-      - name: Install Cypress
-        run: npm install cypress
-
-      # Step 7: Run Cypress tests
+      # Run Cypress tests
       - name: Run Cypress Tests
-        env:
-          CYPRESS_BASE_URL: ${{ env.CYPRESS_BASE_URL }}
-        run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
+        run: npm run test:cypress
+        working-directory: packages/client
