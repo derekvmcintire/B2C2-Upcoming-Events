@@ -113,6 +113,15 @@
   margin-right: 8px;
 }
 
+.descriptionContainer {
+  background-color: #2e2e2e;
+  /* border: 1px solid #868686; */
+  border-radius: 4px;
+  text-align: left;
+  padding: 8px;
+  width: 100%;
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {

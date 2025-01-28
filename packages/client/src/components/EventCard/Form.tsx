@@ -68,7 +68,7 @@ export default function EventCardForm({
   const buttonsAreAvailable = !interestedRiderInputOpen && !housingUrlInputOpen;
 
   return (
-    <Stack align="center" className={classes.eventCardForm}>
+    <Stack w="100%" align="center" className={classes.eventCardForm}>
       {interestedRiderInputOpen && (
         <EventCardInput
           placeholder="Add Interested Rider"

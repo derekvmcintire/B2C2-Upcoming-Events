@@ -1,5 +1,6 @@
-import { Progress, Text } from "@mantine/core";
+import { Flex, Progress, Text } from "@mantine/core";
 import { getHypeColor, getHypeLevel } from "../../utils/hype";
+import { MdDeviceThermostat } from "react-icons/md";
 
 interface HypometerProps {
   numberOfRegisteredRiders: number;
@@ -28,7 +29,10 @@ export default function Hypometer({
    */
   return (
     <>
-      <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
+      <Flex align="flex-start">
+        <MdDeviceThermostat />
+        <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
+      </Flex>
       <Progress
         radius="xs"
         size="xl"

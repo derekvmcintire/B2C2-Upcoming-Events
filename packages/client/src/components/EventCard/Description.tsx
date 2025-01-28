@@ -131,30 +131,51 @@ export default function Description({
   );
 
   /**
+   * Renders the EditLabel component.
+   */
+  const EditLabel = () => (
+    <Flex
+      ml="8"
+      align="center"
+      justify="flex-start"
+      w="50%"
+      className={classes.editLabel}
+    >
+      <Text size="xs" fs="italic" ta="left">
+        Event Details
+      </Text>
+      <EditButton
+        clickHandler={() => setIsOpen(true)}
+        aria-label="Edit event description"
+      />
+    </Flex>
+  );
+
+  /**
+   * Renders a label indicating unsaved changes.
+   */
+  const UnsavedChangesLabel = () => (
+    <Flex align="center" w="100%">
+      <EditLabel />
+      <Flex mr="16" align="center" w="50%" justify="flex-end">
+        <MdOutlineWarningAmber color="orange" />
+        <Text ta="right" ml="8" size="xs" fs="italic">
+          Unsaved changes
+        </Text>
+      </Flex>
+    </Flex>
+  );
+
+  /**
    * Represents the content of the event description.
    * If a value is provided, it displays the event details along with an edit button.
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack gap={1} align="flex-start" mt="16">
-      {hasUnsavedChanges && (
-        <Flex>
-          <MdOutlineWarningAmber color="orange" />
-          <Text ml="8" size="xs" fs="italic">
-            Unsaved changes
-          </Text>
-        </Flex>
-      )}
-      <Flex align="center">
-        <Text size="xs" fs="italic" ta="left">
-          Event Details
-        </Text>
-        <EditButton
-          clickHandler={() => setIsOpen(true)}
-          aria-label="Edit event description"
-        />
-      </Flex>
-      <Text ta="left">{description || ""}</Text>
+    <Stack w="100%" gap={1} align="flex-start" mt="16">
+      {hasUnsavedChanges ? <UnsavedChangesLabel /> : <EditLabel />}
+
+      <Text className={classes.descriptionContainer}>{description || ""}</Text>
     </Stack>
   ) : (
     <AddButton
