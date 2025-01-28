@@ -4,21 +4,25 @@ export const DISCIPLINES: EventDisciplines = {
   ROAD: {
     queryParam: "road%20race",
     text: "Road",
+    mobileText: "Road",
     id: "road",
   },
   CX: {
     queryParam: "cyclocross",
-    text: "CX",
+    text: "Cyclocross",
+    mobileText: "CX",
     id: "cx",
   },
   XC: {
     queryParam: "mountain%20bike",
-    text: "XC",
+    text: "Mountain Bike",
+    mobileText: "XC",
     id: "xc",
   },
   SPECIAL: {
     queryParam: "special",
-    text: "Team",
+    text: "Team Event",
+    mobileText: "Team",
     id: "special",
   },
 };

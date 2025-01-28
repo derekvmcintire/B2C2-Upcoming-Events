@@ -3,6 +3,9 @@ import classes from "./event.module.css";
 import DismissButton from "../Shared/DismissButton";
 import { useFormInput } from "../../hooks/useFormInput";
 import { useCallback } from "react";
+import { MdArrowForward } from "react-icons/md";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../constants";
 
 type EventCardInputProps = {
   placeholder: string;
@@ -35,6 +38,8 @@ export default function EventCardInput({
     validate: validate || (() => true),
   });
 
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
   /**
    * Handles the click event for the submit button.
    * If there are no errors, it calls the submitHandler function with the inputValue,
@@ -48,9 +53,16 @@ export default function EventCardInput({
     }
   }, [submitHandler, reset, dismissInput, error, inputValue]);
 
+  /**
+   * Renders the default button label based on the value of `isMobile`.
+   * If `isMobile` is true, it renders an arrow icon. Otherwise, it renders the string "Submit".
+   * @returns The default button label.
+   */
+  const DefaultButtonLabel = () => (isMobile ? <MdArrowForward /> : "Submit");
+
   return (
-    <Flex m="8" justify="center">
-      <DismissButton clickHandler={dismissInput} withoutModal />
+    <Flex mt="8" mb="8" justify="center">
+      <DismissButton xs clickHandler={dismissInput} withoutModal />
       <TextInput
         size="xs"
         value={inputValue}
@@ -60,7 +72,7 @@ export default function EventCardInput({
         error={error}
       />
       <Button size="xs" onClick={handleClickSubmit}>
-        {submitLabel || "Submit"}
+        {submitLabel || <DefaultButtonLabel />}
       </Button>
     </Flex>
   );

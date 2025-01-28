@@ -6,6 +6,7 @@ import { MdClose } from "react-icons/md";
 type DismissButtonProps = {
   clickHandler: () => void;
   withoutModal?: boolean;
+  xs?: boolean;
 };
 
 /**
@@ -20,10 +21,13 @@ type DismissButtonProps = {
 export default function DismissButton({
   clickHandler,
   withoutModal = false,
+  xs = false,
 }: DismissButtonProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
   const handleClick = () => (withoutModal ? clickHandler() : open());
+
+  const size = xs ? "compact-xs" : "compact-s";
 
   return (
     <>
@@ -45,7 +49,7 @@ export default function DismissButton({
         className={classes.xButton}
         onClick={handleClick}
         variant="subtle"
-        size="compact-sm"
+        size={size}
       >
         <MdClose />
       </Button>

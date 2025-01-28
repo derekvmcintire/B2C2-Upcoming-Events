@@ -82,6 +82,7 @@ export type EventDisciplineParam =
 export type Discipline = {
   queryParam: EventDisciplineParam;
   text: string;
+  mobileText: string;
   id: EventDiscipline;
 };
 
