@@ -25,7 +25,7 @@ export default function TopNav(): JSX.Element {
     location.pathname !== "/submit" ? <SubmissionDrawer /> : <Nav />;
 
   return (
-    <div className={classes.topNavContainer}>
+    <div className={classes.topNavContainer} data-testid="nav">
       <Flex justify="space-between" align="flex-end">
         {isMobile ? <HamburgerNav /> : getNavbarContents}
         <>
