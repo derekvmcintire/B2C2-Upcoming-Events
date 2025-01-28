@@ -48,3 +48,5 @@ jobs:
         env:
           CYPRESS_BASE_URL: ${{ env.CYPRESS_BASE_URL }}
         run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
+        working-directory: packages/client
+
