@@ -9,10 +9,9 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-image: url("public/headerbglite.jpg");
   background-image: light-dark(
-    url("public/headerbglite.jpg"),
-    url("public/headerbgdark.jpg")
+    url("/headerbglite.jpg"),
+    url("/headerbgdark.jpg")
   );
   background-attachment: fixed;
 }
