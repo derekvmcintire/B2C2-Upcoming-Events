@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0; /* Reset default margin */
 }
@@ -9,7 +10,10 @@ html, body {
   padding: 2rem;
   text-align: center;
   background-image: url("public/headerbglite.jpg");
-  background-image: light-dark(url("public/headerbglite.jpg"), url("public/headerbgdark.jpg"));
+  background-image: light-dark(
+    url("public/headerbglite.jpg"),
+    url("public/headerbgdark.jpg")
+  );
   background-attachment: fixed;
 }
 

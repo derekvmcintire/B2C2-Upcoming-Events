@@ -113,10 +113,6 @@
   margin-right: 8px;
 }
 
-.eventCardForm {
-  height: 50px;
-}
-
 /* Make adjustments for smaller screens */
 @media (max-width: 768px) {
   .eventGrid {

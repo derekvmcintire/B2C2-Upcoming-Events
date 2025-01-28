@@ -14,7 +14,7 @@ interface EventCardButtonProps {
  * @param {Function} props.handleClickOpen - The click event handler for opening a dialog.
  * @returns {JSX.Element} The rendered component.
  */
-export default function EventCardButtons({
+export default function FormButtons({
   hasHousingUrl,
   handleClickOpen,
 }: EventCardButtonProps): JSX.Element {
