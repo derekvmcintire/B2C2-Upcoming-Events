@@ -24,20 +24,6 @@ export default function EventDetails({ event }: EventDetailsProps) {
           {name}
         </Text>
         <Divider w="100%" mt="8" mb="8" />
-        {/* Event Location */}
-        <Text
-          w="100%"
-          ta="right"
-          className={classes.eventLocation}
-        >{`${city}, ${state}`}</Text>
-        {/* Event URL */}
-        {eventUrl && (
-          <Text w="100%" ta="right" className={classes.eventLink}>
-            <a href={eventUrl} target="_blank" rel="noopener noreferrer">
-              Event Details
-            </a>
-          </Text>
-        )}
       </Stack>
     </>
   );

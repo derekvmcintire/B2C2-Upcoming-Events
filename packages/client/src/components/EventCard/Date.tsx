@@ -1,9 +1,10 @@
-import { Stack, Text, Title } from "@mantine/core";
+import { Flex, Stack, Text, Title } from "@mantine/core";
 import classes from "./event.module.css";
 import { EventType } from "../../types";
 import { formatEventDate } from "../../utils/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
+import EventDetails from "./Details";
 
 type EventDateProps = {
   event: EventType;
@@ -42,9 +43,11 @@ export default function EventDate({ event }: EventDateProps) {
   return (
     <>
       <Stack gap={0} align={stackAlign}>
+      <EventDetails event={event} />
         <Title ta={textAlign}>
           <DateText />
         </Title>
+        
       </Stack>
     </>
   );

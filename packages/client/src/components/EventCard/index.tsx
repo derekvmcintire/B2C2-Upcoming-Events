@@ -17,14 +17,12 @@ import type {
 import { updateEvent, UpdateEventData } from "../../api/updateEvent";
 import classes from "./event.module.css";
 
-import RegisteredRidersRow from "./RegisteredRidersRow";
-import InterestedRidersRow from "./InterestedRidersRow";
 import EventInformationRow from "./InformationRow";
-import { DISCIPLINES } from "../../constants";
 import EventCardForm from "./Form";
 import { useEventsContext } from "../../context/events-context";
 import Hypometer from "./Hypometer";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
+import RidersLists from "../RidersLists/RidersLists";
 
 type EventProps = {
   event: EventType;
@@ -171,27 +169,24 @@ export default function EventCard({
         </Flex>
       )}
       <Grid w="100%" className={classes.eventGrid}>
+      <EventCardForm
+          hasHousingUrl={!!housingUrl}
+          handleSubmitHousing={handleSubmitHousing}
+          handleSubmitInterestedRider={handleSubmitInterestedRider}
+        />
         <EventInformationRow
           event={event}
           housingUrl={housingUrl}
           removeHousingUrl={handleRemoveHousing}
           submitDescription={handleSubmitDescription}
         />
-        {eventType !== DISCIPLINES.SPECIAL.id && (
-          <RegisteredRidersRow registeredNames={registeredNames} />
-        )}
-
-        <InterestedRidersRow
+        <RidersLists
           riders={interestedRiders}
           removeRider={handleRemoveInterestedRider}
+          registeredNames={registeredNames}
         />
       </Grid>
       <Flex justify="center">
-        <EventCardForm
-          hasHousingUrl={!!housingUrl}
-          handleSubmitHousing={handleSubmitHousing}
-          handleSubmitInterestedRider={handleSubmitInterestedRider}
-        />
       </Flex>
       <Hypometer
         numberOfInterestedRiders={interestedRiders.length}

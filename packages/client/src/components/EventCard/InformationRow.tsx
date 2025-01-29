@@ -31,9 +31,11 @@ export default function EventInformationRow({
 }: EventInformationRowProps) {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
+  const { city, state, eventUrl } = event;
+
   return (
-    <div data-testid="info-row">
-      <Grid.Col span={isMobile ? 12 : 4}>
+    <>
+      <Grid.Col data-testid="info-row" span={isMobile ? 12 : 4}>
         <EventDate event={event} />
         <Divider mt="8" />
       </Grid.Col>
@@ -43,7 +45,22 @@ export default function EventInformationRow({
         className={classes.lightSection}
       >
         <Stack gap={4} align="flex-start">
-          <EventDetails event={event} />
+          <Flex>
+          {/* Event Location */}
+        <Text
+          w="100%"
+          ta="left"
+          className={classes.eventLocation}
+        >{`${city}, ${state}`}</Text>
+        {/* Event URL */}
+        {eventUrl && (
+          <Text w="100%" ta="left" className={classes.eventLink}>
+            <a href={eventUrl} target="_blank" rel="noopener noreferrer">
+              Event Details
+            </a>
+          </Text>
+        )}
+        </Flex>
           {housingUrl && (
             <Flex justify="flex-start">
               <Text className={classes.eventLink}>
@@ -57,6 +74,6 @@ export default function EventInformationRow({
           <Description event={event} submitFn={submitDescription} />
         </Stack>
       </Grid.Col>
-    </div>
+    </>
   );
 }

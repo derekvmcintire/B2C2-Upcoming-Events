@@ -171,7 +171,7 @@ export default function Description({
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack w="100%" gap={1} align="center" mt="16">
+    <Stack w="100%" gap={1} align="center">
       <EditLabel />
       <Text className={classes.descriptionContainer}>{description || ""}</Text>
     </Stack>
