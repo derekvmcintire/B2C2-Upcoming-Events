@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,  // Required for Docker/CI environments
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        target: "http://localhost:3000",
         changeOrigin: true,
       },
     },
