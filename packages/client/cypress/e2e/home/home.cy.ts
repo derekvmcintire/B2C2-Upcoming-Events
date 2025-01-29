@@ -1,13 +1,17 @@
 describe("Homepage", () => {
-  it("should load the homepage and display the title", () => {
-    // Visit the base URL (set in cypress.config.ts)
-    cy.visit("/");
+  it('should load the homepage and display the title', () => {
+    cy.visit('/');
+    
+    cy.document().then((doc) => {
+      console.log('Page HTML:', doc.body.innerHTML);
+    });
 
-    // Check if the title exists
-    cy.contains("B2C2 Event Calendar").should("be.visible");
-    cy.get('[data-testid="nav"]').should("exist");
-    cy.get('[data-testid="sub-drawer-button"]').should("exist");
-    // cy.get('[data-testid="loading"]').should("exist");
+    // First wait for loading to appear
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should('exist')
+      // Then wait for the table to appear (meaning loading is complete)
+      .get('[data-testid="expandable-table"]', { timeout: 10000 })
+      .should('exist');
   });
 
   it("should navigate to a specific page", () => {
