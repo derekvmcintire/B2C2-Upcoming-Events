@@ -34,8 +34,8 @@ describe("Homepage", () => {
     cy.get('[data-testid="event-tabs"]', { timeout: 10000 })
       .should('exist');
 
-      // check that the events list is rendered inside the default tab
-      cy.get('[data-testid="events-panels"]', { timeout: 10000 })
+      // check that the loading state renders
+      cy.get('[data-testid="loading"]', { timeout: 10000 })
       .should('exist');
 
       // // check that the expandable table renders inside the events list

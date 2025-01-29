@@ -3,6 +3,7 @@ import { DISCIPLINES } from "../../constants";
 import EventsList from "../EventList/EventsList";
 import classes from "./event-list-tabs.module.css";
 import { EventDiscipline } from "../../types";
+import Loading from "../Shared/Loading";
 
 type EventPanelsProps = {
   eventsLoading: boolean;
@@ -32,7 +33,7 @@ export default function EventPanels({
       value={DISCIPLINES.ROAD.text}
     >
       {eventsLoading ? (
-        <div className={classes.loading}>Loading...</div>
+        <Loading />
       ) : (
         <EventsList
         data-testid="events-list"
@@ -49,7 +50,7 @@ export default function EventPanels({
   const CxPanel = () => (
     <Tabs.Panel w="100%" key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
       {eventsLoading ? (
-        <div className={classes.loading}>Loading...</div>
+        <Loading />
       ) : (
         <EventsList
         data-testid="events-list"
@@ -66,7 +67,7 @@ export default function EventPanels({
   const XcPanel = () => (
     <Tabs.Panel w="100%" key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
       {eventsLoading ? (
-        <div className={classes.loading}>Loading...</div>
+        <Loading />
       ) : (
         <EventsList
         data-testid="events-list"
@@ -87,7 +88,7 @@ export default function EventPanels({
       value={DISCIPLINES.SPECIAL.text}
     >
       {eventsLoading ? (
-        <div className={classes.loading}>Loading...</div>
+        <Loading />
       ) : (
         <EventsList
         data-testid="events-list"

@@ -3,6 +3,7 @@ import { useEventsContext } from "../../context/events-context";
 import { EventDiscipline, type Discipline } from "../../types";
 import classes from "./event-list.module.css";
 import ExpandableTable from "../ExpandableEventsTable/ExpandableTable";
+import Loading from "../Shared/Loading";
 
 interface EventsListProps {
   discipline: Discipline;
@@ -33,7 +34,7 @@ export default function EventsList({
    */
   const getEventDetails = () => {
     return registrationsLoading ? (
-      <div className={classes.loading} data-testid="loading">Loading...</div>
+      <Loading />
     ) : (
       <>
         <ExpandableTable
