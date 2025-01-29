@@ -143,7 +143,6 @@ jobs:
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
-          DEBUG: "cypress:*"  # Enable Cypress debugging
         run: |
           cd packages/client
           # Check both servers are responding
