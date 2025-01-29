@@ -39,7 +39,7 @@ jobs:
       - name: Wait for Vercel server
         run: |
           attempt_counter=0
-          max_attempts=30
+          max_attempts=100
           
           until $(curl --output /dev/null --silent --head --fail http://localhost:3000); do
             if [ ${attempt_counter} -eq ${max_attempts} ]; then
