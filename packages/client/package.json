@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite -- --host",
+    "dev-api": "vercel dev --yes",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

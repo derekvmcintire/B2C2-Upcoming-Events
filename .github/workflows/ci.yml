@@ -15,34 +15,60 @@ jobs:
           node-version: '18'
 
       # Step 3: Install dependencies
-      - run: npm ci
-
-      # Step 4: Start mock API server for proxy (if needed)
-      - name: Start Mock API Server
+      - name: Install dependencies
         run: |
-          npx json-server --watch db.json --port 3000 &
-          echo "Starting mock API server..."
-        continue-on-error: true  # Optional: depends on whether you need the API in tests
+          npm ci
+          npm install -g vercel
 
-      # Step 5: Start Vite
-      - name: Start Vite
+      # Step 4: Configure Vercel
+      - name: Configure Vercel
         run: |
-          npm run dev &
-          echo "Starting Vite server..."
+          vercel pull --yes --environment=development --token=${{ secrets.VERCEL_TOKEN }}
+          vercel env pull --environment=development --token=${{ secrets.VERCEL_TOKEN }}
         env:
-          NODE_ENV: test
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # Step 6: Wait for servers
-      - name: Wait for servers
+      # Step 5: Start Vercel Dev Server
+      - name: Start Vercel Dev Server
+        run: |
+          vercel dev --yes &
+          echo "Starting Vercel dev server..."
+
+      # Step 6: Wait for Vercel server
+      - name: Wait for Vercel server
         run: |
           attempt_counter=0
           max_attempts=30
           
-          echo "Checking Vite server..."
+          until $(curl --output /dev/null --silent --head --fail http://localhost:3000); do
+            if [ ${attempt_counter} -eq ${max_attempts} ]; then
+              echo "Max attempts reached. Vercel server is not running."
+              exit 1
+            fi
+            
+            attempt_counter=$(($attempt_counter+1))
+            echo "Waiting for Vercel server... (${attempt_counter}/${max_attempts})"
+            sleep 2
+          done
+          
+          echo "Vercel server is up!"
+
+      # Step 7: Start Vite
+      - name: Start Vite
+        run: |
+          npm run dev &
+          echo "Starting Vite server..."
+
+      # Step 8: Wait for Vite server
+      - name: Wait for Vite server
+        run: |
+          attempt_counter=0
+          max_attempts=30
+          
           until $(curl --output /dev/null --silent --head --fail http://localhost:5173); do
             if [ ${attempt_counter} -eq ${max_attempts} ]; then
               echo "Max attempts reached. Vite server is not running."
-              cat vite.log
               exit 1
             fi
             
@@ -53,26 +79,19 @@ jobs:
           
           echo "Vite server is up!"
 
-          # Optional: Check API server if needed
-          if curl --output /dev/null --silent --head --fail http://localhost:3000; then
-            echo "API server is up!"
-          else
-            echo "Warning: API server may not be running. This might affect tests."
-          fi
-
-      # Step 7: Install Cypress dependencies
+      # Step 9: Install Cypress
       - name: Install Cypress
         run: npm install cypress
 
-      # Step 8: Run Cypress Tests
+      # Step 10: Run Cypress Tests
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
         run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
 
-      # Step 9: Cleanup
+      # Step 11: Cleanup
       - name: Cleanup
         if: always()
         run: |
-          pkill -f vite || true
-          pkill -f "json-server" || true  # Clean up mock API server if used
+          pkill -f "vite" || true
+          pkill -f "vercel dev" || true
