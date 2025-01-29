@@ -26,8 +26,8 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Authenticate Vercel
-        run: echo "${{ secrets.VERCEL_TOKEN }}" | vercel login
+      - name: Set Vercel Token
+        run: vercel config set token ${{ secrets.VERCEL_TOKEN }}
 
       # Step 4: Configure Vercel
       - name: Configure Vercel
