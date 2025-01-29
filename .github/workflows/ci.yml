@@ -99,7 +99,7 @@ jobs:
           CYPRESS_BASE_URL: http://localhost:5173
         run: |
           cd packages/client
-          npx cypress run --spec "packages/client/cypress/e2e/home/home.cy.ts"
+          npx cypress run --spec "cypress/e2e/home/home.cy.ts"
 
       # Step 11: Cleanup
       - name: Cleanup
