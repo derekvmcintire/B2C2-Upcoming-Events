@@ -17,30 +17,45 @@ jobs:
       # Step 3: Install dependencies
       - run: npm ci
 
-      # Step 4: Start Vite in the background with a wait command
+      # Step 4: Start Vite with proper host binding
       - name: Start Vite
         run: |
-          npm run dev -- --host > vite.log 2>&1 &
-          echo "Waiting for Vite to start..."
-          sleep 5
+          npm run dev -- --host 0.0.0.0 &
+          echo "Starting Vite server..."
         env:
           NODE_ENV: test
+          VITE_PORT: 5173
 
-      # Step 5: Debugging Vite logs if wait-on times out
-      - name: Debug Vite Logs
-        if: failure()
-        run: cat vite.log
+      # Step 5: Wait for Vite server with health check
+      - name: Wait for Vite server
+        run: |
+          attempt_counter=0
+          max_attempts=30
+          
+          until $(curl --output /dev/null --silent --head --fail http://localhost:5173); do
+            if [ ${attempt_counter} -eq ${max_attempts} ]; then
+              echo "Max attempts reached. Vite server is not running."
+              cat vite.log
+              exit 1
+            fi
+            
+            attempt_counter=$(($attempt_counter+1))
+            echo "Waiting for Vite server... (${attempt_counter}/${max_attempts})"
+            sleep 2
+          done
 
-      # Step 6: Wait for Vite server to be ready
-      - name: Wait for localhost to be ready
-        run: npx wait-on http://localhost:5173 --timeout 60000
-
-      # Step 7: Install Cypress dependencies
+      # Step 6: Install Cypress dependencies
       - name: Install Cypress
         run: npm install cypress
 
-      # Step 8: Run Cypress Tests
+      # Step 7: Run Cypress Tests
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
         run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
+
+      # Step 8: Cleanup
+      - name: Cleanup
+        if: always()
+        run: |
+          pkill -f vite || true
