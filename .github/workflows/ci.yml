@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build-and-test:
@@ -67,6 +67,9 @@ jobs:
 
       # Step 7: Start Vite
       - name: Start Vite
+        env:
+          VITE_API_SECRET_KEY: ${{ secrets.VITE_API_SECRET_KEY }}
+          # Add any other needed environment variables
         run: |
           cd packages/client
           npm run dev &
@@ -97,14 +100,32 @@ jobs:
           cd packages/client
           npm install cypress
 
+      # DEBUGGING
+      - name: Debug Server State
+        run: |
+          echo "Checking server states..."
+          echo "Vite Server Response:"
+          curl -v http://localhost:5173 || true
+          echo "Vercel Server Response:"
+          curl -v http://localhost:3000 || true
+          echo "Environment Variables:"
+          env | grep VITE || true
+          env | grep VERCEL || true
+
       # Step 10: Run Cypress Tests
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
+          DEBUG: "cypress:*"  # Enable Cypress debugging
         run: |
           cd packages/client
+          # Check both servers are responding
+          echo "Checking Vite server..."
           curl -v http://localhost:5173
-          npx cypress run --spec "cypress/e2e/home/home.cy.ts"
+          echo "Checking Vercel server..."
+          curl -v http://localhost:3000
+          # Run tests with more verbose output
+          CYPRESS_DEBUG=1 npx cypress run --spec "cypress/e2e/home/home.cy.ts"
 
       # Step 11: Cleanup
       - name: Cleanup
