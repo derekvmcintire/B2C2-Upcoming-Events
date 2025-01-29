@@ -1,7 +1,6 @@
 import { Flex, Tabs } from "@mantine/core";
 import { DISCIPLINES } from "../../constants";
 import EventsList from "../EventList/EventsList";
-import classes from "./event-list-tabs.module.css";
 import { EventDiscipline } from "../../types";
 import Loading from "../Shared/Loading";
 

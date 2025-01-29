@@ -1,7 +1,6 @@
 import { Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { EventDiscipline, type Discipline } from "../../types";
-import classes from "./event-list.module.css";
 import ExpandableTable from "../ExpandableEventsTable/ExpandableTable";
 import Loading from "../Shared/Loading";
 

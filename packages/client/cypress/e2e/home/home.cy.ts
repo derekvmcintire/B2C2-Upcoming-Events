@@ -1,49 +1,18 @@
 describe("Homepage", () => {
   it('should load the homepage and display the title', () => {
-    // Intercept ALL network requests to log them
-    cy.intercept('**/*', (req) => {
-      console.log(`Request made to: ${req.url}`);
-      req.continue();
-    }).as('allRequests');
-    
     cy.visit('/');
-
-    cy.intercept('/api/proxy*', (req) => {
-      console.log('Proxy request:', {
-        url: req.url,
-        query: req.query,
-        headers: req.headers
-      });
-      req.continue((res) => {
-        console.log('Proxy response:', {
-          status: res.statusCode,
-          body: res.body
-        });
-      });
-    }).as('proxyRequest');
     
-    cy.wait('@proxyRequest').then((interception) => {
-      console.log('Proxy interception:', interception);
-    });
-
     cy.document().then((doc) => {
       console.log('Page HTML:', doc.body.innerHTML);
     });
 
-    // Check that the tabs are rendered
-    cy.get('[data-testid="event-tabs"]', { timeout: 10000 })
+    // First wait for loading to appear
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should('exist')
+      // Then wait for the table to appear (meaning loading is complete)
+      .get('[data-testid="expandable-table"]', { timeout: 10000 })
       .should('exist');
-
-      // check that the loading state renders
-      cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should('exist');
-
-      // // check that the expandable table renders inside the events list
-      // cy.get('[data-testid="expandable-table"]', { timeout: 10000 })
-      // .should('exist');
   });
-
-
 
   it("should navigate to a specific page", () => {
     cy.visit("/");
