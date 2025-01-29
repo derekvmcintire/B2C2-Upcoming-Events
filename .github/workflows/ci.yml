@@ -89,7 +89,7 @@ jobs:
 
       # Step 9: Install Cypress
       - name: Install Cypress
-        run: 
+        run: |
           cd packages/client
           npm install cypress
 
@@ -97,7 +97,7 @@ jobs:
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
-        run: 
+        run: |
           cd packages/client
           npx cypress run --spec "packages/client/cypress/e2e/home/home.cy.ts"
 
