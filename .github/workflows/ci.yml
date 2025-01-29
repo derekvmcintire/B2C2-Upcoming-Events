@@ -21,14 +21,13 @@ jobs:
           npm ci
           npm install -g vercel
 
+      # DEBUG env vars
       - name: Debug Environment
         run: |
           echo "Checking environment variables..."
           echo "VITE_API_SECRET_KEY exists: ${{ secrets.VITE_API_SECRET_KEY != '' }}"
-          echo "API URL: $VITE_API_URL"
-          echo "Token length: ${#VERCEL_TOKEN}"
+          echo "Token length: ${#VERCEL_TOKEN}"          
         env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_API_SECRET_KEY: ${{ secrets.VITE_API_SECRET_KEY }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
@@ -104,6 +103,7 @@ jobs:
           CYPRESS_BASE_URL: http://localhost:5173
         run: |
           cd packages/client
+          curl -v http://localhost:5173
           npx cypress run --spec "cypress/e2e/home/home.cy.ts"
 
       # Step 11: Cleanup
