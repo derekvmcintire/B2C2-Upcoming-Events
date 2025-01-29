@@ -33,7 +33,7 @@ export default function EventsList({
    */
   const getEventDetails = () => {
     return registrationsLoading ? (
-      <div className={classes.loading}>Loading...</div>
+      <div className={classes.loading} data-testid="loading">Loading...</div>
     ) : (
       <>
         <ExpandableTable
