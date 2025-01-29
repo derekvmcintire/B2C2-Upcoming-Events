@@ -7,21 +7,23 @@ describe("Homepage", () => {
     }).as('allRequests');
     
     cy.visit('/');
-    
-    // Wait and log all requests
-    cy.wait('@allRequests').then((interception) => {
-      console.log('Network call made:', {
-        url: interception.request.url,
-        method: interception.request.method,
-        response: interception.response?.body
-      });
-    });
 
-    // Add debug logging for window object
-    cy.window().then((win) => {
-      console.log('Window object:', win);
-      // Access environment variables through Cypress.env() instead
-      console.log('Cypress environment:', Cypress.env());
+    cy.intercept('/api/proxy*', (req) => {
+      console.log('Proxy request:', {
+        url: req.url,
+        query: req.query,
+        headers: req.headers
+      });
+      req.continue((res) => {
+        console.log('Proxy response:', {
+          status: res.statusCode,
+          body: res.body
+        });
+      });
+    }).as('proxyRequest');
+    
+    cy.wait('@proxyRequest').then((interception) => {
+      console.log('Proxy interception:', interception);
     });
 
     cy.document().then((doc) => {

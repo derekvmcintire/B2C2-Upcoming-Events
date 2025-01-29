@@ -17,12 +17,14 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          npm install -g vercel
+          # Install client dependencies
           cd packages/client
           npm ci
           npm install -g vercel
+          # Install API dependencies
           cd api
-          npm install -g vercel
+          npm ci
+          cd ..
 
       # DEBUG env vars
       - name: Debug Environment
@@ -37,8 +39,20 @@ jobs:
       # Step 4: Configure Vercel
       - name: Configure Vercel
         run: |
+          # Pull Vercel configuration
           vercel pull --yes --environment=development --token=${{ secrets.VERCEL_TOKEN }}
           vercel env pull --environment=development --token=${{ secrets.VERCEL_TOKEN }}
+          # Create or update vercel.json if needed
+          echo '{
+            "version": 2,
+            "builds": [
+              { "src": "api/**/*.js", "use": "@vercel/node" },
+              { "src": "package.json", "use": "@vercel/static-build" }
+            ],
+            "routes": [
+              { "src": "/api/(.*)", "dest": "api/$1" }
+            ]
+          }' > vercel.json
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -48,6 +62,16 @@ jobs:
         run: |
           vercel dev --yes --token=${{ secrets.VERCEL_TOKEN }} &
           echo "Starting Vercel dev server..."
+
+      # Add after Starting Vercel Dev Server
+      - name: Debug Proxy Setup
+        run: |
+          echo "Checking API setup..."
+          ls -la packages/client/api/
+          echo "Checking node_modules in API directory..."
+          ls -la packages/client/api/node_modules || echo "No node_modules found!"
+          echo "Testing proxy endpoint..."
+          curl -v "http://localhost:3000/api/proxy?apiUrl=https%3A%2F%2Fb2c2-events-api.vercel.app%2Fapi%2FgetEventsByType&params=%7B%22type%22%3A%22road%22%7D"
 
       # Step 6: Wait for Vercel server
       - name: Wait for Vercel server
