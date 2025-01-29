@@ -17,12 +17,11 @@ describe("Homepage", () => {
       });
     });
 
-    // Add debug logging
+    // Add debug logging for window object
     cy.window().then((win) => {
-      console.log('Environment Variables:', {
-        nodeEnv: win.process?.env?.NODE_ENV,
-        apiUrl: win.process?.env?.VITE_API_URL,
-      });
+      console.log('Window object:', win);
+      // Access environment variables through Cypress.env() instead
+      console.log('Cypress environment:', Cypress.env());
     });
 
     cy.document().then((doc) => {
@@ -33,6 +32,7 @@ describe("Homepage", () => {
     cy.get('[data-testid="loading"]', { timeout: 10000 })
       .should('exist');
   });
+
 
 
   it("should navigate to a specific page", () => {
