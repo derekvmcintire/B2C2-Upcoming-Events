@@ -17,6 +17,7 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
+          cd packages/client
           npm ci
           npm install -g vercel
 
