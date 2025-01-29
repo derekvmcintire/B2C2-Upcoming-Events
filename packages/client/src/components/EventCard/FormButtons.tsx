@@ -55,6 +55,7 @@ export default function FormButtons({
       </Button>
     ) : (
       <Button
+        data-testid="interested-button"
         variant="default"
         size="compact-sm"
         leftSection={<MdAdd size={14} />}
@@ -82,6 +83,7 @@ export default function FormButtons({
       </Button>
     ) : (
       <Button
+        data-testid="housing-button"
         variant="default"
         size="compact-sm"
         leftSection={<MdAdd size={14} />}

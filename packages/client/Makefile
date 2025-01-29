@@ -1,5 +1,5 @@
 run:
-	npm run dev -- --host
+	npm run dev
 
 run-api:
 	vercel dev --yes
@@ -24,3 +24,6 @@ add:
 
 clean:
 	npm run format; npm run typecheck; npm run lint
+
+cyp:
+	npx cypress run --spec "cypress/e2e/home/"

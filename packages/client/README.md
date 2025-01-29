@@ -110,7 +110,7 @@ The B2C2 Event Calendar client application is a React-based web application that
    yarn start
    ```
 
-5. Open the application in your browser at `http://localhost:3000`.
+5. Open the application in your browser at `http://localhost:5173`.
 
 ---
 

@@ -37,7 +37,6 @@ export const useEventData = (): UseEventDataReturn => {
     setIsSubmitting,
     setRequestFreshData,
     setErrors,
-    errors,
   } = useEventsContext();
 
   /**
@@ -48,13 +47,10 @@ export const useEventData = (): UseEventDataReturn => {
    */
   const handleSetNewError = useCallback(
     (newError: string, message?: string): void => {
-      const newErrors = [
-        ...errors.filter((error) => error !== newError),
-        `${message} ${newError}`,
-      ];
-      setErrors(newErrors);
+      console.log("*** SETTING ERRORS ***");
+      setErrors([`${message} ${newError}`]);
     },
-    [errors, setErrors],
+    [setErrors],
   );
 
   /**

@@ -1,8 +1,8 @@
 import { Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { EventDiscipline, type Discipline } from "../../types";
-import classes from "./event-list.module.css";
 import ExpandableTable from "../ExpandableEventsTable/ExpandableTable";
+import Loading from "../Shared/Loading";
 
 interface EventsListProps {
   discipline: Discipline;
@@ -33,7 +33,7 @@ export default function EventsList({
    */
   const getEventDetails = () => {
     return registrationsLoading ? (
-      <div className={classes.loading}>Loading...</div>
+      <Loading />
     ) : (
       <>
         <ExpandableTable
@@ -46,7 +46,10 @@ export default function EventsList({
   };
 
   return events.length < 1 ? (
-    <Text mt="16">{`No ${discipline.text} events found.`}</Text>
+    <Text
+      mt="16"
+      data-testid="no-events-found"
+    >{`No ${discipline.text} events found.`}</Text>
   ) : (
     getEventDetails()
   );

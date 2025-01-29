@@ -68,10 +68,9 @@ const ExpandableTable = ({
   ));
 
   return (
-    <Card p="md">
+    <Card p="md" data-testid="expandable-table">
       {!expandedRows.size ? (
         <Button
-          data-testid="detail-view-button"
           variant="subtle"
           onClick={() => setExpandedRows(new Set(eventIds))}
         >

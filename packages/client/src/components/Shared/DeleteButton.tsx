@@ -1,5 +1,5 @@
 import { Button, Flex, Modal, Stack, Text } from "@mantine/core";
-import classes from "./remove-button.module.css";
+import classes from "./shared.module.css";
 import { MdDeleteForever } from "react-icons/md";
 import { useDisclosure } from "@mantine/hooks";
 
