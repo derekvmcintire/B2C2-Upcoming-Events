@@ -35,6 +35,7 @@ export default function EventPanels({
         <div className={classes.loading}>Loading...</div>
       ) : (
         <EventsList
+          data-testid="events-list"
           discipline={DISCIPLINES.ROAD}
           requestDataCallback={requestFreshDataForEventType}
         />

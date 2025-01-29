@@ -30,9 +30,17 @@ describe("Homepage", () => {
       console.log('Page HTML:', doc.body.innerHTML);
     });
 
-    // Check loading state
+    // Check that the tabs are rendered
     cy.get('[data-testid="event-tabs"]', { timeout: 10000 })
       .should('exist');
+
+      // check that the events list is rendered inside the default tab
+      cy.get('[data-testid="events-list"]', { timeout: 10000 })
+      .should('exist');
+
+      // // check that the expandable table renders inside the events list
+      // cy.get('[data-testid="expandable-table"]', { timeout: 10000 })
+      // .should('exist');
   });
 
 
