@@ -89,17 +89,22 @@ jobs:
 
       # Step 9: Install Cypress
       - name: Install Cypress
-        run: npm install cypress
+        run: 
+          cd packages/client
+          npm install cypress
 
       # Step 10: Run Cypress Tests
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
-        run: npx cypress run --spec "packages/client/cypress/e2e/home/home.cy.ts"
+        run: 
+          cd packages/client
+          npx cypress run --spec "packages/client/cypress/e2e/home/home.cy.ts"
 
       # Step 11: Cleanup
       - name: Cleanup
         if: always()
         run: |
+          cd packages/client
           pkill -f "vite" || true
           pkill -f "vercel dev" || true
