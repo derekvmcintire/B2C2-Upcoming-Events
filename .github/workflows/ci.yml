@@ -17,21 +17,28 @@ jobs:
       # Step 3: Install dependencies
       - run: npm ci
 
-      # Step 4: Start Vite with proper host binding
+      # Step 4: Start mock API server for proxy (if needed)
+      - name: Start Mock API Server
+        run: |
+          npx json-server --watch db.json --port 3000 &
+          echo "Starting mock API server..."
+        continue-on-error: true  # Optional: depends on whether you need the API in tests
+
+      # Step 5: Start Vite
       - name: Start Vite
         run: |
-          npm run dev -- --host 0.0.0.0 &
+          npm run dev &
           echo "Starting Vite server..."
         env:
           NODE_ENV: test
-          VITE_PORT: 5173
 
-      # Step 5: Wait for Vite server with health check
-      - name: Wait for Vite server
+      # Step 6: Wait for servers
+      - name: Wait for servers
         run: |
           attempt_counter=0
           max_attempts=30
           
+          echo "Checking Vite server..."
           until $(curl --output /dev/null --silent --head --fail http://localhost:5173); do
             if [ ${attempt_counter} -eq ${max_attempts} ]; then
               echo "Max attempts reached. Vite server is not running."
@@ -43,19 +50,29 @@ jobs:
             echo "Waiting for Vite server... (${attempt_counter}/${max_attempts})"
             sleep 2
           done
+          
+          echo "Vite server is up!"
 
-      # Step 6: Install Cypress dependencies
+          # Optional: Check API server if needed
+          if curl --output /dev/null --silent --head --fail http://localhost:3000; then
+            echo "API server is up!"
+          else
+            echo "Warning: API server may not be running. This might affect tests."
+          fi
+
+      # Step 7: Install Cypress dependencies
       - name: Install Cypress
         run: npm install cypress
 
-      # Step 7: Run Cypress Tests
+      # Step 8: Run Cypress Tests
       - name: Run Cypress Tests
         env:
           CYPRESS_BASE_URL: http://localhost:5173
         run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
 
-      # Step 8: Cleanup
+      # Step 9: Cleanup
       - name: Cleanup
         if: always()
         run: |
           pkill -f vite || true
+          pkill -f "json-server" || true  # Clean up mock API server if used
