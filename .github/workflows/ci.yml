@@ -17,36 +17,23 @@ jobs:
       # Step 3: Install dependencies
       - run: npm ci
 
-      # Step 4: Deploy to Vercel
-      - name: Deploy to Vercel
-        id: vercel-deploy
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: '--prod=false'
-          working-directory: .
+      # Step 4: Start Next.js app in the background
+      - name: Start Next.js
+        run: npm run dev & 
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NODE_ENV: test
 
-      # Step 5: Set Cypress base URL from Vercel preview
-      - name: Set Base URL
+      # Step 5: Wait for the server to be ready
+      - name: Wait for localhost to be ready
         run: |
-          PREVIEW_URL="${{ steps.vercel-deploy.outputs.preview-url }}"
-          if [[ ! $PREVIEW_URL =~ ^https:// ]]; then
-            PREVIEW_URL="https://$PREVIEW_URL"
-          fi
-          echo "CYPRESS_BASE_URL=$PREVIEW_URL" >> $GITHUB_ENV
-          echo "Preview URL for Cypress: $PREVIEW_URL"
+          npx wait-on http://localhost:3000
 
       # Step 6: Install Cypress dependencies
       - name: Install Cypress
         run: npm install cypress
 
-      # Step 7: Run Cypress tests
+      # Step 7: Run Cypress Tests
       - name: Run Cypress Tests
         env:
-          CYPRESS_BASE_URL: ${{ env.CYPRESS_BASE_URL }}
+          CYPRESS_BASE_URL: http://localhost:3000
         run: npx cypress run --spec "cypress/e2e/home/home.cy.ts"
-        working-directory: packages/client
-
