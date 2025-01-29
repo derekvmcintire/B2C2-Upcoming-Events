@@ -17,22 +17,23 @@ jobs:
       # Step 3: Install dependencies
       - run: npm ci
 
-      # Step 4: Start Vite in the background with logging
+      # Step 4: Start Vite in the background with a wait command
       - name: Start Vite
         run: |
           npm run dev -- --host > vite.log 2>&1 &
-          echo "Vite server starting..."
+          echo "Waiting for Vite to start..."
+          sleep 5
         env:
           NODE_ENV: test
 
-      # Step 5: Debugging Vite logs if it fails to start
+      # Step 5: Debugging Vite logs if wait-on times out
       - name: Debug Vite Logs
         if: failure()
         run: cat vite.log
 
-      # Step 6: Wait for the Vite server to be ready
+      # Step 6: Wait for Vite server to be ready
       - name: Wait for localhost to be ready
-        run: npx wait-on http://localhost:5173 --timeout 30000
+        run: npx wait-on http://localhost:5173 --timeout 60000
 
       # Step 7: Install Cypress dependencies
       - name: Install Cypress
