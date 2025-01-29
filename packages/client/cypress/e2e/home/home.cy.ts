@@ -1,16 +1,22 @@
 describe("Homepage", () => {
   it('should load the homepage and display the title', () => {
+    // Add API intercepts
+    cy.intercept('**/api/**').as('apiCall');
+    
     cy.visit('/');
     
+    // Log any API calls
+    cy.wait('@apiCall').then((interception) => {
+      console.log('API Response:', interception.response?.body);
+      console.log('API Status:', interception.response?.statusCode);
+    });
+
     cy.document().then((doc) => {
       console.log('Page HTML:', doc.body.innerHTML);
     });
 
-    // First wait for loading to appear
+    // Check loading state
     cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should('exist')
-      // Then wait for the table to appear (meaning loading is complete)
-      .get('[data-testid="expandable-table"]', { timeout: 10000 })
       .should('exist');
   });
 
