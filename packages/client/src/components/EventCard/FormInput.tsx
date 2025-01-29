@@ -64,6 +64,7 @@ export default function EventCardInput({
     <Flex mt="8" mb="8" justify="center">
       <DismissButton xs clickHandler={dismissInput} withoutModal />
       <TextInput
+        data-testid="event-card-form-input"
         size="xs"
         value={inputValue}
         onChange={handleChange}
@@ -71,7 +72,11 @@ export default function EventCardInput({
         placeholder={placeholder}
         error={error}
       />
-      <Button size="xs" onClick={handleClickSubmit}>
+      <Button
+        data-testid="event-card-form-submit"
+        size="xs"
+        onClick={handleClickSubmit}
+      >
         {submitLabel || <DefaultButtonLabel />}
       </Button>
     </Flex>

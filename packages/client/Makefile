@@ -24,3 +24,6 @@ add:
 
 clean:
 	npm run format; npm run typecheck; npm run lint
+
+cyp:
+	npx cypress run --spec "cypress/e2e/home/"

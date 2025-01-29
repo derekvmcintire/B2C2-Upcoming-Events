@@ -37,7 +37,6 @@ export const useEventData = (): UseEventDataReturn => {
     setIsSubmitting,
     setRequestFreshData,
     setErrors,
-    errors,
   } = useEventsContext();
 
   /**
