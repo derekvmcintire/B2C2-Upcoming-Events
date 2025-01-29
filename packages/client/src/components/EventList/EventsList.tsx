@@ -37,7 +37,6 @@ export default function EventsList({
     ) : (
       <>
         <ExpandableTable
-          data-testid="expandable-table"
           events={events}
           registrations={registrations}
           requestDataCallback={requestDataCallback}

@@ -11,6 +11,9 @@ describe("Homepage", () => {
       .should('exist')
       // Then wait for the table to appear (meaning loading is complete)
       .get('[data-testid="expandable-table"]', { timeout: 10000 })
+      .should('exist')
+      // Then wait for the table to appear (meaning loading is complete)
+      .get('[data-testid="detail-view-button"]', { timeout: 10000 })
       .should('exist');
   });
 
