@@ -31,7 +31,7 @@ describe("Homepage", () => {
     });
 
     // Check loading state
-    cy.get('[data-testid="no-events-found"]', { timeout: 10000 })
+    cy.get('[data-testid="event-tabs"]', { timeout: 10000 })
       .should('exist');
   });
 

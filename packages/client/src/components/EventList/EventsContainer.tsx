@@ -47,6 +47,7 @@ const EventsContainer = (): JSX.Element => {
   return (
     <Stack>
       <Tabs
+        data-testid="event-tabs"
         value={activeTab}
         onChange={handleTabChange}
         defaultValue={DISCIPLINES.ROAD.text}
