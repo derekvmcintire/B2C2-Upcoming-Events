@@ -35,7 +35,7 @@ describe("Homepage", () => {
       .should('exist');
 
       // // check that the events list is rendered inside the default tab
-      // cy.get('[data-testid="events-list"]', { timeout: 10000 })
+      // cy.get('[data-testid="events-panels"]', { timeout: 10000 })
       // .should('exist');
 
       // // check that the expandable table renders inside the events list

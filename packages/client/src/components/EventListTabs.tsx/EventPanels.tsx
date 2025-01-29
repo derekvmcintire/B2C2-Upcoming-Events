@@ -35,7 +35,7 @@ export default function EventPanels({
         <div className={classes.loading}>Loading...</div>
       ) : (
         <EventsList
-          data-testid="events-list"
+        data-testid="events-list"
           discipline={DISCIPLINES.ROAD}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -52,6 +52,7 @@ export default function EventPanels({
         <div className={classes.loading}>Loading...</div>
       ) : (
         <EventsList
+        data-testid="events-list"
           discipline={DISCIPLINES.CX}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -68,6 +69,7 @@ export default function EventPanels({
         <div className={classes.loading}>Loading...</div>
       ) : (
         <EventsList
+        data-testid="events-list"
           discipline={DISCIPLINES.XC}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -88,6 +90,7 @@ export default function EventPanels({
         <div className={classes.loading}>Loading...</div>
       ) : (
         <EventsList
+        data-testid="events-list"
           discipline={DISCIPLINES.SPECIAL}
           requestDataCallback={requestFreshDataForEventType}
         />

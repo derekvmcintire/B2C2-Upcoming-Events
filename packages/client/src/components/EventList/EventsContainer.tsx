@@ -56,6 +56,7 @@ const EventsContainer = (): JSX.Element => {
       >
         <EventTabs />
         <EventPanels
+        data-testid="events-panels"
           eventsLoading={eventsLoading}
           requestFreshDataForEventType={requestFreshDataForEventType}
         />
