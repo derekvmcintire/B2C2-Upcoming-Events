@@ -26,9 +26,6 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Set Vercel Token
-        run: vercel config set token ${{ secrets.VERCEL_TOKEN }}
-
       # Step 4: Configure Vercel
       - name: Configure Vercel
         run: |
@@ -41,7 +38,7 @@ jobs:
       # Step 5: Start Vercel Dev Server
       - name: Start Vercel Dev Server
         run: |
-          vercel dev --yes &
+          vercel dev --yes --token=${{ secrets.VERCEL_TOKEN }} &
           echo "Starting Vercel dev server..."
 
       # Step 6: Wait for Vercel server
