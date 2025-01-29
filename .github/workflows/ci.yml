@@ -63,7 +63,7 @@ jobs:
           vercel dev --yes --token=${{ secrets.VERCEL_TOKEN }} &
           echo "Starting Vercel dev server..."
 
-      # Add after Starting Vercel Dev Server
+      # Debug that the proxy is running and we can get event data
       - name: Debug Proxy Setup
         run: |
           echo "Checking API setup..."

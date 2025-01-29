@@ -55,6 +55,7 @@ export default function FormButtons({
       </Button>
     ) : (
       <Button
+        data-testid="interested-button"
         variant="default"
         size="compact-sm"
         leftSection={<MdAdd size={14} />}
@@ -72,6 +73,7 @@ export default function FormButtons({
   const HousingButton = () =>
     isMobile ? (
       <Button
+        data-testid="housing-button"
         variant="transparent"
         size="compact-xs"
         leftSection={<MdAdd size={14} />}

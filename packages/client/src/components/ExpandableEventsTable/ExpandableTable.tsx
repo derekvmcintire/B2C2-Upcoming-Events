@@ -78,10 +78,7 @@ const ExpandableTable = ({
           Detail View
         </Button>
       ) : (
-        <Button
-          variant="subtle"
-          onClick={() => setExpandedRows(new Set())}
-        >
+        <Button variant="subtle" onClick={() => setExpandedRows(new Set())}>
           Quick View
         </Button>
       )}

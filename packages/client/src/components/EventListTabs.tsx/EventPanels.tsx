@@ -35,7 +35,7 @@ export default function EventPanels({
         <Loading />
       ) : (
         <EventsList
-        data-testid="events-list"
+          data-testid="events-list"
           discipline={DISCIPLINES.ROAD}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -52,7 +52,7 @@ export default function EventPanels({
         <Loading />
       ) : (
         <EventsList
-        data-testid="events-list"
+          data-testid="events-list"
           discipline={DISCIPLINES.CX}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -69,7 +69,7 @@ export default function EventPanels({
         <Loading />
       ) : (
         <EventsList
-        data-testid="events-list"
+          data-testid="events-list"
           discipline={DISCIPLINES.XC}
           requestDataCallback={requestFreshDataForEventType}
         />
@@ -90,7 +90,7 @@ export default function EventPanels({
         <Loading />
       ) : (
         <EventsList
-        data-testid="events-list"
+          data-testid="events-list"
           discipline={DISCIPLINES.SPECIAL}
           requestDataCallback={requestFreshDataForEventType}
         />

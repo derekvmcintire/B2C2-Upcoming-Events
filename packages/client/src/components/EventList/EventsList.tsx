@@ -46,7 +46,10 @@ export default function EventsList({
   };
 
   return events.length < 1 ? (
-    <Text mt="16" data-testid="no-events-found">{`No ${discipline.text} events found.`}</Text>
+    <Text
+      mt="16"
+      data-testid="no-events-found"
+    >{`No ${discipline.text} events found.`}</Text>
   ) : (
     getEventDetails()
   );
