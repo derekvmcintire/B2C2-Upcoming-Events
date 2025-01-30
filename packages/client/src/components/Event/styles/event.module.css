@@ -1,0 +1,17 @@
+.linkBlock {
+  padding: 16px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
+.label {
+  padding: 8px 32px;
+  background-color: yellow;
+  color: black;
+}
+
+.logisticCard {
+  padding: 16px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
