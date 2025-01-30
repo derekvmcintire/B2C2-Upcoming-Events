@@ -29,7 +29,7 @@ export default function Hypometer({
    */
   return (
     <>
-      <Flex align="flex-start" >
+      <Flex align="flex-start">
         <MdDeviceThermostat />
         <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
       </Flex>
