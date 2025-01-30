@@ -32,8 +32,8 @@ export default function EventInformationRow({
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   return (
-    <div data-testid="info-row">
-      <Grid.Col span={isMobile ? 12 : 4}>
+    <>
+      <Grid.Col span={isMobile ? 12 : 4} data-testid="info-row">
         <EventDate event={event} />
         <Divider mt="8" />
       </Grid.Col>
@@ -57,6 +57,6 @@ export default function EventInformationRow({
           <Description event={event} submitFn={submitDescription} />
         </Stack>
       </Grid.Col>
-    </div>
+    </>
   );
 }

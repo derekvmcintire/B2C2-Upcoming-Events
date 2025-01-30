@@ -28,17 +28,18 @@ export default function Hypometer({
    * Renders the hype level as text and a progress bar with dynamic coloring.
    */
   return (
-    <div data-testid="hype">
-      <Flex align="flex-start">
+    <>
+      <Flex align="flex-start" >
         <MdDeviceThermostat />
         <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
       </Flex>
       <Progress
+        data-testid="hype"
         radius="xs"
         size="xl"
         value={hypeLevel}
         color={getHypeColor(hypeLevel)}
       />
-    </div>
+    </>
   );
 }

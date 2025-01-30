@@ -59,8 +59,8 @@ export default function InterestedRidersRow({
   );
 
   return (
-    <div data-testid="interested-row">
-      <Grid.Col span={isMobile ? 0 : 4}>{!isMobile && label}</Grid.Col>
+    <>
+      <Grid.Col span={isMobile ? 0 : 4} data-testid="interested-row">{!isMobile && label}</Grid.Col>
       <Grid.Col
         p="16"
         span={isMobile ? 12 : 8}
@@ -71,6 +71,6 @@ export default function InterestedRidersRow({
           {content}
         </>
       </Grid.Col>
-    </div>
+    </>
   );
 }
