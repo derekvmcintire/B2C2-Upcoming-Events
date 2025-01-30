@@ -5,3 +5,21 @@
 .loading {
   margin-top: 16px;
 }
+
+.collapseLabel {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.listCollapseButton {
+  color: #f4f4f4;
+  border: 1px solid #868686;
+  /* border: 2px solid gray; */
+  background-color: #363636;
+  margin-top: 16px;
+}

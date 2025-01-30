@@ -1,7 +1,7 @@
 import { Collapse, Progress, Table } from "@mantine/core";
 import React, { useMemo } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
-import EventCard from "../EventCard";
+import EventCard from "../Event/Card";
 import { getHypeColor, getHypeLevel } from "../../utils/hype";
 import { formatEventDate, formatShortDate } from "../../utils/dates";
 import {
