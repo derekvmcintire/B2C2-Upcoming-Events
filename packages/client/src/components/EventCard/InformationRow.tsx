@@ -7,12 +7,16 @@ import DismissButton from "../Shared/DismissButton";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
 import Description from "./Description";
+import EventCardForm from "./Form";
+
 
 type EventInformationRowProps = {
   event: EventType;
   housingUrl?: string;
   removeHousingUrl: () => void;
   submitDescription: (value: string) => void;
+  handleSubmitHousing: (value: string) => void;
+  handleSubmitInterestedRider: (value: string) => void;
 };
 
 /**
@@ -28,6 +32,8 @@ export default function EventInformationRow({
   housingUrl,
   removeHousingUrl,
   submitDescription,
+  handleSubmitHousing,
+  handleSubmitInterestedRider,
 }: EventInformationRowProps) {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
@@ -45,7 +51,7 @@ export default function EventInformationRow({
         className={classes.lightSection}
       >
         <Stack gap={4} align="flex-start">
-          <Flex>
+          <Flex w="100%">
           {/* Event Location */}
         <Text
           w="100%"
@@ -60,6 +66,11 @@ export default function EventInformationRow({
             </a>
           </Text>
         )}
+        <EventCardForm
+          hasHousingUrl={!!housingUrl}
+          handleSubmitHousing={handleSubmitHousing}
+          handleSubmitInterestedRider={handleSubmitInterestedRider}
+        />
         </Flex>
           {housingUrl && (
             <Flex justify="flex-start">

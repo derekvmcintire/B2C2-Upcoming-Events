@@ -179,6 +179,8 @@ export default function EventCard({
           housingUrl={housingUrl}
           removeHousingUrl={handleRemoveHousing}
           submitDescription={handleSubmitDescription}
+          handleSubmitHousing={handleSubmitHousing}
+          handleSubmitInterestedRider={handleSubmitInterestedRider}
         />
         <RidersLists
           riders={interestedRiders}
