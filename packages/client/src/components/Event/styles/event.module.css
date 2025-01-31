@@ -1,17 +1,76 @@
-.linkBlock {
-  padding: 16px;
+.eventContainer {
+  background-color: light-dark(#ffffff, #363636);
   border: 1px solid gray;
-  border-radius: 8px;
+  border-top: 10px solid gray;
+  border-radius: 4px;
+  padding: 24px;
 }
 
-.label {
-  padding: 8px 32px;
-  background-color: yellow;
-  color: black;
+.linkBlock {
+  padding: 8px;
+  border-radius: 8px;
+  height: 100%;
+  margin-right: 16px;
 }
 
 .logisticCard {
   padding: 16px;
   border: 1px solid gray;
-  border-radius: 8px;
+  border-radius: 4px;
+  height: 100%;
+}
+
+.logisticsTabs {
+  margin: 16px;
+}
+
+.dateText {
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-3));
+  font-size: rem(20px);
+  font-weight: 500;
+  letter-spacing: rem(-1px);
+  line-height: 1;
+  margin-bottom: 8px;
+  max-width: 300px;
+}
+
+.locationText {
+  text-align: left;
+}
+
+.eventName {
+  letter-spacing: rem(-1px);
+  font-size: rem(50px);
+  font-weight: 700;
+  line-height: 1.1;
+  font-weight: 700;
+  text-align: center;
+}
+
+.descriptionBlock {
+  background-color: light-dark(#f4f4f4, #2e2e2e);
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 16px;
+  height: 100%;
+}
+
+.ridersListContainer {
+  border-radius: 4px;
+  margin: 16px;
+  background-color: light-dark(#f4f4f4, #2e2e2e);
+  
+}
+
+.registeredRiderText {
+  color: orange;
+}
+
+.riderListCollapse {
+  border: 1px solid gray;
+}
+
+.riderListStack {
+  padding: 8px;
+
 }

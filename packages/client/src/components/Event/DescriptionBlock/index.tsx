@@ -1,7 +1,7 @@
 import { Button, Flex, Stack, Text, Textarea } from "@mantine/core";
 import { useState, useCallback } from "react";
 import { MdOutlineWarningAmber } from "react-icons/md";
-import classes from "./event.module.css";
+import classes from "../styles/event.module.css";
 import { useEventContext } from "../../../context/event-context";
 import DismissButton from "../../Shared/DismissButton";
 import DeleteButton from "../../Shared/DeleteButton";
@@ -156,7 +156,7 @@ export default function Description({
       w="100%"
       className={classes.editLabel}
     >
-      <Text size="xs" fs="italic" ta="left">
+      <Text size="sm" fs="italic" ta="left">
         Event Details
       </Text>
       <EditButton
@@ -172,7 +172,7 @@ export default function Description({
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack w="100%" gap={1} align="center" mt="16">
+    <Stack w="100%" gap={1} align="center">
       <EditLabel />
       <Text className={classes.descriptionContainer}>{description || ""}</Text>
     </Stack>
@@ -188,5 +188,5 @@ export default function Description({
   /**
    * Renders either the input form (if editing) or the event description.
    */
-  return <>{isOpen ? input : descriptionContent}</>;
+  return <Flex justify="Center" align="flex-start" className={classes.descriptionBlock}>{isOpen ? input : descriptionContent}</Flex>;
 }

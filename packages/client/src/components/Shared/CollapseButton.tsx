@@ -22,6 +22,7 @@ export default function CollapseButton({
   return (
     <Button
       ta="left"
+      radius="0"
       leftSection={buttonIcon}
       className={classes.listCollapseButton}
       variant="transparent"

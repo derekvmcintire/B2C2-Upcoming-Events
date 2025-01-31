@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import {
   Alert,
+  Container,
   Divider,
   Flex,
   Grid,
@@ -17,6 +18,12 @@ import { EventType, FetchRegistrationsResponse, EventDiscipline } from "../../..
 import { getEntriesByEventId } from "../../../utils/findRegisteredRiders";
 import EventName from "../TitleBlock";
 import { EventProvider } from "../../../context/event-context";
+import LocationBlock from "../LocationBlock";
+import EventLinksBlock from "../EventLinkBlock";
+import Description from "../DescriptionBlock";
+import RidersList from "../RidersBlock";
+import LogisticsBlock from "../LogisticsBlock";
+import Hypometer from "../Hypometer";
 
 type EventProps = {
   event: EventType;
@@ -134,6 +141,7 @@ export default function EventCard({
 
   return (
     <Stack
+      key={eventId}
       gap={0}
       className={classes.eventContainer}
       style={{ position: "relative" }}
@@ -163,10 +171,33 @@ export default function EventCard({
         </Flex>
       )}
       <Grid w="100%" className={classes.eventGrid}>
-        <EventProvider>
-        <EventName />
+        <EventProvider event={event}>
+          <Grid.Col span={9}>
+          <EventName />
+          </Grid.Col>
+          <Grid.Col span={3}>
+            <EventLinksBlock />
+          </Grid.Col>
+          <Divider w="100%" mb="16"/>
+          <Grid.Col span={6}>
+          <LocationBlock />
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <Description submitFn={() => {}} />
+          </Grid.Col>
+          <Divider w="100%" mb="16"/>
+          <Grid.Col span={6}>
+            <RidersList interestedRiders={interestedRiders} registeredRiders={registeredNames} removeRider={() => {}}/>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <LogisticsBlock />
+          </Grid.Col>
         </EventProvider>
       </Grid>
+      <Hypometer
+        numberOfInterestedRiders={interestedRiders.length}
+        numberOfRegisteredRiders={registeredNames.length}
+      />
       <Divider />
     </Stack>
   );

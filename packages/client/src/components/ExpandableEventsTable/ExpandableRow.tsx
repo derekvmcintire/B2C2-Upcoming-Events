@@ -54,8 +54,6 @@ export default function ExpandableRow({
     : `${weekday} ${dateString}`;
 
   const numberOfIntRiders = interestedRiders?.length || 0;
-  console.log(numberOfIntRiders);
-  console.log(registeredNames.length);
   const hypeLevel = getHypeLevel(registeredNames.length, numberOfIntRiders);
 
   const chevronSize = isMobile ? 8 : 16;

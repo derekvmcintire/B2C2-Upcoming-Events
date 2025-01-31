@@ -34,7 +34,7 @@ const ExpandableTable = ({
   }, [events]);
 
   const [expandedRows, setExpandedRows] = useState<Set<string>>(
-    new Set(eventIds),
+    new Set(),
   );
 
   /**

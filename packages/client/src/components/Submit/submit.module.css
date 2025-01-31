@@ -29,5 +29,5 @@
 }
 
 .drawerButton {
-  color: light-dark(var(--mantine-color-black-9), var(--mantine-color-white-3));
+  color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-3));
 }

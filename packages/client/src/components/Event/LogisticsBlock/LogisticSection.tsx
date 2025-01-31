@@ -4,7 +4,7 @@ import classes from '../styles/event.module.css';
 
 export default function LogisticSection() {
     return (
-        <Card className={classes.logisticCard}>
+        <Card h="100%" className={classes.logisticCard}>
           <Text>Some logistics stuff here</Text>
         </Card>
     )

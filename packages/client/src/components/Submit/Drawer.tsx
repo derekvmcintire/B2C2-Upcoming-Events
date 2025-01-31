@@ -1,4 +1,4 @@
-import { Button, Drawer, Flex } from "@mantine/core";
+import { Button, Drawer, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import DrawerContent from "./DrawerContent";
 import { MdFormatAlignJustify } from "react-icons/md";
@@ -22,7 +22,7 @@ export default function SubmissionDrawer() {
         onClick={open}
         leftSection={<MdFormatAlignJustify />}
       >
-        Submit an Event
+        <Text className={classes.drawerButton}>Submit an Event</Text>
       </Button>
     </Flex>
   );

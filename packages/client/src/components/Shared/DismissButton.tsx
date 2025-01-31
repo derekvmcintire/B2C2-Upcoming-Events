@@ -8,6 +8,7 @@ type DismissButtonProps = {
   withoutModal?: boolean;
   xs?: boolean;
   disabled?: boolean;
+  position?: "right" | "left";
 };
 
 /**
@@ -24,6 +25,7 @@ export default function DismissButton({
   withoutModal = false,
   xs = false,
   disabled = false,
+  position = "right",
 }: DismissButtonProps) {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -53,6 +55,7 @@ export default function DismissButton({
         variant="subtle"
         size={size}
         disabled={disabled}
+        mr={position === "left" ? "0" : "8"}
       >
         <MdClose />
       </Button>

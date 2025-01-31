@@ -1,61 +1,88 @@
-import { Box, Collapse, Flex, Group, Text } from "@mantine/core";
-import classes from "./riders-lists.module.css";
+import { Box, Collapse, Divider, Flex, Group, SimpleGrid, Stack, Text } from "@mantine/core";
+import classes from "../styles/event.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { useCallback } from "react";
 import CollapseButton from "../../Shared/CollapseButton";
 import DismissButton from "../../Shared/DismissButton";
 
 type RidersListProps = {
-  riders: string[];
+  interestedRiders: string[];
+  registeredRiders: string[];
   removeRider: (rider: string) => void;
 };
 
 /**
  * RidersList Component
  *
- * Renders a row that contains a list of riders that are interested in this event
+ * Renders a row that contains a list of interestedRiders that are interested in this event
  *
  * @param {RidersListProps} props
  */
 export default function RidersList({
-  riders,
+  interestedRiders,
+  registeredRiders,
   removeRider,
 }: RidersListProps) {
   const [opened, { toggle }] = useDisclosure(true);
 
-  const numberOfRidersInterested = riders.length;
-  const interestedLabelText =
-    numberOfRidersInterested === 1
-      ? `${numberOfRidersInterested} Rider Interested`
-      : `${numberOfRidersInterested} Riders Interested`;
+  const numberOfRidersInterested = interestedRiders.length;
 
   const handleRemoveRider = useCallback(
     (rider: string) => removeRider(rider),
     [removeRider],
   );
 
+  const InterestedRiders = () => (
+    <Stack gap={0} className={classes.riderListStack}>
+      <Text ta="left">{`${numberOfRidersInterested} Riders Interested`}</Text>
+      <Divider mb="8" w="100%" />
+    {numberOfRidersInterested > 0 &&
+    interestedRiders.map((rider: string) => (
+      <div key={rider} className={classes.interestedRiderFlex}>
+        <Flex justify="flex-start" align="center">
+          <DismissButton xs clickHandler={() => handleRemoveRider(rider)} position="left" />
+          <Text ta="left" span fw="600" className={classes.interestedRiderText}>
+            {rider}
+          </Text>
+        </Flex>
+      </div>
+    ))}
+    </Stack>
+    )
+
+    const RegisteredRiders = () => (
+      <Stack gap={0} className={classes.riderListStack}>
+        <Text ta="left">{`${registeredRiders.length} Riders Registered`}</Text>
+        <Divider mb="8" w="100%" />
+      {registeredRiders.length > 0 &&
+    registeredRiders.map((rider: string) => (
+      <div key={rider} className={classes.interestedRiderFlex}>
+        <Flex justify="flex-start" align="center">
+          <DismissButton xs clickHandler={() => handleRemoveRider(rider)} position="left" />
+          <Text ta="left" span fw="600" className={classes.registeredRiderText}>
+            {rider}
+          </Text>
+        </Flex>
+      </div>
+    ))}
+    </Stack>
+    )
+
   return (
     <Box
-      w="100%"
       data-testid="interested-row"
-      className={classes.interestedListContainer}
+      className={classes.ridersListContainer}
     >
       <Group justify="center" mb={5}>
-        <CollapseButton label={interestedLabelText} opened={opened} toggleFn={toggle} />
+        <CollapseButton label="Riders Attending" opened={opened} toggleFn={toggle} />
       </Group>
 
-      <Collapse in={opened}>
-        {numberOfRidersInterested > 0 &&
-          riders.map((rider: string) => (
-            <div key={rider} className={classes.interestedRiderFlex}>
-              <Flex justify="flex-start" align="flex-end">
-                <DismissButton clickHandler={() => handleRemoveRider(rider)} />
-                <Text span fw="600" className={classes.interestedRiderText}>
-                  {rider}
-                </Text>
-              </Flex>
-            </div>
-          ))}
+      <Collapse in={opened} className={classes.riderListCollapse}>
+        <SimpleGrid cols={2}>
+        <RegisteredRiders />
+        <InterestedRiders />
+        </SimpleGrid>
+        
       </Collapse>
     </Box>
   );

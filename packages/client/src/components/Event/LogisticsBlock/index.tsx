@@ -1,18 +1,19 @@
-import { Stack, Tabs, Text } from '@mantine/core';
+import { Box, Stack, Tabs } from '@mantine/core';
 import LogisticSection from './LogisticSection';
+import classes from '../styles/event.module.css';
 
-export default function Component() {
+
+export default function LogisticsBlock() {
     return (
-      <Tabs defaultValue="housing" inverted>
+      <Box className={classes.logisticsTabs}>
+      <Tabs h="100%" defaultValue="housing" inverted>
       <Tabs.Panel value="housing" pb="xs">
         <Stack>
-          <Text>Housing Logistics</Text>
           <LogisticSection />
         </Stack>
       </Tabs.Panel>
       <Tabs.Panel value="carpool" pb="xs">
       <Stack>
-          <Text>Carpool Logistics</Text>
           <LogisticSection />
         </Stack>
       </Tabs.Panel>
@@ -22,5 +23,6 @@ export default function Component() {
         <Tabs.Tab value="carpool">Carpool</Tabs.Tab>
       </Tabs.List>
     </Tabs>
+    </Box>
     )
 }

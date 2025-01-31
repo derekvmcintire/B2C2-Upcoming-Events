@@ -47,7 +47,6 @@ export const useEventData = (): UseEventDataReturn => {
    */
   const handleSetNewError = useCallback(
     (newError: string, message?: string): void => {
-      console.log("*** SETTING ERRORS ***");
       setErrors([`${message} ${newError}`]);
     },
     [setErrors],

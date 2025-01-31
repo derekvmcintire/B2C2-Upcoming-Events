@@ -17,9 +17,7 @@
 }
 
 .listCollapseButton {
-  color: #f4f4f4;
-  border: 1px solid #868686;
-  /* border: 2px solid gray; */
-  background-color: #363636;
-  margin-top: 16px;
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-1));;
+  border: 1px solid gray;
+  background-color: light-dark(#f4f4f4, #363636);
 }
