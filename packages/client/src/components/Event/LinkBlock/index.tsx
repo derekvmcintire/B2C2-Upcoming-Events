@@ -13,8 +13,8 @@ export default function LinkBlock({ handleUpdateEvent }: LinkBlockProps) {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const alignment = isMobile ? "center" : "right";
 
-  const buttonSize= isMobile ? "compact-xs" : "sm";
-  
+  const buttonSize = isMobile ? "compact-xs" : "sm";
+
   return (
     <Flex className={classes.linkBlock} justify={alignment} align="center">
       <ActionFormRefactored handleUpdateEvent={handleUpdateEvent} />

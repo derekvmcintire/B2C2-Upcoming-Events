@@ -29,11 +29,9 @@ export const fetchCoordinates = async ({
   city,
   state,
 }: FetchCoordinatesOptions): Promise<{ lat: number; lon: number } | null> => {
-
-  const url = `${NOMINATIM_API_BASE_URL}?format=json&q=${city},${state},USA`
+  const url = `${NOMINATIM_API_BASE_URL}?format=json&q=${city},${state},USA`;
 
   const proxyUrl = buildProxyRequestUrl(url);
-  
 
   /**
    * Handles the response from the proxy API.
@@ -42,7 +40,7 @@ export const fetchCoordinates = async ({
    * @returns {{ lat: number; lon: number } | null} The processed coordinates.
    */
   const handleResponse = (
-    response: SimpleResponse<FetchCoordinatesResponse>
+    response: SimpleResponse<FetchCoordinatesResponse>,
   ): { lat: number; lon: number } | null => {
     const data = response.data;
     if (data.length > 0) {

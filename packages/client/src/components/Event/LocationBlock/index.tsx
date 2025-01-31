@@ -23,7 +23,7 @@ export default function LocationBlock() {
           mb={8}
           className={classes.locationText}
         >{`${city}, ${state}`}</Text>
-        <Map city={city} state={state}/>
+        <Map city={city} state={state} />
       </Stack>
     </>
   );

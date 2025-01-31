@@ -58,7 +58,6 @@ export default function EventCard({
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
-
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
@@ -81,18 +80,6 @@ export default function EventCard({
     },
     [requestDataCallback, eventType, setIsSubmitting],
   );
-
-  /**
-   * Handles the submission of an interested rider.
-   *
-   * @param rider - The rider to be submitted.
-   */
-  const handleSubmitInterestedRider = (rider: string) =>
-    handleSubmitEventUpdate({
-      eventId: eventId,
-      eventType: eventType,
-      interestedRiders: [...interestedRiders, rider],
-    });
 
   /**
    * Handles the submission of the event description.
@@ -181,7 +168,7 @@ export default function EventCard({
             <RidersList
               interestedRiders={interestedRiders}
               registeredRiders={registeredNames}
-              removeRider={() => {}}
+              removeInterestedRider={handleRemoveInterestedRider}
             />
           </Grid.Col>
           <Divider w="100%" mb="16" />

@@ -40,11 +40,9 @@ const ToggleInputForm = ({
     return (
       <Button
         variant={buttonConfig.variant || "outline"}
-        c={buttonConfig.color || "white"}
         size={isMobile ? "compact-xs" : "sm"}
         leftSection={<MdAdd size={14} />}
         onClick={() => setIsInputOpen(true)}
-        m="8"
         data-testid={buttonConfig.testId}
       >
         {isMobile

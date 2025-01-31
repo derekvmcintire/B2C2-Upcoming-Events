@@ -140,6 +140,10 @@
   margin-right: 8px;
 }
 
+.actionFormButton {
+  color: green;
+}
+
 /* Make adjustments for smaller screens */
 @media (max-width: 825px) {
   .eventName {

@@ -8,7 +8,7 @@ import RiderList from "./RiderList";
 type RidersListProps = {
   interestedRiders: string[];
   registeredRiders: string[];
-  removeRider: (rider: string) => void;
+  removeInterestedRiderFn: (rider: string) => void;
 };
 
 /**
@@ -21,14 +21,9 @@ type RidersListProps = {
 export default function RidersList({
   interestedRiders,
   registeredRiders,
-  removeRider,
+  removeInterestedRiderFn,
 }: RidersListProps) {
   const [opened, { toggle }] = useDisclosure(true);
-
-  const handleRemoveRider = useCallback(
-    (rider: string) => removeRider(rider),
-    [removeRider],
-  );
 
   return (
     <Box data-testid="interested-row" className={classes.ridersListContainer}>
@@ -46,12 +41,11 @@ export default function RidersList({
             label="Registered"
             isRegisteredList
             riders={registeredRiders}
-            removeFn={handleRemoveRider}
           />
           <RiderList
             label="Interested"
             riders={interestedRiders}
-            removeFn={handleRemoveRider}
+            removeFn={removeInterestedRiderFn}
           />
         </SimpleGrid>
       </Collapse>

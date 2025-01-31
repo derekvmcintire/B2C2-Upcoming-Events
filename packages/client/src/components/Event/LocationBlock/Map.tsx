@@ -20,10 +20,11 @@ interface MapProps {
 }
 
 const Map = ({ city, state }: MapProps): JSX.Element => {
-  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
+  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(
+    null,
+  );
   const [hasFetched, setHasFetched] = useState(false);
   const [mapRef, isVisible] = useOnScreen();
-
 
   useEffect(() => {
     if (isVisible && !hasFetched) {
@@ -39,7 +40,11 @@ const Map = ({ city, state }: MapProps): JSX.Element => {
   return (
     <div ref={mapRef} style={{ height: "300px", width: "100%" }}>
       {coords ? (
-        <MapContainer center={[coords.lat, coords.lon]} zoom={12} style={{ height: "100%", width: "100%", zIndex: 1 }}>
+        <MapContainer
+          center={[coords.lat, coords.lon]}
+          zoom={12}
+          style={{ height: "100%", width: "100%", zIndex: 1 }}
+        >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <Marker position={[coords.lat, coords.lon]} icon={defaultIcon}>
             <Popup>
