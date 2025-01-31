@@ -1,9 +1,9 @@
-import { Box, Collapse, Divider, Flex, Group, SimpleGrid, Stack, Text } from "@mantine/core";
+import { Box, Collapse, Group, SimpleGrid } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { useCallback } from "react";
 import CollapseButton from "../../Shared/CollapseButton";
-import DismissButton from "../../Shared/DismissButton";
+import RiderList from "./RiderList";
 
 type RidersListProps = {
   interestedRiders: string[];
@@ -25,64 +25,35 @@ export default function RidersList({
 }: RidersListProps) {
   const [opened, { toggle }] = useDisclosure(true);
 
-  const numberOfRidersInterested = interestedRiders.length;
-
   const handleRemoveRider = useCallback(
     (rider: string) => removeRider(rider),
     [removeRider],
   );
 
-  const InterestedRiders = () => (
-    <Stack gap={0} className={classes.riderListStack}>
-      <Text ta="left">{`${numberOfRidersInterested} Riders Interested`}</Text>
-      <Divider mb="8" w="100%" />
-    {numberOfRidersInterested > 0 &&
-    interestedRiders.map((rider: string) => (
-      <div key={rider} className={classes.interestedRiderFlex}>
-        <Flex justify="flex-start" align="center">
-          <DismissButton xs clickHandler={() => handleRemoveRider(rider)} position="left" />
-          <Text ta="left" span fw="600" className={classes.interestedRiderText}>
-            {rider}
-          </Text>
-        </Flex>
-      </div>
-    ))}
-    </Stack>
-    )
-
-    const RegisteredRiders = () => (
-      <Stack gap={0} className={classes.riderListStack}>
-        <Text ta="left">{`${registeredRiders.length} Riders Registered`}</Text>
-        <Divider mb="8" w="100%" />
-      {registeredRiders.length > 0 &&
-    registeredRiders.map((rider: string) => (
-      <div key={rider} className={classes.interestedRiderFlex}>
-        <Flex justify="flex-start" align="center">
-          <DismissButton xs clickHandler={() => handleRemoveRider(rider)} position="left" />
-          <Text ta="left" span fw="600" className={classes.registeredRiderText}>
-            {rider}
-          </Text>
-        </Flex>
-      </div>
-    ))}
-    </Stack>
-    )
-
   return (
-    <Box
-      data-testid="interested-row"
-      className={classes.ridersListContainer}
-    >
+    <Box data-testid="interested-row" className={classes.ridersListContainer}>
       <Group justify="center" mb={5}>
-        <CollapseButton label="Riders Attending" opened={opened} toggleFn={toggle} />
+        <CollapseButton
+          label="Riders Attending"
+          opened={opened}
+          toggleFn={toggle}
+        />
       </Group>
 
       <Collapse in={opened} className={classes.riderListCollapse}>
         <SimpleGrid cols={2}>
-        <RegisteredRiders />
-        <InterestedRiders />
+          <RiderList
+            label="Riders Registered"
+            isRegisteredList
+            riders={registeredRiders}
+            removeFn={handleRemoveRider}
+          />
+          <RiderList
+            label="Riders Interested"
+            riders={interestedRiders}
+            removeFn={handleRemoveRider}
+          />
         </SimpleGrid>
-        
       </Collapse>
     </Box>
   );

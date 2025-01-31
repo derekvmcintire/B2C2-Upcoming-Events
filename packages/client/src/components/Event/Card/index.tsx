@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import {
   Alert,
-  Container,
   Divider,
   Flex,
   Grid,
@@ -10,16 +9,19 @@ import {
 } from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
-
 import classes from "../styles/event.module.css";
 import { useEventsContext } from "../../../context/events-context";
 import { UpdateEventData, updateEvent } from "../../../api/updateEvent";
-import { EventType, FetchRegistrationsResponse, EventDiscipline } from "../../../types";
+import {
+  EventType,
+  FetchRegistrationsResponse,
+  EventDiscipline,
+} from "../../../types";
 import { getEntriesByEventId } from "../../../utils/findRegisteredRiders";
 import EventName from "../TitleBlock";
 import { EventProvider } from "../../../context/event-context";
 import LocationBlock from "../LocationBlock";
-import EventLinksBlock from "../EventLinkBlock";
+import LinkBlock from "../LinkBlock";
 import Description from "../DescriptionBlock";
 import RidersList from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
@@ -49,7 +51,7 @@ export default function EventCard({
 
   const eventsContext = useEventsContext();
   const { isSubmitting, setIsSubmitting } = eventsContext;
-  const { eventId, eventType, housingUrl, interestedRiders = [] } = event;
+  const { eventId, eventType, interestedRiders = [] } = event;
 
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
@@ -172,25 +174,36 @@ export default function EventCard({
       )}
       <Grid w="100%" className={classes.eventGrid}>
         <EventProvider event={event}>
-          <Grid.Col span={9}>
-          <EventName />
+          <Grid.Col span={12}>
+            <EventName />
           </Grid.Col>
-          <Grid.Col span={3}>
-            <EventLinksBlock />
+          <Grid.Col span={12}>
+            <LinkBlock
+              handleSubmitHousing={handleSubmitHousing}
+              handleSubmitInterestedRider={handleSubmitInterestedRider}
+            />
           </Grid.Col>
-          <Divider w="100%" mb="16"/>
+          <Divider w="100%" mb="16" />
           <Grid.Col span={6}>
-          <LocationBlock />
+            <Flex w="100%" justify="center">
+              <LocationBlock />
+            </Flex>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <RidersList
+              interestedRiders={interestedRiders}
+              registeredRiders={registeredNames}
+              removeRider={() => {}}
+            />
+          </Grid.Col>
+          <Divider w="100%" mb="16" />
+          <Grid.Col span={6}>
+            <Stack w="100%" h="100%" justify="flex-end">
+            <LogisticsBlock />
+            </Stack>
           </Grid.Col>
           <Grid.Col span={6}>
             <Description submitFn={() => {}} />
-          </Grid.Col>
-          <Divider w="100%" mb="16"/>
-          <Grid.Col span={6}>
-            <RidersList interestedRiders={interestedRiders} registeredRiders={registeredNames} removeRider={() => {}}/>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <LogisticsBlock />
           </Grid.Col>
         </EventProvider>
       </Grid>

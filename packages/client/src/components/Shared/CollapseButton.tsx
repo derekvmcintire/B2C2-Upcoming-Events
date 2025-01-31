@@ -30,10 +30,10 @@ export default function CollapseButton({
       onClick={toggleFn}
     >
       <Flex justify="flex-start" align="flex-end">
-      <Text size="lg" fw="300" fs="italic" className={classes.collapseLabel}>
-        {label}
-      </Text>
-    </Flex>
+        <Text size="lg" fw="300" fs="italic" className={classes.collapseLabel}>
+          {label}
+        </Text>
+      </Flex>
     </Button>
   );
 }

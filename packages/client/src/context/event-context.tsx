@@ -27,11 +27,12 @@ interface EventProviderProps {
  *
  * Provides a single `EventType` object to be accessed by nested components.
  */
-export const EventProvider: React.FC<EventProviderProps> = ({ children, event }) => {
+export const EventProvider: React.FC<EventProviderProps> = ({
+  children,
+  event,
+}) => {
   return (
-    <EventContext.Provider value={{ event }}>
-      {children}
-    </EventContext.Provider>
+    <EventContext.Provider value={{ event }}>{children}</EventContext.Provider>
   );
 };
 

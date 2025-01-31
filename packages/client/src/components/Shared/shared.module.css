@@ -17,7 +17,7 @@
 }
 
 .listCollapseButton {
-  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-1));;
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-1));
   border: 1px solid gray;
   background-color: light-dark(#f4f4f4, #363636);
 }

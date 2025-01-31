@@ -1,6 +1,6 @@
-import { Flex } from '@mantine/core';
+import { Flex } from "@mantine/core";
 
-const DEFAULT_RWGPS_MAP = 'public/map-placeholder.png';
+const DEFAULT_RWGPS_MAP = "public/map-placeholder.png";
 
 export default function Map() {
   return (

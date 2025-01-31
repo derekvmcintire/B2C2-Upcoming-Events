@@ -1,13 +1,13 @@
 .eventContainer {
   background-color: light-dark(#ffffff, #363636);
   border: 1px solid gray;
-  border-top: 10px solid gray;
+  border-top: 30px solid gray;
   border-radius: 4px;
   padding: 24px;
+  padding-top: 8px;
 }
 
 .linkBlock {
-  padding: 8px;
   border-radius: 8px;
   height: 100%;
   margin-right: 16px;
@@ -21,17 +21,39 @@
 }
 
 .logisticsTabs {
-  margin: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .dateText {
   color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-3));
-  font-size: rem(20px);
+  font-size: rem(25px);
   font-weight: 500;
   letter-spacing: rem(-1px);
   line-height: 1;
-  margin-bottom: 8px;
-  max-width: 300px;
+}
+
+.dateBadge {
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  width: 100px;
+  
+}
+
+.weekday {
+  font-size: rem(14px);
+}
+
+.month {
+  color: light-dark(var(--mantine-color-blue-9), var(--mantine-color-blue-3));
+  line-height: 1.1;
+}
+
+.day {
+  font-size: rem(40px);
+  line-height: 1.1;
 }
 
 .locationText {
@@ -40,11 +62,11 @@
 
 .eventName {
   letter-spacing: rem(-1px);
-  font-size: rem(50px);
+  font-size: rem(60px);
   font-weight: 700;
   line-height: 1.1;
   font-weight: 700;
-  text-align: center;
+  text-align: right;
 }
 
 .descriptionBlock {
@@ -52,14 +74,12 @@
   border: 1px solid gray;
   border-radius: 4px;
   padding: 16px;
-  height: 100%;
 }
 
 .ridersListContainer {
   border-radius: 4px;
   margin: 16px;
   background-color: light-dark(#f4f4f4, #2e2e2e);
-  
 }
 
 .registeredRiderText {
@@ -72,5 +92,11 @@
 
 .riderListStack {
   padding: 8px;
+}
 
+.actionFormInput {
+  border: 1px solid gray;
+  border-radius: 3px;
+  color: gray;
+  margin-right: 8px;
 }

@@ -24,7 +24,7 @@ export default function Description({
 }: DescriptionProps): JSX.Element {
   const eventContext = useEventContext();
   const { event } = eventContext;
-  
+
   const { description = "" } = event;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>(description);
@@ -188,5 +188,13 @@ export default function Description({
   /**
    * Renders either the input form (if editing) or the event description.
    */
-  return <Flex justify="Center" align="flex-start" className={classes.descriptionBlock}>{isOpen ? input : descriptionContent}</Flex>;
+  return (
+    <Flex
+      justify="Center"
+      align="flex-start"
+      className={classes.descriptionBlock}
+    >
+      {isOpen ? input : descriptionContent}
+    </Flex>
+  );
 }

@@ -20,7 +20,10 @@ export default function LocationBlock() {
   return (
     <>
       <Stack gap={0} ml="16">
-        <Text ta="left" className={classes.locationText}>{`${city}, ${state}`}</Text>
+        <Text
+          ta="left"
+          className={classes.locationText}
+        >{`${city}, ${state}`}</Text>
         <Map />
       </Stack>
     </>
