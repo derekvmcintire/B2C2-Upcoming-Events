@@ -43,13 +43,13 @@ export default function RidersList({
       <Collapse in={opened} className={classes.riderListCollapse}>
         <SimpleGrid cols={2}>
           <RiderList
-            label="Riders Registered"
+            label="Registered"
             isRegisteredList
             riders={registeredRiders}
             removeFn={handleRemoveRider}
           />
           <RiderList
-            label="Riders Interested"
+            label="Interested"
             riders={interestedRiders}
             removeFn={handleRemoveRider}
           />

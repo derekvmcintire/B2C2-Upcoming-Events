@@ -110,10 +110,15 @@
 }
 
 .registeredRiderText {
+  text-align: left;
   color: light-dark(
     var(--mantine-color-orange-9),
     var(--mantine-color-orange-3)
   );
+}
+
+.defaultRiderText {
+  text-align: left;
 }
 
 .riderListCollapse {
@@ -124,9 +129,32 @@
   padding: 8px;
 }
 
+.riderListLabel {
+  text-align: left;
+}
+
 .actionFormInput {
   border: 1px solid gray;
   border-radius: 3px;
   color: gray;
   margin-right: 8px;
+}
+
+/* Make adjustments for smaller screens */
+@media (max-width: 825px) {
+  .eventName {
+    font-size: rem(30px);
+  }
+
+  .registeredRiderText {
+    font-size: rem(11px);
+  }
+
+  .defaultRiderText {
+    font-size: rem(11px);
+  }
+
+  .riderListLabel {
+    font-size: rem(11px);
+  }
 }

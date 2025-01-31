@@ -29,7 +29,7 @@ export default function RiderList({
 
   return (
     <Stack gap={1} className={classes.riderListStack}>
-      <Text ta="left">{`${riders.length} ${label}`}</Text>
+      <Text className={classes.riderListLabel}>{`${riders.length} ${label}`}</Text>
       <Divider mb="8" w="100%" />
       {riders.length > 0 &&
         riders.map((rider: string) => (
@@ -40,7 +40,7 @@ export default function RiderList({
                 clickHandler={() => removeFn(rider)}
                 position="left"
               />
-              <Text className={textClass} ta="left" span fw="600">
+              <Text className={textClass} span fw="600">
                 {formatName(rider)}
               </Text>
             </Flex>

@@ -27,6 +27,8 @@ import RidersList from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../TitleBlock/Date";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../../constants";
 
 type EventProps = {
   event: EventType;
@@ -53,6 +55,9 @@ export default function EventCard({
   const eventsContext = useEventsContext();
   const { isSubmitting, setIsSubmitting } = eventsContext;
   const { eventId, eventType, interestedRiders = [] } = event;
+
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
 
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
@@ -157,22 +162,22 @@ export default function EventCard({
       )}
       <Grid w="100%" className={classes.eventGrid}>
         <EventProvider event={event}>
-          <Grid.Col span={3}>
+          <Grid.Col span={isMobile ? 12 : 3}>
             <Date />
           </Grid.Col>
-          <Grid.Col span={9}>
+          <Grid.Col span={isMobile ? 12 : 9}>
             <Stack>
               <EventName />
               <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
             </Stack>
           </Grid.Col>
           <Divider w="100%" mb="16" />
-          <Grid.Col span={4}>
+          <Grid.Col span={isMobile ? 12 : 4}>
             <Flex w="100%" justify="center">
               <LocationBlock />
             </Flex>
           </Grid.Col>
-          <Grid.Col span={8}>
+          <Grid.Col span={isMobile ? 12 : 8}>
             <RidersList
               interestedRiders={interestedRiders}
               registeredRiders={registeredNames}
@@ -180,12 +185,12 @@ export default function EventCard({
             />
           </Grid.Col>
           <Divider w="100%" mb="16" />
-          <Grid.Col span={6}>
+          <Grid.Col span={isMobile ? 12 : 6}>
             <Stack w="100%" h="100%" justify="flex-end">
               <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
             </Stack>
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={isMobile ? 12 : 6}>
             <Description submitFn={() => {}} />
           </Grid.Col>
         </EventProvider>
