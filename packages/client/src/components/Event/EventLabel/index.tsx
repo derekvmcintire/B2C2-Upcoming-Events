@@ -12,7 +12,12 @@ export default function EventLabel({ label }: LabelProps) {
   // const { label = "race" } = event;
 
   return (
-    <Badge color={label.color} radius="xs" className={classes.eventLabel}>
+    <Badge
+      color={label.color}
+      radius="xs"
+      size="xl"
+      className={classes.eventLabel}
+    >
       {label.text}
     </Badge>
   );

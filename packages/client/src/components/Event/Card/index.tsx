@@ -26,10 +26,10 @@ import Description from "../DescriptionBlock";
 import RiderListBlock from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
-import Date from "../TitleBlock/Date";
+import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
 import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
-import EventLabel from "../TitleBlock/Label";
+import EventLabel from "../EventLabel";
 
 type EventProps = {
   event: EventType;
