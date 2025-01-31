@@ -3,6 +3,7 @@ import classes from "../styles/event.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import CollapseButton from "../../Shared/CollapseButton";
 import RiderList from "./RiderList";
+import { useEventContext } from "../../../context/event-context";
 
 type RidersListProps = {
   interestedRiders: string[];
@@ -24,7 +25,15 @@ export default function RiderListBlock({
 }: RidersListProps) {
   const [opened, { toggle }] = useDisclosure(true);
 
-  const buttonLabel = `${registeredRiders.length} Reg'd | ${interestedRiders.length} Interested`;
+  const eventContext = useEventContext();
+  const { event } = eventContext;
+  const { eventType } = event;
+
+  const isRace = eventType !== "special";
+
+  const nonRaceButtonlabel = `${registeredRiders.length} Committed | ${interestedRiders.length} Interested`;
+  const raceButtonlabel = `${registeredRiders.length} Reg'd | ${interestedRiders.length} Interested`;
+  const buttonLabel = !isRace ? nonRaceButtonlabel : raceButtonlabel;
 
   return (
     <Box data-testid="interested-row" className={classes.ridersListContainer}>
@@ -35,7 +44,7 @@ export default function RiderListBlock({
       <Collapse in={opened} className={classes.riderListCollapse}>
         <SimpleGrid cols={2}>
           <RiderList
-            label="Registered"
+            label={isRace ? "Registered" : "Committed"}
             isRegisteredList
             riders={registeredRiders}
           />

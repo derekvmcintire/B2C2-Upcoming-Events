@@ -33,7 +33,9 @@ const ExpandableTable = ({
     return events.map((event) => event.eventId);
   }, [events]);
 
-  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set(eventIds));
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(
+    new Set(eventIds),
+  );
 
   /**
    * Toggles the row with the specified ID in the expandedRows set.

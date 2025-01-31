@@ -16,7 +16,6 @@ export default function Date() {
 
   return (
     <Stack gap={8} align="center" className={classes.dateStack}>
-      <EventLabel label={label} />
       <Card shadow="sm" className={classes.dateBadge}>
         <Stack gap={0} align="center" justify="center">
           <Text size="xs" className={classes.weekday}>

@@ -28,7 +28,8 @@ import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../TitleBlock/Date";
 import { useMediaQuery } from "@mantine/hooks";
-import { MOBILE_BREAK_POINT } from "../../../constants";
+import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
+import EventLabel from "../TitleBlock/Label";
 
 type EventProps = {
   event: EventType;
@@ -94,77 +95,83 @@ export default function EventCard({
       ),
     });
 
+  const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
+
   return (
-    <Stack
-      key={eventId}
-      gap={0}
-      className={classes.eventContainer}
-      style={{ position: "relative" }}
-    >
-      <LoadingOverlay
-        visible={isSubmitting}
-        zIndex={1000}
-        overlayProps={{
-          blur: 2,
-          fixed: false,
-          style: { position: "absolute" },
-        }}
-      />
-      {error && (
-        <Flex justify="center">
-          <Alert
-            className={classes.alert}
-            variant="light"
-            color="red"
-            title="Error"
-            withCloseButton
-            onClose={() => setError("")}
-            icon={<MdOutlineWarning />}
-          >
-            {error}
-          </Alert>
-        </Flex>
-      )}
-      <Grid w="100%" className={classes.eventGrid}>
-        <EventProvider event={event}>
-          <Grid.Col span={isMobile ? 12 : 3}>
-            <Date />
-          </Grid.Col>
-          <Grid.Col span={isMobile ? 12 : 9}>
-            <Stack>
-              <EventName />
-              <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
-            </Stack>
-          </Grid.Col>
-          <Divider w="100%" mb="16" />
-          <Grid.Col span={isMobile ? 12 : 4}>
-            <Flex w="100%" justify="center">
-              <LocationBlock />
-            </Flex>
-          </Grid.Col>
-          <Grid.Col span={isMobile ? 12 : 8}>
-            <RiderListBlock
-              interestedRiders={interestedRiders}
-              registeredRiders={registeredNames}
-              removeInterestedRiderFn={handleRemoveInterestedRider}
-            />
-          </Grid.Col>
-          <Divider w="100%" mb="16" />
-          <Grid.Col span={isMobile ? 12 : 6}>
-            <Stack w="100%" h="100%" justify="flex-end">
-              <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
-            </Stack>
-          </Grid.Col>
-          <Grid.Col span={isMobile ? 12 : 6}>
-            <Description submitFn={handleSubmitEventUpdate} />
-          </Grid.Col>
-        </EventProvider>
-      </Grid>
-      <Hypometer
-        numberOfInterestedRiders={interestedRiders.length}
-        numberOfRegisteredRiders={registeredNames.length}
-      />
-      <Divider />
+    <Stack gap={0}>
+      <EventLabel label={label} />
+      <Stack
+        key={eventId}
+        gap={0}
+        className={classes.eventContainer}
+        style={{ position: "relative" }}
+      >
+        <LoadingOverlay
+          visible={isSubmitting}
+          zIndex={1000}
+          overlayProps={{
+            blur: 2,
+            fixed: false,
+            style: { position: "absolute" },
+          }}
+        />
+        {error && (
+          <Flex justify="center">
+            <Alert
+              className={classes.alert}
+              variant="light"
+              color="red"
+              title="Error"
+              withCloseButton
+              onClose={() => setError("")}
+              icon={<MdOutlineWarning />}
+            >
+              {error}
+            </Alert>
+          </Flex>
+        )}
+
+        <Grid w="100%" className={classes.eventGrid}>
+          <EventProvider event={event}>
+            <Grid.Col span={isMobile ? 12 : 3}>
+              <Date />
+            </Grid.Col>
+            <Grid.Col span={isMobile ? 12 : 9}>
+              <Stack>
+                <EventName />
+                <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
+              </Stack>
+            </Grid.Col>
+            <Divider w="100%" mb="16" />
+            <Grid.Col span={isMobile ? 12 : 4}>
+              <Flex w="100%" justify="center">
+                <LocationBlock />
+              </Flex>
+            </Grid.Col>
+            <Grid.Col span={isMobile ? 12 : 8}>
+              <RiderListBlock
+                interestedRiders={interestedRiders}
+                registeredRiders={registeredNames}
+                removeInterestedRiderFn={handleRemoveInterestedRider}
+              />
+            </Grid.Col>
+            <Divider w="100%" mb="16" />
+            <Grid.Col span={isMobile ? 12 : 6}>
+              <Stack w="100%" h="100%" justify="flex-end">
+                <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
+              </Stack>
+            </Grid.Col>
+            <Grid.Col span={isMobile ? 12 : 6}>
+              <Description submitFn={handleSubmitEventUpdate} />
+            </Grid.Col>
+          </EventProvider>
+        </Grid>
+        <Hypometer
+          numberOfInterestedRiders={interestedRiders.length}
+          numberOfRegisteredRiders={registeredNames.length}
+        />
+        <Divider />
+      </Stack>
     </Stack>
   );
 }

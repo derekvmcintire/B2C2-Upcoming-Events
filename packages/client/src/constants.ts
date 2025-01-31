@@ -37,10 +37,10 @@ export const MOBILE_BREAK_POINT = "(max-width: 825px)";
 export const LABELS: ValidLabels = {
   RACE: {
     text: "Race",
-    color: "green",
+    color: "#12664c",
   },
   TRIP: {
     text: "Team Trip",
-    color: "yellow",
+    color: "#8c774c",
   },
 };
