@@ -1,95 +1,47 @@
-import { useCallback, useState } from "react";
+import { Flex } from "@mantine/core";
+import ToggleInputForm from "./ToggleInputForm";
+import { UpdateEventData } from "../../../api/updateEvent";
+import { useEventContext } from "../../../context/event-context";
 
-import { Stack } from "@mantine/core";
-import ActionFormButtons from "./ActionFormButtons";
-import ActionFormInput from "./ActionFormInput";
+interface ActionFormProps {
+  handleUpdateEvent: (data: UpdateEventData) => void;
+}
 
-type ActionFormProps = {
-  hasHousingUrl: boolean;
-  handleSubmitHousing: (value: string) => void;
-  handleSubmitInterestedRider: (value: string) => void;
-};
+const ActionFormRefactored = ({ handleUpdateEvent }: ActionFormProps) => {
+  const eventContext = useEventContext();
+  const { event } = eventContext;
+  const { eventId, eventType, interestedRiders } = event;
 
-/**
- * ActionFormProps Component
- *
- * Renders a form row, containing a button to open the form/close the form, and a text input and submit button
- *
- * @param {ActionFormProps} props
- */
-export default function ActionForm({
-  hasHousingUrl,
-  handleSubmitHousing,
-  handleSubmitInterestedRider,
-}: ActionFormProps) {
-  const [interestedRiderInputOpen, setInterestedRiderInputOpen] =
-    useState<boolean>(false);
-  const [housingUrlInputOpen, setHousingUrlInputOpen] =
-    useState<boolean>(false);
-
-  const handleClickOpen = (action: "rider" | "url") => {
-    if (action === "rider") {
-      setHousingUrlInputOpen(false);
-      setInterestedRiderInputOpen(true);
-    } else if (action === "url") {
-      setInterestedRiderInputOpen(false);
-      setHousingUrlInputOpen(true);
-    }
+  /**
+   * Handles the submission of an interested rider.
+   *
+   * @param rider - The rider to be submitted.
+   */
+  const handleSubmitInterestedRider = (rider: string) => {
+    const existingInterestedRiders = interestedRiders || [];
+    return handleUpdateEvent({
+      eventId: eventId,
+      eventType: eventType,
+      interestedRiders: [...existingInterestedRiders, rider],
+    });
   };
-
-  const handleClickClose = () => {
-    setInterestedRiderInputOpen(false);
-    setHousingUrlInputOpen(false);
-  };
-
-  const handleClickSubmit = useCallback(
-    (value: string, action: "rider" | "url") => {
-      if (action === "rider") {
-        handleSubmitInterestedRider(value);
-      } else if (action === "url") {
-        handleSubmitHousing(value);
-      }
-      setInterestedRiderInputOpen(false);
-      setHousingUrlInputOpen(false);
-    },
-    [handleSubmitHousing, handleSubmitInterestedRider],
-  );
-
-  const validateHousingUrl = (value: string) => {
-    try {
-      new URL(value);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
-  const buttonsAreAvailable = !interestedRiderInputOpen && !housingUrlInputOpen;
 
   return (
-    <Stack align="fex-start">
-      {interestedRiderInputOpen && (
-        <ActionFormInput
-          placeholder="Add Interested Rider"
-          validate={() => true}
-          submitHandler={(value) => handleClickSubmit(value, "rider")}
-          dismissInput={handleClickClose}
-        />
-      )}
-      {housingUrlInputOpen && (
-        <ActionFormInput
-          placeholder="Add Housing Link"
-          validate={validateHousingUrl}
-          submitHandler={(value) => handleClickSubmit(value, "url")}
-          dismissInput={handleClickClose}
-        />
-      )}
-      {buttonsAreAvailable && (
-        <ActionFormButtons
-          hasHousingUrl={hasHousingUrl}
-          handleClickOpen={handleClickOpen}
-        />
-      )}
-    </Stack>
+    <Flex pr="16" justify="center" wrap="wrap">
+      <ToggleInputForm
+        buttonConfig={{
+          label: "I'm interested",
+          mobileLabel: "Interested",
+          testId: "interested-button",
+        }}
+        inputConfig={{
+          placeholder: "Enter Name",
+          validate: () => true,
+        }}
+        onSubmit={handleSubmitInterestedRider}
+      />
+    </Flex>
   );
-}
+};
+
+export default ActionFormRefactored;

@@ -57,6 +57,7 @@ const ExpandableTable = ({
    */
   const rows: JSX.Element[] = events.map((row) => (
     <ExpandableRow
+      key={row.eventId}
       event={row}
       toggleRow={toggleRow}
       expandedRows={expandedRows}

@@ -82,20 +82,27 @@ export const formatEventDate = (dateString: string): string => {
  * @param dateString - The stored ISO date string
  * @returns Object with { weekday, month, day }
  */
-export const formatCalendarDate = (dateString: string): { 
-  weekday: string; 
-  month: string; 
+export const formatCalendarDate = (
+  dateString: string,
+): {
+  weekday: string;
+  month: string;
   day: number;
 } => {
   const date = normalizeToUTCDate(dateString);
 
   return {
-    weekday: new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "UTC" }).format(date), // e.g., "Sunday"
-    month: new Intl.DateTimeFormat("en-US", { month: "long", timeZone: "UTC" }).format(date), // e.g., "March"
+    weekday: new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: "UTC",
+    }).format(date), // e.g., "Sunday"
+    month: new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      timeZone: "UTC",
+    }).format(date), // e.g., "March"
     day: date.getUTCDate(), // Numeric day (e.g., 2)
   };
 };
-
 
 /**
  * Validates and normalizes a date for form display

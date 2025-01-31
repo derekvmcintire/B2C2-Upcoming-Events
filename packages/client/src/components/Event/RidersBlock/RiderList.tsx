@@ -19,8 +19,16 @@ export default function RiderList({
     ? classes.registeredRiderText
     : classes.defaultRiderText;
 
+  const formatName = (name: string) => {
+    const parts = name.trim().split(" ");
+    if (parts.length > 1) {
+      return `${parts[0]} ${parts[1][0]}.`; // First name + Last initial
+    }
+    return name; // If there's only one name, return as is
+  };
+
   return (
-    <Stack gap={0} className={classes.riderListStack}>
+    <Stack gap={1} className={classes.riderListStack}>
       <Text ta="left">{`${riders.length} ${label}`}</Text>
       <Divider mb="8" w="100%" />
       {riders.length > 0 &&
@@ -33,7 +41,7 @@ export default function RiderList({
                 position="left"
               />
               <Text className={textClass} ta="left" span fw="600">
-                {rider}
+                {formatName(rider)}
               </Text>
             </Flex>
           </div>

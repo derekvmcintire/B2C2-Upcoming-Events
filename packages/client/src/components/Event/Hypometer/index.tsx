@@ -1,4 +1,4 @@
-import { Flex, Progress, Text } from "@mantine/core";
+import { Box, Flex, Progress, Text } from "@mantine/core";
 import { MdDeviceThermostat } from "react-icons/md";
 import { getHypeColor, getHypeLevel } from "../../../utils/hype";
 
@@ -28,7 +28,7 @@ export default function Hypometer({
    * Renders the hype level as text and a progress bar with dynamic coloring.
    */
   return (
-    <>
+    <Box mt="24">
       <Flex align="flex-start">
         <MdDeviceThermostat />
         <Text ta="left" mb="16">{`Hypometer Level ${hypeLevel}/100`}</Text>
@@ -40,6 +40,6 @@ export default function Hypometer({
         value={hypeLevel}
         color={getHypeColor(hypeLevel)}
       />
-    </>
+    </Box>
   );
 }

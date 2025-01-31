@@ -1,29 +1,16 @@
 import { Button, Flex } from "@mantine/core";
 import classes from "../styles/event.module.css";
-import ActionForm from "../ActionForm";
-import { useEventContext } from "../../../context/event-context";
-import ActionFormRefactored from "../ActionForm/ActionFormRefactored";
+import ActionFormRefactored from "../ActionForm";
+import { UpdateEventData } from "../../../api/updateEvent";
 
 type LinkBlockProps = {
-  handleSubmitHousing: (value: string) => void;
-  handleSubmitInterestedRider: (value: string) => void;
+  handleUpdateEvent: (data: UpdateEventData) => void;
 };
 
-export default function LinkBlock({
-  handleSubmitHousing,
-  handleSubmitInterestedRider,
-}: LinkBlockProps) {
-  const eventContext = useEventContext();
-  const { event } = eventContext;
-  const { housingUrl } = event;
-
+export default function LinkBlock({ handleUpdateEvent }: LinkBlockProps) {
   return (
     <Flex className={classes.linkBlock} justify="right" align="center">
-      <ActionFormRefactored
-        hasHousingUrl={!!housingUrl}
-        handleSubmitHousing={handleSubmitHousing}
-        handleSubmitInterestedRider={handleSubmitInterestedRider}
-      />
+      <ActionFormRefactored handleUpdateEvent={handleUpdateEvent} />
       <Button size="sm">Link to Event</Button>
     </Flex>
   );

@@ -26,6 +26,7 @@ import Description from "../DescriptionBlock";
 import RidersList from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
+import Date from "../TitleBlock/Date";
 
 type EventProps = {
   event: EventType;
@@ -87,24 +88,6 @@ export default function EventCard({
       eventType: eventType,
       interestedRiders: [...interestedRiders, rider],
     });
-
-  /**
-   * Handles the submission of a housing URL.
-   *
-   * @param url - The housing URL to be submitted.
-   */
-  const handleSubmitHousing = (url: string) => {
-    setError("");
-    if (!url.startsWith("http")) {
-      setError("Housing URL must start with 'http'");
-      return;
-    }
-    handleSubmitEventUpdate({
-      eventId: eventId,
-      eventType: eventType,
-      housingUrl: url,
-    });
-  };
 
   /**
    * Handles the submission of the event description.
@@ -174,22 +157,22 @@ export default function EventCard({
       )}
       <Grid w="100%" className={classes.eventGrid}>
         <EventProvider event={event}>
-          <Grid.Col span={12}>
-            <EventName />
+          <Grid.Col span={3}>
+            <Date />
           </Grid.Col>
-          <Grid.Col span={12}>
-            <LinkBlock
-              handleSubmitHousing={handleSubmitHousing}
-              handleSubmitInterestedRider={handleSubmitInterestedRider}
-            />
+          <Grid.Col span={9}>
+            <Stack>
+              <EventName />
+              <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
+            </Stack>
           </Grid.Col>
           <Divider w="100%" mb="16" />
-          <Grid.Col span={6}>
+          <Grid.Col span={4}>
             <Flex w="100%" justify="center">
               <LocationBlock />
             </Flex>
           </Grid.Col>
-          <Grid.Col span={6}>
+          <Grid.Col span={8}>
             <RidersList
               interestedRiders={interestedRiders}
               registeredRiders={registeredNames}
@@ -199,7 +182,7 @@ export default function EventCard({
           <Divider w="100%" mb="16" />
           <Grid.Col span={6}>
             <Stack w="100%" h="100%" justify="flex-end">
-            <LogisticsBlock />
+              <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
             </Stack>
           </Grid.Col>
           <Grid.Col span={6}>

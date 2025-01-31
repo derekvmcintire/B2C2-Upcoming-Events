@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { MdAdd } from "react-icons/md";
 import { MOBILE_BREAK_POINT } from "../../../constants";
-import EventCardInput from './ActionFormInput';
+import EventCardInput from "./ActionFormInput";
 
 interface ToggleFormProps {
   // Button configuration
@@ -39,7 +39,7 @@ const ToggleInputForm = ({
   if (!isInputOpen) {
     return (
       <Button
-        variant={buttonConfig.variant || (isMobile ? "transparent" : "light")}
+        variant={buttonConfig.variant || (isMobile ? "transparent" : "outline")}
         // color={buttonConfig.color || "gray"}
         c={buttonConfig.color || "white"}
         size={isMobile ? "compact-xs" : undefined}
@@ -48,7 +48,9 @@ const ToggleInputForm = ({
         m="8"
         data-testid={buttonConfig.testId}
       >
-        {isMobile ? buttonConfig.mobileLabel || buttonConfig.label : buttonConfig.label}
+        {isMobile
+          ? buttonConfig.mobileLabel || buttonConfig.label
+          : buttonConfig.label}
       </Button>
     );
   }
