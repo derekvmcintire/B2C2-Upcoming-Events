@@ -7,9 +7,10 @@ import DismissButton from "../../Shared/DismissButton";
 import DeleteButton from "../../Shared/DeleteButton";
 import EditButton from "../../Shared/EditButton";
 import AddButton from "../../Shared/AddButton";
+import { UpdateEventData } from "../../../api/updateEvent";
 
 interface DescriptionProps {
-  submitFn: (value: string) => void;
+  submitFn: (value: UpdateEventData) => void;
 }
 
 /**
@@ -25,7 +26,7 @@ export default function Description({
   const eventContext = useEventContext();
   const { event } = eventContext;
 
-  const { description = "" } = event;
+  const { description = "", eventId, eventType } = event;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>(description);
 
@@ -34,7 +35,11 @@ export default function Description({
    * Calls the `submitFn` provided as a prop and closes the edit form.
    */
   const handleClickSubmit = useCallback(() => {
-    submitFn(value);
+    submitFn({
+      eventId: eventId,
+      eventType: eventType,
+      description: value,
+    });
     setIsOpen(false);
   }, [submitFn, value]);
 
@@ -46,7 +51,11 @@ export default function Description({
    * Clears the submitted value and resets the input value.
    */
   const handleDelete = () => {
-    submitFn("");
+    submitFn({
+      eventId: eventId,
+      eventType: eventType,
+      description: "",
+    });
     setValue("");
     setIsOpen(false);
   };
@@ -67,7 +76,7 @@ export default function Description({
    * @returns The JSX element representing the input buttons.
    */
   const inputButtonsLeft = (
-    <Flex w="100%" justify="left">
+    <Flex w="100%" justify="left" align="center">
       <Button
         size="xs"
         variant="default"
@@ -89,6 +98,7 @@ export default function Description({
         Clear
       </Button>
       <DismissButton
+        xs
         clickHandler={handleDismiss}
         withoutModal
         aria-label="Cancel editing description"
@@ -100,7 +110,7 @@ export default function Description({
    * The right-aligned container for input buttons.
    */
   const inputButtonsRight = description && (
-    <Flex className={classes.deleteContainer} justify="right">
+    <Flex className={classes.deleteContainer} justify="right" align="center">
       <DeleteButton
         clickHandler={handleDelete}
         aria-label="Delete event description"
@@ -134,6 +144,7 @@ export default function Description({
       <UnsavedChangesLabel />
       <Textarea
         w="100%"
+        mb="8"
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
         placeholder="Add event details."

@@ -23,7 +23,7 @@ import { EventProvider } from "../../../context/event-context";
 import LocationBlock from "../LocationBlock";
 import LinkBlock from "../LinkBlock";
 import Description from "../DescriptionBlock";
-import RidersList from "../RidersBlock";
+import RiderListBlock from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../TitleBlock/Date";
@@ -80,28 +80,6 @@ export default function EventCard({
     },
     [requestDataCallback, eventType, setIsSubmitting],
   );
-
-  /**
-   * Handles the submission of the event description.
-   *
-   * @param description - The new description for the event.
-   */
-  const handleSubmitDescription = (description: string) =>
-    handleSubmitEventUpdate({
-      eventId: eventId,
-      eventType: eventType,
-      description,
-    });
-
-  /**
-   * Handles the removal of housing for an event.
-   */
-  const handleRemoveHousing = () =>
-    handleSubmitEventUpdate({
-      eventId: eventId,
-      eventType: eventType,
-      housingUrl: null,
-    });
 
   /**
    * Handles the removal of an interested rider from the event.
@@ -165,10 +143,10 @@ export default function EventCard({
             </Flex>
           </Grid.Col>
           <Grid.Col span={isMobile ? 12 : 8}>
-            <RidersList
+            <RiderListBlock
               interestedRiders={interestedRiders}
               registeredRiders={registeredNames}
-              removeInterestedRider={handleRemoveInterestedRider}
+              removeInterestedRiderFn={handleRemoveInterestedRider}
             />
           </Grid.Col>
           <Divider w="100%" mb="16" />
@@ -178,7 +156,7 @@ export default function EventCard({
             </Stack>
           </Grid.Col>
           <Grid.Col span={isMobile ? 12 : 6}>
-            <Description submitFn={() => {}} />
+            <Description submitFn={handleSubmitEventUpdate} />
           </Grid.Col>
         </EventProvider>
       </Grid>

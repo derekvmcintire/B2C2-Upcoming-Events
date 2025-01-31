@@ -19,7 +19,7 @@ export default function LogisticsBlock({
       className={classes.logisticsTabs}
     >
       <Tabs
-        defaultValue="carpool"
+        defaultValue="housing"
         style={{ flex: 1, display: "flex", flexDirection: "column" }}
       >
         <Box>

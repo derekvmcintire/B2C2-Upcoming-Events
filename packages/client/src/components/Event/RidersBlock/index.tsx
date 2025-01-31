@@ -1,7 +1,6 @@
 import { Box, Collapse, Group, SimpleGrid } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useDisclosure } from "@mantine/hooks";
-import { useCallback } from "react";
 import CollapseButton from "../../Shared/CollapseButton";
 import RiderList from "./RiderList";
 
@@ -18,21 +17,19 @@ type RidersListProps = {
  *
  * @param {RidersListProps} props
  */
-export default function RidersList({
+export default function RiderListBlock({
   interestedRiders,
   registeredRiders,
   removeInterestedRiderFn,
 }: RidersListProps) {
   const [opened, { toggle }] = useDisclosure(true);
 
+  const buttonLabel = `${registeredRiders.length} Reg'd | ${interestedRiders.length} Interested`;
+
   return (
     <Box data-testid="interested-row" className={classes.ridersListContainer}>
       <Group justify="center" mb={5}>
-        <CollapseButton
-          label="Riders Attending"
-          opened={opened}
-          toggleFn={toggle}
-        />
+        <CollapseButton label={buttonLabel} opened={opened} toggleFn={toggle} />
       </Group>
 
       <Collapse in={opened} className={classes.riderListCollapse}>

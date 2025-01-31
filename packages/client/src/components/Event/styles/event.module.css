@@ -1,6 +1,6 @@
 .eventContainer {
   background-color: light-dark(#ffffff, #363636);
-  border: 1px solid gray;
+  border: 3px solid gray;
   border-top: 30px solid gray;
   border-radius: 4px;
   padding: 24px;
@@ -65,7 +65,7 @@
 }
 
 .eventBadge {
-  width: 100px;
+  width: 150px;
 }
 
 .weekday {
@@ -124,6 +124,10 @@
   border: 1px solid gray;
 }
 
+.listCollapseButton {
+  font-size: 12px;
+}
+
 .riderListStack {
   padding: 8px;
 }
@@ -136,7 +140,7 @@
   border: 1px solid gray;
   border-radius: 3px;
   color: gray;
-  margin-right: 8px;
+  margin-right: 11px;
 }
 
 .actionFormButton {

@@ -1,20 +1,22 @@
-import { Badge, Card, Stack, Text } from "@mantine/core";
+import { Card, Stack, Text } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useEventContext } from "../../../context/event-context";
 import { formatCalendarDate } from "../../../utils/dates";
+import EventLabel from "./Label";
+import { LABELS } from "../../../constants";
 
 export default function Date() {
   const eventContext = useEventContext();
   const { event } = eventContext;
-  const { date } = event;
+  const { date, eventType } = event;
+
+  const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
 
   const { weekday, month, day } = formatCalendarDate(date);
 
   return (
     <Stack gap={8} align="center" className={classes.dateStack}>
-      <Badge color="green" radius="xs" className={classes.eventBadge}>
-        Race
-      </Badge>
+      <EventLabel label={label} />
       <Card shadow="sm" className={classes.dateBadge}>
         <Stack gap={0} align="center" justify="center">
           <Text size="xs" className={classes.weekday}>

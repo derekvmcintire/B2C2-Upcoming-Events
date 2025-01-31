@@ -121,3 +121,13 @@ export type SubmitResponse = {
   message: string;
   success: boolean;
 };
+
+export type Label = {
+  text: string;
+  color: string;
+};
+
+export type ValidLabels = {
+  RACE: Label;
+  TRIP: Label;
+};
