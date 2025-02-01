@@ -3,8 +3,34 @@ export interface Rider {
   name: string;
 }
 
+export type RiderListEventType = "race" | "special";
+
+export type RiderListEventTypesEnum = {
+  RACE: RiderListEventType;
+  SPECIAL: RiderListEventType;
+};
+
+export const RIDER_LIST_EVENT_TYPES: RiderListEventTypesEnum = {
+  RACE: "race",
+  SPECIAL: "special",
+};
+
+export type ListConfigId = "registered" | "interested" | "committed";
+
+export type ValidListConfigIds = {
+  REGISTERED: ListConfigId;
+  INTERESTED: ListConfigId;
+  COMMITTED: ListConfigId;
+};
+
+export const VALID_LIST_CONFIG_IDS: ValidListConfigIds = {
+  REGISTERED: "registered",
+  INTERESTED: "interested",
+  COMMITTED: "committed",
+};
+
 export interface ListConfig {
-  id: string;
+  id: ListConfigId;
   title: string;
   hasDismiss: boolean;
 }
@@ -17,12 +43,12 @@ export interface RiderListsConfig {
 // Predefined configurations for different event types
 export const RACE_CONFIG: RiderListsConfig = {
   primaryList: {
-    id: "registered",
+    id: VALID_LIST_CONFIG_IDS.REGISTERED,
     title: "Registered",
     hasDismiss: false,
   },
   secondaryList: {
-    id: "interested",
+    id: VALID_LIST_CONFIG_IDS.INTERESTED,
     title: "Interested",
     hasDismiss: true,
   },
@@ -30,14 +56,14 @@ export const RACE_CONFIG: RiderListsConfig = {
 
 export const SPECIAL_EVENT_CONFIG: RiderListsConfig = {
   primaryList: {
-    id: "committed",
+    id: VALID_LIST_CONFIG_IDS.COMMITTED,
     title: "Committed",
     hasDismiss: true,
   },
   secondaryList: {
-    id: "interested",
+    id: VALID_LIST_CONFIG_IDS.INTERESTED,
     title: "Interested",
-    hasDismiss: true
+    hasDismiss: true,
   },
 };
 
@@ -55,5 +81,5 @@ export const initialRiders: RiderLists = {
     { id: "rider-4", name: "Sarah J." },
     { id: "rider-5", name: "David L." },
   ],
-  registered: [],
+  registered: [{ id: "rider-4", name: "Derek J." }],
 };

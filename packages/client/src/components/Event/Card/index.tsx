@@ -28,9 +28,13 @@ import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
-import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
+import { DISCIPLINES, LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventLabel from "../EventLabel";
 import DraggableRidersLists from "../../Shared/Draggable/DraggableRidersList";
+import {
+  RIDER_LIST_EVENT_TYPES,
+  RiderListEventType,
+} from "../../Shared/Draggable/types";
 
 type EventProps = {
   event: EventType;
@@ -63,6 +67,11 @@ export default function EventCard({
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
+
+  const riderListEventType: RiderListEventType =
+    event.eventType === DISCIPLINES.SPECIAL.id
+      ? RIDER_LIST_EVENT_TYPES.SPECIAL
+      : RIDER_LIST_EVENT_TYPES.RACE;
 
   /**
    * Handles the form submission by calling the provided update function with the given data.
@@ -165,10 +174,11 @@ export default function EventCard({
             </Grid.Col>
             <Divider w="100%" mb="16" />
             <Grid.Col span={12}>
-
               {/* Rider Lists */}
-              <DraggableRidersLists eventType={"special"} />
-
+              <DraggableRidersLists
+                isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
+                eventListType={riderListEventType}
+              />
             </Grid.Col>
             {/* <Grid.Col span={12}>
               <RiderListBlock

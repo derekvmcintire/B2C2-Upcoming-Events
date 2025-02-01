@@ -4,16 +4,21 @@ import DismissButton from "../DismissButton";
 interface StaticRiderProps {
   name: string;
   hasDismiss?: boolean;
+  dismissRider?: (name: string) => void;
 }
 
 /**
  * Renders a static rider component.
+ *
  * @param name - The name of the rider.
- * @returns The JSX element representing the static rider.
+ * @param hasDismiss - Indicates whether the rider has a dismiss button.
+ * @param dismissRider - The dismiss rider callback function.
+ * @returns The rendered static rider component.
  */
 const StaticRider = ({
   name,
   hasDismiss = false,
+  dismissRider = () => {},
 }: StaticRiderProps): JSX.Element => {
   return (
     <Paper
@@ -30,7 +35,7 @@ const StaticRider = ({
         <Flex align="center" justify="left">
           <DismissButton
             xs
-            clickHandler={() => {}}
+            clickHandler={() => dismissRider(name)}
             position="left"
             disabled={false}
           />

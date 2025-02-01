@@ -7,21 +7,24 @@ import DismissButton from "../DismissButton";
 interface SortableRiderProps extends Rider {
   draggable: boolean;
   hasDismiss?: boolean;
+  dismissRider?: (name: string) => void;
 }
 
 /**
- * Represents a sortable rider component.
+ * SortableRider component represents a draggable rider element that can be sorted.
  *
  * @param id - The unique identifier of the rider.
  * @param name - The name of the rider.
  * @param draggable - Indicates whether the rider is draggable.
- * @returns The JSX element representing the sortable rider.
+ * @param hasDismiss - Indicates whether the rider has a dismiss button.
+ * @param dismissRider - The callback function to dismiss the rider.
  */
 const SortableRider = ({
   id,
   name,
   draggable,
   hasDismiss = false,
+  dismissRider = () => {},
 }: SortableRiderProps): JSX.Element => {
   const {
     attributes,
@@ -69,7 +72,7 @@ const SortableRider = ({
         <Flex align="center" justify="left">
           <DismissButton
             xs
-            clickHandler={() => {}}
+            clickHandler={() => dismissRider(name)}
             position="left"
             disabled={false}
           />

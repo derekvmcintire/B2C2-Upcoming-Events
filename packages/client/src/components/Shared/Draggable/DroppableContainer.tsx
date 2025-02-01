@@ -16,6 +16,7 @@ interface DroppableContainerProps {
   isOver?: boolean;
   draggable: boolean;
   hasDismiss?: boolean;
+  removeFn: (name: string) => void;
 }
 
 /**
@@ -33,6 +34,7 @@ const DroppableContainer = ({
   title,
   draggable,
   hasDismiss,
+  removeFn,
 }: DroppableContainerProps): JSX.Element => {
   const { setNodeRef, isOver } = useDroppable({
     id,
@@ -56,11 +58,24 @@ const DroppableContainer = ({
             strategy={verticalListSortingStrategy}
           >
             {items.map((rider) => (
-              <SortableRider key={rider.id} {...rider} hasDismiss={hasDismiss} draggable={draggable} />
+              <SortableRider
+                key={rider.id}
+                {...rider}
+                hasDismiss={hasDismiss}
+                draggable={draggable}
+                dismissRider={removeFn}
+              />
             ))}
           </SortableContext>
         ) : (
-          items.map((rider) => <StaticRider key={rider.id} name={rider.name} hasDismiss={hasDismiss} />)
+          items.map((rider) => (
+            <StaticRider
+              key={rider.id}
+              name={rider.name}
+              hasDismiss={hasDismiss}
+              dismissRider={removeFn}
+            />
+          ))
         )}
         {items.length === 0 && draggable && (
           <Box className={classes.draggableRidersBox}>Drop rider here</Box>

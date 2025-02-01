@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -17,28 +17,58 @@ import DraggableRider from "./DraggableRider";
 import DroppableContainer from "./DroppableContainer";
 import {
   RiderLists,
-  initialRiders,
   RiderListsConfig,
   RACE_CONFIG,
   SPECIAL_EVENT_CONFIG,
+  VALID_LIST_CONFIG_IDS,
+  ListConfigId,
 } from "./types";
+import { updateEvent, UpdateEventData } from "../../../api/updateEvent";
+import { useEventData } from "../../../hooks/useEventData";
+import { useEventContext } from "../../../context/event-context";
 
 interface DraggableRidersListsProps {
   isStatic?: boolean;
-  eventType: "race" | "special";
+  eventListType: "race" | "special";
 }
 
 const DraggableRidersLists = ({
   isStatic = false,
-  eventType,
+  eventListType,
 }: DraggableRidersListsProps): JSX.Element => {
+  const eventContext = useEventContext();
+  const { event } = eventContext;
+  const { eventId, eventType, interestedRiders = [] } = event;
+
+  const mappedInterestedRiders = interestedRiders.map((name) => {
+    return {
+      id: name,
+      name,
+    };
+  });
+
+  const initialRiders: RiderLists = {
+    interested: mappedInterestedRiders,
+    committed: [
+      { id: "rider-4", name: "Sarah J." },
+      { id: "rider-5", name: "David L." },
+    ],
+    registered: [{ id: "rider-4", name: "Derek J." }],
+  };
+
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overContainer, setOverContainer] = useState<string | null>(null);
 
+  useEffect(() => {
+    console.log("probably need to update interested riders bruh");
+  }, [interestedRiders]);
+
+  const { requestFreshDataForEventType } = useEventData();
+
   // Select the appropriate configuration based on event type
   const config: RiderListsConfig =
-    eventType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;
+    eventListType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;
   const validContainers = [config.primaryList.id, config.secondaryList.id];
 
   const sensors = useSensors(
@@ -52,6 +82,63 @@ const DraggableRidersLists = ({
     }),
   );
 
+  /**
+   * Handles the form submission by calling the provided update function with the given data.
+   * @param {UpdateEventData} data The data to be submitted.
+   * @returns {Promise<void>} A promise that resolves when the submission is complete.
+   */
+  const handleSubmitEventUpdate = useCallback(
+    async (data: UpdateEventData): Promise<void> => {
+      const response = await updateEvent(data);
+
+      if (response.success) {
+        requestFreshDataForEventType(eventType);
+      } else {
+        console.log("problems update event from draglist");
+      }
+    },
+    [requestFreshDataForEventType, eventType],
+  );
+
+  type RemoveFunction = (name: string) => void;
+
+  /**
+   * Handles the removal of an interested rider from the event.
+   * @param {string} nameToRemove - The rider to be removed.
+   */
+  const handleRemoveInterestedRider = (nameToRemove: string) =>
+    handleSubmitEventUpdate({
+      eventId: eventId,
+      eventType: eventType,
+      interestedRiders: interestedRiders.filter(
+        (name) => name !== nameToRemove,
+      ),
+    });
+
+  const removeCommitted: RemoveFunction = (name: string) => {
+    console.log("remove committed:", name);
+  };
+
+  /**
+   * Returns the remove function based on the provided configuration.
+   * @param {Object} options - The options object.
+   * @param {boolean} options.isPrimary - Indicates whether the list is primary or not.
+   * @returns {RemoveFunction} - The remove function.
+   */
+  const getRemoveFn = ({
+    isPrimary,
+  }: {
+    isPrimary: boolean;
+  }): RemoveFunction => {
+    const { id } = isPrimary ? config.primaryList : config.secondaryList;
+    const removeFnMap: Record<string, (name: string) => void> = {
+      [VALID_LIST_CONFIG_IDS.COMMITTED]: removeCommitted,
+      [VALID_LIST_CONFIG_IDS.INTERESTED]: handleRemoveInterestedRider,
+    };
+
+    return removeFnMap[id] || (() => {});
+  };
+
   // If dragging is disabled, render a simple view
   if (isStatic) {
     return (
@@ -63,7 +150,7 @@ const DraggableRidersLists = ({
             title={config.primaryList.title}
             hasDismiss={config.primaryList.hasDismiss}
             draggable={false}
-
+            removeFn={getRemoveFn({ isPrimary: true })}
           />
           <DroppableContainer
             id={config.secondaryList.id}
@@ -71,6 +158,7 @@ const DraggableRidersLists = ({
             title={config.secondaryList.title}
             hasDismiss={config.secondaryList.hasDismiss}
             draggable={false}
+            removeFn={getRemoveFn({ isPrimary: false })}
           />
         </Group>
       </Box>
@@ -82,7 +170,7 @@ const DraggableRidersLists = ({
   };
 
   const handleDragOver = (event: DragOverEvent) => {
-    const container = event.over?.id as string;
+    const container = event.over?.id as ListConfigId;
     if (container && validContainers.includes(container)) {
       setOverContainer(container);
     }
@@ -103,10 +191,12 @@ const DraggableRidersLists = ({
 
     if (!active || !over) return;
 
-    const sourceContainer = findContainer(active.id as string);
-    const destinationContainer = validContainers.includes(over.id as string)
-      ? (over.id as string)
-      : findContainer(over.id as string);
+    const sourceContainer = findContainer(active.id as ListConfigId);
+    const destinationContainer = validContainers.includes(
+      over.id as ListConfigId,
+    )
+      ? (over.id as ListConfigId)
+      : findContainer(over.id as ListConfigId);
 
     if (sourceContainer === destinationContainer) {
       const items = [...(riders[sourceContainer] || [])];
@@ -114,6 +204,8 @@ const DraggableRidersLists = ({
       const newIndex = items.findIndex((item) => item.id === over.id);
 
       if (newIndex !== -1) {
+        console.log("Sorting items");
+
         setRiders({
           ...riders,
           [sourceContainer]: arrayMove(items, oldIndex, newIndex),
@@ -125,6 +217,10 @@ const DraggableRidersLists = ({
       const movedItem = sourceItems.find((item) => item.id === active.id);
 
       if (movedItem) {
+        // move update function here
+        console.log(
+          `Moving ${movedItem.name} from ${sourceContainer} to ${destinationContainer}`,
+        );
         setRiders({
           ...riders,
           [sourceContainer]: sourceItems.filter(
@@ -158,6 +254,7 @@ const DraggableRidersLists = ({
             title={config.primaryList.title}
             hasDismiss={config.primaryList.hasDismiss}
             draggable={true}
+            removeFn={getRemoveFn({ isPrimary: true })}
           />
           <DroppableContainer
             id={config.secondaryList.id}
@@ -165,6 +262,7 @@ const DraggableRidersLists = ({
             title={config.secondaryList.title}
             hasDismiss={config.secondaryList.hasDismiss}
             draggable={true}
+            removeFn={getRemoveFn({ isPrimary: false })}
           />
         </Group>
 
