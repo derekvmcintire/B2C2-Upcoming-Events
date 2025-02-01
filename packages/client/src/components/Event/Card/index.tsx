@@ -23,7 +23,7 @@ import { EventProvider } from "../../../context/event-context";
 import LocationBlock from "../LocationBlock";
 import LinkBlock from "../LinkBlock";
 import Description from "../DescriptionBlock";
-import RiderListBlock from "../RidersBlock";
+// import RiderListBlock from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
@@ -83,18 +83,18 @@ export default function EventCard({
     [requestDataCallback, eventType, setIsSubmitting],
   );
 
-  /**
-   * Handles the removal of an interested rider from the event.
-   * @param {string} riderToRemove - The rider to be removed.
-   */
-  const handleRemoveInterestedRider = (riderToRemove: string) =>
-    handleSubmitEventUpdate({
-      eventId: eventId,
-      eventType: eventType,
-      interestedRiders: interestedRiders.filter(
-        (rider) => rider !== riderToRemove,
-      ),
-    });
+  // /**
+  //  * Handles the removal of an interested rider from the event.
+  //  * @param {string} riderToRemove - The rider to be removed.
+  //  */
+  // const handleRemoveInterestedRider = (riderToRemove: string) =>
+  //   handleSubmitEventUpdate({
+  //     eventId: eventId,
+  //     eventType: eventType,
+  //     interestedRiders: interestedRiders.filter(
+  //       (rider) => rider !== riderToRemove,
+  //     ),
+  //   });
 
   const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
 
@@ -131,46 +131,59 @@ export default function EventCard({
             </Alert>
           </Flex>
         )}
-        <DraggableRidersLists />
+        <Hypometer
+          numberOfInterestedRiders={interestedRiders.length}
+          numberOfRegisteredRiders={registeredNames.length}
+        />
         <Grid w="100%" className={classes.eventGrid}>
           <EventProvider event={event}>
             <Grid.Col span={isMobile ? 12 : 3}>
               <Date />
             </Grid.Col>
             <Grid.Col span={isMobile ? 12 : 9}>
-              <Stack>
+              <Stack h="100%" justify="center" p="16">
                 <EventName />
                 <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
               </Stack>
             </Grid.Col>
             <Divider w="100%" mb="16" />
-            <Grid.Col span={isMobile ? 12 : 4}>
+            <Grid.Col span={isMobile ? 12 : 5}>
               <Flex w="100%" justify="center">
                 <LocationBlock />
               </Flex>
             </Grid.Col>
-            <Grid.Col span={isMobile ? 12 : 8}>
+            <Grid.Col span={isMobile ? 12 : 7}>
+              <Flex
+                w="100%"
+                h="100%"
+                p={isMobile ? "0" : "24"}
+                justify="center"
+                align="center"
+              >
+                <Description submitFn={handleSubmitEventUpdate} />
+              </Flex>
+            </Grid.Col>
+            <Divider w="100%" mb="16" />
+            <Grid.Col span={12}>
+
+              {/* Rider Lists */}
+              <DraggableRidersLists eventType={"special"} />
+
+            </Grid.Col>
+            {/* <Grid.Col span={12}>
               <RiderListBlock
                 interestedRiders={interestedRiders}
                 registeredRiders={registeredNames}
                 removeInterestedRiderFn={handleRemoveInterestedRider}
               />
-            </Grid.Col>
-            <Divider w="100%" mb="16" />
-            <Grid.Col span={isMobile ? 12 : 6}>
+            </Grid.Col> */}
+            <Grid.Col span={12}>
               <Stack w="100%" h="100%" justify="flex-end">
                 <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
               </Stack>
             </Grid.Col>
-            <Grid.Col span={isMobile ? 12 : 6}>
-              <Description submitFn={handleSubmitEventUpdate} />
-            </Grid.Col>
           </EventProvider>
         </Grid>
-        <Hypometer
-          numberOfInterestedRiders={interestedRiders.length}
-          numberOfRegisteredRiders={registeredNames.length}
-        />
         <Divider />
       </Stack>
     </Stack>

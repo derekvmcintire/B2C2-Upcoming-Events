@@ -147,7 +147,7 @@ export default function Description({
         mb="8"
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
-        placeholder="Add event details."
+        placeholder="Add an event description."
         aria-label="Event description input"
       />
       <Flex w="100%" justify="space-between">
@@ -168,7 +168,7 @@ export default function Description({
       className={classes.editLabel}
     >
       <Text size="sm" fs="italic" ta="left">
-        Event Details
+        Event Description
       </Text>
       <EditButton
         clickHandler={() => setIsOpen(true)}
@@ -179,13 +179,17 @@ export default function Description({
 
   /**
    * Represents the content of the event description.
-   * If a value is provided, it displays the event details along with an edit button.
+   * If a value is provided, it displays the event description along with an edit button.
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack w="100%" gap={1} align="center">
+    <Stack w="100%" gap={1}>
       <EditLabel />
-      <Text className={classes.descriptionContainer}>{description || ""}</Text>
+      <Flex className={classes.descriptionBlock}>
+        <Text className={classes.descriptionContainer}>
+          {description || ""}
+        </Text>
+      </Flex>
     </Stack>
   ) : (
     <AddButton
@@ -199,13 +203,5 @@ export default function Description({
   /**
    * Renders either the input form (if editing) or the event description.
    */
-  return (
-    <Flex
-      justify="Center"
-      align="flex-start"
-      className={classes.descriptionBlock}
-    >
-      {isOpen ? input : descriptionContent}
-    </Flex>
-  );
+  return <Flex w="100%">{isOpen ? input : descriptionContent}</Flex>;
 }

@@ -21,3 +21,20 @@
   border: 1px solid gray;
   background-color: light-dark(#f4f4f4, #363636);
 }
+
+/* Paper.module.css */
+.paper {
+  min-height: 200px;
+  /* transition: background-color 0.2s; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.over {
+  background-color: #2e2e2e;
+}
+
+.default {
+  background-color: #363636;
+}

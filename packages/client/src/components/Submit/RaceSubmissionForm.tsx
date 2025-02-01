@@ -244,7 +244,7 @@ const RaceSubmissionForm = ({
         </Flex>
       )}
 
-    <DraggableRidersLists />
+      <DraggableRidersLists />
     </Stack>
   );
 };
