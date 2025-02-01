@@ -31,3 +31,16 @@
 .drawerButton {
   color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-3));
 }
+
+.draggableRidersBox {
+  padding: 1rem;
+  text-align: center;
+  color: #868e96;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ced4da;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}

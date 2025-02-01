@@ -30,6 +30,7 @@ import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
 import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventLabel from "../EventLabel";
+import DraggableRidersLists from "../../Shared/Draggable/DraggableRidersList";
 
 type EventProps = {
   event: EventType;
@@ -130,7 +131,7 @@ export default function EventCard({
             </Alert>
           </Flex>
         )}
-
+        <DraggableRidersLists />
         <Grid w="100%" className={classes.eventGrid}>
           <EventProvider event={event}>
             <Grid.Col span={isMobile ? 12 : 3}>

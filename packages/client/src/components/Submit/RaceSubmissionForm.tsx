@@ -17,6 +17,7 @@ import { DISCIPLINES } from "../../constants";
 import classes from "./submit.module.css";
 import { useDebounce } from "../../hooks/useDebounce";
 import { isEventDiscipline } from "../../utils/discipline";
+import DraggableRidersLists from "../Shared/Draggable/DraggableRidersList";
 
 interface RaceSubmissionFormProps {
   vertical?: boolean;
@@ -242,6 +243,8 @@ const RaceSubmissionForm = ({
           {formCore}
         </Flex>
       )}
+
+    <DraggableRidersLists />
     </Stack>
   );
 };
