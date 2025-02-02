@@ -48,28 +48,30 @@ export const useRiderLists = ({
   );
 
   const getMoveRiderUpdateData = useCallback(
-    (
-      sourceList: MovableListType,
-      targetList: MovableListType,
-      name: string,
-    ): UpdateEventData => {
+    (sourceList: MovableListType, targetList: MovableListType, name: string): UpdateEventData => {
       const newInterestedRiders = [...interestedRiders];
       const newCommittedRiders = [...committedRiders];
-
+  
       if (sourceList === "interested" && targetList === "committed") {
         const index = newInterestedRiders.indexOf(name);
         if (index !== -1) {
           newInterestedRiders.splice(index, 1);
-          newCommittedRiders.push(name);
+          // Only add if not already in committed
+          if (!newCommittedRiders.includes(name)) {
+            newCommittedRiders.push(name);
+          }
         }
       } else if (sourceList === "committed" && targetList === "interested") {
         const index = newCommittedRiders.indexOf(name);
         if (index !== -1) {
           newCommittedRiders.splice(index, 1);
-          newInterestedRiders.push(name);
+          // Only add if not already in interested
+          if (!newInterestedRiders.includes(name)) {
+            newInterestedRiders.push(name);
+          }
         }
       }
-
+  
       return {
         eventId,
         eventType,
@@ -77,8 +79,8 @@ export const useRiderLists = ({
         committedRiders: newCommittedRiders,
       };
     },
-    [eventId, eventType, interestedRiders, committedRiders],
-  );
+    [eventId, eventType, interestedRiders, committedRiders]
+  );  
 
   return {
     riders,

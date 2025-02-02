@@ -52,3 +52,9 @@
   background-color: #363636;
   border: 1px dashed gray;
 }
+
+.draggingRider {
+  cursor: grabbing;
+  user-select: none;
+  font-size: 0.875rem;
+}

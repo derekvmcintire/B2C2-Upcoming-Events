@@ -60,21 +60,19 @@ export const useDragAndDrop = ({
     setActiveId(null);
     setOverContainer(null);
     const { active, over } = event;
-
+  
     if (!active || !over) return;
-
+  
     const sourceContainer = findContainer(active.id as ListConfigId);
-    const destinationContainer = validContainers.includes(
-      over.id as ListConfigId,
-    )
+    const destinationContainer = validContainers.includes(over.id as ListConfigId)
       ? (over.id as ListConfigId)
       : findContainer(over.id as ListConfigId);
-
+  
     if (sourceContainer === destinationContainer) {
       const items = [...(riders[sourceContainer] || [])];
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
-
+  
       if (newIndex !== -1) {
         setRiders({
           ...riders,
@@ -85,24 +83,36 @@ export const useDragAndDrop = ({
       const sourceItems = [...(riders[sourceContainer] || [])];
       const destinationItems = [...(riders[destinationContainer] || [])];
       const movedItem = sourceItems.find((item) => item.id === active.id);
-
+  
       if (
         movedItem &&
         isMovableListType(sourceContainer) &&
         isMovableListType(destinationContainer)
       ) {
-        setRiders({
-          ...riders,
-          [sourceContainer]: sourceItems.filter(
-            (item) => item.id !== active.id,
-          ),
-          [destinationContainer]: [...destinationItems, movedItem],
-        });
-
-        onMoveRider(sourceContainer, destinationContainer, movedItem.name);
+        // Prevent duplicate entries in destination list
+        const alreadyExists = destinationItems.some(
+          (item) => item.name === movedItem.name
+        );
+  
+        if (!alreadyExists) {
+          setRiders({
+            ...riders,
+            [sourceContainer]: sourceItems.filter((item) => item.id !== active.id),
+            [destinationContainer]: [...destinationItems, movedItem],
+          });
+  
+          onMoveRider(sourceContainer, destinationContainer, movedItem.name);
+        } else {
+          // Just remove from source if it already exists in destination
+          setRiders({
+            ...riders,
+            [sourceContainer]: sourceItems.filter((item) => item.id !== active.id),
+          });
+        }
       }
     }
   };
+  
 
   return {
     activeId,
