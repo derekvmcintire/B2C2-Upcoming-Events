@@ -38,3 +38,17 @@
 .default {
   background-color: #363636;
 }
+
+.primaryList {
+  border: 1px solid rgba(255, 165, 0, 0.5); /* Softer orange */
+  border-radius: 4px;
+}
+
+.secondaryList {
+  border-radius: 4px;
+}
+
+.placeholderRider {
+  background-color: #363636;
+  border: 1px dashed gray;
+}

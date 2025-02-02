@@ -32,12 +32,13 @@
 }
 
 .dateBadge {
-  color: #2e2e2e;
+  width: 125px;
+  color: #dbdbdb;
   text-align: center;
-  padding: 8px 24px;
+  padding: 8px;
   border-radius: 4px;
-  border: 2px solid black;
-  background: #f4f4f4;
+  border: 2px solid #dbdbdb;
+  background: #363636;
   position: relative;
   transition:
     transform 0.3s ease,
@@ -57,12 +58,10 @@
 .weekday {
   font-size: rem(16px);
   font-weight: 500;
-  color: black;
 }
 
 .month {
   font-size: rem(18px);
-  color: var(--mantine-color-gray-8);
   line-height: 1.1;
   font-weight: 700;
 }

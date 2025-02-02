@@ -15,7 +15,17 @@ export const RIDER_LIST_EVENT_TYPES: RiderListEventTypesEnum = {
   SPECIAL: "special",
 };
 
-export type ListConfigId = "registered" | "interested" | "committed";
+export const INTERESTED_LIST_TYPE = "interested";
+export const COMMITTED_LIST_TYPE = "committed";
+export const REGISTERED_LIST_TYPE = "registered";
+
+export type ListConfigId =
+  | typeof REGISTERED_LIST_TYPE
+  | typeof INTERESTED_LIST_TYPE
+  | typeof COMMITTED_LIST_TYPE;
+export type MovableListType =
+  | typeof INTERESTED_LIST_TYPE
+  | typeof COMMITTED_LIST_TYPE;
 
 export type ValidListConfigIds = {
   REGISTERED: ListConfigId;

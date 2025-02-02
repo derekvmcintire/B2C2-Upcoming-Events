@@ -9,6 +9,7 @@ export type EventType = {
   eventUrl?: string;
   eventType: EventDiscipline;
   interestedRiders?: string[];
+  committedRiders?: string[];
   housingUrl?: string;
   description?: string;
 };

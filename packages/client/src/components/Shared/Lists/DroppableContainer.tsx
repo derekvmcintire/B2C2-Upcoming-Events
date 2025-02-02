@@ -6,8 +6,9 @@ import {
 import { Box, Paper, Text } from "@mantine/core";
 import StaticRider from "./StaticRider";
 import classes from "../shared.module.css";
-import { type Rider } from "./types";
+import { RACE_CONFIG, SPECIAL_EVENT_CONFIG, type Rider } from "./types";
 import SortableRider from "./SortableRider";
+import PlaceholderRider from "./PlaceholderRider";
 
 interface DroppableContainerProps {
   id: string;
@@ -41,7 +42,28 @@ const DroppableContainer = ({
     disabled: !draggable,
   });
 
+  const isPrimary =
+    title === RACE_CONFIG.primaryList.title ||
+    title === SPECIAL_EVENT_CONFIG.primaryList.title;
   const containerClass = `${classes.paper} ${isOver ? classes.over : classes.default}`;
+
+  const DraggableContent = () => (
+    <SortableContext
+            items={items.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {items.map((rider) => (
+              <SortableRider
+                key={rider.id}
+                {...rider}
+                hasDismiss={hasDismiss}
+                draggable={draggable}
+                dismissRider={removeFn}
+                isPrimary={isPrimary}
+              />
+            ))}
+          </SortableContext>
+  )
 
   return (
     <Box>
@@ -53,20 +75,7 @@ const DroppableContainer = ({
         className={containerClass}
       >
         {draggable ? (
-          <SortableContext
-            items={items.map((item) => item.id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {items.map((rider) => (
-              <SortableRider
-                key={rider.id}
-                {...rider}
-                hasDismiss={hasDismiss}
-                draggable={draggable}
-                dismissRider={removeFn}
-              />
-            ))}
-          </SortableContext>
+          <DraggableContent />
         ) : (
           items.map((rider) => (
             <StaticRider
@@ -74,11 +83,14 @@ const DroppableContainer = ({
               name={rider.name}
               hasDismiss={hasDismiss}
               dismissRider={removeFn}
+              isPrimary={isPrimary}
             />
           ))
         )}
-        {items.length === 0 && draggable && (
-          <Box className={classes.draggableRidersBox}>Drop rider here</Box>
+        {draggable && (
+          <Box className={classes.draggableRidersBox}>
+            <PlaceholderRider />
+          </Box>
         )}
       </Paper>
     </Box>

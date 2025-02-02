@@ -3,11 +3,13 @@ import { Flex, Paper, Text } from "@mantine/core";
 import { CSS } from "@dnd-kit/utilities";
 import { Rider } from "./types";
 import DismissButton from "../DismissButton";
+import classes from "../shared.module.css";
 
 interface SortableRiderProps extends Rider {
   draggable: boolean;
   hasDismiss?: boolean;
   dismissRider?: (name: string) => void;
+  isPrimary?: boolean;
 }
 
 /**
@@ -25,6 +27,7 @@ const SortableRider = ({
   draggable,
   hasDismiss = false,
   dismissRider = () => {},
+  isPrimary = false,
 }: SortableRiderProps): JSX.Element => {
   const {
     attributes,
@@ -44,10 +47,15 @@ const SortableRider = ({
     opacity: isDragging ? 0.5 : 1,
   };
 
+  const riderClassName = isPrimary
+    ? classes.primaryList
+    : classes.secondaryList;
+
   return (
     <Paper
       ref={setNodeRef}
       style={style}
+      className={riderClassName}
       {...(draggable ? { ...attributes, ...listeners } : {})}
       shadow="xs"
       p="xs"
