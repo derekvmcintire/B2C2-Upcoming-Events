@@ -73,9 +73,9 @@ export default function ActionFormInput({
         className={classes.actionFormInput}
       />
       <Button
-        variant="outline"
-        color="gray"
-        c="gray"
+        // variant="outline"
+        // color="#1e88e5"
+        // c="#1e88e5"
         data-testid="event-card-form-submit"
         size="xs"
         onClick={handleClickSubmit}

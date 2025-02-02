@@ -10,7 +10,7 @@ export default function EventLabel({ labelConfig }: LabelProps) {
     <Badge
       color={labelConfig.color}
       radius="xs"
-      size="xl"
+      size="md"
       className={classes.eventLabel}
     >
       {labelConfig.text}

@@ -18,7 +18,7 @@ export default function SubmissionDrawer() {
         data-testid="sub-drawer-button"
         className={classes.drawerButton}
         size="md"
-        variant="outline"
+        // variant="outline"
         onClick={open}
         leftSection={<MdFormatAlignJustify />}
       >

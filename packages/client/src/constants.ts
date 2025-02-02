@@ -34,13 +34,14 @@ export const B2C2_API_BASE_URL = "https://b2c2-events-api.vercel.app";
 
 export const MOBILE_BREAK_POINT = "(max-width: 825px)";
 
+// other label colors to use: #0d47a1
 export const LABELS: ValidLabels = {
   RACE: {
     text: "Race",
-    color: "#12664c",
+    color: "#2e7d32",
   },
   TRIP: {
     text: "Team Trip",
-    color: "#8c774c",
+    color: "#546e7a",
   },
 };

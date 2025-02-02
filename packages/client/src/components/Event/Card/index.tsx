@@ -28,8 +28,7 @@ import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
-import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
-import EventLabel from "../EventLabel";
+import { MOBILE_BREAK_POINT } from "../../../constants";
 import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
 
 type EventProps = {
@@ -88,11 +87,8 @@ export default function EventCard({
     [requestDataCallback, eventType, setIsSubmitting],
   );
 
-  const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
-
   return (
     <Stack gap={0}>
-      <EventLabel labelConfig={label} />
       <Stack
         key={eventId}
         gap={0}
