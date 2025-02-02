@@ -18,13 +18,16 @@ import { useRiderLists } from "./hooks/useRiderLists";
 interface DraggableRidersListsProps {
   isStatic?: boolean;
   eventListType: "race" | "special";
-  registrations: string[];
+  initialRiders: RiderLists;
 }
 
+/**
+ * DraggableRidersLists component renders a list of draggable riders.
+ */
 const DraggableRidersLists = ({
   isStatic = false,
   eventListType,
-  registrations = [],
+  initialRiders,
 }: DraggableRidersListsProps): JSX.Element => {
   const { event } = useEventContext();
   const {
@@ -34,45 +37,6 @@ const DraggableRidersLists = ({
     committedRiders = [],
   } = event;
 
-  // Create a Set to track unique rider names
-  const seenRiders = new Set<string>();
-
-  // Function to filter riders, ensuring uniqueness
-  const filterUniqueRiders = (riders: string[]) =>
-    riders.filter((name) => {
-      if (seenRiders.has(name)) {
-        return false; // Skip if already seen
-      }
-      seenRiders.add(name);
-      return true;
-    });
-
-  // Process lists in priority order: registered > committed > interested
-  const mappedRegistrations = filterUniqueRiders(registrations).map((name) => ({
-    id: name,
-    name,
-  }));
-
-  const mappedCommittedRiders = filterUniqueRiders(committedRiders).map(
-    (name) => ({
-      id: name,
-      name,
-    }),
-  );
-
-  const mappedInterestedRiders = filterUniqueRiders(interestedRiders).map(
-    (name) => ({
-      id: name,
-      name,
-    }),
-  );
-
-  const initialRiders: RiderLists = {
-    registered: mappedRegistrations,
-    committed: mappedCommittedRiders,
-    interested: mappedInterestedRiders,
-  };
-
   const config = eventListType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;
   const validContainers = [config.primaryList.id, config.secondaryList.id];
 
@@ -80,6 +44,7 @@ const DraggableRidersLists = ({
     riders,
     setRiders,
     handleRemoveInterestedRider,
+    handleRemoveCommittedRider,
     getMoveRiderUpdateData,
     handleSubmitEventUpdate,
   } = useRiderLists({
@@ -110,19 +75,14 @@ const DraggableRidersLists = ({
     }),
   );
 
-  const removeCommitted = (name: string) => {
-    console.log("remove committed:", name);
-  };
-
+  // if primary list is not committed then it is registered, and we can't remove registered riders
+  // secondary lists are only allowed to be interested for now
   const removeFns = {
     primary:
       config.primaryList.id === "committed"
-        ? removeCommitted
-        : handleRemoveInterestedRider,
-    secondary:
-      config.secondaryList.id === "committed"
-        ? removeCommitted
-        : handleRemoveInterestedRider,
+        ? handleRemoveCommittedRider
+        : () => {},
+    secondary: handleRemoveInterestedRider,
   };
 
   const activeRider = activeId

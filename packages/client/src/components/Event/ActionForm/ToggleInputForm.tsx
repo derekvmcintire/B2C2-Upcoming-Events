@@ -3,7 +3,7 @@ import { Button } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { MdAdd } from "react-icons/md";
 import { MOBILE_BREAK_POINT } from "../../../constants";
-import EventCardInput from "./ActionFormInput";
+import ActionFormInput from "./ActionFormInput";
 
 interface ToggleFormProps {
   // Button configuration
@@ -24,6 +24,15 @@ interface ToggleFormProps {
   onSubmit: (value: string) => void;
 }
 
+/**
+ * ToggleInputForm component renders a toggleable input form.
+ *
+ * @component
+ * @param {Object} buttonConfig - Configuration for the toggle button.
+ * @param {Object} inputConfig - Configuration for the input form.
+ * @param {Function} onSubmit - Function to handle form submission.
+ * @returns {JSX.Element} ToggleInputForm component.
+ */
 const ToggleInputForm = ({
   buttonConfig,
   inputConfig,
@@ -55,7 +64,7 @@ const ToggleInputForm = ({
   }
 
   return (
-    <EventCardInput
+    <ActionFormInput
       placeholder={inputConfig.placeholder}
       submitLabel={inputConfig.submitLabel}
       submitHandler={onSubmit}

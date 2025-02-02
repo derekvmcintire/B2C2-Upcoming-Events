@@ -1,24 +1,19 @@
 import { Badge } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { Label } from "../../../types";
-// import { useEventContext } from "../../../context/event-context";
 
 interface LabelProps {
-  label: Label;
+  labelConfig: Label;
 }
-export default function EventLabel({ label }: LabelProps) {
-  // const eventContext = useEventContext();
-  // const { event } = eventContext;
-  // const { label = "race" } = event;
-
+export default function EventLabel({ labelConfig }: LabelProps) {
   return (
     <Badge
-      color={label.color}
+      color={labelConfig.color}
       radius="xs"
       size="xl"
       className={classes.eventLabel}
     >
-      {label.text}
+      {labelConfig.text}
     </Badge>
   );
 }

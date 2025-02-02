@@ -7,7 +7,7 @@ import { MOBILE_BREAK_POINT } from "../../../constants";
 import { useFormInput } from "../../../hooks/useFormInput";
 import DismissButton from "../../Shared/DismissButton";
 
-type EventCardInputProps = {
+type ActionFormInputProps = {
   placeholder: string;
   submitLabel?: string;
   submitHandler: (e: string) => void;
@@ -22,13 +22,13 @@ type EventCardInputProps = {
  *
  * @param {EventCardInput} props
  */
-export default function EventCardInput({
+export default function ActionFormInput({
   placeholder,
   submitLabel,
   submitHandler,
   dismissInput,
   validate,
-}: EventCardInputProps) {
+}: ActionFormInputProps) {
   const {
     value: inputValue,
     error,

@@ -3,11 +3,18 @@ import ToggleInputForm from "./ToggleInputForm";
 import { UpdateEventData } from "../../../api/updateEvent";
 import { useEventContext } from "../../../context/event-context";
 
-interface ActionFormProps {
+interface InterestedRiderFormProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
 }
 
-const ActionFormRefactored = ({ handleUpdateEvent }: ActionFormProps) => {
+/**
+ * Represents a form component for capturing interested riders for an event.
+ *
+ * @param handleUpdateEvent - The function to handle the update of the event.
+ */
+const InterestedRiderForm = ({
+  handleUpdateEvent,
+}: InterestedRiderFormProps) => {
   const eventContext = useEventContext();
   const { event } = eventContext;
   const { eventId, eventType, interestedRiders } = event;
@@ -44,4 +51,4 @@ const ActionFormRefactored = ({ handleUpdateEvent }: ActionFormProps) => {
   );
 };
 
-export default ActionFormRefactored;
+export default InterestedRiderForm;

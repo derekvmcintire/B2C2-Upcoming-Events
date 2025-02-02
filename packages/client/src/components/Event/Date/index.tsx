@@ -3,6 +3,9 @@ import classes from "../styles/event.module.css";
 import { useEventContext } from "../../../context/event-context";
 import { formatCalendarDate } from "../../../utils/dates";
 
+/**
+ * Renders the date of an event.
+ */
 export default function Date() {
   const eventContext = useEventContext();
   const { event } = eventContext;

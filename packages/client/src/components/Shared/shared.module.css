@@ -40,7 +40,7 @@
 }
 
 .primaryListRider {
-  border: 1px solid rgba(255, 165, 0, 0.5); /* Softer orange */
+  color: #e8b556; /* Softer orange */
   border-radius: 4px;
   font-size: 0.875rem;
 }

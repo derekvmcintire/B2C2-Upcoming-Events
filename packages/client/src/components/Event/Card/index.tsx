@@ -28,13 +28,9 @@ import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
-import { DISCIPLINES, LABELS, MOBILE_BREAK_POINT } from "../../../constants";
+import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventLabel from "../EventLabel";
-import DraggableRidersLists from "../../Shared/Lists/DraggableRidersList";
-import {
-  RIDER_LIST_EVENT_TYPES,
-  RiderListEventType,
-} from "../../Shared/Lists/types";
+import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
 
 type EventProps = {
   event: EventType;
@@ -60,18 +56,18 @@ export default function EventCard({
 
   const eventsContext = useEventsContext();
   const { isSubmitting, setIsSubmitting } = eventsContext;
-  const { eventId, eventType, interestedRiders = [] } = event;
+  const {
+    eventId,
+    eventType,
+    interestedRiders = [],
+    committedRiders = [],
+  } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
-
-  const riderListEventType: RiderListEventType =
-    event.eventType === DISCIPLINES.SPECIAL.id
-      ? RIDER_LIST_EVENT_TYPES.SPECIAL
-      : RIDER_LIST_EVENT_TYPES.RACE;
 
   /**
    * Handles the form submission by calling the provided update function with the given data.
@@ -92,24 +88,11 @@ export default function EventCard({
     [requestDataCallback, eventType, setIsSubmitting],
   );
 
-  // /**
-  //  * Handles the removal of an interested rider from the event.
-  //  * @param {string} riderToRemove - The rider to be removed.
-  //  */
-  // const handleRemoveInterestedRider = (riderToRemove: string) =>
-  //   handleSubmitEventUpdate({
-  //     eventId: eventId,
-  //     eventType: eventType,
-  //     interestedRiders: interestedRiders.filter(
-  //       (rider) => rider !== riderToRemove,
-  //     ),
-  //   });
-
   const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
 
   return (
     <Stack gap={0}>
-      <EventLabel label={label} />
+      <EventLabel labelConfig={label} />
       <Stack
         key={eventId}
         gap={0}
@@ -143,6 +126,7 @@ export default function EventCard({
         <Hypometer
           numberOfInterestedRiders={interestedRiders.length}
           numberOfRegisteredRiders={registeredNames.length}
+          numberOfCommittedRiders={committedRiders.length}
         />
         <Grid w="100%" className={classes.eventGrid}>
           <EventProvider event={event}>
@@ -152,7 +136,7 @@ export default function EventCard({
             <Grid.Col span={isMobile ? 12 : 9}>
               <Stack h="100%" justify="center" p="16">
                 <EventName />
-                <LinkBlock handleUpdateEvent={handleSubmitEventUpdate} />
+                <LinkBlock />
               </Stack>
             </Grid.Col>
             <Divider w="100%" mb="16" />
@@ -175,19 +159,11 @@ export default function EventCard({
             <Divider w="100%" mb="16" />
             <Grid.Col span={12}>
               {/* Rider Lists */}
-              <DraggableRidersLists
-                isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
-                eventListType={riderListEventType}
+              <EventRidersBlock
                 registrations={registeredNames}
+                updateEventFn={handleSubmitEventUpdate}
               />
             </Grid.Col>
-            {/* <Grid.Col span={12}>
-              <RiderListBlock
-                interestedRiders={interestedRiders}
-                registeredRiders={registeredNames}
-                removeInterestedRiderFn={handleRemoveInterestedRider}
-              />
-            </Grid.Col> */}
             <Grid.Col span={12}>
               <Stack w="100%" h="100%" justify="flex-end">
                 <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />

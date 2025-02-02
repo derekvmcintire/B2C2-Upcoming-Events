@@ -3,7 +3,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Box, Paper, Text } from "@mantine/core";
+import { Box, Divider, Paper, Text } from "@mantine/core";
 import StaticRider from "./StaticRider";
 import classes from "../shared.module.css";
 import { RACE_CONFIG, SPECIAL_EVENT_CONFIG, type Rider } from "./types";
@@ -49,7 +49,10 @@ const DroppableContainer = ({
 
   return (
     <Box>
-      <Text mb="xs">{title}</Text>
+      <Text fw={600} size="xl" mb="xs">
+        {title}
+      </Text>
+      <Divider />
       <Paper
         ref={draggable ? setNodeRef : undefined}
         p="sm"

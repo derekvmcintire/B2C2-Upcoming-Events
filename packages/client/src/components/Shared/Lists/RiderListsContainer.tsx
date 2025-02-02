@@ -23,7 +23,7 @@ export const RiderListsContainer = ({
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   return (
-    <Box p="sm">
+    <Box p="sm" w="100%">
       <Grid>
         <Grid.Col span={isMobile ? 12 : 6}>
           <DroppableContainer

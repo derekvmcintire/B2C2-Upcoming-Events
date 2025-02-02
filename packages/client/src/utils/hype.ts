@@ -15,4 +15,6 @@ export const getHypeColor = (hypeLevel: number): string => {
 export const getHypeLevel = (
   registeredRiders: number,
   interestedRiders: number,
-): number => (registeredRiders + interestedRiders) * 10;
+  numberOfCommittedRiders: number,
+): number =>
+  (registeredRiders + interestedRiders + numberOfCommittedRiders) * 10;

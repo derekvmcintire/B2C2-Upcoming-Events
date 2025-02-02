@@ -8,21 +8,18 @@ interface DraggableRiderProps {
 
 /**
  * DraggableRider component represents a draggable rider element.
- *
- * @param name - The name of the rider.
- * @returns The rendered DraggableRider component.
  */
 const DraggableRider = ({ name }: DraggableRiderProps): JSX.Element => {
   return (
     <Paper className={classes.draggingRider} shadow="sm" p="xs" withBorder>
-      <Flex align="center" justify="left">
+      <Flex align="center" justify="space-between" w="100%">
         <DismissButton
           xs
           clickHandler={() => {}}
           position="left"
           disabled={true}
         />
-        <Text ml="8" span fw="600">
+        <Text ml="8" span fw="600" style={{ flex: 1, textAlign: "center" }}>
           {name}
         </Text>
       </Flex>

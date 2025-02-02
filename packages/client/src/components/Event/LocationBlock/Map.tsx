@@ -19,6 +19,13 @@ interface MapProps {
   state: string;
 }
 
+/**
+ * Renders a map component with a marker at the specified city and state coordinates.
+ *
+ * @param city - The city name.
+ * @param state - The state name.
+ * @returns The map component.
+ */
 const Map = ({ city, state }: MapProps): JSX.Element => {
   const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(
     null,
@@ -38,14 +45,17 @@ const Map = ({ city, state }: MapProps): JSX.Element => {
   }, [isVisible, hasFetched]);
 
   return (
-    <div ref={mapRef} style={{ height: "300px", width: "100%" }}>
+    <div ref={mapRef} style={{ height: "200px", width: "100%" }}>
       {coords ? (
         <MapContainer
           center={[coords.lat, coords.lon]}
           zoom={12}
           style={{ height: "100%", width: "100%", zIndex: 1 }}
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
           <Marker position={[coords.lat, coords.lon]} icon={defaultIcon}>
             <Popup>
               {city}, {state}

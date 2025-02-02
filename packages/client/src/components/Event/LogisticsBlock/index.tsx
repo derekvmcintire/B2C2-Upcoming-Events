@@ -8,6 +8,12 @@ interface LogisticsBlockProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
 }
 
+/**
+ * Renders the logistics block component.
+ *
+ * @param handleUpdateEvent - Function to handle event updates.
+ * @returns The rendered logistics block component.
+ */
 export default function LogisticsBlock({
   handleUpdateEvent,
 }: LogisticsBlockProps) {

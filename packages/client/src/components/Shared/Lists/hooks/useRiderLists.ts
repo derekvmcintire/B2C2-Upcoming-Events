@@ -12,6 +12,16 @@ interface UseRiderListsProps {
   committedRiders: string[];
 }
 
+/**
+ * Custom hook for managing rider lists in an event.
+ *
+ * @param eventId - The ID of the event.
+ * @param eventType - The type of the event.
+ * @param initialRiders - The initial list of riders.
+ * @param interestedRiders - The list of interested riders.
+ * @param committedRiders - The list of committed riders.
+ * @returns An object containing the riders state, update functions, and helper functions.
+ */
 export const useRiderLists = ({
   eventId,
   eventType,
@@ -22,6 +32,11 @@ export const useRiderLists = ({
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
   const { requestFreshDataForEventType } = useEventData();
 
+  /**
+   * Handles the submission of an event update.
+   * @param data The data for the event update.
+   * @returns A promise that resolves when the event update is complete.
+   */
   const handleSubmitEventUpdate = useCallback(
     async (data: UpdateEventData): Promise<void> => {
       const response = await updateEvent(data);
@@ -35,6 +50,10 @@ export const useRiderLists = ({
     [requestFreshDataForEventType, eventType],
   );
 
+  /**
+   * Handles the removal of an interested rider from the event.
+   * @param nameToRemove - The name of the rider to remove.
+   */
   const handleRemoveInterestedRider = useCallback(
     (nameToRemove: string) =>
       handleSubmitEventUpdate({
@@ -45,6 +64,23 @@ export const useRiderLists = ({
         ),
       }),
     [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
+  );
+
+  /**
+   * Handles the removal of a committed rider from the event.
+   *
+   * @param nameToRemove - The name of the rider to remove.
+   */
+  const handleRemoveCommittedRider = useCallback(
+    (nameToRemove: string) =>
+      handleSubmitEventUpdate({
+        eventId,
+        eventType,
+        committedRiders: committedRiders.filter(
+          (name) => name !== nameToRemove,
+        ),
+      }),
+    [eventId, eventType, committedRiders, handleSubmitEventUpdate],
   );
 
   const getMoveRiderUpdateData = useCallback(
@@ -91,6 +127,7 @@ export const useRiderLists = ({
     setRiders,
     handleSubmitEventUpdate,
     handleRemoveInterestedRider,
+    handleRemoveCommittedRider,
     getMoveRiderUpdateData,
   };
 };

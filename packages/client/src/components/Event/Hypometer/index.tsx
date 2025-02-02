@@ -5,6 +5,7 @@ import { getHypeColor, getHypeLevel } from "../../../utils/hype";
 interface HypometerProps {
   numberOfRegisteredRiders: number;
   numberOfInterestedRiders: number;
+  numberOfCommittedRiders?: number;
 }
 
 /**
@@ -18,10 +19,12 @@ interface HypometerProps {
 export default function Hypometer({
   numberOfRegisteredRiders,
   numberOfInterestedRiders,
+  numberOfCommittedRiders = 0,
 }: HypometerProps): JSX.Element {
   const hypeLevel: number = getHypeLevel(
     numberOfRegisteredRiders,
     numberOfInterestedRiders,
+    numberOfCommittedRiders,
   );
 
   /**

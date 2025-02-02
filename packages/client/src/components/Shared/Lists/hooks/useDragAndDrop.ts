@@ -20,6 +20,15 @@ interface UseDragAndDropProps {
   ) => void;
 }
 
+/**
+ * Custom hook for handling drag and drop functionality.
+ *
+ * @param validContainers - An array of valid container IDs where items can be dropped.
+ * @param riders - The current state of the riders.
+ * @param setRiders - A function to update the state of the riders.
+ * @param onMoveRider - A callback function to be called when a rider is moved.
+ * @returns An object containing the active ID, over container, and event handlers for drag and drop.
+ */
 export const useDragAndDrop = ({
   validContainers,
   riders,
@@ -29,10 +38,19 @@ export const useDragAndDrop = ({
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overContainer, setOverContainer] = useState<ListConfigId | null>(null);
 
+  /**
+   * Handles the drag start event.
+   * @param event The drag start event.
+   */
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id as string);
   };
 
+  /**
+   * Handles the drag over event for the drag and drop functionality.
+   * Updates the over container if the container actually changed.
+   * @param event - The drag over event.
+   */
   const handleDragOver = (event: DragOverEvent) => {
     const container = event.over?.id as ListConfigId;
 
@@ -46,16 +64,30 @@ export const useDragAndDrop = ({
     }
   };
 
-  const isMovableListType = (list: ListConfigId): list is MovableListType => {
+  /**
+   * Checks if a given list is a movable list.
+   * @param list - The list to check.
+   * @returns True if the list is a movable list, false otherwise.
+   */
+  const hasMovableItems = (list: ListConfigId): list is MovableListType => {
     return list === INTERESTED_LIST_TYPE || list === COMMITTED_LIST_TYPE;
   };
 
+  /**
+   * Finds the container for the given ID in the drag and drop list.
+   * @param id - The ID of the item to find the container for.
+   * @returns The container ID where the item belongs.
+   */
   const findContainer = (id: string): ListConfigId => {
     if (riders.interested?.find((item) => item.id === id)) return "interested";
     if (riders.committed?.find((item) => item.id === id)) return "committed";
     return overContainer || "interested";
   };
 
+  /**
+   * Handles the drag end event.
+   * @param event The drag end event.
+   */
   const handleDragEnd = (event: DragEndEvent) => {
     setActiveId(null);
     setOverContainer(null);
@@ -88,8 +120,8 @@ export const useDragAndDrop = ({
 
       if (
         movedItem &&
-        isMovableListType(sourceContainer) &&
-        isMovableListType(destinationContainer)
+        hasMovableItems(sourceContainer) &&
+        hasMovableItems(destinationContainer)
       ) {
         // Prevent duplicate entries in destination list
         const alreadyExists = destinationItems.some(

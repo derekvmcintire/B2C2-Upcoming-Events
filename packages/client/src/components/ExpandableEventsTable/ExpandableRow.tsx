@@ -38,7 +38,15 @@ export default function ExpandableRow({
   registrations,
   requestDataCallback,
 }: ExpandableRowProps) {
-  const { city, date, eventId, interestedRiders, name, state } = event;
+  const {
+    city,
+    date,
+    eventId,
+    interestedRiders,
+    committedRiders,
+    name,
+    state,
+  } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const registeredNames = useMemo(
@@ -54,7 +62,13 @@ export default function ExpandableRow({
     : `${weekday} ${dateString}`;
 
   const numberOfIntRiders = interestedRiders?.length || 0;
-  const hypeLevel = getHypeLevel(registeredNames.length, numberOfIntRiders);
+  const numberOfCommittedRiders = committedRiders?.length || 0;
+
+  const hypeLevel = getHypeLevel(
+    registeredNames.length,
+    numberOfIntRiders,
+    numberOfCommittedRiders,
+  );
 
   const chevronSize = isMobile ? 8 : 16;
 

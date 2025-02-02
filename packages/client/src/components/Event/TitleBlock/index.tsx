@@ -4,6 +4,9 @@ import { useEventContext } from "../../../context/event-context";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
 
+/**
+ * Renders the event name in the title block.
+ */
 export default function EventName() {
   const eventContext = useEventContext();
   const { event } = eventContext;

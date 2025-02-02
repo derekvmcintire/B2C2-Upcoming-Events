@@ -183,7 +183,7 @@ export default function Description({
    * If no value is provided, it displays an "Add" button to add the event description.
    */
   const descriptionContent = value ? (
-    <Stack w="100%" gap={1}>
+    <Stack w="100%" h="100%" gap={1}>
       <EditLabel />
       <Flex className={classes.descriptionBlock}>
         <Text className={classes.descriptionContainer}>
@@ -203,5 +203,9 @@ export default function Description({
   /**
    * Renders either the input form (if editing) or the event description.
    */
-  return <Flex w="100%">{isOpen ? input : descriptionContent}</Flex>;
+  return (
+    <Flex w="100%" h="100%" align="flex-start">
+      {isOpen ? input : descriptionContent}
+    </Flex>
+  );
 }

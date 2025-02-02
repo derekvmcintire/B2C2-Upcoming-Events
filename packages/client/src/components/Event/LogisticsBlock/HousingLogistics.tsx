@@ -4,12 +4,17 @@ import ToggleInputForm from "../ActionForm/ToggleInputForm";
 import { useEventContext } from "../../../context/event-context";
 import { UpdateEventData } from "../../../api/updateEvent";
 import DismissButton from "../../Shared/DismissButton";
-import RiderList from "../RidersBlock/RiderList";
+import HousingRidersBlock from "./HousingRidersBlock";
 
 interface HousingLogisticProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
 }
 
+/**
+ * Renders the HousingLogistic component.
+ *
+ * @param handleUpdateEvent - Function to handle event updates.
+ */
 export default function HousingLogistic({
   handleUpdateEvent,
 }: HousingLogisticProps) {
@@ -49,9 +54,6 @@ export default function HousingLogistic({
       housingUrl: null,
     });
 
-  const mockRidersInterestedHousing = ["Wout", "Jonas"];
-  const mockRidersConfirmedHousing = ["Tadej", "Remco", "Fabian"];
-
   return (
     <Stack h="100%" className={classes.logisticCard}>
       {!housingUrl ? (
@@ -71,7 +73,7 @@ export default function HousingLogistic({
         </>
       ) : (
         <Stack>
-          <Flex justify="flex-start" align="center">
+          <Flex justify="flex-end" align="center">
             <Text className={classes.eventLink}>
               <a href={housingUrl} target="_blank" rel="noopener noreferrer">
                 Link to Housing Information
@@ -79,12 +81,8 @@ export default function HousingLogistic({
             </Text>
             <DismissButton clickHandler={handleRemoveHousing} />
           </Flex>
-          <Flex w="100%" justify="space-around">
-            <RiderList label="Confirmed" riders={mockRidersConfirmedHousing} />
-            <RiderList
-              label="Interested"
-              riders={mockRidersInterestedHousing}
-            />
+          <Flex w="100%" justify="center">
+            <HousingRidersBlock />
           </Flex>
         </Stack>
       )}

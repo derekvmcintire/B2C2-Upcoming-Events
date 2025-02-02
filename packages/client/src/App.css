@@ -1,10 +1,10 @@
 #root {
   min-height: 100vh; /* This ensures it takes up at least the full viewport height */
-  max-width: 1080px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 3rem;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  padding-left: 8rem;
+  padding-right: 8rem;
   text-align: center;
   background-image: light-dark(
     url("/headerbglite.jpg"),
