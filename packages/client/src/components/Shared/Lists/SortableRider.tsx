@@ -1,5 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { Flex, Paper, Text } from "@mantine/core";
+import { Flex, Paper, px, Text } from "@mantine/core";
 import { CSS } from "@dnd-kit/utilities";
 import { Rider } from "./types";
 import DismissButton from "../DismissButton";
@@ -48,8 +48,8 @@ const SortableRider = ({
   };
 
   const riderClassName = isPrimary
-    ? classes.primaryList
-    : classes.secondaryList;
+    ? classes.primaryListRider
+    : classes.secondaryListRider;
 
   return (
     <Paper
@@ -64,7 +64,6 @@ const SortableRider = ({
         root: {
           cursor: draggable ? "grab" : "default",
           userSelect: "none",
-          fontSize: "0.875rem",
           "&:hover": draggable
             ? {
                 backgroundColor: "#f8f9fa",
@@ -84,7 +83,7 @@ const SortableRider = ({
             position="left"
             disabled={false}
           />
-          <Text ml="8" span fw="600">
+          <Text ml="8" span fw="600" className={classes.riderListText}>
             {name}
           </Text>
         </Flex>

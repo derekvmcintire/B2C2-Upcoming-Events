@@ -24,7 +24,7 @@
 
 /* Paper.module.css */
 .paper {
-  min-height: 200px;
+  /* min-height: 200px; */
   /* transition: background-color 0.2s; */
   display: flex;
   flex-direction: column;
@@ -39,23 +39,41 @@
   background-color: #363636;
 }
 
-.primaryList {
+.primaryListRider {
   border: 1px solid rgba(255, 165, 0, 0.5); /* Softer orange */
   border-radius: 4px;
+  font-size: 0.875rem;
 }
 
-.secondaryList {
+.secondaryListRider {
   border-radius: 4px;
+  font-size: 100px;
 }
 
 .placeholderRider {
   background-color: #363636;
   color: var(--mantine-color-gray-5);
   border: 1px dashed var(--mantine-color-gray-7);
+  font-size: 0.875rem;
 }
 
 .draggingRider {
   cursor: grabbing;
   user-select: none;
   font-size: 0.875rem;
+}
+
+/* Make adjustments for smaller screens */
+@media (max-width: 825px) {
+  .secondaryListRider {
+    font-size: 0.5rem;
+  }
+
+  .placeholderRider {
+    font-size: 0.6rem;
+  }
+
+  .riderListText {
+    font-size: 0.75rem;
+  }
 }

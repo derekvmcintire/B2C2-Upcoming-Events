@@ -24,8 +24,8 @@ const StaticRider = ({
   isPrimary = false,
 }: StaticRiderProps): JSX.Element => {
   const riderClassName = isPrimary
-    ? classes.primaryList
-    : classes.secondaryList;
+    ? classes.primaryListRider
+    : classes.secondaryListRider;
 
   return (
     <Paper
