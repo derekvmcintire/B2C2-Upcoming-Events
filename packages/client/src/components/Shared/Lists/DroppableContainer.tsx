@@ -47,8 +47,17 @@ const DroppableContainer = ({
     title === SPECIAL_EVENT_CONFIG.primaryList.title;
   const containerClass = `${classes.paper} ${isOver ? classes.over : classes.default}`;
 
-  const DraggableContent = () => (
-    <SortableContext
+  return (
+    <Box>
+      <Text mb="xs">{title}</Text>
+      <Paper
+        ref={draggable ? setNodeRef : undefined}
+        p="sm"
+        radius="md"
+        className={containerClass}
+      >
+        {draggable ? (
+          <SortableContext
             items={items.map((item) => item.id)}
             strategy={verticalListSortingStrategy}
           >
@@ -63,19 +72,6 @@ const DroppableContainer = ({
               />
             ))}
           </SortableContext>
-  )
-
-  return (
-    <Box>
-      <Text mb="xs">{title}</Text>
-      <Paper
-        ref={draggable ? setNodeRef : undefined}
-        p="sm"
-        radius="md"
-        className={containerClass}
-      >
-        {draggable ? (
-          <DraggableContent />
         ) : (
           items.map((rider) => (
             <StaticRider

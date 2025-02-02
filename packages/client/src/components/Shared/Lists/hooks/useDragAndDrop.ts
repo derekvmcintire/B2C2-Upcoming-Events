@@ -35,7 +35,13 @@ export const useDragAndDrop = ({
 
   const handleDragOver = (event: DragOverEvent) => {
     const container = event.over?.id as ListConfigId;
-    if (container && validContainers.includes(container)) {
+
+    // Only update if the container actually changed
+    if (
+      container &&
+      validContainers.includes(container) &&
+      container !== overContainer
+    ) {
       setOverContainer(container);
     }
   };

@@ -9,9 +9,7 @@ import classes from "../shared.module.css";
  * @param dismissRider - The dismiss rider callback function.
  * @returns The rendered static rider component.
  */
-const PlaceholderRider = ({
-}): JSX.Element => {
-
+const PlaceholderRider = ({}): JSX.Element => {
   return (
     <Paper
       shadow="xs"
@@ -23,7 +21,7 @@ const PlaceholderRider = ({
         },
       })}
     >
-    Drop Rider Here
+      Drop Rider Here
     </Paper>
   );
 };
