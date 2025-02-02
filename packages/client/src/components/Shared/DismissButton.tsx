@@ -26,7 +26,7 @@ export default function DismissButton({
   xs = false,
   disabled = false,
   position = "right",
-}: DismissButtonProps) {
+}: DismissButtonProps): JSX.Element {
   const [opened, { open, close }] = useDisclosure(false);
 
   const handleClick = () => (withoutModal ? clickHandler() : open());

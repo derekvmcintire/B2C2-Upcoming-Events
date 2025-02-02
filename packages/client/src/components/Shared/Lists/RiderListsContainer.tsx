@@ -14,6 +14,15 @@ interface RiderListsContainerProps {
   };
 }
 
+/**
+ * Renders a container for rider lists.
+ *
+ * @param config - The configuration for the rider lists.
+ * @param riders - The riders data.
+ * @param draggable - Indicates whether the items are draggable.
+ * @param removeFns - The remove functions for each list.
+ * @returns The rendered RiderListsContainer component.
+ */
 export const RiderListsContainer = ({
   config,
   riders,
