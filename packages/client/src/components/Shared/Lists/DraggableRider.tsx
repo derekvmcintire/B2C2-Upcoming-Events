@@ -14,23 +14,18 @@ interface DraggableRiderProps {
  */
 const DraggableRider = ({ name }: DraggableRiderProps): JSX.Element => {
   return (
-    <Paper
-      className={classes.draggingRider}
-      shadow="sm"
-      p="xs"
-      withBorder
-    >
+    <Paper className={classes.draggingRider} shadow="sm" p="xs" withBorder>
       <Flex align="center" justify="left">
-       <DismissButton
-            xs
-            clickHandler={() => {}}
-            position="left"
-            disabled={true}
-          />
-          <Text ml="8" span fw="600">
-            {name}
-          </Text>
-        </Flex>
+        <DismissButton
+          xs
+          clickHandler={() => {}}
+          position="left"
+          disabled={true}
+        />
+        <Text ml="8" span fw="600">
+          {name}
+        </Text>
+      </Flex>
     </Paper>
   );
 };

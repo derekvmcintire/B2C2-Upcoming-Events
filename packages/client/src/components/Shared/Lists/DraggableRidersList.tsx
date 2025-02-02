@@ -34,20 +34,43 @@ const DraggableRidersLists = ({
     committedRiders = [],
   } = event;
 
-  const mappedInterestedRiders = interestedRiders.map((name) => ({
+  // Create a Set to track unique rider names
+  const seenRiders = new Set<string>();
+
+  // Function to filter riders, ensuring uniqueness
+  const filterUniqueRiders = (riders: string[]) =>
+    riders.filter((name) => {
+      if (seenRiders.has(name)) {
+        return false; // Skip if already seen
+      }
+      seenRiders.add(name);
+      return true;
+    });
+
+  // Process lists in priority order: registered > committed > interested
+  const mappedRegistrations = filterUniqueRiders(registrations).map((name) => ({
     id: name,
     name,
   }));
-  const mappedCommittedRiders = committedRiders.map((name) => ({
-    id: name,
-    name,
-  }));
-  const mappedRegistrations = registrations.map((name) => ({ id: name, name }));
+
+  const mappedCommittedRiders = filterUniqueRiders(committedRiders).map(
+    (name) => ({
+      id: name,
+      name,
+    }),
+  );
+
+  const mappedInterestedRiders = filterUniqueRiders(interestedRiders).map(
+    (name) => ({
+      id: name,
+      name,
+    }),
+  );
 
   const initialRiders: RiderLists = {
-    interested: mappedInterestedRiders,
-    committed: mappedCommittedRiders,
     registered: mappedRegistrations,
+    committed: mappedCommittedRiders,
+    interested: mappedInterestedRiders,
   };
 
   const config = eventListType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;

@@ -50,7 +50,8 @@
 
 .placeholderRider {
   background-color: #363636;
-  border: 1px dashed gray;
+  color: var(--mantine-color-gray-5);
+  border: 1px dashed var(--mantine-color-gray-7);
 }
 
 .draggingRider {

@@ -48,10 +48,14 @@ export const useRiderLists = ({
   );
 
   const getMoveRiderUpdateData = useCallback(
-    (sourceList: MovableListType, targetList: MovableListType, name: string): UpdateEventData => {
+    (
+      sourceList: MovableListType,
+      targetList: MovableListType,
+      name: string,
+    ): UpdateEventData => {
       const newInterestedRiders = [...interestedRiders];
       const newCommittedRiders = [...committedRiders];
-  
+
       if (sourceList === "interested" && targetList === "committed") {
         const index = newInterestedRiders.indexOf(name);
         if (index !== -1) {
@@ -71,7 +75,7 @@ export const useRiderLists = ({
           }
         }
       }
-  
+
       return {
         eventId,
         eventType,
@@ -79,8 +83,8 @@ export const useRiderLists = ({
         committedRiders: newCommittedRiders,
       };
     },
-    [eventId, eventType, interestedRiders, committedRiders]
-  );  
+    [eventId, eventType, interestedRiders, committedRiders],
+  );
 
   return {
     riders,
