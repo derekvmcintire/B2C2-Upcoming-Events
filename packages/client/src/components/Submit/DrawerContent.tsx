@@ -39,9 +39,15 @@ const DrawerContent = (): JSX.Element => {
           {value === FORMS.RACE.value ? (
             <RaceSubmissionForm vertical={true} />
           ) : value === FORMS.CONTES.value ? (
-            <SpecialEventSubmissionForm isQuickContes />
+            <>
+              {/* forcing a remount with key so initial state is updated */}
+              <SpecialEventSubmissionForm key={"contes"} isQuickContes />
+            </>
           ) : (
-            <SpecialEventSubmissionForm />
+            <>
+              {/* forcing a remount with key so initial state is updated */}
+              <SpecialEventSubmissionForm key={"special"} />
+            </>
           )}
         </Container>
       </EventsProvider>

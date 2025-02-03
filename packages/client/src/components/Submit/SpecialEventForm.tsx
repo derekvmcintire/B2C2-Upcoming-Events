@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -46,13 +46,17 @@ const SpecialEventSubmissionForm = ({
         state: "MA",
         name: "Conte's Group Ride",
       }
-    : {};
+    : {
+        city: "",
+        state: "",
+        name: "",
+      };
 
   // State variables for required fields
-  const [city, setCity] = useState<string>(initialData?.city || "");
+  const [city, setCity] = useState<string>(initialData.city);
   const [date, setDate] = useState<string>("");
-  const [name, setName] = useState<string>(initialData?.name || "");
-  const [state, setState] = useState<string>(initialData?.state || "");
+  const [name, setName] = useState<string>(initialData.name);
+  const [state, setState] = useState<string>(initialData.state);
   const [discipline, setDiscipline] = useState<EventDiscipline>(
     DISCIPLINES.SPECIAL.id,
   );
@@ -224,6 +228,7 @@ const SpecialEventSubmissionForm = ({
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
+        disabled={isQuickContes}
       />
       <TextInput
         className={classes.formInput}
@@ -239,6 +244,7 @@ const SpecialEventSubmissionForm = ({
         value={city}
         onChange={(e) => setCity(e.target.value)}
         required
+        disabled={isQuickContes}
       />
       <TextInput
         className={classes.formInput}
@@ -246,6 +252,7 @@ const SpecialEventSubmissionForm = ({
         value={state}
         onChange={(e) => setState(e.target.value)}
         required
+        disabled={isQuickContes}
       />
       <Select
         className={`${classes.formInput} ${classes.disciplineInput}`}
@@ -253,18 +260,21 @@ const SpecialEventSubmissionForm = ({
         value={discipline}
         onChange={handleOnChangeSelect}
         data={disciplineOptions}
+        disabled={isQuickContes}
       />
       <TextInput
         className={classes.formInput}
         placeholder="Event URL (optional)"
         value={eventUrl}
         onChange={(e) => setEventUrl(e.target.value)}
+        disabled={isQuickContes}
       />
       <TextInput
         className={classes.formInput}
         placeholder="Housing URL (optional)"
         value={housingUrl}
         onChange={(e) => setHousingUrl(e.target.value)}
+        disabled={isQuickContes}
       />
 
       <Button
@@ -280,11 +290,17 @@ const SpecialEventSubmissionForm = ({
 
   return (
     <Stack align="center" w="100%" className={classes.submissionForm}>
-      <Text className={classes.formDescription}>
-        Submit a special event - or any event that isn't on BikeReg, to add it
-        to the calendar. Discipline will default to "Team Events" - but you can
-        select another discipline if you want.
-      </Text>
+      {!isQuickContes ? (
+        <Text className={classes.formDescription}>
+          Submit a special event - or any event that isn't on BikeReg, to add it
+          to the calendar. Discipline will default to "Team Events" - but you
+          can select another discipline if you want.
+        </Text>
+      ) : (
+        <Text className={classes.formDescription}>
+          Select the date and add a Conte's Ride
+        </Text>
+      )}
 
       {error && (
         <Alert color="red" withCloseButton onClose={() => setError("")}>
