@@ -2,8 +2,17 @@
   margin-right: 8px;
 }
 
+.subTitle {
+  font-weight: 500;
+  font-size: rem(25px);
+}
+
 .loading {
   margin-top: 16px;
+}
+
+.droppableContainer {
+  max-width: 700px;
 }
 
 /* Paper.module.css */
@@ -20,11 +29,11 @@
 }
 
 .default {
-  background-color: #363636;
+  background-color: light-dark(#ffffff, #363636);
 }
 
 .primaryListRider {
-  color: #e8b556; /* Softer orange */
+  color: light-dark(#fb8c00, #e8b556);
   border-radius: 4px;
   font-size: 0.875rem;
 }
@@ -35,7 +44,7 @@
 }
 
 .placeholderRider {
-  background-color: #363636;
+  background-color: light-dark(#ffffff, #363636);
   color: var(--mantine-color-gray-5);
   border: 1px dashed var(--mantine-color-gray-7);
   font-size: 0.875rem;

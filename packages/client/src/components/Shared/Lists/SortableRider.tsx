@@ -84,9 +84,7 @@ const SortableRider = ({
             disabled={false}
           />
           <Text
-            ml="8"
             span
-            fw="600"
             className={classes.riderListText}
             style={{ flex: 1, textAlign: "center" }}
           >

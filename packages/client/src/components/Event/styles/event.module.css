@@ -1,5 +1,5 @@
 .eventContainer {
-  background-color: light-dark(#ffffff, #363636);
+  background-color: light-dark(#f4f4f4, #363636);
   border: 1px solid #607d8b;
   padding: 24px;
   padding-top: 0px;
@@ -32,12 +32,12 @@
 
 .dateBadge {
   width: 125px;
-  color: #dbdbdb;
+  color: light-dark(#363636, #f4f4f4);
   text-align: center;
   padding: 8px;
   border-radius: 4px;
   border: 2px solid #dbdbdb;
-  background: #363636;
+  background: light-dark(#ffffff, #363636);
   position: relative;
   transition:
     transform 0.3s ease,
@@ -85,7 +85,7 @@
 }
 
 .descriptionBlock {
-  background-color: light-dark(#f4f4f4, #2e2e2e);
+  background-color: light-dark(#ffffff, #2e2e2e);
   border: 1px solid #607d8b;
   border-radius: 4px;
   padding: 16px;
@@ -94,7 +94,7 @@
 
 .ridersListContainer {
   border-radius: 4px;
-  background-color: light-dark(#f4f4f4, #2e2e2e);
+  background-color: light-dark(#ffffff, #2e2e2e);
 }
 
 .registeredRiderText {

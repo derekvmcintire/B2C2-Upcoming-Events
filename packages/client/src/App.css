@@ -1,5 +1,5 @@
 #root {
-  min-height: 100vh; /* This ensures it takes up at least the full viewport height */
+  min-height: 100vh;
   max-width: 1400px;
   margin: 0 auto;
   padding: 3rem;

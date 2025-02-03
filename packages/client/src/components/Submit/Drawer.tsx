@@ -10,7 +10,6 @@ export default function SubmissionDrawer() {
   return (
     <Flex>
       <Drawer opened={opened} onClose={close}>
-        {/* Drawer content */}
         <DrawerContent />
       </Drawer>
 

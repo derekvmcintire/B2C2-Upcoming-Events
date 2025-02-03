@@ -1,4 +1,4 @@
-import { Collapse, Progress, Table } from "@mantine/core";
+import { Collapse, Progress, resolveClassNames, Table } from "@mantine/core";
 import React, { useMemo } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../Event/Card";

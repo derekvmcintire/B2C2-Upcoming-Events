@@ -3,6 +3,7 @@ import DroppableContainer from "./DroppableContainer";
 import { RiderLists, RiderListsConfig } from "./types";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
+import classes from "../shared.module.css";
 
 interface RiderListsContainerProps {
   config: RiderListsConfig;
@@ -32,7 +33,7 @@ export const RiderListsContainer = ({
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   return (
-    <Box p="sm" w="100%">
+    <Box p="sm" w="100%" className={classes.droppableContainer}>
       <Grid>
         <Grid.Col span={isMobile ? 12 : 6}>
           <DroppableContainer

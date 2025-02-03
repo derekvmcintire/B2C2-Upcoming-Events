@@ -14,6 +14,7 @@ import DraggableRider from "./DraggableRider";
 import { useEventContext } from "../../../context/event-context";
 import { useDragAndDrop } from "./hooks/useDragAndDrop";
 import { useRiderLists } from "./hooks/useRiderLists";
+import { Flex } from "@mantine/core";
 
 interface DraggableRidersListsProps {
   isStatic?: boolean;
@@ -93,36 +94,40 @@ const DraggableRidersLists = ({
 
   if (isStatic) {
     return (
-      <RiderListsContainer
-        config={config}
-        riders={riders}
-        draggable={false}
-        removeFns={removeFns}
-      />
+      <Flex w="100%" justify="center">
+        <RiderListsContainer
+          config={config}
+          riders={riders}
+          draggable={false}
+          removeFns={removeFns}
+        />
+      </Flex>
     );
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-    >
-      <RiderListsContainer
-        config={config}
-        riders={riders}
-        draggable={true}
-        removeFns={removeFns}
-      />
+    <Flex w="100%" justify="center">
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <RiderListsContainer
+          config={config}
+          riders={riders}
+          draggable={true}
+          removeFns={removeFns}
+        />
 
-      <DragOverlay dropAnimation={null}>
-        {activeId && activeRider ? (
-          <DraggableRider name={activeRider.name} />
-        ) : null}
-      </DragOverlay>
-    </DndContext>
+        <DragOverlay dropAnimation={null}>
+          {activeId && activeRider ? (
+            <DraggableRider name={activeRider.name} />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
+    </Flex>
   );
 };
 

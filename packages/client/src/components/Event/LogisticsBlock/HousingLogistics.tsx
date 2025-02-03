@@ -5,6 +5,7 @@ import { useEventContext } from "../../../context/event-context";
 import { UpdateEventData } from "../../../api/updateEvent";
 import DismissButton from "../../Shared/DismissButton";
 import HousingRidersBlock from "./HousingRidersBlock";
+import SubTitle from "../../Shared/SubTitle";
 
 interface HousingLogisticProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
@@ -56,6 +57,7 @@ export default function HousingLogistic({
 
   return (
     <Stack h="100%" className={classes.logisticCard}>
+      <SubTitle text="Housing" ta="center" />
       {!housingUrl ? (
         <Stack align="center">
           <ToggleInputForm

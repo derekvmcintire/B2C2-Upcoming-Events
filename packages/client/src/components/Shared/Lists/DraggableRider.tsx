@@ -19,7 +19,7 @@ const DraggableRider = ({ name }: DraggableRiderProps): JSX.Element => {
           position="left"
           disabled={true}
         />
-        <Text ml="8" span fw="600" style={{ flex: 1, textAlign: "center" }}>
+        <Text span style={{ flex: 1, textAlign: "center" }}>
           {name}
         </Text>
       </Flex>

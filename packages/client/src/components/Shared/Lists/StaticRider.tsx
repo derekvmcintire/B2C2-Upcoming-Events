@@ -40,14 +40,18 @@ const StaticRider = ({
       })}
     >
       {hasDismiss ? (
-        <Flex align="center" justify="left">
+        <Flex align="center" justify="space-between" w="100%">
           <DismissButton
             xs
             clickHandler={() => dismissRider(name)}
             position="left"
             disabled={false}
           />
-          <Text ml="8" span fw="600">
+          <Text
+            span
+            className={classes.riderListText}
+            style={{ flex: 1, textAlign: "center" }}
+          >
             {name}
           </Text>
         </Flex>
