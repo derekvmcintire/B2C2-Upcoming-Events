@@ -34,7 +34,9 @@ export const RiderListsContainer = ({
 }: RiderListsContainerProps) => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
-  const rideListContainerClass = xs ? classes.xsRiderListContainer : classes.riderListContainer;
+  const rideListContainerClass = xs
+    ? classes.xsRiderListContainer
+    : classes.riderListContainer;
 
   return (
     <Box p="sm" w="100%" className={rideListContainerClass}>

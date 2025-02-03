@@ -9,7 +9,7 @@ import classes from "../shared.module.css";
  * @param dismissRider - The dismiss rider callback function.
  * @returns The rendered static rider component.
  */
-const PlaceholderRider = ({xs = false}: { xs: boolean }): JSX.Element => {
+const PlaceholderRider = ({ xs = false }: { xs: boolean }): JSX.Element => {
   const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
 
   return (
@@ -22,9 +22,13 @@ const PlaceholderRider = ({xs = false}: { xs: boolean }): JSX.Element => {
         },
       })}
     >
-      <Text span className={textClassName} style={{ flex: 1, textAlign: "center" }}>
-      Drop Rider Here
-        </Text>
+      <Text
+        span
+        className={textClassName}
+        style={{ flex: 1, textAlign: "center" }}
+      >
+        Drop Rider Here
+      </Text>
     </Paper>
   );
 };

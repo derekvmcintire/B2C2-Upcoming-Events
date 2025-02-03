@@ -57,7 +57,6 @@ const SortableRider = ({
 
   const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
 
-
   return (
     <Paper
       ref={setNodeRef}

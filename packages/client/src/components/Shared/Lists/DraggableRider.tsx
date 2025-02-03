@@ -10,7 +10,10 @@ interface DraggableRiderProps {
 /**
  * DraggableRider component represents a draggable rider element.
  */
-const DraggableRider = ({ name, xs = false }: DraggableRiderProps): JSX.Element => {
+const DraggableRider = ({
+  name,
+  xs = false,
+}: DraggableRiderProps): JSX.Element => {
   const riderClassName = xs ? classes.xsDraggingRider : classes.draggingRider;
 
   const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
@@ -24,7 +27,11 @@ const DraggableRider = ({ name, xs = false }: DraggableRiderProps): JSX.Element 
           position="left"
           disabled={true}
         />
-        <Text span className={textClassName} style={{ flex: 1, textAlign: "center" }}>
+        <Text
+          span
+          className={textClassName}
+          style={{ flex: 1, textAlign: "center" }}
+        >
           {name}
         </Text>
       </Flex>

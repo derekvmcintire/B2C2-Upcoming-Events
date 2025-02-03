@@ -1,36 +1,37 @@
 import { useState, useCallback } from "react";
 import { UpdateEventData, updateEvent } from "../../../../api/updateEvent";
 import { useEventData } from "../../../../hooks/useEventData";
-import { RiderLists, MovableListType, COMMITTED_LIST_TYPE, INTERESTED_LIST_TYPE, HOUSING_COMMITTED_LIST_TYPE, HOUSING_INTERESTED_LIST_TYPE } from "../types";
-import { EventDiscipline, Housing } from "../../../../types";
+import {
+  RiderLists,
+  ListConfigId,
+  COMMITTED_LIST_TYPE,
+  INTERESTED_LIST_TYPE,
+  HOUSING_COMMITTED_LIST_TYPE,
+  HOUSING_INTERESTED_LIST_TYPE,
+} from "../types";
+import { EventType, Housing } from "../../../../types";
 
 interface UseRiderListsProps {
-  eventId: string;
-  eventType: EventDiscipline;
+  event: EventType;
   initialRiders: RiderLists;
-  interestedRiders: string[];
-  committedRiders: string[];
-  housing?: Housing;
 }
 
 /**
  * Custom hook for managing rider lists in an event.
  *
- * @param eventId - The ID of the event.
- * @param eventType - The type of the event.
+ * @param event - The event these rider lists are attached to.
  * @param initialRiders - The initial list of riders.
- * @param interestedRiders - The list of interested riders.
- * @param committedRiders - The list of committed riders.
  * @returns An object containing the riders state, update functions, and helper functions.
  */
-export const useRiderLists = ({
-  eventId,
-  eventType,
-  initialRiders,
-  interestedRiders,
-  committedRiders,
-  housing={committed: [], interested: []}
-}: UseRiderListsProps) => {
+export const useRiderLists = ({ event, initialRiders }: UseRiderListsProps) => {
+  const {
+    eventId,
+    eventType,
+    interestedRiders = [],
+    committedRiders = [],
+    housing = { committed: [], interested: [] },
+    housingUrl = "",
+  } = event;
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
   const { requestFreshDataForEventType } = useEventData();
 
@@ -46,6 +47,7 @@ export const useRiderLists = ({
       if (response.success) {
         requestFreshDataForEventType(eventType);
       } else {
+        // @TODO: Error handling here
         console.log("problems update event from draglist");
       }
     },
@@ -88,15 +90,18 @@ export const useRiderLists = ({
   // @TODO: update this to accommodate housing and eventually carpools as well
   const getMoveRiderUpdateData = useCallback(
     (
-      sourceList: MovableListType,
-      targetList: MovableListType,
+      sourceList: ListConfigId,
+      targetList: ListConfigId,
       name: string,
     ): UpdateEventData => {
       const newInterestedRiders = [...interestedRiders];
       const newCommittedRiders = [...committedRiders];
-      
+
       // Existing logic for top-level riders lists
-      if (sourceList === INTERESTED_LIST_TYPE && targetList === COMMITTED_LIST_TYPE) {
+      if (
+        sourceList === INTERESTED_LIST_TYPE &&
+        targetList === COMMITTED_LIST_TYPE
+      ) {
         const index = newInterestedRiders.indexOf(name);
         if (index !== -1) {
           newInterestedRiders.splice(index, 1);
@@ -105,7 +110,10 @@ export const useRiderLists = ({
             newCommittedRiders.push(name);
           }
         }
-      } else if (sourceList === COMMITTED_LIST_TYPE && targetList === INTERESTED_LIST_TYPE) {
+      } else if (
+        sourceList === COMMITTED_LIST_TYPE &&
+        targetList === INTERESTED_LIST_TYPE
+      ) {
         const index = newCommittedRiders.indexOf(name);
         if (index !== -1) {
           newCommittedRiders.splice(index, 1);
@@ -115,17 +123,20 @@ export const useRiderLists = ({
           }
         }
       }
-  
+
       // New logic for housing lists
       const newHousing: Housing = { ...housing };
-      
-      if (sourceList === HOUSING_INTERESTED_LIST_TYPE && targetList === HOUSING_COMMITTED_LIST_TYPE) {
+
+      if (
+        sourceList === HOUSING_INTERESTED_LIST_TYPE &&
+        targetList === HOUSING_COMMITTED_LIST_TYPE
+      ) {
         // Move from housing interested to housing committed
         if (newHousing.interested) {
           const index = newHousing.interested.indexOf(name);
           if (index !== -1) {
             newHousing.interested.splice(index, 1);
-            
+
             // Add to committed only if not already there
             if (!newHousing.committed) {
               newHousing.committed = [];
@@ -135,13 +146,16 @@ export const useRiderLists = ({
             }
           }
         }
-      } else if (sourceList === HOUSING_COMMITTED_LIST_TYPE && targetList === HOUSING_INTERESTED_LIST_TYPE) {
+      } else if (
+        sourceList === HOUSING_COMMITTED_LIST_TYPE &&
+        targetList === HOUSING_INTERESTED_LIST_TYPE
+      ) {
         // Move from housing committed to housing interested
         if (newHousing.committed) {
           const index = newHousing.committed.indexOf(name);
           if (index !== -1) {
             newHousing.committed.splice(index, 1);
-            
+
             // Add to interested only if not already there
             if (!newHousing.interested) {
               newHousing.interested = [];
@@ -152,13 +166,14 @@ export const useRiderLists = ({
           }
         }
       }
-  
+
       return {
         eventId,
         eventType,
         interestedRiders: newInterestedRiders,
         committedRiders: newCommittedRiders,
         housing: newHousing,
+        housingUrl,
       };
     },
     [eventId, eventType, interestedRiders, committedRiders, housing],

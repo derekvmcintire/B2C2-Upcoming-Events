@@ -15,11 +15,11 @@ import {
  */
 export default function HousingRidersBlock() {
   const { event } = useEventContext();
-  const { eventType } = event;
+  const { eventType, housing = {} } = event;
 
   // mock lists
-  const mockRidersInterestedHousing = ["Wout", "Jonas"];
-  const mockRidersConfirmedHousing = ["Tadej", "Remco", "Fabian"];
+  const housingInterestedRiders = housing?.interested || [];
+  const housingCommittedRiders = housing?.committed || [];
 
   const riderListEventType: RiderListEventType =
     eventType === DISCIPLINES.SPECIAL.id
@@ -39,27 +39,28 @@ export default function HousingRidersBlock() {
       return true;
     });
 
-  const mappedCommittedRiders = filterUniqueRiders(
-    mockRidersConfirmedHousing,
-  ).map((name) => ({
-    id: name,
-    name,
-  }));
+  const mappedCommittedRiders = filterUniqueRiders(housingCommittedRiders).map(
+    (name) => ({
+      id: name,
+      name,
+    }),
+  );
 
   const mappedInterestedRiders = filterUniqueRiders(
-    mockRidersInterestedHousing,
+    housingInterestedRiders,
   ).map((name) => ({
     id: name,
     name,
   }));
 
   const initialRiders: RiderLists = {
-    committed: mappedCommittedRiders,
-    interested: mappedInterestedRiders,
+    housingCommitted: mappedCommittedRiders,
+    housingInterested: mappedInterestedRiders,
   };
 
   return (
     <DraggableRidersLists
+      isHousing
       isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
       eventListType={riderListEventType}
       initialRiders={initialRiders}

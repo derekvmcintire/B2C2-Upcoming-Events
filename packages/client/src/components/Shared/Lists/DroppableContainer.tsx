@@ -51,7 +51,9 @@ const DroppableContainer = ({
 
   const titleSize = xs ? "md" : "xl";
 
-  const paperContainerClass = xs ? `${classes.xsListPaper} ${containerClass}` : containerClass;
+  const paperContainerClass = xs
+    ? `${classes.xsListPaper} ${containerClass}`
+    : containerClass;
 
   return (
     <Box>

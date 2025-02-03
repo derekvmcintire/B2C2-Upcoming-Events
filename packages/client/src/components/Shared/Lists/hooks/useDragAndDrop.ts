@@ -4,18 +4,18 @@ import { arrayMove } from "@dnd-kit/sortable";
 import {
   RiderLists,
   ListConfigId,
-  MovableListType,
-  COMMITTED_LIST_TYPE,
-  INTERESTED_LIST_TYPE,
+  RiderListsConfig,
+  MOVABLE_LISTS,
 } from "../types";
 
 interface UseDragAndDropProps {
+  config: RiderListsConfig;
   validContainers: string[];
   riders: RiderLists;
   setRiders: (riders: RiderLists) => void;
   onMoveRider: (
-    sourceList: MovableListType,
-    targetList: MovableListType,
+    sourceList: ListConfigId,
+    targetList: ListConfigId,
     name: string,
   ) => void;
 }
@@ -30,6 +30,7 @@ interface UseDragAndDropProps {
  * @returns An object containing the active ID, over container, and event handlers for drag and drop.
  */
 export const useDragAndDrop = ({
+  config,
   validContainers,
   riders,
   setRiders,
@@ -69,8 +70,8 @@ export const useDragAndDrop = ({
    * @param list - The list to check.
    * @returns True if the list is a movable list, false otherwise.
    */
-  const hasMovableItems = (list: ListConfigId): list is MovableListType => {
-    return list === INTERESTED_LIST_TYPE || list === COMMITTED_LIST_TYPE;
+  const hasMovableItems = (list: ListConfigId): boolean => {
+    return MOVABLE_LISTS.includes(list);
   };
 
   /**
@@ -79,9 +80,11 @@ export const useDragAndDrop = ({
    * @returns The container ID where the item belongs.
    */
   const findContainer = (id: string): ListConfigId => {
-    if (riders.interested?.find((item) => item.id === id)) return "interested";
-    if (riders.committed?.find((item) => item.id === id)) return "committed";
-    return overContainer || "interested";
+    if (riders[config.secondaryList.id]?.find((item) => item.id === id))
+      return config.secondaryList.id;
+    if (riders[config.primaryList.id]?.find((item) => item.id === id))
+      return config.primaryList.id;
+    return overContainer || config.secondaryList.id;
   };
 
   /**
@@ -136,7 +139,6 @@ export const useDragAndDrop = ({
             ),
             [destinationContainer]: [...destinationItems, movedItem],
           });
-
           onMoveRider(sourceContainer, destinationContainer, movedItem.name);
         } else {
           // Just remove from source if it already exists in destination

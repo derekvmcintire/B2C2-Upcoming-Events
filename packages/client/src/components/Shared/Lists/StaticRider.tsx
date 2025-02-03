@@ -29,7 +29,7 @@ const StaticRider = ({
     ? classes.primaryListRider
     : classes.secondaryListRider;
 
-    const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
+  const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
 
   return (
     <Paper

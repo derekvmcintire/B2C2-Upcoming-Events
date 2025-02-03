@@ -8,7 +8,13 @@ import {
   closestCenter,
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { RACE_CONFIG, RiderLists, SPECIAL_EVENT_CONFIG } from "./types";
+import {
+  EVENT_HOUSING_LIST_CONFIG,
+  RACE_CONFIG,
+  RiderLists,
+  RiderListsConfig,
+  SPECIAL_EVENT_CONFIG,
+} from "./types";
 import { RiderListsContainer } from "./RiderListsContainer";
 import DraggableRider from "./DraggableRider";
 import { useEventContext } from "../../../context/event-context";
@@ -21,6 +27,7 @@ interface DraggableRidersListsProps {
   eventListType: "race" | "special";
   initialRiders: RiderLists;
   xs?: boolean;
+  isHousing?: boolean;
 }
 
 /**
@@ -31,16 +38,20 @@ const DraggableRidersLists = ({
   eventListType,
   initialRiders,
   xs = false,
+  isHousing = false,
 }: DraggableRidersListsProps): JSX.Element => {
   const { event } = useEventContext();
-  const {
-    eventId,
-    eventType,
-    interestedRiders = [],
-    committedRiders = [],
-  } = event;
 
-  const config = eventListType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;
+  const getConfig = (): RiderListsConfig => {
+    if (isHousing) {
+      const config = EVENT_HOUSING_LIST_CONFIG;
+      return config;
+    }
+    return eventListType === "race" ? RACE_CONFIG : SPECIAL_EVENT_CONFIG;
+  };
+
+  const config = getConfig();
+
   const validContainers = [config.primaryList.id, config.secondaryList.id];
 
   const {
@@ -51,15 +62,13 @@ const DraggableRidersLists = ({
     getMoveRiderUpdateData,
     handleSubmitEventUpdate,
   } = useRiderLists({
-    eventId,
-    eventType,
+    event,
     initialRiders,
-    interestedRiders,
-    committedRiders,
   });
 
   const { activeId, handleDragStart, handleDragOver, handleDragEnd } =
     useDragAndDrop({
+      config,
       validContainers,
       riders,
       setRiders,
@@ -126,7 +135,7 @@ const DraggableRidersLists = ({
 
         <DragOverlay dropAnimation={null}>
           {activeId && activeRider ? (
-            <DraggableRider name={activeRider.name} xs={xs}/>
+            <DraggableRider name={activeRider.name} xs={xs} />
           ) : null}
         </DragOverlay>
       </DndContext>

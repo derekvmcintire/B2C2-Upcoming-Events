@@ -25,11 +25,21 @@ export type ListConfigId =
   | typeof REGISTERED_LIST_TYPE
   | typeof INTERESTED_LIST_TYPE
   | typeof COMMITTED_LIST_TYPE
-  | typeof HOUSING_INTERESTED_LIST_TYPE | typeof HOUSING_COMMITTED_LIST_TYPE;
+  | typeof HOUSING_INTERESTED_LIST_TYPE
+  | typeof HOUSING_COMMITTED_LIST_TYPE;
 
 export type MovableListType =
   | typeof INTERESTED_LIST_TYPE
-  | typeof COMMITTED_LIST_TYPE | typeof HOUSING_INTERESTED_LIST_TYPE | typeof HOUSING_COMMITTED_LIST_TYPE;
+  | typeof COMMITTED_LIST_TYPE
+  | typeof HOUSING_INTERESTED_LIST_TYPE
+  | typeof HOUSING_COMMITTED_LIST_TYPE;
+
+export const MOVABLE_LISTS: ListConfigId[] = [
+  INTERESTED_LIST_TYPE,
+  COMMITTED_LIST_TYPE,
+  HOUSING_INTERESTED_LIST_TYPE,
+  HOUSING_COMMITTED_LIST_TYPE,
+];
 
 export type ValidListConfigIds = {
   REGISTERED: ListConfigId;
@@ -44,7 +54,7 @@ export const VALID_LIST_CONFIG_IDS: ValidListConfigIds = {
   INTERESTED: INTERESTED_LIST_TYPE,
   COMMITTED: COMMITTED_LIST_TYPE,
   HOUSING_COMMITTED: HOUSING_COMMITTED_LIST_TYPE,
-  HOUSING_INTERESTED: HOUSING_INTERESTED_LIST_TYPE
+  HOUSING_INTERESTED: HOUSING_INTERESTED_LIST_TYPE,
 };
 
 export interface ListConfig {
@@ -80,6 +90,19 @@ export const SPECIAL_EVENT_CONFIG: RiderListsConfig = {
   },
   secondaryList: {
     id: VALID_LIST_CONFIG_IDS.INTERESTED,
+    title: "Interested",
+    hasDismiss: true,
+  },
+};
+
+export const EVENT_HOUSING_LIST_CONFIG: RiderListsConfig = {
+  primaryList: {
+    id: VALID_LIST_CONFIG_IDS.HOUSING_COMMITTED,
+    title: "Committed",
+    hasDismiss: true,
+  },
+  secondaryList: {
+    id: VALID_LIST_CONFIG_IDS.HOUSING_INTERESTED,
     title: "Interested",
     hasDismiss: true,
   },
