@@ -29,6 +29,7 @@ import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
 import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
+import SubTitle from "../../Shared/SubTitle";
 
 type EventProps = {
   event: EventType;
@@ -153,6 +154,7 @@ export default function EventCard({
           <Divider w="100%" mb="16" />
           <Grid.Col span={12}>
             {/* Rider Lists */}
+            <SubTitle text="Riders Attending" ta="center" />
             <EventRidersBlock
               registrations={registeredNames}
               updateEventFn={handleSubmitEventUpdate}

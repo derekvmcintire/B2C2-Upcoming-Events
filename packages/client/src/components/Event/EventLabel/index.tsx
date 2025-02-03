@@ -5,15 +5,20 @@ import { LabelConfig } from "../../../types";
 interface LabelProps {
   labelConfig: LabelConfig;
   xs?: boolean;
+  noText?: boolean;
 }
-export default function EventLabel({ labelConfig, xs = false }: LabelProps) {
+export default function EventLabel({
+  labelConfig,
+  xs = false,
+  noText = false,
+}: LabelProps) {
   return (
     <Badge
       color={labelConfig.color}
       size={xs ? "xs" : "lg"}
       className={classes.eventLabel}
     >
-      {labelConfig.text}
+      {!noText && labelConfig.text}
     </Badge>
   );
 }

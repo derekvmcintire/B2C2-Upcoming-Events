@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Flex,
   TextInput,
@@ -7,13 +7,14 @@ import {
   Stack,
   Alert,
   Select,
+  MultiSelect,
 } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
 import classes from "./submit.module.css";
 import { v4 as uuidv4 } from "uuid";
 import { EventDiscipline } from "../../types";
-import { DISCIPLINES } from "../../constants";
+import { DISCIPLINES, LABELS } from "../../constants";
 import { submitSpecialEvent } from "../../api/submitSpecialEvent";
 import { isEventDiscipline } from "../../utils/discipline";
 import { formatDateForStorage } from "../../utils/dates";
@@ -45,11 +46,13 @@ const SpecialEventSubmissionForm = ({
         city: "Lexington",
         state: "MA",
         name: "Conte's Group Ride",
+        labels: [LABELS.CONTES.id, LABELS.GROUP.id],
       }
     : {
         city: "",
         state: "",
         name: "",
+        labels: [],
       };
 
   // State variables for required fields
@@ -60,10 +63,16 @@ const SpecialEventSubmissionForm = ({
   const [discipline, setDiscipline] = useState<EventDiscipline>(
     DISCIPLINES.SPECIAL.id,
   );
+  const [labels, setLabels] = useState<string[]>(initialData.labels);
 
   const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
     value: d.id,
     label: d.text,
+  }));
+
+  const labelOptions = Object.values(LABELS).map((l) => ({
+    value: l.id,
+    label: l.text,
   }));
 
   // State variables for optional fields
@@ -200,6 +209,7 @@ const SpecialEventSubmissionForm = ({
         state,
         eventUrl: eventUrl || undefined,
         housingUrl: housingUrl || undefined,
+        labels,
       };
 
       const response = await submitSpecialEvent(submission);
@@ -223,6 +233,7 @@ const SpecialEventSubmissionForm = ({
   const formCore = (
     <Stack w="100%" className={classes.formCore}>
       <TextInput
+        label="Event Name"
         className={classes.formInput}
         placeholder="Name*"
         value={name}
@@ -231,6 +242,7 @@ const SpecialEventSubmissionForm = ({
         disabled={isQuickContes}
       />
       <TextInput
+        label="Event Date"
         className={classes.formInput}
         placeholder="Date*"
         type="date"
@@ -239,6 +251,7 @@ const SpecialEventSubmissionForm = ({
         required
       />
       <TextInput
+        label="Event City"
         className={classes.formTextInput}
         placeholder="City*"
         value={city}
@@ -247,6 +260,7 @@ const SpecialEventSubmissionForm = ({
         disabled={isQuickContes}
       />
       <TextInput
+        label="Event State"
         className={classes.formInput}
         placeholder="State*"
         value={state}
@@ -255,14 +269,24 @@ const SpecialEventSubmissionForm = ({
         disabled={isQuickContes}
       />
       <Select
+        label="Event Discipline"
         className={`${classes.formInput} ${classes.disciplineInput}`}
-        placeholder="Race Discipline"
+        placeholder="Event Discipline"
         value={discipline}
         onChange={handleOnChangeSelect}
+        required
         data={disciplineOptions}
         disabled={isQuickContes}
       />
+      <MultiSelect
+        label="Event Labels"
+        placeholder="Event Labels"
+        data={labelOptions}
+        value={labels}
+        onChange={setLabels}
+      />
       <TextInput
+        label="Event URL"
         className={classes.formInput}
         placeholder="Event URL (optional)"
         value={eventUrl}
@@ -270,6 +294,7 @@ const SpecialEventSubmissionForm = ({
         disabled={isQuickContes}
       />
       <TextInput
+        label="Housing URL"
         className={classes.formInput}
         placeholder="Housing URL (optional)"
         value={housingUrl}

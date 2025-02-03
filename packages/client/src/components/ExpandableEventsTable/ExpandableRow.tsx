@@ -93,7 +93,7 @@ export default function ExpandableRow({
         {!isMobile && <Table.Td ta="left">{`${city}, ${state}`}</Table.Td>}
         {!isMobile && (
           <Table.Td ta="left">
-            <LabelsList />
+            <LabelsList noText xs />
           </Table.Td>
         )}
         <Table.Td ta="left">
