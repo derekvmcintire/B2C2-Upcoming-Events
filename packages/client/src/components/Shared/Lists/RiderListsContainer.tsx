@@ -13,6 +13,7 @@ interface RiderListsContainerProps {
     primary: (name: string) => void;
     secondary: (name: string) => void;
   };
+  xs?: boolean;
 }
 
 /**
@@ -29,11 +30,14 @@ export const RiderListsContainer = ({
   riders,
   draggable,
   removeFns,
+  xs = false,
 }: RiderListsContainerProps) => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
+  const rideListContainerClass = xs ? classes.xsRiderListContainer : classes.riderListContainer;
+
   return (
-    <Box p="sm" w="100%" className={classes.droppableContainer}>
+    <Box p="sm" w="100%" className={rideListContainerClass}>
       <Grid>
         <Grid.Col span={isMobile ? 12 : 6}>
           <DroppableContainer
@@ -43,6 +47,7 @@ export const RiderListsContainer = ({
             hasDismiss={config.primaryList.hasDismiss}
             draggable={draggable}
             removeFn={removeFns.primary}
+            xs={xs}
           />
         </Grid.Col>
         <Grid.Col span={isMobile ? 12 : 6}>
@@ -53,6 +58,7 @@ export const RiderListsContainer = ({
             hasDismiss={config.secondaryList.hasDismiss}
             draggable={draggable}
             removeFn={removeFns.secondary}
+            xs={xs}
           />
         </Grid.Col>
       </Grid>

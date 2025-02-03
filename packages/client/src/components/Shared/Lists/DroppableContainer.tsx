@@ -18,6 +18,7 @@ interface DroppableContainerProps {
   draggable: boolean;
   hasDismiss?: boolean;
   removeFn: (name: string) => void;
+  xs?: boolean;
 }
 
 /**
@@ -35,6 +36,7 @@ const DroppableContainer = ({
   title,
   draggable,
   hasDismiss,
+  xs = false,
   removeFn,
 }: DroppableContainerProps): JSX.Element => {
   const { setNodeRef, isOver } = useDroppable({
@@ -47,17 +49,21 @@ const DroppableContainer = ({
     title === SPECIAL_EVENT_CONFIG.primaryList.title;
   const containerClass = `${classes.paper} ${isOver ? classes.over : classes.default}`;
 
+  const titleSize = xs ? "md" : "xl";
+
+  const paperContainerClass = xs ? `${classes.xsListPaper} ${containerClass}` : containerClass;
+
   return (
     <Box>
-      <Text fw={600} size="xl" mb="xs">
+      <Text fw={600} size={titleSize} mb="xs">
         {title}
       </Text>
       <Divider />
       <Paper
         ref={draggable ? setNodeRef : undefined}
-        p="sm"
+        // p="sm"
         radius="md"
-        className={containerClass}
+        className={paperContainerClass}
       >
         {draggable ? (
           <SortableContext
@@ -72,6 +78,7 @@ const DroppableContainer = ({
                 draggable={draggable}
                 dismissRider={removeFn}
                 isPrimary={isPrimary}
+                xs={xs}
               />
             ))}
           </SortableContext>
@@ -83,12 +90,13 @@ const DroppableContainer = ({
               hasDismiss={hasDismiss}
               dismissRider={removeFn}
               isPrimary={isPrimary}
+              xs={xs}
             />
           ))
         )}
         {draggable && (
           <Box className={classes.draggableRidersBox}>
-            <PlaceholderRider />
+            <PlaceholderRider xs={xs} />
           </Box>
         )}
       </Paper>

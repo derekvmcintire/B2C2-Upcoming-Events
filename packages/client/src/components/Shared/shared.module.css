@@ -11,8 +11,12 @@
   margin-top: 16px;
 }
 
-.droppableContainer {
+.riderListContainer {
   max-width: 700px;
+}
+
+.xsRiderListContainer {
+  max-width: 600px;
 }
 
 /* Paper.module.css */
@@ -22,6 +26,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 16px;
+}
+
+.xsListPaper {
+  padding: 8px;
 }
 
 .over {
@@ -36,11 +45,17 @@
   color: light-dark(#fb8c00, #e8b556);
   border-radius: 4px;
   font-size: 0.875rem;
+  padding: 8px;
 }
 
 .secondaryListRider {
   border-radius: 4px;
   font-size: 100px;
+  padding: 8px;
+}
+
+.xsListRider {
+  padding: 4px;
 }
 
 .placeholderRider {
@@ -48,12 +63,33 @@
   color: var(--mantine-color-gray-5);
   border: 1px dashed var(--mantine-color-gray-7);
   font-size: 0.875rem;
+  padding: 8px;
+}
+
+.xsPlaceholderRider {
+  background-color: light-dark(#ffffff, #363636);
+  color: var(--mantine-color-gray-5);
+  border: 1px dashed var(--mantine-color-gray-7);
+  font-size: 0.875rem;
+  padding: 4px;
 }
 
 .draggingRider {
   cursor: grabbing;
   user-select: none;
   font-size: 0.875rem;
+  padding: 8px;
+}
+
+.xsDraggingRider {
+  cursor: grabbing;
+  user-select: none;
+  font-size: 0.875rem;
+  padding: 4px;
+}
+
+.xsRiderListText {
+  font-size: 0.75rem;
 }
 
 /* Make adjustments for smaller screens */

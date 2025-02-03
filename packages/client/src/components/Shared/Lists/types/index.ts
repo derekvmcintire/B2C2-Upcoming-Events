@@ -18,25 +18,33 @@ export const RIDER_LIST_EVENT_TYPES: RiderListEventTypesEnum = {
 export const INTERESTED_LIST_TYPE = "interested";
 export const COMMITTED_LIST_TYPE = "committed";
 export const REGISTERED_LIST_TYPE = "registered";
+export const HOUSING_INTERESTED_LIST_TYPE = "housingInterested";
+export const HOUSING_COMMITTED_LIST_TYPE = "housingCommitted";
 
 export type ListConfigId =
   | typeof REGISTERED_LIST_TYPE
   | typeof INTERESTED_LIST_TYPE
-  | typeof COMMITTED_LIST_TYPE;
+  | typeof COMMITTED_LIST_TYPE
+  | typeof HOUSING_INTERESTED_LIST_TYPE | typeof HOUSING_COMMITTED_LIST_TYPE;
+
 export type MovableListType =
   | typeof INTERESTED_LIST_TYPE
-  | typeof COMMITTED_LIST_TYPE;
+  | typeof COMMITTED_LIST_TYPE | typeof HOUSING_INTERESTED_LIST_TYPE | typeof HOUSING_COMMITTED_LIST_TYPE;
 
 export type ValidListConfigIds = {
   REGISTERED: ListConfigId;
   INTERESTED: ListConfigId;
   COMMITTED: ListConfigId;
+  HOUSING_COMMITTED: ListConfigId;
+  HOUSING_INTERESTED: ListConfigId;
 };
 
 export const VALID_LIST_CONFIG_IDS: ValidListConfigIds = {
-  REGISTERED: "registered",
-  INTERESTED: "interested",
-  COMMITTED: "committed",
+  REGISTERED: REGISTERED_LIST_TYPE,
+  INTERESTED: INTERESTED_LIST_TYPE,
+  COMMITTED: COMMITTED_LIST_TYPE,
+  HOUSING_COMMITTED: HOUSING_COMMITTED_LIST_TYPE,
+  HOUSING_INTERESTED: HOUSING_INTERESTED_LIST_TYPE
 };
 
 export interface ListConfig {

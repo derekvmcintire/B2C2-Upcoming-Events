@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import { UpdateEventData, updateEvent } from "../../../../api/updateEvent";
 import { useEventData } from "../../../../hooks/useEventData";
-import { RiderLists, MovableListType } from "../types";
-import { EventDiscipline } from "../../../../types";
+import { RiderLists, MovableListType, COMMITTED_LIST_TYPE, INTERESTED_LIST_TYPE, HOUSING_COMMITTED_LIST_TYPE, HOUSING_INTERESTED_LIST_TYPE } from "../types";
+import { EventDiscipline, Housing } from "../../../../types";
 
 interface UseRiderListsProps {
   eventId: string;
@@ -10,6 +10,7 @@ interface UseRiderListsProps {
   initialRiders: RiderLists;
   interestedRiders: string[];
   committedRiders: string[];
+  housing?: Housing;
 }
 
 /**
@@ -28,6 +29,7 @@ export const useRiderLists = ({
   initialRiders,
   interestedRiders,
   committedRiders,
+  housing={committed: [], interested: []}
 }: UseRiderListsProps) => {
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
   const { requestFreshDataForEventType } = useEventData();
@@ -83,6 +85,7 @@ export const useRiderLists = ({
     [eventId, eventType, committedRiders, handleSubmitEventUpdate],
   );
 
+  // @TODO: update this to accommodate housing and eventually carpools as well
   const getMoveRiderUpdateData = useCallback(
     (
       sourceList: MovableListType,
@@ -91,8 +94,9 @@ export const useRiderLists = ({
     ): UpdateEventData => {
       const newInterestedRiders = [...interestedRiders];
       const newCommittedRiders = [...committedRiders];
-
-      if (sourceList === "interested" && targetList === "committed") {
+      
+      // Existing logic for top-level riders lists
+      if (sourceList === INTERESTED_LIST_TYPE && targetList === COMMITTED_LIST_TYPE) {
         const index = newInterestedRiders.indexOf(name);
         if (index !== -1) {
           newInterestedRiders.splice(index, 1);
@@ -101,7 +105,7 @@ export const useRiderLists = ({
             newCommittedRiders.push(name);
           }
         }
-      } else if (sourceList === "committed" && targetList === "interested") {
+      } else if (sourceList === COMMITTED_LIST_TYPE && targetList === INTERESTED_LIST_TYPE) {
         const index = newCommittedRiders.indexOf(name);
         if (index !== -1) {
           newCommittedRiders.splice(index, 1);
@@ -111,15 +115,53 @@ export const useRiderLists = ({
           }
         }
       }
-
+  
+      // New logic for housing lists
+      const newHousing: Housing = { ...housing };
+      
+      if (sourceList === HOUSING_INTERESTED_LIST_TYPE && targetList === HOUSING_COMMITTED_LIST_TYPE) {
+        // Move from housing interested to housing committed
+        if (newHousing.interested) {
+          const index = newHousing.interested.indexOf(name);
+          if (index !== -1) {
+            newHousing.interested.splice(index, 1);
+            
+            // Add to committed only if not already there
+            if (!newHousing.committed) {
+              newHousing.committed = [];
+            }
+            if (!newHousing.committed.includes(name)) {
+              newHousing.committed.push(name);
+            }
+          }
+        }
+      } else if (sourceList === HOUSING_COMMITTED_LIST_TYPE && targetList === HOUSING_INTERESTED_LIST_TYPE) {
+        // Move from housing committed to housing interested
+        if (newHousing.committed) {
+          const index = newHousing.committed.indexOf(name);
+          if (index !== -1) {
+            newHousing.committed.splice(index, 1);
+            
+            // Add to interested only if not already there
+            if (!newHousing.interested) {
+              newHousing.interested = [];
+            }
+            if (!newHousing.interested.includes(name)) {
+              newHousing.interested.push(name);
+            }
+          }
+        }
+      }
+  
       return {
         eventId,
         eventType,
         interestedRiders: newInterestedRiders,
         committedRiders: newCommittedRiders,
+        housing: newHousing,
       };
     },
-    [eventId, eventType, interestedRiders, committedRiders],
+    [eventId, eventType, interestedRiders, committedRiders, housing],
   );
 
   return {

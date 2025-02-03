@@ -63,6 +63,7 @@ export default function HousingRidersBlock() {
       isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
       eventListType={riderListEventType}
       initialRiders={initialRiders}
+      xs
     />
   );
 }

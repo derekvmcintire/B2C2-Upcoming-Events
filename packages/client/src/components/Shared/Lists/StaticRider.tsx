@@ -7,6 +7,7 @@ interface StaticRiderProps {
   hasDismiss?: boolean;
   dismissRider?: (name: string) => void;
   isPrimary?: boolean;
+  xs?: boolean;
 }
 
 /**
@@ -22,10 +23,13 @@ const StaticRider = ({
   hasDismiss = false,
   dismissRider = () => {},
   isPrimary = false,
+  xs = false,
 }: StaticRiderProps): JSX.Element => {
   const riderClassName = isPrimary
     ? classes.primaryListRider
     : classes.secondaryListRider;
+
+    const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
 
   return (
     <Paper
@@ -49,7 +53,7 @@ const StaticRider = ({
           />
           <Text
             span
-            className={classes.riderListText}
+            className={textClassName}
             style={{ flex: 1, textAlign: "center" }}
           >
             {name}

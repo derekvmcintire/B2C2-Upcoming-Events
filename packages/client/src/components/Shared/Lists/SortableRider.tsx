@@ -1,5 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { Flex, Paper, px, Text } from "@mantine/core";
+import { Flex, Paper, Text } from "@mantine/core";
 import { CSS } from "@dnd-kit/utilities";
 import { Rider } from "./types";
 import DismissButton from "../DismissButton";
@@ -10,6 +10,7 @@ interface SortableRiderProps extends Rider {
   hasDismiss?: boolean;
   dismissRider?: (name: string) => void;
   isPrimary?: boolean;
+  xs?: boolean;
 }
 
 /**
@@ -28,6 +29,7 @@ const SortableRider = ({
   hasDismiss = false,
   dismissRider = () => {},
   isPrimary = false,
+  xs = false,
 }: SortableRiderProps): JSX.Element => {
   const {
     attributes,
@@ -47,9 +49,14 @@ const SortableRider = ({
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const riderClassName = isPrimary
+  const defaultRiderClassName = isPrimary
     ? classes.primaryListRider
     : classes.secondaryListRider;
+
+  const riderClassName = xs ? classes.xsListRider : defaultRiderClassName;
+
+  const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
+
 
   return (
     <Paper
@@ -58,7 +65,6 @@ const SortableRider = ({
       className={riderClassName}
       {...(draggable ? { ...attributes, ...listeners } : {})}
       shadow="xs"
-      p="xs"
       withBorder
       styles={() => ({
         root: {
@@ -85,7 +91,7 @@ const SortableRider = ({
           />
           <Text
             span
-            className={classes.riderListText}
+            className={textClassName}
             style={{ flex: 1, textAlign: "center" }}
           >
             {name}

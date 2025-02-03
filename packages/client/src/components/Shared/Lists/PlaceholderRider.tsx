@@ -1,4 +1,4 @@
-import { Paper } from "@mantine/core";
+import { Paper, Text } from "@mantine/core";
 import classes from "../shared.module.css";
 
 /**
@@ -9,11 +9,12 @@ import classes from "../shared.module.css";
  * @param dismissRider - The dismiss rider callback function.
  * @returns The rendered static rider component.
  */
-const PlaceholderRider = ({}): JSX.Element => {
+const PlaceholderRider = ({xs = false}: { xs: boolean }): JSX.Element => {
+  const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
+
   return (
     <Paper
       shadow="xs"
-      p="xs"
       className={classes.placeholderRider}
       styles={() => ({
         root: {
@@ -21,7 +22,9 @@ const PlaceholderRider = ({}): JSX.Element => {
         },
       })}
     >
+      <Text span className={textClassName} style={{ flex: 1, textAlign: "center" }}>
       Drop Rider Here
+        </Text>
     </Paper>
   );
 };

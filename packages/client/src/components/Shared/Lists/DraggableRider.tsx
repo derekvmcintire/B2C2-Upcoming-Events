@@ -4,14 +4,19 @@ import DismissButton from "../DismissButton";
 
 interface DraggableRiderProps {
   name: string;
+  xs?: boolean;
 }
 
 /**
  * DraggableRider component represents a draggable rider element.
  */
-const DraggableRider = ({ name }: DraggableRiderProps): JSX.Element => {
+const DraggableRider = ({ name, xs = false }: DraggableRiderProps): JSX.Element => {
+  const riderClassName = xs ? classes.xsDraggingRider : classes.draggingRider;
+
+  const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
+
   return (
-    <Paper className={classes.draggingRider} shadow="sm" p="xs" withBorder>
+    <Paper className={riderClassName} shadow="sm" withBorder>
       <Flex align="center" justify="space-between" w="100%">
         <DismissButton
           xs
@@ -19,7 +24,7 @@ const DraggableRider = ({ name }: DraggableRiderProps): JSX.Element => {
           position="left"
           disabled={true}
         />
-        <Text span style={{ flex: 1, textAlign: "center" }}>
+        <Text span className={textClassName} style={{ flex: 1, textAlign: "center" }}>
           {name}
         </Text>
       </Flex>

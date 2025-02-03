@@ -20,6 +20,7 @@ interface DraggableRidersListsProps {
   isStatic?: boolean;
   eventListType: "race" | "special";
   initialRiders: RiderLists;
+  xs?: boolean;
 }
 
 /**
@@ -29,6 +30,7 @@ const DraggableRidersLists = ({
   isStatic = false,
   eventListType,
   initialRiders,
+  xs = false,
 }: DraggableRidersListsProps): JSX.Element => {
   const { event } = useEventContext();
   const {
@@ -119,11 +121,12 @@ const DraggableRidersLists = ({
           riders={riders}
           draggable={true}
           removeFns={removeFns}
+          xs={xs}
         />
 
         <DragOverlay dropAnimation={null}>
           {activeId && activeRider ? (
-            <DraggableRider name={activeRider.name} />
+            <DraggableRider name={activeRider.name} xs={xs}/>
           ) : null}
         </DragOverlay>
       </DndContext>
