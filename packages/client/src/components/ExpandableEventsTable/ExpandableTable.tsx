@@ -69,7 +69,7 @@ const ExpandableTable = ({
   ));
 
   return (
-    <Card p="md" data-testid="expandable-table">
+    <Card data-testid="expandable-table">
       {!expandedRows.size ? (
         <Button
           variant="subtle"
@@ -93,6 +93,7 @@ const ExpandableTable = ({
             <Table.Th>Date</Table.Th>
             <Table.Th>Name</Table.Th>
             {!isMobile && <Table.Th>Location</Table.Th>}
+            {!isMobile && <Table.Th>Type</Table.Th>}
             <Table.Th>{isMobile ? "Hype" : "Hype Level"}</Table.Th>
           </Table.Tr>
         </Table.Thead>

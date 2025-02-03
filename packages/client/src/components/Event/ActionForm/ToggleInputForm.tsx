@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { MdAdd } from "react-icons/md";
 import { MOBILE_BREAK_POINT } from "../../../constants";
@@ -47,16 +47,18 @@ const ToggleInputForm = ({
 
   if (!isInputOpen) {
     return (
-      <Button
-        size={isMobile ? "compact-xs" : "compact-sm"}
-        leftSection={<MdAdd size={14} />}
-        onClick={() => setIsInputOpen(true)}
-        data-testid={buttonConfig.testId}
-      >
-        {isMobile
-          ? buttonConfig.mobileLabel || buttonConfig.label
-          : buttonConfig.label}
-      </Button>
+      <Flex mt="8" mb="8" justify="center" align="center">
+        <Button
+          size={isMobile ? "compact-xs" : "compact-sm"}
+          leftSection={<MdAdd size={14} />}
+          onClick={() => setIsInputOpen(true)}
+          data-testid={buttonConfig.testId}
+        >
+          {isMobile
+            ? buttonConfig.mobileLabel || buttonConfig.label
+            : buttonConfig.label}
+        </Button>
+      </Flex>
     );
   }
 

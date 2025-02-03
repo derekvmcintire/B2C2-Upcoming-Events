@@ -12,6 +12,8 @@ import {
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
+import EventLabel from "../Event/EventLabel";
+import { getLabelConfig } from "../../utils/label";
 
 interface ExpandableRowProps {
   event: EventType;
@@ -42,6 +44,7 @@ export default function ExpandableRow({
     city,
     date,
     eventId,
+    eventType,
     interestedRiders,
     committedRiders,
     name,
@@ -72,6 +75,8 @@ export default function ExpandableRow({
 
   const chevronSize = isMobile ? 8 : 16;
 
+  const labelConfig = getLabelConfig(eventType);
+
   return (
     <React.Fragment key={eventId}>
       <Table.Tr
@@ -90,6 +95,11 @@ export default function ExpandableRow({
         </Table.Td>
         <Table.Td ta="left">{name}</Table.Td>
         {!isMobile && <Table.Td ta="left">{`${city}, ${state}`}</Table.Td>}
+        {!isMobile && (
+          <Table.Td ta="left">
+            <EventLabel xs labelConfig={labelConfig} />
+          </Table.Td>
+        )}
         <Table.Td ta="left">
           <Progress
             radius="xs"
@@ -100,7 +110,7 @@ export default function ExpandableRow({
         </Table.Td>
       </Table.Tr>
       <Table.Tr>
-        <Table.Td colSpan={5} p={0}>
+        <Table.Td colSpan={6} p={0}>
           <Collapse in={expandedRows.has(eventId)}>
             <EventCard
               key={event.eventId}

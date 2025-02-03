@@ -57,11 +57,10 @@ export default function HousingLogistic({
   return (
     <Stack h="100%" className={classes.logisticCard}>
       {!housingUrl ? (
-        <>
-          <Text>Add Housing Info</Text>
+        <Stack align="center">
           <ToggleInputForm
             buttonConfig={{
-              label: "Housing",
+              label: "Add Housing Info",
               testId: "housing-button",
             }}
             inputConfig={{
@@ -70,7 +69,7 @@ export default function HousingLogistic({
             }}
             onSubmit={handleSubmitHousing}
           />
-        </>
+        </Stack>
       ) : (
         <Stack>
           <Flex justify="flex-end" align="center">

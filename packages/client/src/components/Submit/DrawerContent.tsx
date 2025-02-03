@@ -15,6 +15,7 @@ import { FORMS } from "../../types";
 
 const DrawerContent = (): JSX.Element => {
   const [value, setValue] = useState<string>(FORMS.RACE.value);
+
   return (
     <>
       <EventsProvider>
@@ -28,6 +29,7 @@ const DrawerContent = (): JSX.Element => {
               data={[
                 { label: FORMS.RACE.label, value: FORMS.RACE.value },
                 { label: FORMS.SPECIAL.label, value: FORMS.SPECIAL.value },
+                { label: FORMS.CONTES.label, value: FORMS.CONTES.value },
               ]}
             />
           </Stack>
@@ -36,6 +38,8 @@ const DrawerContent = (): JSX.Element => {
         <Container className={classes.formContainer}>
           {value === FORMS.RACE.value ? (
             <RaceSubmissionForm vertical={true} />
+          ) : value === FORMS.CONTES.value ? (
+            <SpecialEventSubmissionForm isQuickContes />
           ) : (
             <SpecialEventSubmissionForm />
           )}

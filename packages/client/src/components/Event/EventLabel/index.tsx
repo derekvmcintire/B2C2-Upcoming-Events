@@ -4,13 +4,13 @@ import { Label } from "../../../types";
 
 interface LabelProps {
   labelConfig: Label;
+  xs?: boolean;
 }
-export default function EventLabel({ labelConfig }: LabelProps) {
+export default function EventLabel({ labelConfig, xs = false }: LabelProps) {
   return (
     <Badge
       color={labelConfig.color}
-      radius="xs"
-      size="md"
+      size={xs ? "xs" : "lg"}
       className={classes.eventLabel}
     >
       {labelConfig.text}

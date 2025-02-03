@@ -18,6 +18,17 @@ import { submitSpecialEvent } from "../../api/submitSpecialEvent";
 import { isEventDiscipline } from "../../utils/discipline";
 import { formatDateForStorage } from "../../utils/dates";
 
+export interface InitialSpecialEventSubmissionFormData {
+  city: string;
+  state: string;
+  name: string;
+  discipline?: EventDiscipline;
+}
+
+interface SpecialEventSubmissionFormProps {
+  isQuickContes?: boolean;
+}
+
 /**
  * SpecialEventSubmissionForm Component
  *
@@ -26,12 +37,22 @@ import { formatDateForStorage } from "../../utils/dates";
  *
  * @returns A form with a input to collect event information, and a submit button.
  */
-const SpecialEventSubmissionForm = (): JSX.Element => {
+const SpecialEventSubmissionForm = ({
+  isQuickContes = false,
+}: SpecialEventSubmissionFormProps): JSX.Element => {
+  const initialData = isQuickContes
+    ? {
+        city: "Lexington",
+        state: "MA",
+        name: "Conte's Group Ride",
+      }
+    : {};
+
   // State variables for required fields
-  const [city, setCity] = useState("");
-  const [date, setDate] = useState("");
-  const [name, setName] = useState("");
-  const [state, setState] = useState("");
+  const [city, setCity] = useState<string>(initialData?.city || "");
+  const [date, setDate] = useState<string>("");
+  const [name, setName] = useState<string>(initialData?.name || "");
+  const [state, setState] = useState<string>(initialData?.state || "");
   const [discipline, setDiscipline] = useState<EventDiscipline>(
     DISCIPLINES.SPECIAL.id,
   );

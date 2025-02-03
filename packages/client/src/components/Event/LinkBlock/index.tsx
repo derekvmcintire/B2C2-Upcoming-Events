@@ -4,6 +4,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventLabel from "../EventLabel";
 import { useEventContext } from "../../../context/event-context";
+import { getLabelConfig } from "../../../utils/label";
 
 /**
  * Renders a link block component for an event.
@@ -15,7 +16,7 @@ export default function LinkBlock() {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const alignment = isMobile ? "center" : "right";
 
-  const label = eventType === "special" ? LABELS.TRIP : LABELS.RACE;
+  const label = getLabelConfig(eventType);
 
   const buttonSize = isMobile ? "compact-xs" : "compact-sm";
 
