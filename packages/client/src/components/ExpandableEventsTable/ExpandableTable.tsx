@@ -96,7 +96,7 @@ const ExpandableTable = ({
             <Table.Th>Date</Table.Th>
             <Table.Th>Name</Table.Th>
             {!isMobile && <Table.Th>Location</Table.Th>}
-            {!isMobile && <Table.Th>Type</Table.Th>}
+            {!isMobile && <Table.Th>Labels</Table.Th>}
             <Table.Th>{isMobile ? "Hype" : "Hype Level"}</Table.Th>
           </Table.Tr>
         </Table.Thead>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -8,6 +8,8 @@ import {
   Alert,
   Select,
   MultiSelect,
+  Textarea,
+  Checkbox,
 } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
@@ -47,12 +49,16 @@ const SpecialEventSubmissionForm = ({
         state: "MA",
         name: "Conte's Group Ride",
         labels: [LABELS.CONTES.id, LABELS.GROUP.id],
+        description: "9am start",
+        isVirtual: false,
       }
     : {
         city: "",
         state: "",
         name: "",
         labels: [],
+        description: "",
+        isVirtual: false,
       };
 
   // State variables for required fields
@@ -64,6 +70,10 @@ const SpecialEventSubmissionForm = ({
     DISCIPLINES.SPECIAL.id,
   );
   const [labels, setLabels] = useState<string[]>(initialData.labels);
+  const [description, setDescription] = useState<string>(
+    initialData.description,
+  );
+  const [isVirtual, setIsVirtual] = useState<boolean>(initialData.isVirtual);
 
   const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
     value: d.id,
@@ -86,6 +96,16 @@ const SpecialEventSubmissionForm = ({
 
   const eventsContext = useEventsContext();
   const { setEvents } = eventsContext;
+
+  useEffect(() => {
+    setCity(isVirtual ? "Wattopia" : initialData.city);
+    setState(isVirtual ? "Zwift" : initialData.state);
+    setLabels(
+      isVirtual
+        ? (prevLabels) => [...prevLabels, LABELS.VIRTUAL.id]
+        : initialData.labels,
+    );
+  }, [isVirtual]);
 
   /**
    * Handles the change event for the race discipline dropdown.
@@ -210,6 +230,7 @@ const SpecialEventSubmissionForm = ({
         eventUrl: eventUrl || undefined,
         housingUrl: housingUrl || undefined,
         labels,
+        description,
       };
 
       const response = await submitSpecialEvent(submission);
@@ -232,6 +253,11 @@ const SpecialEventSubmissionForm = ({
 
   const formCore = (
     <Stack w="100%" className={classes.formCore}>
+      <Checkbox
+        label="This is a virtual event"
+        checked={isVirtual}
+        onChange={(event) => setIsVirtual(event.currentTarget.checked)}
+      />
       <TextInput
         label="Event Name"
         className={classes.formInput}
@@ -301,7 +327,12 @@ const SpecialEventSubmissionForm = ({
         onChange={(e) => setHousingUrl(e.target.value)}
         disabled={isQuickContes}
       />
-
+      <Textarea
+        label="Event Description"
+        placeholder="Add a description"
+        value={description}
+        onChange={(event) => setDescription(event.currentTarget.value)}
+      />
       <Button
         className={classes.formInput}
         onClick={handleSubmit}
