@@ -56,7 +56,7 @@ const DroppableContainer = ({
     : containerClass;
 
   return (
-    <Box>
+    <Box className={classes.droppableContainer}>
       <Text fw={600} size={titleSize} mb="xs">
         {title}
       </Text>

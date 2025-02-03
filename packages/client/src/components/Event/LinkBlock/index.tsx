@@ -7,7 +7,11 @@ import LabelsList from "../EventLabel/LabelsList";
 /**
  * Renders a link block component for an event.
  */
-export default function LinkBlock() {
+export default function LinkBlock({
+  eventUrl = undefined,
+}: {
+  eventUrl?: string;
+}) {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const alignment = isMobile ? "center" : "right";
 
@@ -16,7 +20,18 @@ export default function LinkBlock() {
   return (
     <Flex className={classes.linkBlock} justify={alignment} align="center">
       <LabelsList />
-      <Button size={buttonSize}>Link to Event</Button>
+      {eventUrl && (
+        <Button size={buttonSize}>
+          <a
+            href={eventUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.eventLink}
+          >
+            Event Details
+          </a>
+        </Button>
+      )}
     </Flex>
   );
 }

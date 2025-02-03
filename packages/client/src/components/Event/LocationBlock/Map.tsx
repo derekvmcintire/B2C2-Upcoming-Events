@@ -30,15 +30,18 @@ const Map = ({ city, state }: MapProps): JSX.Element => {
   const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(
     null,
   );
-  const [hasFetched, setHasFetched] = useState(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [mapRef, isVisible] = useOnScreen();
 
   useEffect(() => {
     if (isVisible && !hasFetched) {
       setHasFetched(true);
       fetchCoordinates({ city, state }).then((response) => {
-        if (response) {
+        if (response && response.lat && response.lon) {
           setCoords({ lat: response.lat, lon: response.lon });
+        } else {
+          setHasError(true);
         }
       });
     }
@@ -62,8 +65,10 @@ const Map = ({ city, state }: MapProps): JSX.Element => {
             </Popup>
           </Marker>
         </MapContainer>
+      ) : hasError ? (
+        <p>Error Loading Map.</p>
       ) : (
-        <p>Loading map...</p>
+        <p>Loading Map...</p>
       )}
     </div>
   );

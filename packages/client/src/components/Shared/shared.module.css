@@ -19,7 +19,11 @@
   max-width: 600px;
 }
 
-/* Paper.module.css */
+/* .droppableContainer {
+  border: 1px solid #607d8b;
+  border-radius: 4px;
+} */
+
 .paper {
   /* min-height: 200px; */
   /* transition: background-color 0.2s; */

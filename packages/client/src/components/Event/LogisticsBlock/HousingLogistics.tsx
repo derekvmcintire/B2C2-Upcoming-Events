@@ -6,6 +6,7 @@ import { UpdateEventData } from "../../../api/updateEvent";
 import DismissButton from "../../Shared/DismissButton";
 import HousingRidersBlock from "./HousingRidersBlock";
 import SubTitle from "../../Shared/SubTitle";
+import InterestedRiderForm from "../ActionForm";
 
 interface HousingLogisticProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
@@ -85,6 +86,11 @@ export default function HousingLogistic({
           <Flex w="100%" justify="center">
             <HousingRidersBlock />
           </Flex>
+          <InterestedRiderForm
+            isHousing
+            handleUpdateEvent={handleUpdateEvent}
+            customLabel={"I'm Interested in Housing"}
+          />
         </Stack>
       )}
     </Stack>

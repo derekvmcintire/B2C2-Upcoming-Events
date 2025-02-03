@@ -186,7 +186,7 @@ export default function Description({
     <Stack w="100%" h="100%" gap={1}>
       <EditLabel />
       <Flex className={classes.descriptionBlock}>
-        <Text className={classes.descriptionContainer}>
+        <Text className={classes.descriptionTextContainer}>
           {description || ""}
         </Text>
       </Flex>
@@ -204,7 +204,13 @@ export default function Description({
    * Renders either the input form (if editing) or the event description.
    */
   return (
-    <Flex w="100%" h="100%" align="flex-start">
+    <Flex
+      w="100%"
+      h="100%"
+      align="flex-start"
+      justify="center"
+      style={{ maxWidth: "600px" }}
+    >
       {isOpen ? input : descriptionContent}
     </Flex>
   );

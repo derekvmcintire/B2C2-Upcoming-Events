@@ -15,6 +15,12 @@
   margin-right: 16px;
 }
 
+.eventLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: inherit;
+}
+
 .logisticCard {
   padding: 16px;
   border-radius: 4px;
@@ -24,6 +30,7 @@
 .logisticsTabs {
   border: 1px solid #607d8b;
   border-radius: 4px;
+  background-color: light-dark(#ffffff, #2e2e2e);
 }
 
 .dateStack {
@@ -90,6 +97,7 @@
   border-radius: 4px;
   padding: 16px;
   height: 100%;
+  max-width: 600px;
 }
 
 .ridersListContainer {
@@ -147,7 +155,7 @@
   }
 }
 
-.descriptionContainer {
+.descriptionTextContainer {
   width: 100%;
   text-align: left;
 }

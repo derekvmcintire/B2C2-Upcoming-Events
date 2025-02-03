@@ -54,12 +54,12 @@ export const LABELS: ValidLabels = {
   CONTES: {
     id: "contes",
     text: "Conte's",
-    color: "#80deea",
+    color: "#55969e",
   },
   GROUP: {
     id: "group",
     text: "Group Ride",
-    color: "#d7ccc8",
+    color: "#7a6b66",
   },
   FONDO: {
     id: "fondo",

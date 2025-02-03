@@ -5,6 +5,8 @@ import { useEventContext } from "../../../context/event-context";
 
 interface InterestedRiderFormProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
+  isHousing?: boolean;
+  customLabel?: string;
 }
 
 /**
@@ -14,17 +16,20 @@ interface InterestedRiderFormProps {
  */
 const InterestedRiderForm = ({
   handleUpdateEvent,
+  isHousing = false,
+  customLabel,
 }: InterestedRiderFormProps) => {
   const eventContext = useEventContext();
   const { event } = eventContext;
-  const { eventId, eventType, interestedRiders } = event;
+  const {
+    eventId,
+    eventType,
+    interestedRiders,
+    housingUrl,
+    housing = {},
+  } = event;
 
-  /**
-   * Handles the submission of an interested rider.
-   *
-   * @param rider - The rider to be submitted.
-   */
-  const handleSubmitInterestedRider = (rider: string) => {
+  const handleSubmitInterestedInEvent = (rider: string) => {
     const existingInterestedRiders = interestedRiders || [];
     return handleUpdateEvent({
       eventId: eventId,
@@ -33,11 +38,36 @@ const InterestedRiderForm = ({
     });
   };
 
+  const handleSubmitInterestedInHousing = (rider: string) => {
+    const existingInterestedInHousingList = housing?.interested || [];
+
+    return handleUpdateEvent({
+      eventId: eventId,
+      eventType: eventType,
+      housingUrl,
+      housing: {
+        interested: [...existingInterestedInHousingList, rider],
+        committed: housing?.committed || [],
+      },
+    });
+  };
+
+  /**
+   * Handles the submission of an interested rider.
+   *
+   * @param rider - The rider to be submitted.
+   */
+  const handleSubmitInterestedRider = (rider: string) => {
+    return isHousing
+      ? handleSubmitInterestedInHousing(rider)
+      : handleSubmitInterestedInEvent(rider);
+  };
+
   return (
     <Flex pr="16" justify="center" wrap="wrap">
       <ToggleInputForm
         buttonConfig={{
-          label: "I'm interested",
+          label: customLabel || "I'm interested",
           mobileLabel: "Interested",
           testId: "interested-button",
         }}

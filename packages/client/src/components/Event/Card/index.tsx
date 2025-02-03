@@ -27,7 +27,7 @@ import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
-import { MOBILE_BREAK_POINT } from "../../../constants";
+import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
 import SubTitle from "../../Shared/SubTitle";
 
@@ -58,11 +58,15 @@ export default function EventCard({
   const {
     eventId,
     eventType,
+    eventUrl,
     interestedRiders = [],
     committedRiders = [],
+    labels,
   } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
+  const isVirtualEvent = labels?.includes(LABELS.VIRTUAL.id);
 
   const registeredNames = registrations
     ? getEntriesByEventId(registrations, Number(eventId))
@@ -131,16 +135,18 @@ export default function EventCard({
           <Grid.Col span={isMobile ? 12 : 9}>
             <Stack h="100%" justify="center" p="16">
               <EventName />
-              <LinkBlock />
+              <LinkBlock eventUrl={eventUrl} />
             </Stack>
           </Grid.Col>
           <Divider w="100%" mb="16" />
-          <Grid.Col span={isMobile ? 12 : 5}>
-            <Flex w="100%" justify="center">
-              <LocationBlock />
-            </Flex>
-          </Grid.Col>
-          <Grid.Col span={isMobile ? 12 : 7}>
+          {!isVirtualEvent && (
+            <Grid.Col span={isMobile ? 12 : 5}>
+              <Flex w="100%" justify="center">
+                <LocationBlock />
+              </Flex>
+            </Grid.Col>
+          )}
+          <Grid.Col span={isMobile || isVirtualEvent ? 12 : 7}>
             <Flex
               w="100%"
               h="100%"
@@ -160,11 +166,13 @@ export default function EventCard({
               updateEventFn={handleSubmitEventUpdate}
             />
           </Grid.Col>
-          <Grid.Col span={12}>
-            <Stack w="100%" h="100%" justify="flex-end">
-              <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
-            </Stack>
-          </Grid.Col>
+          {!isVirtualEvent && (
+            <Grid.Col span={12}>
+              <Stack w="100%" h="100%" justify="flex-end">
+                <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
+              </Stack>
+            </Grid.Col>
+          )}
         </Grid>
         <Divider />
       </Stack>
