@@ -8,6 +8,7 @@ import {
 import ExpandableRow from "./ExpandableRow";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
+import { EventProvider } from "../../context/event-context";
 
 interface ExpandableTableProps {
   events: EventType[];
@@ -58,14 +59,16 @@ const ExpandableTable = ({
    * @type {JSX.Element[]}
    */
   const rows: JSX.Element[] = events.map((row) => (
-    <ExpandableRow
-      key={row.eventId}
-      event={row}
-      toggleRow={toggleRow}
-      expandedRows={expandedRows}
-      registrations={registrations}
-      requestDataCallback={requestDataCallback}
-    />
+    <EventProvider event={row}>
+      <ExpandableRow
+        key={row.eventId}
+        event={row}
+        toggleRow={toggleRow}
+        expandedRows={expandedRows}
+        registrations={registrations}
+        requestDataCallback={requestDataCallback}
+      />
+    </EventProvider>
   ));
 
   return (

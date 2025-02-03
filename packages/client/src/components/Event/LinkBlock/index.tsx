@@ -1,28 +1,21 @@
 import { Button, Flex } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useMediaQuery } from "@mantine/hooks";
-import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
-import EventLabel from "../EventLabel";
-import { useEventContext } from "../../../context/event-context";
-import { getLabelConfig } from "../../../utils/label";
+import { MOBILE_BREAK_POINT } from "../../../constants";
+import LabelsList from "../EventLabel/LabelsList";
 
 /**
  * Renders a link block component for an event.
  */
 export default function LinkBlock() {
-  const eventContext = useEventContext();
-  const { event } = eventContext;
-  const { eventType } = event;
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const alignment = isMobile ? "center" : "right";
-
-  const label = getLabelConfig(eventType);
 
   const buttonSize = isMobile ? "compact-xs" : "compact-sm";
 
   return (
     <Flex className={classes.linkBlock} justify={alignment} align="center">
-      <EventLabel labelConfig={label} />
+      <LabelsList />
       <Button size={buttonSize}>Link to Event</Button>
     </Flex>
   );

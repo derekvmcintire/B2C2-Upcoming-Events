@@ -1,4 +1,4 @@
-import { Collapse, Progress, resolveClassNames, Table } from "@mantine/core";
+import { Collapse, Progress, Table } from "@mantine/core";
 import React, { useMemo } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../Event/Card";
@@ -12,8 +12,7 @@ import {
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
-import EventLabel from "../Event/EventLabel";
-import { getLabelConfig } from "../../utils/label";
+import LabelsList from "../Event/EventLabel/LabelsList";
 
 interface ExpandableRowProps {
   event: EventType;
@@ -44,7 +43,6 @@ export default function ExpandableRow({
     city,
     date,
     eventId,
-    eventType,
     interestedRiders,
     committedRiders,
     name,
@@ -75,8 +73,6 @@ export default function ExpandableRow({
 
   const chevronSize = isMobile ? 8 : 16;
 
-  const labelConfig = getLabelConfig(eventType);
-
   return (
     <React.Fragment key={eventId}>
       <Table.Tr
@@ -97,7 +93,7 @@ export default function ExpandableRow({
         {!isMobile && <Table.Td ta="left">{`${city}, ${state}`}</Table.Td>}
         {!isMobile && (
           <Table.Td ta="left">
-            <EventLabel xs labelConfig={labelConfig} />
+            <LabelsList />
           </Table.Td>
         )}
         <Table.Td ta="left">

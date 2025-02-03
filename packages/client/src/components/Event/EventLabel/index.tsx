@@ -1,9 +1,9 @@
 import { Badge } from "@mantine/core";
 import classes from "../styles/event.module.css";
-import { Label } from "../../../types";
+import { LabelConfig } from "../../../types";
 
 interface LabelProps {
-  labelConfig: Label;
+  labelConfig: LabelConfig;
   xs?: boolean;
 }
 export default function EventLabel({ labelConfig, xs = false }: LabelProps) {

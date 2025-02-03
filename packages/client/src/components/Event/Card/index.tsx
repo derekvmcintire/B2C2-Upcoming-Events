@@ -19,7 +19,6 @@ import {
 } from "../../../types";
 import { getEntriesByEventId } from "../../../utils/findRegisteredRiders";
 import EventName from "../TitleBlock";
-import { EventProvider } from "../../../context/event-context";
 import LocationBlock from "../LocationBlock";
 import LinkBlock from "../LinkBlock";
 import Description from "../DescriptionBlock";
@@ -125,47 +124,45 @@ export default function EventCard({
           numberOfCommittedRiders={committedRiders.length}
         />
         <Grid w="100%" className={classes.eventGrid}>
-          <EventProvider event={event}>
-            <Grid.Col span={isMobile ? 12 : 3}>
-              <Date />
-            </Grid.Col>
-            <Grid.Col span={isMobile ? 12 : 9}>
-              <Stack h="100%" justify="center" p="16">
-                <EventName />
-                <LinkBlock />
-              </Stack>
-            </Grid.Col>
-            <Divider w="100%" mb="16" />
-            <Grid.Col span={isMobile ? 12 : 5}>
-              <Flex w="100%" justify="center">
-                <LocationBlock />
-              </Flex>
-            </Grid.Col>
-            <Grid.Col span={isMobile ? 12 : 7}>
-              <Flex
-                w="100%"
-                h="100%"
-                p={isMobile ? "0" : "24"}
-                justify="center"
-                align="center"
-              >
-                <Description submitFn={handleSubmitEventUpdate} />
-              </Flex>
-            </Grid.Col>
-            <Divider w="100%" mb="16" />
-            <Grid.Col span={12}>
-              {/* Rider Lists */}
-              <EventRidersBlock
-                registrations={registeredNames}
-                updateEventFn={handleSubmitEventUpdate}
-              />
-            </Grid.Col>
-            <Grid.Col span={12}>
-              <Stack w="100%" h="100%" justify="flex-end">
-                <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
-              </Stack>
-            </Grid.Col>
-          </EventProvider>
+          <Grid.Col span={isMobile ? 12 : 3}>
+            <Date />
+          </Grid.Col>
+          <Grid.Col span={isMobile ? 12 : 9}>
+            <Stack h="100%" justify="center" p="16">
+              <EventName />
+              <LinkBlock />
+            </Stack>
+          </Grid.Col>
+          <Divider w="100%" mb="16" />
+          <Grid.Col span={isMobile ? 12 : 5}>
+            <Flex w="100%" justify="center">
+              <LocationBlock />
+            </Flex>
+          </Grid.Col>
+          <Grid.Col span={isMobile ? 12 : 7}>
+            <Flex
+              w="100%"
+              h="100%"
+              p={isMobile ? "0" : "24"}
+              justify="center"
+              align="center"
+            >
+              <Description submitFn={handleSubmitEventUpdate} />
+            </Flex>
+          </Grid.Col>
+          <Divider w="100%" mb="16" />
+          <Grid.Col span={12}>
+            {/* Rider Lists */}
+            <EventRidersBlock
+              registrations={registeredNames}
+              updateEventFn={handleSubmitEventUpdate}
+            />
+          </Grid.Col>
+          <Grid.Col span={12}>
+            <Stack w="100%" h="100%" justify="flex-end">
+              <LogisticsBlock handleUpdateEvent={handleSubmitEventUpdate} />
+            </Stack>
+          </Grid.Col>
         </Grid>
         <Divider />
       </Stack>

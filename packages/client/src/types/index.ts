@@ -12,6 +12,9 @@ export type EventType = {
   committedRiders?: string[];
   housingUrl?: string;
   description?: string;
+  labels?: string[];
+  carpools?: Carpool[];
+  housing?: Housing;
 };
 
 export const mockEvents: EventType[] = [
@@ -128,12 +131,32 @@ export type SubmitResponse = {
   success: boolean;
 };
 
-export type Label = {
+export type LabelConfig = {
+  id: string;
   text: string;
   color: string;
 };
 
 export type ValidLabels = {
-  RACE: Label;
-  TRIP: Label;
+  RACE: LabelConfig;
+  TRIP: LabelConfig;
+  SPECIAL: LabelConfig;
+  CONTES: LabelConfig;
+  GROUP: LabelConfig;
+  FONDO: LabelConfig;
+  STAGE: LabelConfig;
+  CLIMB: LabelConfig;
+  GEO: LabelConfig;
+  VIRTUAL: LabelConfig;
+};
+
+export type Carpool = {
+  name: string;
+  seats: number;
+  riders: string[];
+};
+
+export type Housing = {
+  committed?: string[];
+  interested?: string[];
 };
