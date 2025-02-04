@@ -25,7 +25,7 @@ export default function LogisticsBlock({
       className={classes.logisticsTabs}
     >
       <Tabs
-        defaultValue="housing"
+        defaultValue="carpool"
         style={{ flex: 1, display: "flex", flexDirection: "column" }}
       >
         <Box>
@@ -35,12 +35,12 @@ export default function LogisticsBlock({
           </Tabs.List>
         </Box>
 
-        <Tabs.Panel value="carpool" pb="xs">
+        <Tabs.Panel value="carpool" p="16">
           <Stack w="100%" h="100%">
             <CarpoolManager />
           </Stack>
         </Tabs.Panel>
-        <Tabs.Panel value="housing" pb="xs">
+        <Tabs.Panel value="housing" p="16">
           <Stack w="100%" h="100%">
             <HousingLogistics handleUpdateEvent={handleUpdateEvent} />
           </Stack>

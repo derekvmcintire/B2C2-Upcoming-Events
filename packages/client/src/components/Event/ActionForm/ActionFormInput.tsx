@@ -11,8 +11,9 @@ type ActionFormInputProps = {
   placeholder: string;
   submitLabel?: string;
   submitHandler: (e: string) => void;
-  dismissInput: () => void;
+  dismissInput?: () => void;
   validate: (value: string) => boolean;
+  withoutDismiss?: boolean;
 };
 
 /**
@@ -26,8 +27,9 @@ export default function ActionFormInput({
   placeholder,
   submitLabel,
   submitHandler,
-  dismissInput,
+  dismissInput = () => {},
   validate,
+  withoutDismiss = false,
 }: ActionFormInputProps) {
   const {
     value: inputValue,
@@ -61,8 +63,10 @@ export default function ActionFormInput({
   const DefaultButtonLabel = () => (isMobile ? <MdArrowForward /> : "Submit");
 
   return (
-    <Flex mt="8" mb="8" justify="center" align="center">
-      <DismissButton xs clickHandler={dismissInput} withoutModal />
+    <Flex justify="center" align="center">
+      {!withoutDismiss && (
+        <DismissButton xs clickHandler={dismissInput} withoutModal />
+      )}
       <TextInput
         data-testid="event-card-form-input"
         size="xs"
@@ -77,7 +81,7 @@ export default function ActionFormInput({
         size="xs"
         onClick={handleClickSubmit}
       >
-        {submitLabel || <DefaultButtonLabel />}
+        {(!isMobile && submitLabel) || <DefaultButtonLabel />}
       </Button>
     </Flex>
   );

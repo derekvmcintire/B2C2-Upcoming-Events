@@ -1,12 +1,14 @@
-import { Flex, Stack, Text } from "@mantine/core";
+import { Button, Card, Flex, Stack } from "@mantine/core";
 import classes from "../styles/event.module.css";
-import ToggleInputForm from "../ActionForm/ToggleInputForm";
 import { useEventContext } from "../../../context/event-context";
 import { UpdateEventData } from "../../../api/updateEvent";
 import DismissButton from "../../Shared/DismissButton";
 import HousingRidersBlock from "./HousingRidersBlock";
 import SubTitle from "../../Shared/SubTitle";
 import InterestedRiderForm from "../ActionForm";
+import ActionFormInput from "../ActionForm/ActionFormInput";
+import { useMediaQuery } from "@mantine/hooks";
+import { MOBILE_BREAK_POINT } from "../../../constants";
 
 interface HousingLogisticProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
@@ -23,6 +25,9 @@ export default function HousingLogistic({
   const eventContext = useEventContext();
   const { event } = eventContext;
   const { eventId, eventType, housingUrl } = event;
+
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+  const buttonSize = isMobile ? "compact-xs" : "sm";
 
   const validateHousingUrl = (value: string) => {
     try {
@@ -57,11 +62,28 @@ export default function HousingLogistic({
     });
 
   return (
-    <Stack h="100%" className={classes.logisticCard}>
-      <SubTitle text="Housing" ta="center" />
-      {!housingUrl ? (
-        <Stack align="center">
-          <ToggleInputForm
+    <>
+      {housingUrl && (
+        <Flex w="100%" justify="flex-end" align="center">
+          <Button variant="default" c="white" size={buttonSize} mr={8}>
+            <a
+              href={housingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.eventLink}
+            >
+              {!isMobile ? "Link to Housing Information" : "Housing Info"}
+            </a>
+          </Button>
+          <DismissButton xs clickHandler={handleRemoveHousing} />
+        </Flex>
+      )}
+      <Stack gap="md" style={{ width: "80%", margin: "0 auto" }} mb="20">
+        <SubTitle text="Housing" ta="center" />
+        {!housingUrl ? (
+          <Card withBorder>
+            <Stack align="center">
+              {/* <ToggleInputForm
             buttonConfig={{
               label: "Add Housing Info",
               testId: "housing-button",
@@ -71,28 +93,29 @@ export default function HousingLogistic({
               validate: validateHousingUrl,
             }}
             onSubmit={handleSubmitHousing}
-          />
-        </Stack>
-      ) : (
-        <Stack>
-          <Flex justify="flex-end" align="center">
-            <Text className={classes.eventLink}>
-              <a href={housingUrl} target="_blank" rel="noopener noreferrer">
-                Link to Housing Information
-              </a>
-            </Text>
-            <DismissButton clickHandler={handleRemoveHousing} />
-          </Flex>
-          <Flex w="100%" justify="center">
-            <HousingRidersBlock />
-          </Flex>
-          <InterestedRiderForm
-            isHousing
-            handleUpdateEvent={handleUpdateEvent}
-            customLabel={"I'm Interested in Housing"}
-          />
-        </Stack>
-      )}
-    </Stack>
+          /> */}
+              <ActionFormInput
+                placeholder="https://www..."
+                submitLabel="Add URL"
+                submitHandler={handleSubmitHousing}
+                withoutDismiss
+                validate={validateHousingUrl}
+              />
+            </Stack>
+          </Card>
+        ) : (
+          <Stack>
+            <Flex w="100%" justify="center">
+              <HousingRidersBlock />
+            </Flex>
+            <InterestedRiderForm
+              isHousing
+              handleUpdateEvent={handleUpdateEvent}
+              customLabel={"I'm Interested in Housing"}
+            />
+          </Stack>
+        )}
+      </Stack>
+    </>
   );
 }

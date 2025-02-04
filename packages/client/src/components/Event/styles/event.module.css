@@ -21,10 +21,9 @@
   cursor: inherit;
 }
 
-.logisticCard {
-  padding: 16px;
+.housingUrlContainer {
+  border: 1px solid #607d8b;
   border-radius: 4px;
-  height: 100%;
 }
 
 .logisticsTabs {

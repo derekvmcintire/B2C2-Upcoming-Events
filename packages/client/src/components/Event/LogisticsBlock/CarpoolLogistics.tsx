@@ -13,6 +13,7 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { MdClose, MdCheck } from "react-icons/md";
 import { MOBILE_BREAK_POINT } from "../../../constants";
+import SubTitle from "../../Shared/SubTitle";
 
 export type Carpool = {
   id: string;
@@ -134,7 +135,8 @@ export default function CarpoolManager() {
   };
 
   return (
-    <Stack gap="md" style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <Stack gap="md" style={{ width: "80%", margin: "0 auto" }}>
+      <SubTitle text="Carpool" ta="center" />
       {/* Car Creation Form */}
       <Card withBorder>
         <Flex
@@ -143,15 +145,13 @@ export default function CarpoolManager() {
           align={isMobile ? "stretch" : "flex-end"}
         >
           <TextInput
-            label="Car Name"
             value={newCarName}
             onChange={(e) => setNewCarName(e.currentTarget.value)}
             error={errors.carName}
-            placeholder="Enter car name"
+            placeholder="Car Name"
             style={{ flex: 1 }}
           />
           <NumberInput
-            label="Available Seats"
             value={newCarSeats}
             onChange={(value) => setNewCarSeats(Number(value))}
             error={errors.carSeats}
