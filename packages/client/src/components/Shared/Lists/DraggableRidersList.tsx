@@ -16,7 +16,7 @@ import {
   SPECIAL_EVENT_CONFIG,
 } from "./types";
 import { RiderListsContainer } from "./RiderListsContainer";
-import DraggableRider from "./DraggableRider";
+import ActivelyDraggingRider from "./ActivelyDraggingRider";
 import { useDragAndDrop } from "./hooks/useDragAndDrop";
 import { Flex } from "@mantine/core";
 import { useEffect } from "react";
@@ -137,7 +137,7 @@ const DraggableRidersLists = ({
 
         <DragOverlay dropAnimation={null}>
           {activeId && activeRider ? (
-            <DraggableRider name={activeRider.name} xs={xs} />
+            <ActivelyDraggingRider name={activeRider.name} xs={xs} />
           ) : null}
         </DragOverlay>
       </DndContext>

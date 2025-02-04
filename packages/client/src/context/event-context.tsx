@@ -9,6 +9,8 @@ import { DISCIPLINES } from "../constants";
 interface EventContextType {
   event: EventType;
   setEvent: (data: EventType) => void;
+  isUpdating: boolean;
+  setIsUpdating: (is: boolean) => void;
 }
 
 export const defaultEventContext: EventContextType = {
@@ -22,6 +24,8 @@ export const defaultEventContext: EventContextType = {
     eventType: DISCIPLINES.ROAD.id,
   },
   setEvent: () => {},
+  isUpdating: false,
+  setIsUpdating: () => {},
 };
 
 /**
@@ -47,8 +51,11 @@ export const EventProvider: React.FC<EventProviderProps> = ({
   initialEvent,
 }) => {
   const [event, setEvent] = useState<EventType>(initialEvent);
+  const [isUpdating, setIsUpdating] = useState(false);
   return (
-    <EventContext.Provider value={{ event, setEvent }}>
+    <EventContext.Provider
+      value={{ event, setEvent, isUpdating, setIsUpdating }}
+    >
       {children}
     </EventContext.Provider>
   );

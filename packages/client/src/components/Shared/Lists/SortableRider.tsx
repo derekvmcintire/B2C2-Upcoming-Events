@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Rider } from "./types";
 import DismissButton from "../DismissButton";
 import classes from "../shared.module.css";
+import { useEventContext } from "../../../context/event-context";
 
 interface SortableRiderProps extends Rider {
   draggable: boolean;
@@ -31,6 +32,9 @@ const SortableRider = ({
   isPrimary = false,
   xs = false,
 }: SortableRiderProps): JSX.Element => {
+  const eventContext = useEventContext();
+  const { isUpdating } = eventContext;
+
   const {
     attributes,
     listeners,
@@ -40,7 +44,7 @@ const SortableRider = ({
     isDragging,
   } = useSortable({
     id,
-    disabled: !draggable,
+    disabled: !draggable || isUpdating,
   });
 
   const style = {
@@ -86,7 +90,7 @@ const SortableRider = ({
             xs
             clickHandler={() => dismissRider(name)}
             position="left"
-            disabled={false}
+            disabled={isUpdating}
           />
           <Text
             span

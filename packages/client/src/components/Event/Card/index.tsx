@@ -9,7 +9,6 @@ import EventName from "../TitleBlock";
 import LocationBlock from "../LocationBlock";
 import LinkBlock from "../LinkBlock";
 import Description from "../DescriptionBlock";
-// import RiderListBlock from "../RidersBlock";
 import LogisticsBlock from "../LogisticsBlock";
 import Hypometer from "../Hypometer";
 import Date from "../Date";
@@ -60,44 +59,6 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
       console.log("got an error: ", error);
     }
   };
-
-  // /**
-  //  * Handles the form submission by calling the provided update function with the given data.
-  //  * @param {UpdateEventData} data The data to be submitted.
-  //  * @returns {Promise<void>} A promise that resolves when the submission is complete.
-  //  */
-  // const handleSubmitEventUpdate = useCallback(
-  //   async (data: UpdateEventData): Promise<void> => {
-  //     // @UPDATE
-  //     console.log('handeSubmitEventUpdate in Event>Card')
-  //     console.log('update data is: ', data)
-
-  //     // validate we have everything we need to update the event
-  //     if (!event || event.eventId !== data.eventId) {
-  //       console.error("Event not found or eventId mismatch.");
-  //       return;
-  //     }
-
-  //     const updatedEvent: EventType = {
-  //       ...event, // Preserve existing event data
-  //       ...data, // Override with updated data
-  //       interestedRiders: data.interestedRiders ?? event.interestedRiders,
-  //       committedRiders: data.committedRiders ?? event.committedRiders,
-  //       housingUrl: data.housingUrl !== null ? data.housingUrl : undefined,
-  //       housing: data.housing ?? event.housing,
-  //       description: data.description ?? event.description,
-  //     };
-
-  //     setEvent(updatedEvent);
-
-  //     const response = await updateEvent(data);
-
-  //     if (!response.success) {
-  //       setError(`Error submiting event update: ${response.message}`);
-  //     }
-  //   },
-  //   [eventType],
-  // );
 
   return (
     <Stack gap={0}>

@@ -36,7 +36,7 @@ export const useRiderLists = ({
     housingUrl = "",
   } = event;
 
-  const { handleEventUpdate, error } = useEventUpdate();
+  const { handleEventUpdate, error, isUpdating } = useEventUpdate();
 
   const eventsListContext = useEventsContext();
   const { registrations } = eventsListContext;
@@ -75,27 +75,6 @@ export const useRiderLists = ({
       console.log("got an error: ", error);
     }
   };
-
-  //   /**
-  //  * Handles the submission of an event update.
-  //  * @param data The data for the event update.
-  //  * @returns A promise that resolves when the event update is complete.
-  //  */
-  //   const handleSubmitEventUpdate = useCallback(
-  //     async (data: UpdateEventData): Promise<void> => {
-  //       console.log('update event in useRiderLists hook')
-  //       console.log('update data is: ', data)
-
-  //       // @UPDATE
-  //       const response = await updateEvent(data);
-
-  //       if (!response.success) {
-  //         // @TODO: Error handling here
-  //         console.log("problems update event from draglist");
-  //       }
-  //     },
-  //     [eventType],
-  //   );
 
   /**
    * Handles the removal of an interested rider from the event.
@@ -229,5 +208,6 @@ export const useRiderLists = ({
     handleRemoveInterestedRider,
     handleRemoveCommittedRider,
     getMoveRiderUpdateData,
+    isUpdating,
   };
 };

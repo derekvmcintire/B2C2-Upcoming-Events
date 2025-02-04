@@ -2,18 +2,18 @@ import { Flex, Paper, Text } from "@mantine/core";
 import classes from "../shared.module.css";
 import DismissButton from "../DismissButton";
 
-interface DraggableRiderProps {
+interface ActivelyDraggingRiderProps {
   name: string;
   xs?: boolean;
 }
 
 /**
- * DraggableRider component represents a draggable rider element.
+ * ActivelyDraggingRider component represents a rider element that is actively being dragged.
  */
-const DraggableRider = ({
+const ActivelyDraggingRider = ({
   name,
   xs = false,
-}: DraggableRiderProps): JSX.Element => {
+}: ActivelyDraggingRiderProps): JSX.Element => {
   const riderClassName = xs ? classes.xsDraggingRider : classes.draggingRider;
 
   const textClassName = xs ? classes.xsRiderListText : classes.riderListText;
@@ -39,4 +39,4 @@ const DraggableRider = ({
   );
 };
 
-export default DraggableRider;
+export default ActivelyDraggingRider;

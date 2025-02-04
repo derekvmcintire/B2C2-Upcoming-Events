@@ -10,9 +10,8 @@ interface EventUpdateError {
 }
 
 export const useEventUpdate = () => {
-  const { event, setEvent } = useEventContext();
+  const { event, setEvent, isUpdating, setIsUpdating } = useEventContext();
   const [error, setError] = useState<EventUpdateError | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
 
   const handleEventUpdate = useCallback(
     async (data: UpdateEventData) => {
