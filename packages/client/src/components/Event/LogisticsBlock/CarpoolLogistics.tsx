@@ -14,6 +14,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { MdClose, MdCheck } from "react-icons/md";
 import { MOBILE_BREAK_POINT } from "../../../constants";
 import SubTitle from "../../Shared/SubTitle";
+import DismissButton from "../../Shared/DismissButton";
+import { MdArrowForward } from "react-icons/md";
 
 export type Carpool = {
   id: string;
@@ -78,6 +80,7 @@ export default function CarpoolManager() {
   };
 
   const claimSeat = (carId: string) => {
+    console.log("calling cliam seat");
     const riderName = riderInputs[carId]?.trim() || "";
 
     if (!riderName) {
@@ -168,82 +171,85 @@ export default function CarpoolManager() {
         wrap={isMobile ? "nowrap" : "wrap"}
         direction={isMobile ? "column" : "row"}
       >
-        {carpools.map((car) => (
-          <Card
-            key={car.id}
-            withBorder
-            style={{
-              flex: isMobile ? "0 0 100%" : "0 1 calc(33.333% - 16px)",
-              minWidth: 300,
-            }}
-          >
-            <Stack>
-              <Group justify="space-between">
-                <Text size="lg" fw={700}>
-                  {car.name}
-                </Text>
-                <Group>
-                  <Text>
-                    Seats: {car.riders.length}/{car.seats}
+        {carpools.map((car) => {
+          const isCarFull = car.riders.length >= car.seats;
+          return (
+            <Card
+              key={car.id}
+              withBorder
+              style={{
+                flex: isMobile ? "0 0 100%" : "0 1 calc(33.333% - 16px)",
+                minWidth: 300,
+                border: isCarFull ? "1px solid #ff8a65" : "",
+              }}
+            >
+              <Stack>
+                <Group justify="space-between">
+                  <Text size="lg" fw={700}>
+                    {car.name}
                   </Text>
-                  <Button
-                    size="compact-xs"
-                    color="red"
-                    onClick={() => deleteCar(car.id)}
-                  >
-                    Delete Car
-                  </Button>
-                </Group>
-              </Group>
-
-              {/* Rider Name Input and Claim Seat */}
-              <Group>
-                <TextInput
-                  style={{ flex: 1 }}
-                  label="Your Name"
-                  placeholder="Enter your name"
-                  value={riderInputs[car.id] || ""}
-                  onChange={(e) =>
-                    handleRiderInputChange(car.id, e.currentTarget.value)
-                  }
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      claimSeat(car.id);
-                    }
-                  }}
-                />
-                <ActionIcon
-                  variant="filled"
-                  color="green"
-                  size="lg"
-                  onClick={() => claimSeat(car.id)}
-                  disabled={
-                    !riderInputs[car.id] || car.riders.length >= car.seats
-                  }
-                >
-                  <MdCheck size={20} />
-                </ActionIcon>
-              </Group>
-
-              {/* Riders List */}
-              <Group>
-                {car.riders.map((rider) => (
-                  <Group key={rider} gap="xs" align="center">
-                    <Text>{rider}</Text>
-                    <ActionIcon
-                      variant="light"
-                      color="red"
-                      size="xs"
-                      onClick={() => leaveRide(car.id, rider)}
-                    >
-                      <MdClose size={12} />
-                    </ActionIcon>
+                  <Group>
+                    <Text>
+                      Seats: {car.riders.length}/{car.seats}
+                    </Text>
+                    <DismissButton clickHandler={() => deleteCar(car.id)} />
                   </Group>
-                ))}
-              </Group>
-            </Stack>
-          </Card>
-        ))}
+                </Group>
+
+                {/* Rider Name Input and Claim Seat */}
+                <Group>
+                  {!isCarFull ? (
+                    <>
+                      <TextInput
+                        style={{ flex: 1 }}
+                        placeholder="Enter your name"
+                        value={riderInputs[car.id] || ""}
+                        onChange={(e) =>
+                          handleRiderInputChange(car.id, e.currentTarget.value)
+                        }
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            claimSeat(car.id);
+                          }
+                        }}
+                        disabled={isCarFull}
+                      />
+                      <ActionIcon
+                        variant="filled"
+                        size="md"
+                        onClick={() => claimSeat(car.id)}
+                        disabled={!riderInputs[car.id] || isCarFull}
+                      >
+                        <MdArrowForward />
+                      </ActionIcon>
+                    </>
+                  ) : (
+                    <Text w="100%" fw={600}>
+                      Car Full
+                    </Text>
+                  )}
+                </Group>
+
+                {/* Riders List */}
+                <Group>
+                  {car.riders.map((rider) => (
+                    <Group key={rider} gap="xs" align="center">
+                      <Text>{rider}</Text>
+                      <ActionIcon
+                        variant="light"
+                        color="red"
+                        size="xs"
+                        onClick={() => leaveRide(car.id, rider)}
+                      >
+                        <MdClose size={12} />
+                      </ActionIcon>
+                    </Group>
+                  ))}
+                </Group>
+              </Stack>
+            </Card>
+          );
+        })}
       </Flex>
     </Stack>
   );

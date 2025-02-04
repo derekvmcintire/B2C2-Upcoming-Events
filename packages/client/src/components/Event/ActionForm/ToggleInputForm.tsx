@@ -47,7 +47,13 @@ const ToggleInputForm = ({
 
   if (!isInputOpen) {
     return (
-      <Flex mt="8" mb="8" justify="center" align="center">
+      <Flex
+        mt="8"
+        mb="8"
+        justify="center"
+        align="center"
+        style={{ height: "50px" }}
+      >
         <Button
           size={isMobile ? "compact-xs" : "compact-sm"}
           leftSection={<MdAdd size={14} />}
@@ -63,13 +69,21 @@ const ToggleInputForm = ({
   }
 
   return (
-    <ActionFormInput
-      placeholder={inputConfig.placeholder}
-      submitLabel={inputConfig.submitLabel}
-      submitHandler={onSubmit}
-      dismissInput={handleDismiss}
-      validate={inputConfig.validate}
-    />
+    <Flex
+      mt="8"
+      mb="8"
+      justify="center"
+      align="center"
+      style={{ height: "50px" }}
+    >
+      <ActionFormInput
+        placeholder={inputConfig.placeholder}
+        submitLabel={inputConfig.submitLabel}
+        submitHandler={onSubmit}
+        dismissInput={handleDismiss}
+        validate={inputConfig.validate}
+      />
+    </Flex>
   );
 };
 
