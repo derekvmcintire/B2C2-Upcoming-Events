@@ -6,7 +6,7 @@ import {
   ListConfigId,
   RiderListsConfig,
   MOVABLE_LISTS,
-} from "../types";
+} from "../components/Shared/Lists/types";
 
 interface UseDragAndDropProps {
   config: RiderListsConfig;

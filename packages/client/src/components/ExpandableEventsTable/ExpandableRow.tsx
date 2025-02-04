@@ -7,7 +7,7 @@ import { formatEventDate, formatShortDate } from "../../utils/dates";
 import { EventType, FetchRegistrationsResponse } from "../../types";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import { useMediaQuery } from "@mantine/hooks";
-import { MOBILE_BREAK_POINT } from "../../constants";
+import { LABELS, MOBILE_BREAK_POINT } from "../../constants";
 import LabelsList from "../Event/EventLabel/LabelsList";
 
 interface ExpandableRowProps {
@@ -40,6 +40,7 @@ export default function ExpandableRow({
     committedRiders,
     name,
     state,
+    labels,
   } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
@@ -66,6 +67,12 @@ export default function ExpandableRow({
 
   const chevronSize = isMobile ? 8 : 16;
 
+  const getLocationText = () => {
+    return labels?.includes(LABELS.VIRTUAL.id)
+      ? LABELS.VIRTUAL.text
+      : `${city}, ${state}`;
+  };
+
   return (
     <React.Fragment key={eventId}>
       <Table.Tr
@@ -83,7 +90,7 @@ export default function ExpandableRow({
           {eventDate}
         </Table.Td>
         <Table.Td ta="left">{name}</Table.Td>
-        {!isMobile && <Table.Td ta="left">{`${city}, ${state}`}</Table.Td>}
+        {!isMobile && <Table.Td ta="left">{getLocationText()}</Table.Td>}
         {!isMobile && (
           <Table.Td ta="left">
             <LabelsList noText xs />

@@ -75,7 +75,8 @@ export const useRiderLists = ({
   };
 
   const handleRemoveHousingCommittedRider = useCallback(
-    (nameToRemove: string) =>
+    (nameToRemove: string) => {
+      console.log("removing housing committed rider");
       handleSubmitEventUpdate({
         eventId,
         eventType,
@@ -85,12 +86,14 @@ export const useRiderLists = ({
           ),
           interested: event?.housing?.interested || [],
         },
-      }),
+      });
+    },
     [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
   );
 
   const handleRemoveHousingInterestedRider = useCallback(
-    (nameToRemove: string) =>
+    (nameToRemove: string) => {
+      console.log("removing housing interested rider");
       handleSubmitEventUpdate({
         eventId,
         eventType,
@@ -100,7 +103,8 @@ export const useRiderLists = ({
             (name) => name !== nameToRemove,
           ),
         },
-      }),
+      });
+    },
     [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
   );
 

@@ -8,6 +8,27 @@ import EventPanels from "../EventListTabs.tsx/EventPanels";
 import { useEventData } from "../../hooks/useEventData";
 import { useTabState } from "../../hooks/useTabState";
 
+const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
+
+// Helper to map URL parameter to discipline
+const getDisciplineFromUrl = (): string => {
+  const params = new URLSearchParams(window.location.search);
+  const tab = params.get("tab") || window.location.hash.replace("#", "");
+
+  switch (tab) {
+    case "road":
+      return DISCIPLINES.ROAD.text;
+    case "xc":
+      return DISCIPLINES.XC.text;
+    case "cx":
+      return DISCIPLINES.CX.text;
+    case "team":
+      return DISCIPLINES.SPECIAL.text;
+    default:
+      return DEFAULT_DISCIPLINE.text;
+  }
+};
+
 /**
  * EventsContainer Component
  *
@@ -19,12 +40,9 @@ import { useTabState } from "../../hooks/useTabState";
  * - Fetches data on tab change, using cached events when available.
  */
 const EventsContainer = (): JSX.Element => {
-  const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
-  const { activeTab, handleTabChange } = useTabState(
-    DEFAULT_DISCIPLINE.text,
-    false,
-    false,
-  );
+  const initialTab = getDisciplineFromUrl();
+
+  const { activeTab, handleTabChange } = useTabState(initialTab, false, false);
   const { getRegisteredRiders, getEvents } = useEventData();
 
   const eventsContext = useEventsContext();
@@ -34,8 +52,12 @@ const EventsContainer = (): JSX.Element => {
    * Fetches registrations and events data when the component is mounted.
    */
   useEffect(() => {
-    getRegisteredRiders({ disciplineParam: DEFAULT_DISCIPLINE.queryParam });
-    getEvents({ disciplineId: DEFAULT_DISCIPLINE.id });
+    const discipline =
+      Object.values(DISCIPLINES).find((d) => d.text === activeTab) ||
+      DEFAULT_DISCIPLINE;
+
+    getRegisteredRiders({ disciplineParam: discipline.queryParam });
+    getEvents({ disciplineId: discipline.id });
   }, [
     getRegisteredRiders,
     getEvents,
@@ -48,7 +70,7 @@ const EventsContainer = (): JSX.Element => {
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
-        defaultValue={DISCIPLINES.ROAD.text}
+        defaultValue={initialTab}
         className={classes.eventList}
         mb="64"
       >

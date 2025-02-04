@@ -16,7 +16,7 @@ import {
 } from "./types";
 import { RiderListsContainer } from "./RiderListsContainer";
 import ActivelyDraggingRider from "./ActivelyDraggingRider";
-import { useDragAndDrop } from "./hooks/useDragAndDrop";
+import { useDragAndDrop } from "../../../hooks/useDragAndDrop";
 import { Flex } from "@mantine/core";
 import { useRiderLists } from "../../../hooks/useRiderLists";
 
@@ -94,7 +94,7 @@ const DraggableRidersLists = ({
   // secondary lists are only allowed to be interested for now
   const housingRemovefns = {
     primary:
-      config.primaryList.id === "committed"
+      config.primaryList.id === "housingCommitted"
         ? handleRemoveHousingCommittedRider
         : () => {},
     secondary: handleRemoveHousingInterestedRider,

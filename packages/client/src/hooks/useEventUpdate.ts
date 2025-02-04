@@ -41,13 +41,17 @@ export const useEventUpdate = () => {
         setEvent(updatedEvent);
 
         const getValidatedUpdateData = () => {
+          console.log("validating update data");
           // housing lists can only be saved with a housing URL
           if (data?.housing && !data?.housingUrl) {
+            console.log("is housing with no housingURL");
             if (!event?.housingUrl) {
+              console.log("and event has no housing url");
               console.log(
                 "ERROR: must have a housing URL before adding housing lists",
               );
             }
+            console.log("setting event.housingURL: ", event.housingUrl);
             return { ...data, housingUrl: event.housingUrl };
           }
           // if we don't have housing data or we do, but we also have a housing URL already, just return the data
