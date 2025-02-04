@@ -39,10 +39,11 @@
 
 .over {
   background-color: #2e2e2e;
+  background-color: light-dark(#ffffff, #2e2e2e);
 }
 
 .default {
-  background-color: light-dark(#ffffff, #363636);
+  background-color: light-dark(#f4f4f4, #363636);
 }
 
 .primaryListRider {

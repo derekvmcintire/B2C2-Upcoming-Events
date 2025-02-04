@@ -1,6 +1,6 @@
 import { Box, Stack, Tabs } from "@mantine/core";
 import HousingLogistics from "./HousingLogistics";
-import CarpoolLogistics from "./CarpoolLogistics";
+import CarpoolManager from "./CarpoolLogistics";
 import classes from "../styles/event.module.css";
 import { UpdateEventData } from "../../../api/updateEvent";
 
@@ -37,7 +37,7 @@ export default function LogisticsBlock({
 
         <Tabs.Panel value="carpool" pb="xs">
           <Stack w="100%" h="100%">
-            <CarpoolLogistics />
+            <CarpoolManager />
           </Stack>
         </Tabs.Panel>
         <Tabs.Panel value="housing" pb="xs">

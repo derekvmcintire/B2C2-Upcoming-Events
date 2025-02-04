@@ -58,7 +58,7 @@ const DroppableContainer = ({
   return (
     <Box className={classes.droppableContainer}>
       <Text fw={600} size={titleSize} mb="xs">
-        {title}
+        {`${items.length} ${title}`}
       </Text>
       <Divider />
       <Paper
