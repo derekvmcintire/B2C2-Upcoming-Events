@@ -6,6 +6,7 @@ import {
   RiderListEventType,
   RiderLists,
 } from "../../Shared/Lists/types";
+import { useRiderLists } from "../../../hooks/useRiderLists";
 
 /**
  * Renders a block of draggable riders for an event.
@@ -58,12 +59,18 @@ export default function HousingRidersBlock() {
     housingInterested: mappedInterestedRiders,
   };
 
+  const { riders } = useRiderLists({
+    type: "housing",
+  });
+
+  console.log("riders is: ", riders);
+
   return (
     <DraggableRidersLists
       isHousing
       isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
       eventListType={riderListEventType}
-      initialRiders={initialRiders}
+      initialRiders={riders}
       xs
     />
   );

@@ -11,7 +11,6 @@ import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   EVENT_HOUSING_LIST_CONFIG,
   RACE_CONFIG,
-  RiderLists,
   RiderListsConfig,
   SPECIAL_EVENT_CONFIG,
 } from "./types";
@@ -19,13 +18,11 @@ import { RiderListsContainer } from "./RiderListsContainer";
 import ActivelyDraggingRider from "./ActivelyDraggingRider";
 import { useDragAndDrop } from "./hooks/useDragAndDrop";
 import { Flex } from "@mantine/core";
-import { useEffect } from "react";
 import { useRiderLists } from "../../../hooks/useRiderLists";
 
 interface DraggableRidersListsProps {
   isStatic?: boolean;
   eventListType: "race" | "special";
-  initialRiders: RiderLists;
   xs?: boolean;
   isHousing?: boolean;
 }
@@ -36,7 +33,6 @@ interface DraggableRidersListsProps {
 const DraggableRidersLists = ({
   isStatic = false,
   eventListType,
-  initialRiders,
   xs = false,
   isHousing = false,
 }: DraggableRidersListsProps): JSX.Element => {
@@ -47,9 +43,9 @@ const DraggableRidersLists = ({
     handleRemoveCommittedRider,
     getMoveRiderUpdateData,
     handleSubmitEventUpdate,
-  } = useRiderLists({
-    initialRiders,
-  });
+  } = useRiderLists({ type: isHousing ? "housing" : "event" });
+
+  console.log("riders in draggableriderslist is: ", riders);
 
   const getConfig = (): RiderListsConfig => {
     if (isHousing) {
@@ -62,11 +58,6 @@ const DraggableRidersLists = ({
   const config = getConfig();
 
   const validContainers = [config.primaryList.id, config.secondaryList.id];
-
-  // @UPDATE
-  useEffect(() => {
-    console.log("");
-  }, [initialRiders]);
 
   const { activeId, handleDragStart, handleDragOver, handleDragEnd } =
     useDragAndDrop({

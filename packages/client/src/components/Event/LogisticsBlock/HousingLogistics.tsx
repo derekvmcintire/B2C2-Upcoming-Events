@@ -83,17 +83,6 @@ export default function HousingLogistic({
         {!housingUrl ? (
           <Card withBorder>
             <Stack align="center">
-              {/* <ToggleInputForm
-            buttonConfig={{
-              label: "Add Housing Info",
-              testId: "housing-button",
-            }}
-            inputConfig={{
-              placeholder: "Add Housing Link",
-              validate: validateHousingUrl,
-            }}
-            onSubmit={handleSubmitHousing}
-          /> */}
               <ActionFormInput
                 placeholder="https://www..."
                 submitLabel="Add URL"

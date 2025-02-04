@@ -40,13 +40,14 @@ export const buildEventRiderLists = (
  * Retrieves the initial riders for the draggable riders block.s.
  */
 export const buildHousingRiderLists = (housing: Housing): RiderLists => {
+  console.log("building housing riders");
   const seenRiders = new Set<string>();
 
   return {
-    committed: housing?.committed
+    housingCommitted: housing?.committed
       ? createRiderObjects(housing.committed, seenRiders)
       : [],
-    interested: housing?.interested
+    housingInterested: housing?.interested
       ? createRiderObjects(housing?.interested, seenRiders)
       : [],
   };

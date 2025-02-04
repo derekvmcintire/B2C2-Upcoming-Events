@@ -9,6 +9,7 @@ interface InterestedRiderFormProps {
   customLabel?: string;
 }
 
+// @TODO: naming of this component vs naming of this file
 /**
  * Represents a form component for capturing interested riders for an event.
  *

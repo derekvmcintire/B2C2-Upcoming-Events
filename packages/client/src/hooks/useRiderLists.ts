@@ -19,10 +19,8 @@ import { useEventsContext } from "../context/events-context";
 import { useEventUpdate } from "./useEventUpdate";
 
 export const useRiderLists = ({
-  initialRiders,
   type = "event",
 }: {
-  initialRiders: RiderLists;
   type?: "event" | "housing";
 }) => {
   const eventContext = useEventContext();
@@ -46,7 +44,7 @@ export const useRiderLists = ({
     [registrations, eventId],
   );
 
-  const [riders, setRiders] = useState<RiderLists>(initialRiders);
+  const [riders, setRiders] = useState<RiderLists>({});
 
   useEffect(() => {
     const newRiders =
