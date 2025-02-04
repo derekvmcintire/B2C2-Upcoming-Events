@@ -14,7 +14,7 @@ export default function Date() {
   const { weekday, month, day } = formatCalendarDate(date);
 
   return (
-    <Stack gap={8} align="center" className={classes.dateStack}>
+    <Stack gap={8} align="center" justify="center" h="100%" className={classes.dateStack} >
       <Card shadow="sm" className={classes.dateBadge}>
         <Stack gap={0} align="center" justify="center">
           <Text size="xs" className={classes.weekday}>
