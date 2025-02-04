@@ -10,6 +10,7 @@ import {
 import InterestedRiderForm from "../ActionForm";
 import { UpdateEventData } from "../../../api/updateEvent";
 import { Stack } from "@mantine/core";
+import { useState } from "react";
 
 interface EventRidersBlockProps {
   registrations: string[];
@@ -26,10 +27,7 @@ const EventRidersBlock = ({
   const { event } = useEventContext();
   const { eventType, interestedRiders = [], committedRiders = [] } = event;
 
-  const riderListEventType: RiderListEventType =
-    eventType === DISCIPLINES.SPECIAL.id
-      ? RIDER_LIST_EVENT_TYPES.SPECIAL
-      : RIDER_LIST_EVENT_TYPES.RACE;
+  // @UPDATE
 
   /**
    * Creates an array of Rider objects based on the provided names, filtering out any duplicates.
@@ -62,12 +60,19 @@ const EventRidersBlock = ({
     };
   };
 
+  const [initialRiders] = useState<RiderLists>(getInitialRiders());
+
+  const riderListEventType: RiderListEventType =
+    eventType === DISCIPLINES.SPECIAL.id
+      ? RIDER_LIST_EVENT_TYPES.SPECIAL
+      : RIDER_LIST_EVENT_TYPES.RACE;
+
   return (
     <Stack mb="16">
       <DraggableRidersLists
         isStatic={eventType !== DISCIPLINES.SPECIAL.id}
         eventListType={riderListEventType}
-        initialRiders={getInitialRiders()}
+        initialRiders={initialRiders}
       />
       <InterestedRiderForm handleUpdateEvent={updateEventFn} />
     </Stack>

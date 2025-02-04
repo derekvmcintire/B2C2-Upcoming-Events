@@ -1,18 +1,9 @@
-import { useCallback, useState } from "react";
-import {
-  Alert,
-  Divider,
-  Flex,
-  Grid,
-  LoadingOverlay,
-  Stack,
-} from "@mantine/core";
+import { Alert, Divider, Flex, Grid, Stack } from "@mantine/core";
 import { MdOutlineWarning } from "react-icons/md";
 
 import classes from "../styles/event.module.css";
-import { useEventsContext } from "../../../context/events-context";
-import { UpdateEventData, updateEvent } from "../../../api/updateEvent";
-import { EventType, FetchRegistrationsResponse } from "../../../types";
+import { UpdateEventData } from "../../../api/updateEvent";
+import { FetchRegistrationsResponse } from "../../../types";
 import { getEntriesByEventId } from "../../../utils/findRegisteredRiders";
 import EventName from "../TitleBlock";
 import LocationBlock from "../LocationBlock";
@@ -26,36 +17,33 @@ import { useMediaQuery } from "@mantine/hooks";
 import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
 import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
 import SubTitle from "../../Shared/SubTitle";
+import { useEventContext } from "../../../context/event-context";
+import { useEventUpdate } from "../../../hooks/useEventUpdate";
 
 type EventProps = {
-  event: EventType;
   registrations?: FetchRegistrationsResponse;
 };
 
 /**
  * Renders an event card component.
  *
- * @param event - The event object.
  * @param registrations - The registrations for the event.
  * @param isStripe - Used to determine the background color of the card to create a "striped" effect.
  * @returns The rendered event card component.
  */
-export default function EventCard({
-  event,
-  registrations,
-}: EventProps): JSX.Element {
-  const [error, setError] = useState("");
+export default function EventCard({ registrations }: EventProps): JSX.Element {
+  const eventContext = useEventContext();
+  const { event } = eventContext;
 
-  const eventsContext = useEventsContext();
-  const { isSubmitting, setIsSubmitting } = eventsContext;
   const {
     eventId,
-    eventType,
     eventUrl,
     interestedRiders = [],
     committedRiders = [],
     labels,
   } = event;
+
+  const { handleEventUpdate, error, setError } = useEventUpdate();
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
@@ -65,22 +53,51 @@ export default function EventCard({
     ? getEntriesByEventId(registrations, Number(eventId))
     : [];
 
-  /**
-   * Handles the form submission by calling the provided update function with the given data.
-   * @param {UpdateEventData} data The data to be submitted.
-   * @returns {Promise<void>} A promise that resolves when the submission is complete.
-   */
-  const handleSubmitEventUpdate = useCallback(
-    async (data: UpdateEventData): Promise<void> => {
-      setIsSubmitting(true);
-      const response = await updateEvent(data);
+  const handleSubmitEventUpdate = async (data: UpdateEventData) => {
+    await handleEventUpdate(data);
+    if (error) {
+      // Handle error (e.g. show toast notification)
+      console.log("got an error: ", error);
+    }
+  };
 
-      if (!response.success) {
-        setError(`Error submiting event update: ${response.message}`);
-      }
-    },
-    [eventType, setIsSubmitting],
-  );
+  // /**
+  //  * Handles the form submission by calling the provided update function with the given data.
+  //  * @param {UpdateEventData} data The data to be submitted.
+  //  * @returns {Promise<void>} A promise that resolves when the submission is complete.
+  //  */
+  // const handleSubmitEventUpdate = useCallback(
+  //   async (data: UpdateEventData): Promise<void> => {
+  //     // @UPDATE
+  //     console.log('handeSubmitEventUpdate in Event>Card')
+  //     console.log('update data is: ', data)
+
+  //     // validate we have everything we need to update the event
+  //     if (!event || event.eventId !== data.eventId) {
+  //       console.error("Event not found or eventId mismatch.");
+  //       return;
+  //     }
+
+  //     const updatedEvent: EventType = {
+  //       ...event, // Preserve existing event data
+  //       ...data, // Override with updated data
+  //       interestedRiders: data.interestedRiders ?? event.interestedRiders,
+  //       committedRiders: data.committedRiders ?? event.committedRiders,
+  //       housingUrl: data.housingUrl !== null ? data.housingUrl : undefined,
+  //       housing: data.housing ?? event.housing,
+  //       description: data.description ?? event.description,
+  //     };
+
+  //     setEvent(updatedEvent);
+
+  //     const response = await updateEvent(data);
+
+  //     if (!response.success) {
+  //       setError(`Error submiting event update: ${response.message}`);
+  //     }
+  //   },
+  //   [eventType],
+  // );
 
   return (
     <Stack gap={0}>
@@ -90,15 +107,6 @@ export default function EventCard({
         className={classes.eventContainer}
         style={{ position: "relative" }}
       >
-        <LoadingOverlay
-          visible={isSubmitting}
-          zIndex={1000}
-          overlayProps={{
-            blur: 2,
-            fixed: false,
-            style: { position: "absolute" },
-          }}
-        />
         {error && (
           <Flex justify="center">
             <Alert
@@ -107,10 +115,10 @@ export default function EventCard({
               color="red"
               title="Error"
               withCloseButton
-              onClose={() => setError("")}
+              onClose={() => setError(null)}
               icon={<MdOutlineWarning />}
             >
-              {error}
+              {error.message}
             </Alert>
           </Flex>
         )}

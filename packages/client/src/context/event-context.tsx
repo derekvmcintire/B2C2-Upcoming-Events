@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useContext } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { type EventType } from "../types";
+import { DISCIPLINES } from "../constants";
 
 /**
  * Type definition for the Event Context.
@@ -7,19 +8,33 @@ import { type EventType } from "../types";
  */
 interface EventContextType {
   event: EventType;
+  setEvent: (data: EventType) => void;
 }
+
+export const defaultEventContext: EventContextType = {
+  event: {
+    eventId: "",
+    name: "",
+    date: "",
+    city: "",
+    state: "",
+    eventUrl: "",
+    eventType: DISCIPLINES.ROAD.id,
+  },
+  setEvent: () => {},
+};
 
 /**
  * EventContext object. Must be provided with an actual event.
  */
-const EventContext = createContext<EventContextType | undefined>(undefined);
+const EventContext = createContext<EventContextType>(defaultEventContext);
 
 /**
  * Props for the `EventProvider` component.
  */
 interface EventProviderProps {
   children: ReactNode; // React children to be rendered inside the provider
-  event: EventType; // The event to provide to the context
+  initialEvent: EventType; // The event to provide to the context
 }
 
 /**
@@ -29,10 +44,13 @@ interface EventProviderProps {
  */
 export const EventProvider: React.FC<EventProviderProps> = ({
   children,
-  event,
+  initialEvent,
 }) => {
+  const [event, setEvent] = useState<EventType>(initialEvent);
   return (
-    <EventContext.Provider value={{ event }}>{children}</EventContext.Provider>
+    <EventContext.Provider value={{ event, setEvent }}>
+      {children}
+    </EventContext.Provider>
   );
 };
 

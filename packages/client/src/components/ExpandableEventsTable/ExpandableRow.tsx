@@ -101,11 +101,7 @@ export default function ExpandableRow({
       <Table.Tr>
         <Table.Td colSpan={6} p={0}>
           <Collapse in={expandedRows.has(eventId)}>
-            <EventCard
-              key={event.eventId}
-              event={event}
-              registrations={registrations}
-            />
+            <EventCard key={event.eventId} registrations={registrations} />
           </Collapse>
         </Table.Td>
       </Table.Tr>

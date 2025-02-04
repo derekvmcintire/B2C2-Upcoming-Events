@@ -17,10 +17,10 @@ import {
 } from "./types";
 import { RiderListsContainer } from "./RiderListsContainer";
 import DraggableRider from "./DraggableRider";
-import { useEventContext } from "../../../context/event-context";
 import { useDragAndDrop } from "./hooks/useDragAndDrop";
-import { useRiderLists } from "./hooks/useRiderLists";
 import { Flex } from "@mantine/core";
+import { useEffect } from "react";
+import { useRiderLists } from "../../../hooks/useRiderLists";
 
 interface DraggableRidersListsProps {
   isStatic?: boolean;
@@ -40,7 +40,16 @@ const DraggableRidersLists = ({
   xs = false,
   isHousing = false,
 }: DraggableRidersListsProps): JSX.Element => {
-  const { event } = useEventContext();
+  const {
+    riders,
+    setRiders,
+    handleRemoveInterestedRider,
+    handleRemoveCommittedRider,
+    getMoveRiderUpdateData,
+    handleSubmitEventUpdate,
+  } = useRiderLists({
+    initialRiders,
+  });
 
   const getConfig = (): RiderListsConfig => {
     if (isHousing) {
@@ -54,17 +63,10 @@ const DraggableRidersLists = ({
 
   const validContainers = [config.primaryList.id, config.secondaryList.id];
 
-  const {
-    riders,
-    setRiders,
-    handleRemoveInterestedRider,
-    handleRemoveCommittedRider,
-    getMoveRiderUpdateData,
-    handleSubmitEventUpdate,
-  } = useRiderLists({
-    event,
-    initialRiders,
-  });
+  // @UPDATE
+  useEffect(() => {
+    console.log("");
+  }, [initialRiders]);
 
   const { activeId, handleDragStart, handleDragOver, handleDragEnd } =
     useDragAndDrop({

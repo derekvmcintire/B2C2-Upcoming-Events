@@ -1,31 +1,30 @@
-import { useState, useCallback, useEffect } from "react";
-import { UpdateEventData, updateEvent } from "../../../../api/updateEvent";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import {
-  RiderLists,
-  ListConfigId,
   COMMITTED_LIST_TYPE,
-  INTERESTED_LIST_TYPE,
   HOUSING_COMMITTED_LIST_TYPE,
   HOUSING_INTERESTED_LIST_TYPE,
-} from "../types";
-import { Housing } from "../../../../types";
-import { useEventContext } from "../../../../context/event-context";
-import { useEventsContext } from "../../../../context/events-context";
-import { buildRiderLists } from "../../../../utils/buildRiderLists";
-import { getEntriesByEventId } from "../../../../utils/findRegisteredRiders";
+  INTERESTED_LIST_TYPE,
+  ListConfigId,
+  RiderLists,
+} from "../components/Shared/Lists/types";
+import { useEventContext } from "../context/event-context";
+import {
+  buildEventRiderLists,
+  buildHousingRiderLists,
+} from "../utils/buildRiderLists";
+import { UpdateEventData } from "../api/updateEvent";
+import { Housing } from "../types";
+import { getEntriesByEventId } from "../utils/findRegisteredRiders";
+import { useEventsContext } from "../context/events-context";
+import { useEventUpdate } from "./useEventUpdate";
 
-interface UseRiderListsProps {
+export const useRiderLists = ({
+  initialRiders,
+  type = "event",
+}: {
   initialRiders: RiderLists;
-}
-
-/**
- * Custom hook for managing rider lists in an event.
- *
- * @param event - The event these rider lists are attached to.
- * @param initialRiders - The initial list of riders.
- * @returns An object containing the riders state, update functions, and helper functions.
- */
-export const useRiderLists = ({ initialRiders }: UseRiderListsProps) => {
+  type?: "event" | "housing";
+}) => {
   const eventContext = useEventContext();
   const { event } = eventContext;
   const {
@@ -37,55 +36,66 @@ export const useRiderLists = ({ initialRiders }: UseRiderListsProps) => {
     housingUrl = "",
   } = event;
 
+  const { handleEventUpdate, error } = useEventUpdate();
+
   const eventsListContext = useEventsContext();
   const { registrations } = eventsListContext;
-  const registeredNames = registrations
-    ? getEntriesByEventId(registrations, Number(eventId))
-    : [];
+  const registeredNames = useMemo(
+    () =>
+      registrations ? getEntriesByEventId(registrations, Number(eventId)) : [],
+    [registrations, eventId],
+  );
 
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
 
-  // NEW CODE
-  // Need to handle this cleanly - when interestedRiders, or comittedRiders, or housing.committed or housing.interested lists change,
-  // we need to build new rider lists and setRiders with those new lists.
-  // ALSO - instead of accepting initialRiders as a parameter, we should just build the initial riders internally when this hook is first called,
-  // the same way we do in the useEffect hook below
-  // BUT
-  // we need to do this for two separate lists:
-  // the event lists: committedRiders and interestedRiders
-  // and the housing lists: housing.committed and housing.interested
-  // and we should return event riders OR housing riders
-  // OR I need two separate custom hooks - one for managing event lists and one for managing housing lists
-  // I am not sure how to procede
   useEffect(() => {
-    const newRiders = buildRiderLists(
-      registeredNames,
-      committedRiders,
-      interestedRiders,
-    );
+    const newRiders =
+      type === "housing"
+        ? buildHousingRiderLists(housing)
+        : buildEventRiderLists(
+            registeredNames,
+            committedRiders,
+            interestedRiders,
+          );
+
     setRiders(newRiders);
-  }, [interestedRiders, committedRiders]);
+  }, [
+    type,
+    interestedRiders,
+    committedRiders,
+    housing.committed,
+    housing.interested,
+    registeredNames,
+  ]);
 
-  /**
-   * Handles the submission of an event update.
-   * @param data The data for the event update.
-   * @returns A promise that resolves when the event update is complete.
-   */
-  const handleSubmitEventUpdate = useCallback(
-    async (data: UpdateEventData): Promise<void> => {
-      console.log("update event in useRiderLists hook");
-      console.log("update data is: ", data);
+  const handleSubmitEventUpdate = async (data: UpdateEventData) => {
+    await handleEventUpdate(data);
+    if (error) {
+      // Handle error (e.g. show toast notification)
+      console.log("got an error: ", error);
+    }
+  };
 
-      // @UPDATE
-      const response = await updateEvent(data);
+  //   /**
+  //  * Handles the submission of an event update.
+  //  * @param data The data for the event update.
+  //  * @returns A promise that resolves when the event update is complete.
+  //  */
+  //   const handleSubmitEventUpdate = useCallback(
+  //     async (data: UpdateEventData): Promise<void> => {
+  //       console.log('update event in useRiderLists hook')
+  //       console.log('update data is: ', data)
 
-      if (!response.success) {
-        // @TODO: Error handling here
-        console.log("problems update event from draglist");
-      }
-    },
-    [eventType],
-  );
+  //       // @UPDATE
+  //       const response = await updateEvent(data);
+
+  //       if (!response.success) {
+  //         // @TODO: Error handling here
+  //         console.log("problems update event from draglist");
+  //       }
+  //     },
+  //     [eventType],
+  //   );
 
   /**
    * Handles the removal of an interested rider from the event.
