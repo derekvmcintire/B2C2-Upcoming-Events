@@ -12,11 +12,7 @@ import { MdOutlineWarning } from "react-icons/md";
 import classes from "../styles/event.module.css";
 import { useEventsContext } from "../../../context/events-context";
 import { UpdateEventData, updateEvent } from "../../../api/updateEvent";
-import {
-  EventType,
-  FetchRegistrationsResponse,
-  EventDiscipline,
-} from "../../../types";
+import { EventType, FetchRegistrationsResponse } from "../../../types";
 import { getEntriesByEventId } from "../../../utils/findRegisteredRiders";
 import EventName from "../TitleBlock";
 import LocationBlock from "../LocationBlock";
@@ -34,7 +30,6 @@ import SubTitle from "../../Shared/SubTitle";
 type EventProps = {
   event: EventType;
   registrations?: FetchRegistrationsResponse;
-  requestDataCallback: (eventType: EventDiscipline) => void;
 };
 
 /**
@@ -43,13 +38,11 @@ type EventProps = {
  * @param event - The event object.
  * @param registrations - The registrations for the event.
  * @param isStripe - Used to determine the background color of the card to create a "striped" effect.
- * @param requestDataCallback - Callback function to request data for the event type.
  * @returns The rendered event card component.
  */
 export default function EventCard({
   event,
   registrations,
-  requestDataCallback,
 }: EventProps): JSX.Element {
   const [error, setError] = useState("");
 
@@ -82,13 +75,11 @@ export default function EventCard({
       setIsSubmitting(true);
       const response = await updateEvent(data);
 
-      if (response.success) {
-        requestDataCallback(eventType);
-      } else {
+      if (!response.success) {
         setError(`Error submiting event update: ${response.message}`);
       }
     },
-    [requestDataCallback, eventType, setIsSubmitting],
+    [eventType, setIsSubmitting],
   );
 
   return (

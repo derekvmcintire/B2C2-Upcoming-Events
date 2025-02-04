@@ -25,8 +25,7 @@ const EventsContainer = (): JSX.Element => {
     false,
     false,
   );
-  const { getRegisteredRiders, getEvents, requestFreshDataForEventType } =
-    useEventData();
+  const { getRegisteredRiders, getEvents } = useEventData();
 
   const eventsContext = useEventsContext();
   const { eventsLoading } = eventsContext;
@@ -54,10 +53,7 @@ const EventsContainer = (): JSX.Element => {
         mb="64"
       >
         <EventTabs />
-        <EventPanels
-          eventsLoading={eventsLoading}
-          requestFreshDataForEventType={requestFreshDataForEventType}
-        />
+        <EventPanels eventsLoading={eventsLoading} />
       </Tabs>
     </Stack>
   );

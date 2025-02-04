@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import { UpdateEventData, updateEvent } from "../../../../api/updateEvent";
-import { useEventData } from "../../../../hooks/useEventData";
 import {
   RiderLists,
   ListConfigId,
@@ -33,7 +32,6 @@ export const useRiderLists = ({ event, initialRiders }: UseRiderListsProps) => {
     housingUrl = "",
   } = event;
   const [riders, setRiders] = useState<RiderLists>(initialRiders);
-  const { requestFreshDataForEventType } = useEventData();
 
   /**
    * Handles the submission of an event update.
@@ -44,14 +42,12 @@ export const useRiderLists = ({ event, initialRiders }: UseRiderListsProps) => {
     async (data: UpdateEventData): Promise<void> => {
       const response = await updateEvent(data);
 
-      if (response.success) {
-        requestFreshDataForEventType(eventType);
-      } else {
+      if (!response.success) {
         // @TODO: Error handling here
         console.log("problems update event from draglist");
       }
     },
-    [requestFreshDataForEventType, eventType],
+    [eventType],
   );
 
   /**

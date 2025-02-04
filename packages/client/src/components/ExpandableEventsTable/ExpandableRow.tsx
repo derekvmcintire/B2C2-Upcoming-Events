@@ -4,11 +4,7 @@ import { FaChevronDown, FaChevronRight } from "react-icons/fa6";
 import EventCard from "../Event/Card";
 import { getHypeColor, getHypeLevel } from "../../utils/hype";
 import { formatEventDate, formatShortDate } from "../../utils/dates";
-import {
-  EventDiscipline,
-  EventType,
-  FetchRegistrationsResponse,
-} from "../../types";
+import { EventType, FetchRegistrationsResponse } from "../../types";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
@@ -19,7 +15,6 @@ interface ExpandableRowProps {
   toggleRow: (id: string) => void;
   expandedRows: Set<string>;
   registrations: FetchRegistrationsResponse | undefined;
-  requestDataCallback: (eventType: EventDiscipline) => void;
 }
 
 /**
@@ -29,7 +24,6 @@ interface ExpandableRowProps {
  * @param toggleRow - Function to toggle the expanded state of the row.
  * @param expandedRows - Set of expanded row IDs.
  * @param registrations - Array of registrations for the event.
- * @param requestDataCallback - Callback function to request data.
  * @returns The JSX element representing the expandable row.
  */
 export default function ExpandableRow({
@@ -37,7 +31,6 @@ export default function ExpandableRow({
   toggleRow,
   expandedRows,
   registrations,
-  requestDataCallback,
 }: ExpandableRowProps) {
   const {
     city,
@@ -112,7 +105,6 @@ export default function ExpandableRow({
               key={event.eventId}
               event={event}
               registrations={registrations}
-              requestDataCallback={requestDataCallback}
             />
           </Collapse>
         </Table.Td>

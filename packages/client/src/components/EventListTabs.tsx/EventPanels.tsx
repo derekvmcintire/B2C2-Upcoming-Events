@@ -1,12 +1,10 @@
 import { Flex, Tabs } from "@mantine/core";
 import { DISCIPLINES } from "../../constants";
 import EventsList from "../EventList/EventsList";
-import { EventDiscipline } from "../../types";
 import Loading from "../Shared/Loading";
 
 type EventPanelsProps = {
   eventsLoading: boolean;
-  requestFreshDataForEventType: (eventType: EventDiscipline) => void;
 };
 
 /**
@@ -14,12 +12,10 @@ type EventPanelsProps = {
  *
  * @param {Object} props - The component props.
  * @param {boolean} props.eventsLoading - Indicates whether events are currently loading.
- * @param {Function} props.requestFreshDataForEventType - Callback function to request fresh data for a specific event type.
  * @returns {JSX.Element} The rendered EventPanels component.
  */
 export default function EventPanels({
   eventsLoading,
-  requestFreshDataForEventType,
 }: EventPanelsProps): JSX.Element {
   /**
    *
@@ -34,11 +30,7 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.ROAD}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <EventsList data-testid="events-list" discipline={DISCIPLINES.ROAD} />
       )}
     </Tabs.Panel>
   );
@@ -51,11 +43,7 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.CX}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <EventsList data-testid="events-list" discipline={DISCIPLINES.CX} />
       )}
     </Tabs.Panel>
   );
@@ -68,11 +56,7 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.XC}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <EventsList data-testid="events-list" discipline={DISCIPLINES.XC} />
       )}
     </Tabs.Panel>
   );
@@ -92,7 +76,6 @@ export default function EventPanels({
         <EventsList
           data-testid="events-list"
           discipline={DISCIPLINES.SPECIAL}
-          requestDataCallback={requestFreshDataForEventType}
         />
       )}
     </Tabs.Panel>

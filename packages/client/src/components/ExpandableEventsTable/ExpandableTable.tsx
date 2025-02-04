@@ -1,10 +1,6 @@
 import { useMemo, useState } from "react";
 import { Table, Card, Button } from "@mantine/core";
-import {
-  EventDiscipline,
-  EventType,
-  FetchRegistrationsResponse,
-} from "../../types";
+import { EventType, FetchRegistrationsResponse } from "../../types";
 import ExpandableRow from "./ExpandableRow";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../constants";
@@ -13,7 +9,6 @@ import { EventProvider } from "../../context/event-context";
 interface ExpandableTableProps {
   events: EventType[];
   registrations: FetchRegistrationsResponse | undefined;
-  requestDataCallback: (eventType: EventDiscipline) => void;
 }
 
 /**
@@ -21,13 +16,8 @@ interface ExpandableTableProps {
  *
  * @param events - An array of events to be displayed in the table.
  * @param registrations - An array of registrations associated with the events.
- * @param requestDataCallback - A callback function to request additional data.
  */
-const ExpandableTable = ({
-  events,
-  registrations,
-  requestDataCallback,
-}: ExpandableTableProps) => {
+const ExpandableTable = ({ events, registrations }: ExpandableTableProps) => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   const eventIds = useMemo(() => {
@@ -65,7 +55,6 @@ const ExpandableTable = ({
         toggleRow={toggleRow}
         expandedRows={expandedRows}
         registrations={registrations}
-        requestDataCallback={requestDataCallback}
       />
     </EventProvider>
   ));

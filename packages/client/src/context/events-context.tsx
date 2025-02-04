@@ -1,9 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import {
-  EventDiscipline,
-  FetchRegistrationsResponse,
-  type EventType,
-} from "../types";
+import { FetchRegistrationsResponse, type EventType } from "../types";
 
 // react-refresh only affects components that render UI, since this is triggered by the context
 // provider below, which only manages state and renders no UI, we can safely ignore this
@@ -26,8 +22,6 @@ interface EventsContextType {
   setEventsLoading: (isLoading: boolean) => void;
   errors: string[]; // List of error messages
   setErrors: (errors: string[]) => void; // Setter for error messages
-  requestFreshData?: EventDiscipline;
-  setRequestFreshData: (discipline: EventDiscipline | undefined) => void;
   isSubmitting: boolean;
   setIsSubmitting: (isSubmitting: boolean) => void;
 }
@@ -47,8 +41,6 @@ export const defaultEventsContext: EventsContextType = {
   setEventsLoading: () => {},
   errors: [],
   setErrors: () => {},
-  requestFreshData: undefined,
-  setRequestFreshData: () => {},
   isSubmitting: false,
   setIsSubmitting: () => {},
 };
@@ -69,7 +61,6 @@ interface EventsProviderProps {
   initialRegistrations?: FetchRegistrationsResponse | undefined; // Optional initial registrations
   initialRegistrationsLoading?: boolean;
   initialEventsLoading?: boolean;
-  initialRequestFreshData?: EventDiscipline;
   initialIsSubmitting?: boolean;
 }
 
@@ -85,7 +76,6 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
   initialRegistrations = defaultEventsContext.registrations,
   initialRegistrationsLoading = defaultEventsContext.registrationsLoading,
   initialEventsLoading = defaultEventsContext.eventsLoading,
-  initialRequestFreshData = defaultEventsContext.requestFreshData,
   initialIsSubmitting = defaultEventsContext.isSubmitting,
 }) => {
   // State management for different types of events and registrations
@@ -94,9 +84,6 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
     FetchRegistrationsResponse | undefined
   >(initialRegistrations);
   const [errors, setErrors] = useState<string[]>([]);
-  const [requestFreshData, setRequestFreshData] = useState<
-    EventDiscipline | undefined
-  >(initialRequestFreshData);
   const [registrationsLoading, setRegistrationsLoading] = useState<boolean>(
     initialRegistrationsLoading,
   );
@@ -118,8 +105,6 @@ export const EventsProvider: React.FC<EventsProviderProps> = ({
         setEventsLoading,
         errors,
         setErrors,
-        requestFreshData,
-        setRequestFreshData,
         isSubmitting,
         setIsSubmitting,
       }}

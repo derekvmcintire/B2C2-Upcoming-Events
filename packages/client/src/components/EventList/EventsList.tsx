@@ -1,12 +1,11 @@
 import { Text } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
-import { EventDiscipline, type Discipline } from "../../types";
+import { type Discipline } from "../../types";
 import ExpandableTable from "../ExpandableEventsTable/ExpandableTable";
 import Loading from "../Shared/Loading";
 
 interface EventsListProps {
   discipline: Discipline;
-  requestDataCallback: (eventType: EventDiscipline) => void;
 }
 
 /**
@@ -22,7 +21,6 @@ interface EventsListProps {
  */
 export default function EventsList({
   discipline,
-  requestDataCallback,
 }: EventsListProps): JSX.Element {
   const eventsContext = useEventsContext();
   const { events, registrations, registrationsLoading } = eventsContext;
@@ -36,11 +34,7 @@ export default function EventsList({
       <Loading />
     ) : (
       <>
-        <ExpandableTable
-          events={events}
-          registrations={registrations}
-          requestDataCallback={requestDataCallback}
-        />
+        <ExpandableTable events={events} registrations={registrations} />
       </>
     );
   };
