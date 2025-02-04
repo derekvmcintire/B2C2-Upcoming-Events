@@ -43,9 +43,9 @@ const DraggableRidersLists = ({
     handleRemoveCommittedRider,
     getMoveRiderUpdateData,
     handleSubmitEventUpdate,
+    handleRemoveHousingCommittedRider,
+    handleRemoveHousingInterestedRider,
   } = useRiderLists({ type: isHousing ? "housing" : "event" });
-
-  console.log("riders in draggableriderslist is: ", riders);
 
   const getConfig = (): RiderListsConfig => {
     if (isHousing) {
@@ -82,13 +82,25 @@ const DraggableRidersLists = ({
 
   // if primary list is not committed then it is registered, and we can't remove registered riders
   // secondary lists are only allowed to be interested for now
-  const removeFns = {
+  const eventRemoveFns = {
     primary:
       config.primaryList.id === "committed"
         ? handleRemoveCommittedRider
         : () => {},
     secondary: handleRemoveInterestedRider,
   };
+
+  // if primary list is not committed then it is registered, and we can't remove registered riders
+  // secondary lists are only allowed to be interested for now
+  const housingRemovefns = {
+    primary:
+      config.primaryList.id === "committed"
+        ? handleRemoveHousingCommittedRider
+        : () => {},
+    secondary: handleRemoveHousingInterestedRider,
+  };
+
+  const removeFns = isHousing ? housingRemovefns : eventRemoveFns;
 
   const activeRider = activeId
     ? Object.values(riders)

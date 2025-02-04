@@ -70,9 +70,39 @@ export const useRiderLists = ({
     await handleEventUpdate(data);
     if (error) {
       // Handle error (e.g. show toast notification)
-      console.log("got an error: ", error);
+      console.log("got an errorz: ", error);
     }
   };
+
+  const handleRemoveHousingCommittedRider = useCallback(
+    (nameToRemove: string) =>
+      handleSubmitEventUpdate({
+        eventId,
+        eventType,
+        housing: {
+          committed: (event?.housing?.committed || []).filter(
+            (name) => name !== nameToRemove,
+          ),
+          interested: event?.housing?.interested || [],
+        },
+      }),
+    [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
+  );
+
+  const handleRemoveHousingInterestedRider = useCallback(
+    (nameToRemove: string) =>
+      handleSubmitEventUpdate({
+        eventId,
+        eventType,
+        housing: {
+          committed: event?.housing?.committed || [],
+          interested: (event?.housing?.interested || []).filter(
+            (name) => name !== nameToRemove,
+          ),
+        },
+      }),
+    [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
+  );
 
   /**
    * Handles the removal of an interested rider from the event.
@@ -205,6 +235,8 @@ export const useRiderLists = ({
     handleSubmitEventUpdate,
     handleRemoveInterestedRider,
     handleRemoveCommittedRider,
+    handleRemoveHousingCommittedRider,
+    handleRemoveHousingInterestedRider,
     getMoveRiderUpdateData,
     isUpdating,
   };

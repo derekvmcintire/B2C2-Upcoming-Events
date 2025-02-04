@@ -20,6 +20,9 @@ export const useEventUpdate = () => {
         return;
       }
 
+      console.log("handleEventUpdate with: ", data);
+      console.log("existing event is: ", event);
+
       setIsUpdating(true);
       setError(null);
 
@@ -30,14 +33,29 @@ export const useEventUpdate = () => {
           ...data,
           interestedRiders: data.interestedRiders ?? event.interestedRiders,
           committedRiders: data.committedRiders ?? event.committedRiders,
-          housingUrl: data.housingUrl !== null ? data.housingUrl : undefined,
-          housing: data.housing ?? event.housing,
+          housingUrl: data?.housingUrl || event?.housingUrl,
+          housing: data?.housing ?? event?.housing,
           description: data.description ?? event.description,
         };
+        console.log("settingEvent with: ", updatedEvent);
         setEvent(updatedEvent);
 
+        const getValidatedUpdateData = () => {
+          // housing lists can only be saved with a housing URL
+          if (data?.housing && !data?.housingUrl) {
+            if (!event?.housingUrl) {
+              console.log(
+                "ERROR: must have a housing URL before adding housing lists",
+              );
+            }
+            return { ...data, housingUrl: event.housingUrl };
+          }
+          // if we don't have housing data or we do, but we also have a housing URL already, just return the data
+          return data;
+        };
+
         // Update database
-        const response = await updateEvent(data);
+        const response = await updateEvent(getValidatedUpdateData());
         if (!response.success) {
           throw new Error(response.message);
         }

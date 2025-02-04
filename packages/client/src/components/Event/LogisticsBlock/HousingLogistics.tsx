@@ -9,6 +9,7 @@ import InterestedRiderForm from "../ActionForm";
 import ActionFormInput from "../ActionForm/ActionFormInput";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
+import { useEffect } from "react";
 
 interface HousingLogisticProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
@@ -28,6 +29,10 @@ export default function HousingLogistic({
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const buttonSize = isMobile ? "compact-xs" : "sm";
+
+  useEffect(() => {
+    console.log("housingUrl change: ", housingUrl);
+  }, [housingUrl]);
 
   const validateHousingUrl = (value: string) => {
     try {
