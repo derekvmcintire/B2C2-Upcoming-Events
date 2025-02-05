@@ -94,7 +94,7 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
           </Grid.Col>
           <Grid.Col span={isMobile ? 12 : 9}>
             <Stack h="100%" justify="center" p="16">
-            <LinkBlock eventUrl={eventUrl} />
+              <LinkBlock eventUrl={eventUrl} />
               <EventName />
             </Stack>
           </Grid.Col>

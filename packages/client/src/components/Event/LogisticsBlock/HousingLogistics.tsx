@@ -30,10 +30,6 @@ export default function HousingLogistic({
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const buttonSize = isMobile ? "compact-xs" : "sm";
 
-  useEffect(() => {
-    console.log("housingUrl change: ", housingUrl);
-  }, [housingUrl]);
-
   const validateHousingUrl = (value: string) => {
     try {
       new URL(value);

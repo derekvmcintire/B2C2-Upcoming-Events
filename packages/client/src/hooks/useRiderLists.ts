@@ -18,10 +18,17 @@ import { getEntriesByEventId } from "../utils/findRegisteredRiders";
 import { useEventsContext } from "../context/events-context";
 import { useEventUpdate } from "./useEventUpdate";
 
+const RIDER_LIST_TYPE_HOUSING = "housing";
+const RIDER_LIST_TYPE_EVENT = "event";
+
+type RiderListType =
+  | typeof RIDER_LIST_TYPE_EVENT
+  | typeof RIDER_LIST_TYPE_HOUSING;
+
 export const useRiderLists = ({
-  type = "event",
+  type = RIDER_LIST_TYPE_EVENT,
 }: {
-  type?: "event" | "housing";
+  type?: RiderListType;
 }) => {
   const eventContext = useEventContext();
   const { event } = eventContext;
@@ -48,7 +55,7 @@ export const useRiderLists = ({
 
   useEffect(() => {
     const newRiders =
-      type === "housing"
+      type === RIDER_LIST_TYPE_HOUSING
         ? buildHousingRiderLists(housing)
         : buildEventRiderLists(
             registeredNames,
@@ -69,12 +76,11 @@ export const useRiderLists = ({
   const handleSubmitEventUpdate = async (data: UpdateEventData) => {
     await handleEventUpdate(data);
     if (error) {
-      // Handle error (e.g. show toast notification)
+      // @TODO Handle error (e.g. show toast notification)
       console.log("got an errorz: ", error);
     }
   };
 
-  // @TODO: update this to accommodate housing and eventually carpools as well
   const getMoveRiderUpdateData = useCallback(
     (
       sourceList: ListConfigId,
@@ -166,50 +172,71 @@ export const useRiderLists = ({
     [eventId, eventType, interestedRiders, committedRiders, housing],
   );
 
-  const removeRiderFromList = (nameToRemove: string, list?: string[]): string[] => {
+  const removeRiderFromList = (
+    nameToRemove: string,
+    list?: string[],
+  ): string[] => {
     if (!list) {
       return [];
     }
-    return list.filter(
-      (name) => name !== nameToRemove,
-    )
-  }
+    return list.filter((name) => name !== nameToRemove);
+  };
 
   const buildDataForRemoveFromList = (name: string, listId: string) => {
     return {
       eventId,
       eventType,
       housing: {
-        committed: listId === HOUSING_COMMITTED_LIST_TYPE ? removeRiderFromList(name, housing?.committed) : housing?.committed || [],
-        interested: listId === HOUSING_INTERESTED_LIST_TYPE ? removeRiderFromList(name, housing?.interested) : housing?.interested || [],
+        committed:
+          listId === HOUSING_COMMITTED_LIST_TYPE
+            ? removeRiderFromList(name, housing?.committed)
+            : housing?.committed || [],
+        interested:
+          listId === HOUSING_INTERESTED_LIST_TYPE
+            ? removeRiderFromList(name, housing?.interested)
+            : housing?.interested || [],
       },
       housingUrl,
-      interestedRiders: listId === INTERESTED_LIST_TYPE ? removeRiderFromList(name, interestedRiders) : interestedRiders,
-      committedRiders: listId === COMMITTED_LIST_TYPE ? removeRiderFromList(name, committedRiders) : committedRiders,
-    }
-  }
+      interestedRiders:
+        listId === INTERESTED_LIST_TYPE
+          ? removeRiderFromList(name, interestedRiders)
+          : interestedRiders,
+      committedRiders:
+        listId === COMMITTED_LIST_TYPE
+          ? removeRiderFromList(name, committedRiders)
+          : committedRiders,
+    };
+  };
 
   const handleRemoveCommittedRider = useCallback(
     (nameToRemove: string) =>
-    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, COMMITTED_LIST_TYPE)),
+      handleSubmitEventUpdate(
+        buildDataForRemoveFromList(nameToRemove, COMMITTED_LIST_TYPE),
+      ),
     [],
   );
 
   const handleRemoveInterestedRider = useCallback(
     (nameToRemove: string) =>
-    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, INTERESTED_LIST_TYPE)),
+      handleSubmitEventUpdate(
+        buildDataForRemoveFromList(nameToRemove, INTERESTED_LIST_TYPE),
+      ),
     [],
   );
 
   const handleRemoveHousingCommittedRider = useCallback(
     (nameToRemove: string) =>
-    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, HOUSING_COMMITTED_LIST_TYPE)),
+      handleSubmitEventUpdate(
+        buildDataForRemoveFromList(nameToRemove, HOUSING_COMMITTED_LIST_TYPE),
+      ),
     [],
   );
 
   const handleRemoveHousingInterestedRider = useCallback(
     (nameToRemove: string) =>
-    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, HOUSING_INTERESTED_LIST_TYPE)),
+      handleSubmitEventUpdate(
+        buildDataForRemoveFromList(nameToRemove, HOUSING_INTERESTED_LIST_TYPE),
+      ),
     [],
   );
 

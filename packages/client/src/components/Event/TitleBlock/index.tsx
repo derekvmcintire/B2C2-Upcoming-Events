@@ -22,7 +22,7 @@ export default function EventName() {
         {name}
       </Text>
       <Flex justify={alignment} align="center">
-      <LabelsList />
+        <LabelsList />
       </Flex>
     </Stack>
   );

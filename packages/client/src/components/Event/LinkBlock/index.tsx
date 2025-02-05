@@ -17,7 +17,12 @@ export default function LinkBlock({
   const buttonSize = isMobile ? "compact-xs" : "compact-sm";
 
   return (
-    <Flex className={classes.linkBlock} justify={alignment} align="center"  w="100%" >
+    <Flex
+      className={classes.linkBlock}
+      justify={alignment}
+      align="center"
+      w="100%"
+    >
       {eventUrl && (
         <Button size={buttonSize}>
           <a
