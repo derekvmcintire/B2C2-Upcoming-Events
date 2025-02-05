@@ -74,73 +74,6 @@ export const useRiderLists = ({
     }
   };
 
-  const handleRemoveHousingCommittedRider = useCallback(
-    (nameToRemove: string) => {
-      console.log("removing housing committed rider");
-      handleSubmitEventUpdate({
-        eventId,
-        eventType,
-        housing: {
-          committed: (event?.housing?.committed || []).filter(
-            (name) => name !== nameToRemove,
-          ),
-          interested: event?.housing?.interested || [],
-        },
-      });
-    },
-    [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
-  );
-
-  const handleRemoveHousingInterestedRider = useCallback(
-    (nameToRemove: string) => {
-      console.log("removing housing interested rider");
-      handleSubmitEventUpdate({
-        eventId,
-        eventType,
-        housing: {
-          committed: event?.housing?.committed || [],
-          interested: (event?.housing?.interested || []).filter(
-            (name) => name !== nameToRemove,
-          ),
-        },
-      });
-    },
-    [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
-  );
-
-  /**
-   * Handles the removal of an interested rider from the event.
-   * @param nameToRemove - The name of the rider to remove.
-   */
-  const handleRemoveInterestedRider = useCallback(
-    (nameToRemove: string) =>
-      handleSubmitEventUpdate({
-        eventId,
-        eventType,
-        interestedRiders: interestedRiders.filter(
-          (name) => name !== nameToRemove,
-        ),
-      }),
-    [eventId, eventType, interestedRiders, handleSubmitEventUpdate],
-  );
-
-  /**
-   * Handles the removal of a committed rider from the event.
-   *
-   * @param nameToRemove - The name of the rider to remove.
-   */
-  const handleRemoveCommittedRider = useCallback(
-    (nameToRemove: string) =>
-      handleSubmitEventUpdate({
-        eventId,
-        eventType,
-        committedRiders: committedRiders.filter(
-          (name) => name !== nameToRemove,
-        ),
-      }),
-    [eventId, eventType, committedRiders, handleSubmitEventUpdate],
-  );
-
   // @TODO: update this to accommodate housing and eventually carpools as well
   const getMoveRiderUpdateData = useCallback(
     (
@@ -231,6 +164,53 @@ export const useRiderLists = ({
       };
     },
     [eventId, eventType, interestedRiders, committedRiders, housing],
+  );
+
+  const removeRiderFromList = (nameToRemove: string, list?: string[]): string[] => {
+    if (!list) {
+      return [];
+    }
+    return list.filter(
+      (name) => name !== nameToRemove,
+    )
+  }
+
+  const buildDataForRemoveFromList = (name: string, listId: string) => {
+    return {
+      eventId,
+      eventType,
+      housing: {
+        committed: listId === HOUSING_COMMITTED_LIST_TYPE ? removeRiderFromList(name, housing?.committed) : housing?.committed || [],
+        interested: listId === HOUSING_INTERESTED_LIST_TYPE ? removeRiderFromList(name, housing?.interested) : housing?.interested || [],
+      },
+      housingUrl,
+      interestedRiders: listId === INTERESTED_LIST_TYPE ? removeRiderFromList(name, interestedRiders) : interestedRiders,
+      committedRiders: listId === COMMITTED_LIST_TYPE ? removeRiderFromList(name, committedRiders) : committedRiders,
+    }
+  }
+
+  const handleRemoveCommittedRider = useCallback(
+    (nameToRemove: string) =>
+    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, COMMITTED_LIST_TYPE)),
+    [],
+  );
+
+  const handleRemoveInterestedRider = useCallback(
+    (nameToRemove: string) =>
+    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, INTERESTED_LIST_TYPE)),
+    [],
+  );
+
+  const handleRemoveHousingCommittedRider = useCallback(
+    (nameToRemove: string) =>
+    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, HOUSING_COMMITTED_LIST_TYPE)),
+    [],
+  );
+
+  const handleRemoveHousingInterestedRider = useCallback(
+    (nameToRemove: string) =>
+    handleSubmitEventUpdate(buildDataForRemoveFromList(nameToRemove, HOUSING_INTERESTED_LIST_TYPE)),
+    [],
   );
 
   return {

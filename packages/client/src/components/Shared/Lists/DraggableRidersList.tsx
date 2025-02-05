@@ -9,7 +9,9 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
+  COMMITTED_LIST_TYPE,
   EVENT_HOUSING_LIST_CONFIG,
+  HOUSING_COMMITTED_LIST_TYPE,
   RACE_CONFIG,
   RiderListsConfig,
   SPECIAL_EVENT_CONFIG,
@@ -84,7 +86,7 @@ const DraggableRidersLists = ({
   // secondary lists are only allowed to be interested for now
   const eventRemoveFns = {
     primary:
-      config.primaryList.id === "committed"
+      config.primaryList.id === COMMITTED_LIST_TYPE
         ? handleRemoveCommittedRider
         : () => {},
     secondary: handleRemoveInterestedRider,
@@ -94,7 +96,7 @@ const DraggableRidersLists = ({
   // secondary lists are only allowed to be interested for now
   const housingRemovefns = {
     primary:
-      config.primaryList.id === "housingCommitted"
+      config.primaryList.id === HOUSING_COMMITTED_LIST_TYPE
         ? handleRemoveHousingCommittedRider
         : () => {},
     secondary: handleRemoveHousingInterestedRider,
