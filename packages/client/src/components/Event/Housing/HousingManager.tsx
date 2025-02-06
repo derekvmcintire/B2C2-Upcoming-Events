@@ -27,7 +27,6 @@ export default function HousingManager({
   const { eventId, eventType, housingUrl } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
-  const buttonSize = isMobile ? "compact-xs" : "sm";
 
   const validateHousingUrl = (value: string) => {
     try {
