@@ -8,6 +8,8 @@ export const getDisciplineFromUrl = (): string => {
   const params = new URLSearchParams(window.location.search);
   const tab = params.get("tab") || window.location.hash.replace("#", "");
 
+  console.log("tab is: ", tab);
+
   switch (tab) {
     case "road":
       return DISCIPLINES.ROAD.id;
@@ -15,7 +17,7 @@ export const getDisciplineFromUrl = (): string => {
       return DISCIPLINES.XC.id;
     case "cx":
       return DISCIPLINES.CX.id;
-    case "team":
+    case "special":
       return DISCIPLINES.SPECIAL.id;
     default:
       return DEFAULT_DISCIPLINE.id;
