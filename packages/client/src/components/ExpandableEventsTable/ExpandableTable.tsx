@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Table, Card, Button } from "@mantine/core";
 import { EventType, FetchRegistrationsResponse } from "../../types";
 import ExpandableRow from "./ExpandableRow";
 import { useMediaQuery } from "@mantine/hooks";
-import { MOBILE_BREAK_POINT } from "../../constants";
+import { DEFAULT_DISCIPLINE, MOBILE_BREAK_POINT } from "../../constants";
 import { EventProvider } from "../../context/event-context";
+import { getEventIdsFromUrl, updateUrlParams } from "../../utils/url";
 
 interface ExpandableTableProps {
   events: EventType[];
@@ -24,7 +25,20 @@ const ExpandableTable = ({ events, registrations }: ExpandableTableProps) => {
     return events.map((event) => event.eventId);
   }, [events]);
 
-  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+  const initialSelectedEvents = useMemo(() => {
+    return getEventIdsFromUrl(); // Runs once during initial render
+  }, []);
+
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(
+    new Set(initialSelectedEvents),
+  );
+
+  useEffect(() => {
+    // update the url when expandedRows or events change
+    const tabValue = events[0]?.eventType || DEFAULT_DISCIPLINE;
+    const expandedIds = [...expandedRows];
+    updateUrlParams(tabValue, expandedIds);
+  }, [expandedRows, events]);
 
   /**
    * Toggles the row with the specified ID in the expandedRows set.

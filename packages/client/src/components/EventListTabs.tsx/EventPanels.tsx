@@ -22,11 +22,7 @@ export default function EventPanels({
    * RoadPanel component represents the panel for Road events in the EventListTabs component.
    */
   const RoadPanel = (): JSX.Element => (
-    <Tabs.Panel
-      w="100%"
-      key={DISCIPLINES.ROAD.text}
-      value={DISCIPLINES.ROAD.text}
-    >
+    <Tabs.Panel w="100%" key={DISCIPLINES.ROAD.id} value={DISCIPLINES.ROAD.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
@@ -39,7 +35,7 @@ export default function EventPanels({
    * CxPanel component represents the panel for CX events in the EventListTabs component.
    */
   const CxPanel = () => (
-    <Tabs.Panel w="100%" key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+    <Tabs.Panel w="100%" key={DISCIPLINES.CX.id} value={DISCIPLINES.CX.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
@@ -52,7 +48,7 @@ export default function EventPanels({
    * XcPanel component represents the panel for XC events in the EventListTabs component.
    */
   const XcPanel = () => (
-    <Tabs.Panel w="100%" key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+    <Tabs.Panel w="100%" key={DISCIPLINES.XC.id} value={DISCIPLINES.XC.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
@@ -67,8 +63,8 @@ export default function EventPanels({
   const TeamPanel = () => (
     <Tabs.Panel
       w="100%"
-      key={DISCIPLINES.SPECIAL.text}
-      value={DISCIPLINES.SPECIAL.text}
+      key={DISCIPLINES.SPECIAL.id}
+      value={DISCIPLINES.SPECIAL.id}
     >
       {eventsLoading ? (
         <Loading />

@@ -1,33 +1,47 @@
 import { Stack, Tabs } from "@mantine/core";
 import { useEffect } from "react";
 import { useEventsContext } from "../../context/events-context";
-import { DISCIPLINES } from "../../constants";
+import { DEFAULT_DISCIPLINE, DISCIPLINES } from "../../constants";
 import classes from "./event-list.module.css";
 import EventTabs from "../EventListTabs.tsx/EventTabs";
 import EventPanels from "../EventListTabs.tsx/EventPanels";
 import { useEventData } from "../../hooks/useEventData";
 import { useTabState } from "../../hooks/useTabState";
+import { getDisciplineFromUrl, updateUrlParams } from "../../utils/url";
+import { EventDiscipline } from "../../types";
 
-const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
+// // Helper to map URL parameter to discipline
+// const getDisciplineFromUrl = (): string => {
+//   const params = new URLSearchParams(window.location.search);
+//   const tab = params.get("tab") || window.location.hash.replace("#", "");
 
-// Helper to map URL parameter to discipline
-const getDisciplineFromUrl = (): string => {
-  const params = new URLSearchParams(window.location.search);
-  const tab = params.get("tab") || window.location.hash.replace("#", "");
+//   switch (tab) {
+//     case "road":
+//       return DISCIPLINES.ROAD.text;
+//     case "xc":
+//       return DISCIPLINES.XC.text;
+//     case "cx":
+//       return DISCIPLINES.CX.text;
+//     case "team":
+//       return DISCIPLINES.SPECIAL.text;
+//     default:
+//       return DEFAULT_DISCIPLINE.text;
+//   }
+// };
 
-  switch (tab) {
-    case "road":
-      return DISCIPLINES.ROAD.text;
-    case "xc":
-      return DISCIPLINES.XC.text;
-    case "cx":
-      return DISCIPLINES.CX.text;
-    case "team":
-      return DISCIPLINES.SPECIAL.text;
-    default:
-      return DEFAULT_DISCIPLINE.text;
-  }
-};
+// // Update the URL with a new tab and/or events
+// const updateUrlParams = (tab: string, events: string[] = []) => {
+//   const params = new URLSearchParams(window.location.search);
+//   params.set("tab", tab);
+//   if (events.length > 0) {
+//     params.set("events", events.join(",")); // Join events into a comma-separated string
+//   } else {
+//     params.delete("events"); // Remove 'events' if it's empty
+//   }
+
+//   const newUrl = `${window.location.pathname}?${params.toString()}`;
+//   window.history.replaceState(null, "", newUrl);
+// };
 
 /**
  * EventsContainer Component
@@ -47,6 +61,11 @@ const EventsContainer = (): JSX.Element => {
 
   const eventsContext = useEventsContext();
   const { eventsLoading } = eventsContext;
+
+  const handleClickTab = (value: string | null) => {
+    value && updateUrlParams(value);
+    handleTabChange(value as EventDiscipline);
+  };
 
   /**
    * Fetches registrations and events data when the component is mounted.
@@ -69,7 +88,7 @@ const EventsContainer = (): JSX.Element => {
     <Stack>
       <Tabs
         value={activeTab}
-        onChange={handleTabChange}
+        onChange={handleClickTab}
         defaultValue={initialTab}
         className={classes.eventList}
         mb="64"

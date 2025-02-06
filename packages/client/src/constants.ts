@@ -27,6 +27,8 @@ export const DISCIPLINES: EventDisciplines = {
   },
 };
 
+export const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
+
 export const LIGHT_COLOR_SCHEME = "light";
 export const DARK_COLOR_SCHEME = "dark";
 

@@ -1,16 +1,14 @@
 import { useState, useCallback } from "react";
 import { useEventData } from "./useEventData";
-import {
-  getDisciplineIdFromText,
-  getDisciplineParamFromTextOrId,
-} from "../utils/discipline";
+import { getDisciplineParamFromTextOrId } from "../utils/discipline";
+import { EventDiscipline } from "../types";
 
 /**
  * Defines the shape of the object returned by the `useTabState` hook.
  */
 export interface UseTabStateReturn {
   activeTab: string | null;
-  handleTabChange: (disciplineText: string | null) => void;
+  handleTabChange: (disciplineId: EventDiscipline | null) => void;
 }
 
 /**
@@ -35,17 +33,17 @@ export const useTabState = (
    * @param {string | null} disciplineText - The discipline name or null.
    */
   const handleTabChange = useCallback(
-    (disciplineText: string | null) => {
-      if (!disciplineText || eventsLoading || registrationsLoading) return;
+    (disciplineId: EventDiscipline | null) => {
+      if (!disciplineId || eventsLoading || registrationsLoading) return;
 
       setEventsLoading(true);
 
-      const disciplineId = getDisciplineIdFromText(disciplineText);
+      // const disciplineId = getDisciplineIdFromText(disciplineText);
       getRegisteredRiders({
-        disciplineParam: getDisciplineParamFromTextOrId(disciplineText),
+        disciplineParam: getDisciplineParamFromTextOrId(disciplineId),
       });
       getEvents({ disciplineId });
-      setActiveTab(disciplineText);
+      setActiveTab(disciplineId);
     },
     [
       eventsLoading,
