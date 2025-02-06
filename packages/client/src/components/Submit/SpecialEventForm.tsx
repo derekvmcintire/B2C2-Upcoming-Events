@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -43,23 +43,27 @@ interface SpecialEventSubmissionFormProps {
 const SpecialEventSubmissionForm = ({
   isQuickContes = false,
 }: SpecialEventSubmissionFormProps): JSX.Element => {
-  const initialData = isQuickContes
-    ? {
-        city: "Lexington",
-        state: "MA",
-        name: "Conte's Group Ride",
-        labels: [LABELS.CONTES.id, LABELS.GROUP.id],
-        description: "9am start",
-        isVirtual: false,
-      }
-    : {
-        city: "",
-        state: "",
-        name: "",
-        labels: [],
-        description: "",
-        isVirtual: false,
-      };
+  const initialData = useMemo(
+    () =>
+      isQuickContes
+        ? {
+            city: "Lexington",
+            state: "MA",
+            name: "Conte's Group Ride",
+            labels: [LABELS.CONTES.id, LABELS.GROUP.id],
+            description: "9am start",
+            isVirtual: false,
+          }
+        : {
+            city: "",
+            state: "",
+            name: "",
+            labels: [],
+            description: "",
+            isVirtual: false,
+          },
+    [],
+  );
 
   // State variables for required fields
   const [city, setCity] = useState<string>(initialData.city);
@@ -69,7 +73,9 @@ const SpecialEventSubmissionForm = ({
   const [discipline, setDiscipline] = useState<EventDiscipline>(
     DISCIPLINES.SPECIAL.id,
   );
-  const [labels, setLabels] = useState<string[]>(initialData.labels);
+  const [labels, setLabels] = useState<Set<string>>(
+    new Set(initialData.labels),
+  );
   const [description, setDescription] = useState<string>(
     initialData.description,
   );
@@ -102,10 +108,20 @@ const SpecialEventSubmissionForm = ({
     setState(isVirtual ? "Zwift" : initialData.state);
     setLabels(
       isVirtual
-        ? (prevLabels) => [...prevLabels, LABELS.VIRTUAL.id]
-        : initialData.labels,
+        ? (prevLabels) => new Set([...prevLabels, LABELS.VIRTUAL.id])
+        : new Set(initialData.labels),
     );
   }, [isVirtual, initialData.city, initialData.labels, initialData.state]);
+
+  // useEffect(() => {
+  //   setCity((prevCity) => isVirtual ? "Watopia" : prevCity);
+  //   setState((prevState) => isVirtual ? "Zwift" : prevState);
+  //   setLabels((prevLabels) => isVirtual ? [...prevLabels, LABELS.VIRTUAL.id] : prevLabels);
+  // }, [isVirtual]);
+
+  const handleSetLabels = (values: any) => {
+    setLabels(new Set(values));
+  };
 
   /**
    * Handles the change event for the race discipline dropdown.
@@ -146,7 +162,8 @@ const SpecialEventSubmissionForm = ({
     if (!state.trim()) return "State is required";
 
     // Optional URL validation
-    if (eventUrl && !isValidUrl(eventUrl)) return "Invalid event URL";
+    if (eventUrl && !isValidUrl(eventUrl))
+      return "Invalid event URL, please include http://";
     if (housingUrl && !isValidUrl(housingUrl)) return "Invalid housing URL";
 
     return "";
@@ -157,38 +174,13 @@ const SpecialEventSubmissionForm = ({
    * @param url - The URL to validate.
    * @returns True if valid, false otherwise.
    */
-  const isValidUrl = (url: string) => {
+  const isValidUrl = (url: string): boolean => {
     try {
-      new URL(url);
-      return true;
-    } catch {
+      const newUrl = new URL(url);
+      return newUrl.protocol === "http:" || newUrl.protocol === "https:";
+    } catch (err) {
       return false;
     }
-  };
-
-  /**
-   * Checks if the form is valid by performing several validation steps.
-   *
-   * @returns {boolean} True if the form is valid; otherwise, false.
-   */
-  const isFormValid = (): boolean => {
-    // Validate the form and return false if there's an error
-    if (getValidationErrors()) {
-      return false;
-    }
-
-    // Validate the event URL if it exists
-    if (eventUrl && !isValidUrl(eventUrl)) {
-      return false;
-    }
-
-    // Validate the housing URL if it exists
-    if (housingUrl && !isValidUrl(housingUrl)) {
-      return false;
-    }
-
-    // If all checks pass, the form is valid
-    return true;
   };
 
   /**
@@ -229,7 +221,7 @@ const SpecialEventSubmissionForm = ({
         state,
         eventUrl: eventUrl || undefined,
         housingUrl: housingUrl || undefined,
-        labels,
+        labels: Array.from(labels),
         description,
       };
 
@@ -308,8 +300,8 @@ const SpecialEventSubmissionForm = ({
         label="Event Labels"
         placeholder="Event Labels"
         data={labelOptions}
-        value={labels}
-        onChange={setLabels}
+        value={Array.from(labels)}
+        onChange={handleSetLabels}
       />
       <TextInput
         label="Event URL"
@@ -337,7 +329,7 @@ const SpecialEventSubmissionForm = ({
         className={classes.formInput}
         onClick={handleSubmit}
         loading={isSubmitting}
-        disabled={!isFormValid() || isSubmitting}
+        disabled={isSubmitting}
       >
         Submit Event
       </Button>

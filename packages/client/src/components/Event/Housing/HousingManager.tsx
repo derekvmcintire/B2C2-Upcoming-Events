@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Stack } from "@mantine/core";
+import { Card, Flex, Stack } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useEventContext } from "../../../context/event-context";
 import { UpdateEventData } from "../../../api/updateEvent";
@@ -65,16 +65,14 @@ export default function HousingManager({
     <>
       {housingUrl && (
         <Flex w="100%" justify="flex-end" align="center">
-          <Button variant="default" c="white" size={buttonSize} mr={8}>
-            <a
-              href={housingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={classes.eventLink}
-            >
-              {!isMobile ? "Link to Housing Information" : "Housing Info"}
-            </a>
-          </Button>
+          <a
+            href={housingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.eventLink}
+          >
+            {!isMobile ? "Housing Information" : "Housing Info"}
+          </a>
           <DismissButton xs clickHandler={handleRemoveHousing} />
         </Flex>
       )}

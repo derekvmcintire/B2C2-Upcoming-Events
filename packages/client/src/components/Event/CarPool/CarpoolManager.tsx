@@ -238,13 +238,14 @@ export default function CarpoolManager() {
                   </Flex>
                   <Divider />
                   <Text ta="left">
-                    Seats: {car.riders.length}/{car.seats}
+                    {!isCarFull ? "Seats:" : "Car Full:"} {car.riders.length}/
+                    {car.seats}
                   </Text>
                 </Group>
 
                 {/* Rider Name Input and Claim Seat */}
                 <Group>
-                  {!isCarFull ? (
+                  {!isCarFull && (
                     <>
                       <TextInput
                         style={{ flex: 1, maxWidth: "150px" }}
@@ -274,10 +275,6 @@ export default function CarpoolManager() {
                         <MdArrowForward />
                       </ActionIcon>
                     </>
-                  ) : (
-                    <Text w="100%" fw={600}>
-                      Car Full
-                    </Text>
                   )}
                 </Group>
 
