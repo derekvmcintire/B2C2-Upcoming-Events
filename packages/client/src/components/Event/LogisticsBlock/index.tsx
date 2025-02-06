@@ -3,7 +3,7 @@ import HousingLogistics from "../Housing/HousingManager";
 import classes from "../styles/event.module.css";
 import { UpdateEventData } from "../../../api/updateEvent";
 import { useEventContext } from "../../../context/event-context";
-import CarpoolManager from "../CarPool/CarpoolManagerx";
+import CarpoolManager from "../CarPool/CarpoolManager";
 
 interface LogisticsBlockProps {
   handleUpdateEvent: (data: UpdateEventData) => void;

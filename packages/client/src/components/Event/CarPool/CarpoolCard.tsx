@@ -98,15 +98,7 @@ export const CarpoolCard: React.FC<CarpoolCardProps> = ({
           {car.riders.map((rider) => (
             <Group key={rider} gap="xs" align="center">
               <Text>{rider}</Text>
-              <ActionIcon
-                variant="light"
-                color="red"
-                size="xs"
-                onClick={() => onLeaveRide(rider)}
-                disabled={isUpdating}
-              >
-                <MdClose size={12} />
-              </ActionIcon>
+              <DismissButton xs clickHandler={() => onLeaveRide(rider)} />
             </Group>
           ))}
         </Group>
