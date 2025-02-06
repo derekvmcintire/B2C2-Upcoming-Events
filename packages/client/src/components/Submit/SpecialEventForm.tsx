@@ -1,355 +1,97 @@
-import { useMemo, useState } from "react";
-import {
-  Flex,
-  TextInput,
-  Button,
-  Text,
-  Stack,
-  Alert,
-  Select,
-  MultiSelect,
-  Textarea,
-  Checkbox,
-} from "@mantine/core";
+import { Flex, Button, Text, Stack, Alert } from "@mantine/core";
 import { useEventsContext } from "../../context/events-context";
 import { fetchEventsByDiscipline } from "../../api/fetchEventsByType";
-import classes from "./submit.module.css";
-import { v4 as uuidv4 } from "uuid";
-import { EventDiscipline } from "../../types";
-import { DISCIPLINES, LABELS } from "../../constants";
 import { submitSpecialEvent } from "../../api/submitSpecialEvent";
+import { SpecialEventFormCore } from "./SpecialEventFormCore";
 import { isEventDiscipline } from "../../utils/discipline";
-import { formatDateForStorage } from "../../utils/dates";
-
-export interface InitialSpecialEventSubmissionFormData {
-  city: string;
-  state: string;
-  name: string;
-  discipline?: EventDiscipline;
-}
+import classes from "./submit.module.css";
+import { useSpecialEventForm } from "../../hooks/useSpecialEventForm";
 
 interface SpecialEventSubmissionFormProps {
   isQuickContes?: boolean;
 }
 
 /**
- * SpecialEventSubmissionForm Component
+ * Special Event Submission Form component.
  *
- * A form to submit a special event. This form collects all data relevant to an event and sends it to the API to be inserted into the database.
- * Unlike the RaceSubmissionForm, this flow relies on no external APIs for data, all data is user submitted.
- *
- * @returns A form with a input to collect event information, and a submit button.
+ * @component
+ * @param {SpecialEventSubmissionFormProps} props - The component props.
+ * @returns {JSX.Element} The rendered Special Event Submission Form.
  */
 const SpecialEventSubmissionForm = ({
   isQuickContes = false,
 }: SpecialEventSubmissionFormProps): JSX.Element => {
-  const initialData = useMemo(
-    () =>
-      isQuickContes
-        ? {
-            city: "Lexington",
-            state: "MA",
-            name: "Conte's Group Ride",
-            labels: [LABELS.CONTES.id, LABELS.GROUP.id],
-            description: "9am start",
-            isVirtual: false,
-          }
-        : {
-            city: "",
-            state: "",
-            name: "",
-            labels: [],
-            description: "",
-            isVirtual: false,
-          },
-    [],
-  );
-
-  // State variables for required fields
-  const [city, setCity] = useState<string>(initialData.city);
-  const [date, setDate] = useState<string>("");
-  const [name, setName] = useState<string>(initialData.name);
-  const [state, setState] = useState<string>(initialData.state);
-  const [discipline, setDiscipline] = useState<EventDiscipline>(
-    DISCIPLINES.SPECIAL.id,
-  );
-  const [labels, setLabels] = useState<Set<string>>(
-    new Set(initialData.labels),
-  );
-  const [description, setDescription] = useState<string>(
-    initialData.description,
-  );
-  const [isVirtual, setIsVirtual] = useState<boolean>(initialData.isVirtual);
-
-  /**
-   * Sets the default values for a virtual event.
-   */
-  const setVirtualDefaults = () => {
-    setCity("Wattopia");
-    setState("Zwift");
-    setLabels((prevLabels) => new Set([...prevLabels, LABELS.VIRTUAL.id]));
-  };
-
-  /**
-   * Resets the form values to their initial state.
-   */
-  const resetToInitialValues = () => {
-    setCity(initialData.city);
-    setState(initialData.state);
-    setLabels(new Set(initialData.labels));
-  };
-
-  /**
-   * Handles the toggle of virtual event.
-   * @param isVirtual - Indicates whether the event is virtual or not.
-   */
-  const handleToggleVirtual = (isVirtual: boolean) => {
-    setIsVirtual(isVirtual);
-    if (isVirtual) {
-      setVirtualDefaults();
-    } else {
-      resetToInitialValues();
-    }
-  };
-
-  const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
-    value: d.id,
-    label: d.text,
-  }));
-
-  const labelOptions = Object.values(LABELS).map((l) => ({
-    value: l.id,
-    label: l.text,
-  }));
-
-  // State variables for optional fields
-  const [eventUrl, setEventUrl] = useState("");
-  const [housingUrl, setHousingUrl] = useState("");
-
-  // Other state variables
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+  const {
+    formData,
+    submissionState,
+    disciplineOptions,
+    labelOptions,
+    methods,
+  } = useSpecialEventForm({ isQuickContes });
 
   const eventsContext = useEventsContext();
   const { setEvents } = eventsContext;
 
-  const handleSetLabels = (values: any) => {
-    setLabels(new Set(values));
-  };
-
   /**
-   * Handles the change event for the race discipline dropdown.
-   *
-   * @param value - The selected discipline value.
+   * Updates the events after form submission.
+   * Fetches events by discipline and updates the state with the response events.
    */
-  const handleOnChangeSelect = (value: string | null) => {
-    if (isEventDiscipline(value)) {
-      setDiscipline(value); // Safely call setDiscipline
-    } else {
-      console.error("Invalid value selected:", value);
-    }
+  const updateEventsAfterSubmit = async () => {
+    const response = await fetchEventsByDiscipline({
+      discipline: formData.discipline,
+      skipCache: true,
+    });
+    setEvents(response.events);
   };
 
   /**
-   * Updates the special events by fetching the latest list from the server.
-   */
-  const updateEventsAfterSubmit = () => {
-    const getEvents = async () => {
-      const response = await fetchEventsByDiscipline({
-        discipline: discipline,
-        skipCache: true,
-      });
-      setEvents(response.events);
-    };
-
-    getEvents();
-  };
-
-  /**
-   * Validates the form inputs.
-   * @returns Error message if invalid, otherwise an empty string.
-   */
-  const getValidationErrors = () => {
-    if (!city.trim()) return "City is required";
-    if (!date.trim()) return "Date is required";
-    if (!name.trim()) return "Name is required";
-    if (!state.trim()) return "State is required";
-
-    // Optional URL validation
-    if (eventUrl && !isValidUrl(eventUrl))
-      return "Invalid event URL, please include http://";
-    if (housingUrl && !isValidUrl(housingUrl)) return "Invalid housing URL";
-
-    return "";
-  };
-
-  /**
-   * Checks if a URL is valid.
-   * @param url - The URL to validate.
-   * @returns True if valid, false otherwise.
-   */
-  const isValidUrl = (url: string): boolean => {
-    try {
-      const newUrl = new URL(url);
-      return newUrl.protocol === "http:" || newUrl.protocol === "https:";
-    } catch (err) {
-      return false;
-    }
-  };
-
-  /**
-   * Resets the form fields to their initial values.
-   */
-  const resetFormFields = () => {
-    setCity("");
-    setDate("");
-    setName("");
-    setState("");
-    setEventUrl("");
-    setHousingUrl("");
-    setDiscipline(DISCIPLINES.SPECIAL.id);
-  };
-
-  /**
-   * Handles form submission by validating input, submitting data, and updating the UI accordingly.
+   * Handles the form submission for the SpecialEventForm component.
+   * This function performs form validation, prepares the submission data, and submits the special event.
+   * If the submission is successful, it resets the form and updates the events.
+   * If there is an error during the submission, it sets the submission state with the error message.
    */
   const handleSubmit = async () => {
-    setError("");
-    setShowSuccess(false);
+    const { validateForm, prepareSubmission, resetForm, setSubmissionState } =
+      methods;
 
-    const validationError = getValidationErrors();
+    // Reset previous submission state
+    setSubmissionState({
+      error: "",
+      showSuccess: false,
+      isSubmitting: true,
+    });
+
+    // Validate form
+    const validationError = validateForm();
     if (validationError) {
-      setError(validationError);
+      setSubmissionState({
+        error: validationError,
+        isSubmitting: false,
+      });
       return;
     }
 
-    setIsSubmitting(true);
-
     try {
-      const submission = {
-        eventId: uuidv4(),
-        eventType: discipline,
-        city,
-        date: formatDateForStorage(date),
-        name,
-        state,
-        eventUrl: eventUrl || undefined,
-        housingUrl: housingUrl || undefined,
-        labels: Array.from(labels),
-        description,
-      };
-
+      const submission = prepareSubmission();
       const response = await submitSpecialEvent(submission);
+      console.log("got response: ", response);
 
       if (response.success) {
-        setShowSuccess(true);
-        resetFormFields();
-        updateEventsAfterSubmit();
+        resetForm(true);
+        await updateEventsAfterSubmit();
       } else {
-        setError(
-          `FAILED TO SUBMIT TEAM EVENT:  ${response.message || "Unknown Error"}`,
-        );
+        setSubmissionState({
+          error: `FAILED TO SUBMIT TEAM EVENT: ${response.message || "Unknown Error"}`,
+          isSubmitting: false,
+        });
       }
     } catch (error) {
-      setError(`Unknown Error when submitting team event: ${error}`);
-    } finally {
-      setIsSubmitting(false);
+      setSubmissionState({
+        error: `Unknown Error when submitting team event: ${error}`,
+        isSubmitting: false,
+      });
     }
   };
-
-  const formCore = (
-    <Stack w="100%" className={classes.formCore}>
-      <Checkbox
-        label="This is a virtual event"
-        checked={isVirtual}
-        onChange={(event) => handleToggleVirtual(event.currentTarget.checked)}
-      />
-      <TextInput
-        label="Event Name"
-        className={classes.formInput}
-        placeholder="Name*"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        disabled={isQuickContes}
-      />
-      <TextInput
-        label="Event Date"
-        className={classes.formInput}
-        placeholder="Date*"
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        required
-      />
-      <TextInput
-        label="Event City"
-        className={classes.formTextInput}
-        placeholder="City*"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        required
-        disabled={isQuickContes}
-      />
-      <TextInput
-        label="Event State"
-        className={classes.formInput}
-        placeholder="State*"
-        value={state}
-        onChange={(e) => setState(e.target.value)}
-        required
-        disabled={isQuickContes}
-      />
-      <Select
-        label="Event Discipline"
-        className={`${classes.formInput} ${classes.disciplineInput}`}
-        placeholder="Event Discipline"
-        value={discipline}
-        onChange={handleOnChangeSelect}
-        required
-        data={disciplineOptions}
-        disabled={isQuickContes}
-      />
-      <MultiSelect
-        label="Event Labels"
-        placeholder="Event Labels"
-        data={labelOptions}
-        value={Array.from(labels)}
-        onChange={handleSetLabels}
-      />
-      <TextInput
-        label="Event URL"
-        className={classes.formInput}
-        placeholder="Event URL (optional)"
-        value={eventUrl}
-        onChange={(e) => setEventUrl(e.target.value)}
-        disabled={isQuickContes}
-      />
-      <TextInput
-        label="Housing URL"
-        className={classes.formInput}
-        placeholder="Housing URL (optional)"
-        value={housingUrl}
-        onChange={(e) => setHousingUrl(e.target.value)}
-        disabled={isQuickContes}
-      />
-      <Textarea
-        label="Event Description"
-        placeholder="Add a description"
-        value={description}
-        onChange={(event) => setDescription(event.currentTarget.value)}
-      />
-      <Button
-        className={classes.formInput}
-        onClick={handleSubmit}
-        loading={isSubmitting}
-        disabled={isSubmitting}
-      >
-        Submit Event
-      </Button>
-    </Stack>
-  );
 
   return (
     <Stack align="center" w="100%" className={classes.submissionForm}>
@@ -365,24 +107,49 @@ const SpecialEventSubmissionForm = ({
         </Text>
       )}
 
-      {error && (
-        <Alert color="red" withCloseButton onClose={() => setError("")}>
-          {error}
+      {submissionState.error && (
+        <Alert
+          color="red"
+          withCloseButton
+          onClose={() => methods.setSubmissionState({ error: "" })}
+        >
+          {submissionState.error}
         </Alert>
       )}
 
-      {showSuccess && (
+      {submissionState.showSuccess && (
         <Alert
           color="green"
           withCloseButton
-          onClose={() => setShowSuccess(false)}
+          onClose={() => methods.setSubmissionState({ showSuccess: false })}
         >
           Event submitted successfully!
         </Alert>
       )}
+
       <Flex w="100%" justify="center">
-        {formCore}
+        <SpecialEventFormCore
+          formData={formData}
+          isQuickContes={isQuickContes}
+          disciplineOptions={disciplineOptions}
+          labelOptions={labelOptions}
+          onUpdate={methods.updateFormData}
+          onToggleVirtual={methods.toggleVirtual}
+          onDisciplineChange={(value) =>
+            isEventDiscipline(value) &&
+            methods.updateFormData({ discipline: value })
+          }
+        />
       </Flex>
+
+      <Button
+        className={classes.formInput}
+        onClick={handleSubmit}
+        loading={submissionState.isSubmitting}
+        disabled={submissionState.isSubmitting}
+      >
+        Submit Event
+      </Button>
     </Stack>
   );
 };
