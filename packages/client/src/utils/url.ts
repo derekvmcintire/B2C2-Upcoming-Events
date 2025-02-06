@@ -1,6 +1,9 @@
 import { DEFAULT_DISCIPLINE, DISCIPLINES } from "../constants";
 
-// Helper to map URL parameter to discipline
+/**
+ * Retrieves the discipline from the URL.
+ * @returns The discipline ID.
+ */
 export const getDisciplineFromUrl = (): string => {
   const params = new URLSearchParams(window.location.search);
   const tab = params.get("tab") || window.location.hash.replace("#", "");
@@ -19,11 +22,14 @@ export const getDisciplineFromUrl = (): string => {
   }
 };
 
+/**
+ * Retrieves event IDs from the URL query parameters.
+ * @returns An array of event IDs.
+ */
 export const getEventIdsFromUrl = (): string[] => {
   const params = new URLSearchParams(window.location.search);
   const eventsParam = params.get("events");
-  console.log("eventsParam: ", eventsParam);
-  if (!eventsParam) return []; // Return an empty array if no events found
+  if (!eventsParam) return [];
 
   const eventIds = eventsParam
     .split(",")
@@ -32,14 +38,18 @@ export const getEventIdsFromUrl = (): string[] => {
   return eventIds;
 };
 
-// Update the URL with a new tab and/or events
+/**
+ * Updates the URL parameters with the specified tab and events.
+ * @param tab - The tab to be set in the URL parameters.
+ * @param events - An optional array of events to be set in the URL parameters.
+ */
 export const updateUrlParams = (tab: string, events: string[] = []) => {
   const params = new URLSearchParams(window.location.search);
   params.set("tab", tab);
   if (events.length > 0) {
-    params.set("events", events.join(",")); // Join events into a comma-separated string
+    params.set("events", events.join(","));
   } else {
-    params.delete("events"); // Remove 'events' if it's empty
+    params.delete("events");
   }
 
   const newUrl = `${window.location.pathname}?${params.toString()}`;

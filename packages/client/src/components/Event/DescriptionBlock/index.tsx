@@ -41,7 +41,7 @@ export default function Description({
       description: value,
     });
     setIsOpen(false);
-  }, [submitFn, value]);
+  }, [submitFn, value, eventId, eventType]);
 
   const hasUnsavedChanges = value !== description;
   const isAbleToSave = hasUnsavedChanges && value !== "";

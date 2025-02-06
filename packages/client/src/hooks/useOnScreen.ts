@@ -15,17 +15,18 @@ export const useOnScreen = (threshold = 0.1) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentRef = ref.current; // Copy ref.current to a local variable
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold },
     );
 
-    if (ref.current) observer.observe(ref.current);
+    if (currentRef) observer.observe(currentRef);
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (currentRef) observer.unobserve(currentRef);
     };
-  }, []);
+  }, [threshold]);
 
   return [ref, isVisible] as const;
 };

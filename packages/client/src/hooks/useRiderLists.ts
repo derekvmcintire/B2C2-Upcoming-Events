@@ -70,14 +70,7 @@ export const useRiderLists = ({
           );
 
     setRiders(newRiders);
-  }, [
-    type,
-    interestedRiders,
-    committedRiders,
-    housing.committed,
-    housing.interested,
-    registeredNames,
-  ]);
+  }, [type, interestedRiders, committedRiders, housing, registeredNames]);
 
   /**
    * Handles the submission of an event update.
@@ -121,88 +114,6 @@ export const useRiderLists = ({
   };
 
   /**
-   * Updates the lists of interested and committed riders based on the specified parameters.
-   * @param sourceList - The source list configuration ID.
-   * @param targetList - The target list configuration ID.
-   * @param name - The name of the rider.
-   * @returns An object containing the updated arrays of interested and committed riders.
-   */
-  const updateRiders = (
-    sourceList: ListConfigId,
-    targetList: ListConfigId,
-    name: string,
-  ): { newInterestedRiders: string[]; newCommittedRiders: string[] } => {
-    if (
-      sourceList === INTERESTED_LIST_TYPE &&
-      targetList === COMMITTED_LIST_TYPE
-    ) {
-      const { newSource, newTarget } = moveItemBetweenLists(
-        interestedRiders,
-        committedRiders,
-        name,
-      );
-      return { newInterestedRiders: newSource, newCommittedRiders: newTarget };
-    } else if (
-      sourceList === COMMITTED_LIST_TYPE &&
-      targetList === INTERESTED_LIST_TYPE
-    ) {
-      const { newSource, newTarget } = moveItemBetweenLists(
-        committedRiders,
-        interestedRiders,
-        name,
-      );
-      return { newInterestedRiders: newTarget, newCommittedRiders: newSource };
-    }
-
-    return {
-      newInterestedRiders: interestedRiders,
-      newCommittedRiders: committedRiders,
-    };
-  };
-
-  /**
-   * Updates the housing object by moving an item between source and target lists.
-   *
-   * @param sourceList - The source list identifier.
-   * @param targetList - The target list identifier.
-   * @param name - The name of the item to be moved.
-   * @returns The updated housing object.
-   */
-  const updateHousing = (
-    sourceList: ListConfigId,
-    targetList: ListConfigId,
-    name: string,
-  ): Housing => {
-    const newHousing = { ...housing };
-
-    if (
-      sourceList === HOUSING_INTERESTED_LIST_TYPE &&
-      targetList === HOUSING_COMMITTED_LIST_TYPE
-    ) {
-      const { newSource, newTarget } = moveItemBetweenLists(
-        newHousing.interested,
-        newHousing.committed,
-        name,
-      );
-      newHousing.interested = newSource;
-      newHousing.committed = newTarget;
-    } else if (
-      sourceList === HOUSING_COMMITTED_LIST_TYPE &&
-      targetList === HOUSING_INTERESTED_LIST_TYPE
-    ) {
-      const { newSource, newTarget } = moveItemBetweenLists(
-        newHousing.committed,
-        newHousing.interested,
-        name,
-      );
-      newHousing.committed = newSource;
-      newHousing.interested = newTarget;
-    }
-
-    return newHousing;
-  };
-
-  /**
    * Returns the update data for moving a rider between lists.
    * @param sourceList - The ID of the source list.
    * @param targetList - The ID of the target list.
@@ -215,6 +126,94 @@ export const useRiderLists = ({
       targetList: ListConfigId,
       name: string,
     ): UpdateEventData => {
+      /**
+       * Updates the lists of interested and committed riders based on the specified parameters.
+       * @param sourceList - The source list configuration ID.
+       * @param targetList - The target list configuration ID.
+       * @param name - The name of the rider.
+       * @returns An object containing the updated arrays of interested and committed riders.
+       */
+      const updateRiders = (
+        sourceList: ListConfigId,
+        targetList: ListConfigId,
+        name: string,
+      ): { newInterestedRiders: string[]; newCommittedRiders: string[] } => {
+        if (
+          sourceList === INTERESTED_LIST_TYPE &&
+          targetList === COMMITTED_LIST_TYPE
+        ) {
+          const { newSource, newTarget } = moveItemBetweenLists(
+            interestedRiders,
+            committedRiders,
+            name,
+          );
+          return {
+            newInterestedRiders: newSource,
+            newCommittedRiders: newTarget,
+          };
+        } else if (
+          sourceList === COMMITTED_LIST_TYPE &&
+          targetList === INTERESTED_LIST_TYPE
+        ) {
+          const { newSource, newTarget } = moveItemBetweenLists(
+            committedRiders,
+            interestedRiders,
+            name,
+          );
+          return {
+            newInterestedRiders: newTarget,
+            newCommittedRiders: newSource,
+          };
+        }
+
+        return {
+          newInterestedRiders: interestedRiders,
+          newCommittedRiders: committedRiders,
+        };
+      };
+
+      /**
+       * Updates the housing object by moving an item between source and target lists.
+       *
+       * @param sourceList - The source list identifier.
+       * @param targetList - The target list identifier.
+       * @param name - The name of the item to be moved.
+       * @returns The updated housing object.
+       */
+      const updateHousing = (
+        sourceList: ListConfigId,
+        targetList: ListConfigId,
+        name: string,
+      ): Housing => {
+        const newHousing = { ...housing };
+
+        if (
+          sourceList === HOUSING_INTERESTED_LIST_TYPE &&
+          targetList === HOUSING_COMMITTED_LIST_TYPE
+        ) {
+          const { newSource, newTarget } = moveItemBetweenLists(
+            newHousing.interested,
+            newHousing.committed,
+            name,
+          );
+          newHousing.interested = newSource;
+          newHousing.committed = newTarget;
+        } else if (
+          sourceList === HOUSING_COMMITTED_LIST_TYPE &&
+          targetList === HOUSING_INTERESTED_LIST_TYPE
+        ) {
+          const { newSource, newTarget } = moveItemBetweenLists(
+            newHousing.committed,
+            newHousing.interested,
+            name,
+          );
+          newHousing.committed = newSource;
+          newHousing.interested = newTarget;
+        }
+
+        return newHousing;
+      };
+
       const { newInterestedRiders, newCommittedRiders } = updateRiders(
         sourceList,
         targetList,
@@ -232,7 +231,14 @@ export const useRiderLists = ({
         housingUrl,
       };
     },
-    [eventId, eventType, interestedRiders, committedRiders, housing],
+    [
+      eventId,
+      eventType,
+      housingUrl,
+      committedRiders,
+      housing,
+      interestedRiders,
+    ],
   );
 
   /**

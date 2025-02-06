@@ -82,7 +82,7 @@ export const useEventUpdate = () => {
         setIsUpdating(false);
       }
     },
-    [event, setEvent],
+    [event, setEvent, setIsUpdating],
   );
 
   return { handleEventUpdate, error, setError, isUpdating };

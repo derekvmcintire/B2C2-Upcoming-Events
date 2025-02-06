@@ -2,6 +2,10 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import { type EventType } from "../types";
 import { DISCIPLINES } from "../constants";
 
+// react-refresh only affects components that render UI, since this is triggered by the context
+// provider below, which only manages state and renders no UI, we can safely ignore this
+/* eslint-disable react-refresh/only-export-components */
+
 /**
  * Type definition for the Event Context.
  * Holds a single event with no setter.

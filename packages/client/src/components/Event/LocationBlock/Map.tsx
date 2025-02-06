@@ -45,7 +45,7 @@ const Map = ({ city, state }: MapProps): JSX.Element => {
         }
       });
     }
-  }, [isVisible, hasFetched]);
+  }, [isVisible, hasFetched, city, state]);
 
   return (
     <div ref={mapRef} style={{ height: "200px", width: "100%" }}>

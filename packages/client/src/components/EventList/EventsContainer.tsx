@@ -63,7 +63,9 @@ const EventsContainer = (): JSX.Element => {
   const { eventsLoading } = eventsContext;
 
   const handleClickTab = (value: string | null) => {
-    value && updateUrlParams(value);
+    if (value) {
+      updateUrlParams(value);
+    }
     handleTabChange(value as EventDiscipline);
   };
 
@@ -77,12 +79,7 @@ const EventsContainer = (): JSX.Element => {
 
     getRegisteredRiders({ disciplineParam: discipline.queryParam });
     getEvents({ disciplineId: discipline.id });
-  }, [
-    getRegisteredRiders,
-    getEvents,
-    DEFAULT_DISCIPLINE.id,
-    DEFAULT_DISCIPLINE.queryParam,
-  ]);
+  }, [getRegisteredRiders, getEvents, activeTab]);
 
   return (
     <Stack>

@@ -105,7 +105,7 @@ const SpecialEventSubmissionForm = ({
         ? (prevLabels) => [...prevLabels, LABELS.VIRTUAL.id]
         : initialData.labels,
     );
-  }, [isVirtual]);
+  }, [isVirtual, initialData.city, initialData.labels, initialData.state]);
 
   /**
    * Handles the change event for the race discipline dropdown.
