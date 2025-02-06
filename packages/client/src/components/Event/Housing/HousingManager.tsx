@@ -9,9 +9,8 @@ import InterestedRiderForm from "../ActionForm";
 import ActionFormInput from "../ActionForm/ActionFormInput";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
-import { useEffect } from "react";
 
-interface HousingLogisticProps {
+interface HousingManagerProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
 }
 
@@ -20,9 +19,9 @@ interface HousingLogisticProps {
  *
  * @param handleUpdateEvent - Function to handle event updates.
  */
-export default function HousingLogistic({
+export default function HousingManager({
   handleUpdateEvent,
-}: HousingLogisticProps) {
+}: HousingManagerProps) {
   const eventContext = useEventContext();
   const { event } = eventContext;
   const { eventId, eventType, housingUrl } = event;

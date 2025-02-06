@@ -12,6 +12,8 @@ import {
   COMMITTED_LIST_TYPE,
   EVENT_HOUSING_LIST_CONFIG,
   HOUSING_COMMITTED_LIST_TYPE,
+  HOUSING_INTERESTED_LIST_TYPE,
+  INTERESTED_LIST_TYPE,
   RACE_CONFIG,
   RiderListsConfig,
   SPECIAL_EVENT_CONFIG,
@@ -20,7 +22,11 @@ import { RiderListsContainer } from "./RiderListsContainer";
 import ActivelyDraggingRider from "./ActivelyDraggingRider";
 import { useDragAndDrop } from "../../../hooks/useDragAndDrop";
 import { Flex } from "@mantine/core";
-import { useRiderLists } from "../../../hooks/useRiderLists";
+import {
+  RIDER_LIST_TYPE_EVENT,
+  RIDER_LIST_TYPE_HOUSING,
+  useRiderLists,
+} from "../../../hooks/useRiderLists";
 
 interface DraggableRidersListsProps {
   isStatic?: boolean;
@@ -41,14 +47,17 @@ const DraggableRidersLists = ({
   const {
     riders,
     setRiders,
-    handleRemoveInterestedRider,
-    handleRemoveCommittedRider,
     getMoveRiderUpdateData,
     handleSubmitEventUpdate,
-    handleRemoveHousingCommittedRider,
-    handleRemoveHousingInterestedRider,
-  } = useRiderLists({ type: isHousing ? "housing" : "event" });
+    createRemoveHandler,
+  } = useRiderLists({
+    type: isHousing ? RIDER_LIST_TYPE_HOUSING : RIDER_LIST_TYPE_EVENT,
+  });
 
+  /**
+   * Retrieves the configuration for the rider lists based on the event type and housing flag.
+   * @returns The configuration object for the rider lists.
+   */
   const getConfig = (): RiderListsConfig => {
     if (isHousing) {
       const config = EVENT_HOUSING_LIST_CONFIG;
@@ -82,27 +91,23 @@ const DraggableRidersLists = ({
     }),
   );
 
-  // if primary list is not committed then it is registered, and we can't remove registered riders
-  // secondary lists are only allowed to be interested for now
   const eventRemoveFns = {
     primary:
       config.primaryList.id === COMMITTED_LIST_TYPE
-        ? handleRemoveCommittedRider
+        ? createRemoveHandler(COMMITTED_LIST_TYPE)
         : () => {},
-    secondary: handleRemoveInterestedRider,
+    secondary: createRemoveHandler(INTERESTED_LIST_TYPE),
   };
 
-  // if primary list is not committed then it is registered, and we can't remove registered riders
-  // secondary lists are only allowed to be interested for now
-  const housingRemovefns = {
+  const housingRemoveFns = {
     primary:
       config.primaryList.id === HOUSING_COMMITTED_LIST_TYPE
-        ? handleRemoveHousingCommittedRider
+        ? createRemoveHandler(HOUSING_COMMITTED_LIST_TYPE)
         : () => {},
-    secondary: handleRemoveHousingInterestedRider,
+    secondary: createRemoveHandler(HOUSING_INTERESTED_LIST_TYPE),
   };
 
-  const removeFns = isHousing ? housingRemovefns : eventRemoveFns;
+  const removeFns = isHousing ? housingRemoveFns : eventRemoveFns;
 
   const activeRider = activeId
     ? Object.values(riders)

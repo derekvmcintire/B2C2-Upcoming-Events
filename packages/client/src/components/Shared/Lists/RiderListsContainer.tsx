@@ -31,7 +31,7 @@ export const RiderListsContainer = ({
   draggable,
   removeFns,
   xs = false,
-}: RiderListsContainerProps) => {
+}: RiderListsContainerProps): JSX.Element => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   const rideListContainerClass = xs

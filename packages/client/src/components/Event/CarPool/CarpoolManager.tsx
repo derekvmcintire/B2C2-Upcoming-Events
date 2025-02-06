@@ -20,6 +20,10 @@ import { useEventContext } from "../../../context/event-context";
 import { Carpool } from "../../../types";
 import { useEventUpdate } from "../../../hooks/useEventUpdate";
 
+/**
+ * CarpoolManager component handles the management of carpools for an event.
+ * It allows users to add, delete, and modify carpools, as well as claim and leave seats in the carpools.
+ */
 export default function CarpoolManager() {
   const { event } = useEventContext();
   const { carpools: initialCarpools = [], eventId, eventType } = event;
@@ -37,7 +41,11 @@ export default function CarpoolManager() {
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
-  const validateCarForm = () => {
+  /**
+   * Validates the car form and returns a boolean indicating whether the form is valid.
+   * @returns {boolean} - True if the form is valid, false otherwise.
+   */
+  const validateCarForm = (): boolean => {
     const newErrors: typeof errors = {};
 
     // Validate car name
@@ -60,6 +68,9 @@ export default function CarpoolManager() {
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Adds a new car to the carpool list if the car form is valid.
+   */
   const addCar = () => {
     if (validateCarForm()) {
       const newCar: Carpool = {
@@ -79,12 +90,21 @@ export default function CarpoolManager() {
     }
   };
 
+  /**
+   * Deletes a car from the carpools list and updates the event.
+   * @param carName - The name of the car to be deleted.
+   */
   const deleteCar = (carName: string) => {
     const updatedCarpools = carpools.filter((car) => car.name !== carName);
     setCarpools(updatedCarpools);
     handleEventUpdate({ eventId, eventType, carpools: updatedCarpools });
   };
 
+  /**
+   * Claims a seat in a car for a rider.
+   *
+   * @param carName - The name of the car.
+   */
   const claimSeat = (carName: string) => {
     const riderName = riderInputs[carName]?.trim() || "";
 
@@ -123,6 +143,11 @@ export default function CarpoolManager() {
     setRiderInputs((prev) => ({ ...prev, [carName]: "" }));
   };
 
+  /**
+   * Removes a rider from a carpool.
+   * @param carName - The name of the carpool.
+   * @param riderToRemove - The name of the rider to remove.
+   */
   const leaveRide = (carName: string, riderToRemove: string) => {
     const updatedCarpools = carpools.map((car) =>
       car.name === carName
@@ -137,6 +162,11 @@ export default function CarpoolManager() {
     handleEventUpdate({ eventId, eventType, carpools: updatedCarpools });
   };
 
+  /**
+   * Handles the input change for a specific car rider.
+   * @param carName - The name of the car.
+   * @param value - The new value for the input.
+   */
   const handleRiderInputChange = (carName: string, value: string) => {
     setRiderInputs((prev) => ({
       ...prev,
