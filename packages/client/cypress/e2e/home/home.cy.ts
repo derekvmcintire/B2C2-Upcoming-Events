@@ -7,15 +7,9 @@ describe("Homepage", () => {
       // Then check the expected components
       .get('[data-testid="expandable-table"]')
       .should("exist")
-      .get('[data-testid="quick-view-button"]')
-      .should("exist")
-      .get('[data-testid="info-row"]')
-      .should("exist")
-      .get('[data-testid="interested-row"]')
+      .get('[data-testid="detail-view-button"]')
       .should("exist")
       .get('[data-testid="interested-button"]')
-      .should("exist")
-      .get('[data-testid="housing-button"]')
       .should("exist")
       .get('[data-testid="hype"]')
       .should("exist");
@@ -29,14 +23,54 @@ describe("Homepage", () => {
     cy.get('[data-testid="sub-control"]').should("exist");
   });
 
-  // it("should open the form when interested button is clicked", () => {
-  //   cy.visit("/");
+  it("should default to the road events list", () => {
+    cy.visit("/");
 
-  //   // Simulate clicking the interested rider button
-  //   cy.get('[data-testid="loading"]', { timeout: 10000 })
-  //     .should("exist")
-  //     .get('[data-testid="interested-button"]', { timeout: 10000 }).click()
-  //     .get('[data-testid="event-card-form-input"]').should("exist")
-  //     .get('[data-testid="event-card-form-submit"]').should("exist");
-  // });
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="road-events-list"]')
+      .should("exist");
+  });
+
+  it("should render the road events list when road tab param is passed", () => {
+    cy.visit("/?tab=road");
+
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="road-events-list"]')
+      .should("exist");
+  });
+
+  it("should render the CX events list when cx tab param is passed", () => {
+    cy.visit("/?tab=cx");
+
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="cx-events-list"]')
+      .should("exist");
+  });
+
+  it("should render the XC events list when xc tab param is passed", () => {
+    cy.visit("/?tab=xc");
+
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="xc-events-list"]')
+      .should("exist");
+  });
+
+  it("should render the Team events list when special tab param is passed", () => {
+    cy.visit("/?tab=special");
+
+    cy.get('[data-testid="loading"]', { timeout: 10000 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="team-events-list"]')
+      .should("exist");
+  });
+
 });

@@ -26,7 +26,9 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList data-testid="events-list" discipline={DISCIPLINES.ROAD} />
+        <div data-testid="road-events-list">
+        <EventsList  discipline={DISCIPLINES.ROAD} />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -39,7 +41,9 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList data-testid="events-list" discipline={DISCIPLINES.CX} />
+        <div data-testid="cx-events-list">
+        <EventsList discipline={DISCIPLINES.CX} />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -52,7 +56,9 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList data-testid="events-list" discipline={DISCIPLINES.XC} />
+        <div data-testid="xc-events-list">
+        <EventsList data-testid="xc-events-list" discipline={DISCIPLINES.XC} />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -69,10 +75,12 @@ export default function EventPanels({
       {eventsLoading ? (
         <Loading />
       ) : (
+        <div data-testid="team-events-list">
         <EventsList
-          data-testid="events-list"
+          data-testid="team-events-list"
           discipline={DISCIPLINES.SPECIAL}
         />
+        </div>
       )}
     </Tabs.Panel>
   );
