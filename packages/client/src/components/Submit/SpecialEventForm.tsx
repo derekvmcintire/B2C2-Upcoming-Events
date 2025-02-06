@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Flex,
   TextInput,
@@ -81,6 +81,37 @@ const SpecialEventSubmissionForm = ({
   );
   const [isVirtual, setIsVirtual] = useState<boolean>(initialData.isVirtual);
 
+  /**
+   * Sets the default values for a virtual event.
+   */
+  const setVirtualDefaults = () => {
+    setCity("Wattopia");
+    setState("Zwift");
+    setLabels((prevLabels) => new Set([...prevLabels, LABELS.VIRTUAL.id]));
+  };
+
+  /**
+   * Resets the form values to their initial state.
+   */
+  const resetToInitialValues = () => {
+    setCity(initialData.city);
+    setState(initialData.state);
+    setLabels(new Set(initialData.labels));
+  };
+
+  /**
+   * Handles the toggle of virtual event.
+   * @param isVirtual - Indicates whether the event is virtual or not.
+   */
+  const handleToggleVirtual = (isVirtual: boolean) => {
+    setIsVirtual(isVirtual);
+    if (isVirtual) {
+      setVirtualDefaults();
+    } else {
+      resetToInitialValues();
+    }
+  };
+
   const disciplineOptions = Object.values(DISCIPLINES).map((d) => ({
     value: d.id,
     label: d.text,
@@ -102,22 +133,6 @@ const SpecialEventSubmissionForm = ({
 
   const eventsContext = useEventsContext();
   const { setEvents } = eventsContext;
-
-  useEffect(() => {
-    setCity(isVirtual ? "Wattopia" : initialData.city);
-    setState(isVirtual ? "Zwift" : initialData.state);
-    setLabels(
-      isVirtual
-        ? (prevLabels) => new Set([...prevLabels, LABELS.VIRTUAL.id])
-        : new Set(initialData.labels),
-    );
-  }, [isVirtual, initialData.city, initialData.labels, initialData.state]);
-
-  // useEffect(() => {
-  //   setCity((prevCity) => isVirtual ? "Watopia" : prevCity);
-  //   setState((prevState) => isVirtual ? "Zwift" : prevState);
-  //   setLabels((prevLabels) => isVirtual ? [...prevLabels, LABELS.VIRTUAL.id] : prevLabels);
-  // }, [isVirtual]);
 
   const handleSetLabels = (values: any) => {
     setLabels(new Set(values));
@@ -248,7 +263,7 @@ const SpecialEventSubmissionForm = ({
       <Checkbox
         label="This is a virtual event"
         checked={isVirtual}
-        onChange={(event) => setIsVirtual(event.currentTarget.checked)}
+        onChange={(event) => handleToggleVirtual(event.currentTarget.checked)}
       />
       <TextInput
         label="Event Name"

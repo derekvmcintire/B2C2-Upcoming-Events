@@ -1,4 +1,3 @@
-import React from "react";
 import { TextInput, NumberInput, Button, Card, Flex } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
@@ -13,7 +12,19 @@ interface CarpoolFormProps {
   addCar: () => void;
 }
 
-export const CarpoolForm: React.FC<CarpoolFormProps> = ({
+/**
+ * CarpoolForm component for adding a new car to the carpool.
+ *
+ * @param newCarName - The name of the new car.
+ * @param newCarSeats - The number of seats in the new car.
+ * @param errors - Object containing error messages for car name and car seats.
+ * @param isUpdating - Flag indicating if the form is currently updating.
+ * @param setNewCarName - Function to set the new car name.
+ * @param setNewCarSeats - Function to set the number of seats in the new car.
+ * @param addCar - Function to add the new car to the carpool.
+ * @returns The CarpoolForm component.
+ */
+export const CarpoolForm = ({
   newCarName,
   newCarSeats,
   errors,
@@ -21,7 +32,7 @@ export const CarpoolForm: React.FC<CarpoolFormProps> = ({
   setNewCarName,
   setNewCarSeats,
   addCar,
-}) => {
+}: CarpoolFormProps): JSX.Element => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   return (

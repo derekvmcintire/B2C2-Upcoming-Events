@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   Stack,
@@ -9,7 +8,7 @@ import {
   ActionIcon,
   Divider,
 } from "@mantine/core";
-import { MdClose, MdArrowForward } from "react-icons/md";
+import { MdArrowForward } from "react-icons/md";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
 import DismissButton from "../../Shared/DismissButton";
@@ -28,7 +27,19 @@ interface CarpoolCardProps {
   onRiderInputChange: (value: string) => void;
 }
 
-export const CarpoolCard: React.FC<CarpoolCardProps> = ({
+/**
+ * Renders a card component for a carpool event.
+ *
+ * @param car - The car object containing car details.
+ * @param riderInput - The input value for the rider's name.
+ * @param isUpdating - A flag indicating whether the carpool is being updated.
+ * @param onDeleteCar - The function to handle deleting the car.
+ * @param onClaimSeat - The function to handle claiming a seat in the car.
+ * @param onLeaveRide - The function to handle leaving the carpool ride.
+ * @param onRiderInputChange - The function to handle changes in the rider input.
+ * @returns The JSX element representing the carpool card.
+ */
+export const CarpoolCard = ({
   car,
   riderInput,
   isUpdating,
@@ -36,7 +47,7 @@ export const CarpoolCard: React.FC<CarpoolCardProps> = ({
   onClaimSeat,
   onLeaveRide,
   onRiderInputChange,
-}) => {
+}: CarpoolCardProps): JSX.Element => {
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const isCarFull = car.riders.length >= car.seats;
 
