@@ -1,4 +1,10 @@
+/**
+ * Test suite for the homepage.
+ */
 describe("Homepage", () => {
+  /**
+   * Test that the home page loads correctly.
+   */
   it("should load the homepage and display the title", () => {
     cy.visit("/");
     // First wait for loading to appear
@@ -15,6 +21,9 @@ describe("Homepage", () => {
       .should("exist");
   });
 
+  /**
+   * Test that the form drawer opens correctly.
+   */
   it("should open the form drawer when the sub drawer button is clicked", () => {
     cy.visit("/");
 
@@ -23,6 +32,9 @@ describe("Homepage", () => {
     cy.get('[data-testid="sub-control"]').should("exist");
   });
 
+  /**
+   * Test that default events load correctly.
+   */
   it("should default to the road events list", () => {
     cy.visit("/");
 
@@ -32,7 +44,12 @@ describe("Homepage", () => {
       .get('[data-testid="road-events-list"]')
       .should("exist");
   });
+});
 
+/**
+ * Test tab URL param works correctly.
+ */
+describe("URL Tab Params", () => {
   it("should render the road events list when road tab param is passed", () => {
     cy.visit("/?tab=road");
 
@@ -72,5 +89,4 @@ describe("Homepage", () => {
       .get('[data-testid="team-events-list"]')
       .should("exist");
   });
-
 });
