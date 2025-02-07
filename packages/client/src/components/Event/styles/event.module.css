@@ -17,8 +17,12 @@
 
 .eventLink {
   text-decoration: none;
-  color: #1e90ff;
+  color: inherit;
   cursor: inherit;
+}
+
+.housingLink {
+  color: #1e90ff;
   margin-right: 8px;
   cursor: pointer;
   text-decoration: underline;

@@ -68,7 +68,7 @@ export default function HousingManager({
             href={housingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={classes.eventLink}
+            className={classes.housingLink}
           >
             {!isMobile ? "Housing Information" : "Housing Info"}
           </a>
