@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { LABELS, DISCIPLINES } from "../constants";
 import { EventDiscipline } from "../types";
 import { formatDateForStorage } from "../utils/dates";
+import { isValidUrl } from "../utils/url";
 
 interface UseSpecialEventFormProps {
   isQuickContes?: boolean;
@@ -126,15 +127,6 @@ export const useSpecialEventForm = ({
     if (!date.trim()) return "Date is required";
     if (!name.trim()) return "Name is required";
     if (!state.trim()) return "State is required";
-
-    const isValidUrl = (url: string): boolean => {
-      try {
-        const newUrl = new URL(url);
-        return newUrl.protocol === "http:" || newUrl.protocol === "https:";
-      } catch (err) {
-        return false;
-      }
-    };
 
     if (eventUrl && !isValidUrl(eventUrl))
       return "Invalid event URL, please include http://";

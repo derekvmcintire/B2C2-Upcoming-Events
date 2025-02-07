@@ -1,7 +1,7 @@
-import { Button, Flex, TextInput } from "@mantine/core";
+import { Alert, Button, Flex, Stack, Text, TextInput } from "@mantine/core";
 import classes from "../styles/event.module.css";
-import { useCallback } from "react";
-import { MdArrowForward } from "react-icons/md";
+import { useCallback, useState } from "react";
+import { MdArrowForward, MdOutlineWarning } from "react-icons/md";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
 import { useFormInput } from "../../../hooks/useFormInput";
@@ -10,6 +10,7 @@ import DismissButton from "../../Shared/DismissButton";
 type ActionFormInputProps = {
   placeholder: string;
   submitLabel?: string;
+  inputLabel?: string;
   submitHandler: (e: string) => void;
   dismissInput?: () => void;
   validate: (value: string) => boolean;
@@ -26,6 +27,7 @@ type ActionFormInputProps = {
 export default function ActionFormInput({
   placeholder,
   submitLabel,
+  inputLabel,
   submitHandler,
   dismissInput = () => {},
   validate,
@@ -40,6 +42,8 @@ export default function ActionFormInput({
     validate: validate || (() => true),
   });
 
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   /**
@@ -52,6 +56,8 @@ export default function ActionFormInput({
       submitHandler(inputValue);
       reset();
       dismissInput();
+    } else {
+      setShowAlert(true);
     }
   }, [submitHandler, reset, dismissInput, error, inputValue]);
 
@@ -63,26 +69,45 @@ export default function ActionFormInput({
   const DefaultButtonLabel = () => (isMobile ? <MdArrowForward /> : "Submit");
 
   return (
-    <Flex justify="center" align="center">
-      {!withoutDismiss && (
-        <DismissButton xs clickHandler={dismissInput} withoutModal />
+    <Stack>
+      {showAlert && (
+        <Alert
+          className={classes.alert}
+          variant="light"
+          color="red"
+          title="Error"
+          withCloseButton
+          onClose={() => setShowAlert(false)}
+          icon={<MdOutlineWarning />}
+        >
+          {error}
+        </Alert>
       )}
-      <TextInput
-        data-testid="event-card-form-input"
-        size="xs"
-        value={inputValue}
-        onChange={handleChange}
-        placeholder={placeholder}
-        error={error}
-        className={classes.actionFormInput}
-      />
-      <Button
-        data-testid="event-card-form-submit"
-        size="xs"
-        onClick={handleClickSubmit}
-      >
-        {(!isMobile && submitLabel) || <DefaultButtonLabel />}
-      </Button>
-    </Flex>
+      <Stack gap={0}>
+        <Text w="100%" ta="left" size="xs" fw={500}>
+          {inputLabel}
+        </Text>
+        <Flex justify="center" align="center">
+          {!withoutDismiss && (
+            <DismissButton xs clickHandler={dismissInput} withoutModal />
+          )}
+          <TextInput
+            data-testid="event-card-form-input"
+            size="xs"
+            value={inputValue}
+            onChange={handleChange}
+            placeholder={placeholder}
+            className={classes.actionFormInput}
+          />
+          <Button
+            data-testid="event-card-form-submit"
+            size="xs"
+            onClick={handleClickSubmit}
+          >
+            {(!isMobile && submitLabel) || <DefaultButtonLabel />}
+          </Button>
+        </Flex>
+      </Stack>
+    </Stack>
   );
 }

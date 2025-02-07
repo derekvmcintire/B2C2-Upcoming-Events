@@ -31,6 +31,11 @@ export default function DismissButton({
 
   const handleClick = () => (withoutModal ? clickHandler() : open());
 
+  const handleClickYes = () => {
+    close();
+    clickHandler();
+  };
+
   const size = xs ? "compact-xs" : "compact-s";
 
   return (
@@ -43,7 +48,7 @@ export default function DismissButton({
             <Button m="16" onClick={close}>
               Nope!
             </Button>
-            <Button m="16" onClick={clickHandler}>
+            <Button m="16" onClick={handleClickYes}>
               Yes, I do want to do that.
             </Button>
           </Flex>

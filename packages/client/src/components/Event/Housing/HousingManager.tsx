@@ -9,6 +9,7 @@ import InterestedRiderForm from "../ActionForm";
 import ActionFormInput from "../ActionForm/ActionFormInput";
 import { useMediaQuery } from "@mantine/hooks";
 import { MOBILE_BREAK_POINT } from "../../../constants";
+import { isValidUrl } from "../../../utils/url";
 
 interface HousingManagerProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
@@ -27,15 +28,6 @@ export default function HousingManager({
   const { eventId, eventType, housingUrl } = event;
 
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
-
-  const validateHousingUrl = (value: string) => {
-    try {
-      new URL(value);
-      return true;
-    } catch {
-      return false;
-    }
-  };
 
   /**
    * Handles the submission of a housing URL.
@@ -57,7 +49,7 @@ export default function HousingManager({
     handleUpdateEvent({
       eventId: eventId,
       eventType: eventType,
-      housingUrl: null,
+      housingUrl: "",
     });
 
   return (
@@ -77,30 +69,30 @@ export default function HousingManager({
       )}
       <Stack gap="md" style={{ width: "80%", margin: "0 auto" }} mb="20">
         <SubTitle text="Housing" ta="center" />
-        {!housingUrl ? (
+        {!housingUrl && (
           <Card withBorder>
-            <Stack align="center">
+            <Stack gap={0} align="center">
               <ActionFormInput
+                inputLabel="Enter a valid URL"
                 placeholder="https://www..."
                 submitLabel="Add URL"
                 submitHandler={handleSubmitHousing}
                 withoutDismiss
-                validate={validateHousingUrl}
+                validate={isValidUrl}
               />
             </Stack>
           </Card>
-        ) : (
-          <Stack>
-            <Flex w="100%" justify="center">
-              <HousingRidersBlock />
-            </Flex>
-            <InterestedRiderForm
-              isHousing
-              handleUpdateEvent={handleUpdateEvent}
-              customLabel={"I'm Interested in Housing"}
-            />
-          </Stack>
         )}
+        <Stack>
+          <Flex w="100%" justify="center">
+            <HousingRidersBlock />
+          </Flex>
+          <InterestedRiderForm
+            isHousing
+            handleUpdateEvent={handleUpdateEvent}
+            customLabel={"I'm Interested in Housing"}
+          />
+        </Stack>
       </Stack>
     </>
   );

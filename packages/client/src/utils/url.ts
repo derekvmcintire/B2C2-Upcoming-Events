@@ -57,3 +57,12 @@ export const updateUrlParams = (tab: string, events: string[] = []) => {
   const newUrl = `${window.location.pathname}?${params.toString()}`;
   window.history.replaceState(null, "", newUrl);
 };
+
+export const isValidUrl = (url: string): boolean => {
+  try {
+    const newUrl = new URL(url);
+    return newUrl.protocol === "http:" || newUrl.protocol === "https:";
+  } catch (err) {
+    return false;
+  }
+};

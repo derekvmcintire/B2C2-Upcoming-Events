@@ -48,25 +48,18 @@ export const useEventUpdate = () => {
           ...data,
           interestedRiders: data.interestedRiders ?? event.interestedRiders,
           committedRiders: data.committedRiders ?? event.committedRiders,
-          housingUrl: data?.housingUrl || event?.housingUrl,
-          housing: data?.housing ?? event?.housing,
+          housingUrl:
+            data?.housingUrl === ""
+              ? ""
+              : data?.housingUrl || event?.housingUrl,
+          housing: data?.housing || event?.housing,
           description: data.description ?? event.description,
           carpools: data?.carpools ?? event?.carpools,
         };
         setEvent(updatedEvent);
 
-        const getValidatedUpdateData = () => {
-          if (data?.housing && !data?.housingUrl) {
-            console.log(
-              "ERROR: must have a housing URL before adding housing lists",
-            );
-            return { ...data, housingUrl: event.housingUrl };
-          }
-          return data;
-        };
-
         // Update event in the database
-        const response = await updateEvent(getValidatedUpdateData());
+        const response = await updateEvent(data);
         if (!response.success) {
           throw new Error(response.message);
         }
