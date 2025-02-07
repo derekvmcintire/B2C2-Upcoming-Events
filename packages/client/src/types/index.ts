@@ -9,8 +9,12 @@ export type EventType = {
   eventUrl?: string;
   eventType: EventDiscipline;
   interestedRiders?: string[];
+  committedRiders?: string[];
   housingUrl?: string;
   description?: string;
+  labels?: string[];
+  carpools?: Carpool[];
+  housing?: Housing;
 };
 
 export const mockEvents: EventType[] = [
@@ -93,7 +97,7 @@ export type EventDisciplines = {
   SPECIAL: Discipline;
 };
 
-export type FormValueType = "race" | "special";
+export type FormValueType = "race" | "special" | "contes";
 
 export type FormType = {
   label: string;
@@ -103,16 +107,21 @@ export type FormType = {
 export type EventForms = {
   RACE: FormType;
   SPECIAL: FormType;
+  CONTES: FormType;
 };
 
 export const FORMS: EventForms = {
   RACE: {
-    label: "Submit Race by URL",
+    label: "Race",
     value: "race",
   },
   SPECIAL: {
-    label: "Submit Team Event",
+    label: "Custom Event",
     value: "special",
+  },
+  CONTES: {
+    label: "Quick Conte's",
+    value: "contes",
   },
 };
 
@@ -120,4 +129,34 @@ export type SubmitResponse = {
   eventId?: string;
   message: string;
   success: boolean;
+};
+
+export type LabelConfig = {
+  id: string;
+  text: string;
+  color: string;
+};
+
+export type ValidLabels = {
+  RACE: LabelConfig;
+  TRIP: LabelConfig;
+  SPECIAL: LabelConfig;
+  CONTES: LabelConfig;
+  GROUP: LabelConfig;
+  FONDO: LabelConfig;
+  STAGE: LabelConfig;
+  CLIMB: LabelConfig;
+  GEO: LabelConfig;
+  VIRTUAL: LabelConfig;
+};
+
+export type Carpool = {
+  name: string;
+  seats: number;
+  riders: string[];
+};
+
+export type Housing = {
+  committed?: string[];
+  interested?: string[];
 };

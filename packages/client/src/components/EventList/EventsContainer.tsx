@@ -1,12 +1,13 @@
 import { Stack, Tabs } from "@mantine/core";
-import { useEffect } from "react";
-import { useEventsContext } from "../../context/events-context";
-import { DISCIPLINES } from "../../constants";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { DEFAULT_DISCIPLINE, DISCIPLINES } from "../../constants";
 import classes from "./event-list.module.css";
 import EventTabs from "../EventListTabs.tsx/EventTabs";
 import EventPanels from "../EventListTabs.tsx/EventPanels";
 import { useEventData } from "../../hooks/useEventData";
-import { useTabState } from "../../hooks/useTabState";
+// import { useTabState } from "../../hooks/useTabState";
+import { getDisciplineFromUrl, updateUrlParams } from "../../utils/url";
+import { EventDiscipline } from "../../types";
 
 /**
  * EventsContainer Component
@@ -19,45 +20,37 @@ import { useTabState } from "../../hooks/useTabState";
  * - Fetches data on tab change, using cached events when available.
  */
 const EventsContainer = (): JSX.Element => {
-  const DEFAULT_DISCIPLINE = DISCIPLINES.ROAD;
-  const { activeTab, handleTabChange } = useTabState(
-    DEFAULT_DISCIPLINE.text,
-    false,
-    false,
-  );
-  const { getRegisteredRiders, getEvents, requestFreshDataForEventType } =
-    useEventData();
+  const initialTab = useMemo(() => getDisciplineFromUrl(), []);
+  const [activeTab, setActiveTab] = useState<string | null>(initialTab);
+  const { getRegisteredRiders, getEvents } = useEventData();
 
-  const eventsContext = useEventsContext();
-  const { eventsLoading } = eventsContext;
+  const handleClickTab = useCallback((value: string | null) => {
+    if (!value) return;
+    updateUrlParams(value);
+    setActiveTab(value as EventDiscipline);
+  }, []);
 
-  /**
-   * Fetches registrations and events data when the component is mounted.
-   */
   useEffect(() => {
-    getRegisteredRiders({ disciplineParam: DEFAULT_DISCIPLINE.queryParam });
-    getEvents({ disciplineId: DEFAULT_DISCIPLINE.id });
-  }, [
-    getRegisteredRiders,
-    getEvents,
-    DEFAULT_DISCIPLINE.id,
-    DEFAULT_DISCIPLINE.queryParam,
-  ]);
+    if (!activeTab) return;
+
+    const discipline =
+      Object.values(DISCIPLINES).find((d) => d.id === activeTab) ||
+      DEFAULT_DISCIPLINE;
+    getRegisteredRiders({ disciplineParam: discipline.queryParam });
+    getEvents({ disciplineId: discipline.id });
+  }, [activeTab, getRegisteredRiders, getEvents]);
 
   return (
     <Stack>
       <Tabs
         value={activeTab}
-        onChange={handleTabChange}
-        defaultValue={DISCIPLINES.ROAD.text}
+        onChange={handleClickTab}
+        defaultValue={initialTab}
         className={classes.eventList}
         mb="64"
       >
         <EventTabs />
-        <EventPanels
-          eventsLoading={eventsLoading}
-          requestFreshDataForEventType={requestFreshDataForEventType}
-        />
+        <EventPanels />
       </Tabs>
     </Stack>
   );

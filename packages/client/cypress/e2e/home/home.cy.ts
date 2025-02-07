@@ -1,42 +1,50 @@
+/**
+ * Test suite for the homepage.
+ */
 describe("Homepage", () => {
+  beforeEach(() => {
+    // Common intercept that's needed for all tests
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fwww.crossresults.com%2Fapi%2Fb2c2lookup.php*",
+      { fixture: "registrations.json" },
+    );
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fb2c2-events-api.vercel.app%2Fapi%2FgetEventsByType&params=%7B%22type%22%3A%22road%22%7D",
+      { fixture: "events.json" },
+    );
+  });
+
+  /**
+   * Test that the home page loads correctly.
+   */
   it("should load the homepage and display the title", () => {
     cy.visit("/");
     // First wait for loading to appear
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
+    cy.get('[data-testid="loading"]', { timeout: 100 })
       .should("exist")
       // Then check the expected components
       .get('[data-testid="expandable-table"]')
       .should("exist")
-      .get('[data-testid="quick-view-button"]')
-      .should("exist")
-      .get('[data-testid="info-row"]')
-      .should("exist")
-      .get('[data-testid="interested-row"]')
+      .get('[data-testid="detail-view-button"]')
       .should("exist")
       .get('[data-testid="interested-button"]')
-      .should("exist")
-      .get('[data-testid="housing-button"]')
       .should("exist")
       .get('[data-testid="hype"]')
       .should("exist");
   });
 
-  it("should open the form drawer when the sub drawer button is clicked", () => {
+  /**
+   * Test that default events load correctly.
+   */
+  it("should default to the road events list", () => {
     cy.visit("/");
 
-    // Simulate clicking the submit new event button
-    cy.get('[data-testid="sub-drawer-button"]').click();
-    cy.get('[data-testid="sub-control"]').should("exist");
+    cy.get('[data-testid="loading"]', { timeout: 100 })
+      .should("exist")
+      // Then check the expected components
+      .get('[data-testid="road-events-list"]')
+      .should("exist");
   });
-
-  // it("should open the form when interested button is clicked", () => {
-  //   cy.visit("/");
-
-  //   // Simulate clicking the interested rider button
-  //   cy.get('[data-testid="loading"]', { timeout: 10000 })
-  //     .should("exist")
-  //     .get('[data-testid="interested-button"]', { timeout: 10000 }).click()
-  //     .get('[data-testid="event-card-form-input"]').should("exist")
-  //     .get('[data-testid="event-card-form-submit"]').should("exist");
-  // });
 });

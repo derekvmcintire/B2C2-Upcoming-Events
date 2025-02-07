@@ -46,7 +46,7 @@ const RaceSubmissionForm = ({
   const [isTyping, setIsTyping] = useState(false);
 
   const eventsContext = useEventsContext();
-  const { setEvents } = eventsContext;
+  const { setEvents, setEventsLoading } = eventsContext;
 
   const debouncedValue = useDebounce(bikeregUrl, validateDelay);
 
@@ -56,12 +56,14 @@ const RaceSubmissionForm = ({
    * @param discipline - The selected event discipline.
    */
   const updateEventsAfterSubmit = (discipline: EventDiscipline) => {
+    setEventsLoading(true);
     const getEvents = async () => {
       const response = await fetchEventsByDiscipline({
         discipline,
         skipCache: true,
       });
       setEvents(response.events);
+      setEventsLoading(false);
     };
 
     getEvents();

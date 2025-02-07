@@ -1,0 +1,168 @@
+.eventContainer {
+  background-color: light-dark(#f4f4f4, #363636);
+  border: 1px solid #607d8b;
+  padding: 24px;
+  padding-top: 0px;
+}
+
+.eventGrid {
+  margin-top: 16px;
+}
+
+.linkBlock {
+  border-radius: 8px;
+  height: 100%;
+  margin-right: 16px;
+}
+
+.eventLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: inherit;
+}
+
+.housingLink {
+  color: #1e90ff;
+  margin-right: 8px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1.1rem;
+}
+
+.housingUrlContainer {
+  border: 1px solid #607d8b;
+  border-radius: 4px;
+}
+
+.logisticsTabs {
+  border: 1px solid #607d8b;
+  border-radius: 4px;
+  background-color: light-dark(#ffffff, #2e2e2e);
+}
+
+.dateStack {
+  margin-top: 8px;
+}
+
+.dateBadge {
+  width: 125px;
+  color: light-dark(#363636, #f4f4f4);
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  border: 2px solid #dbdbdb;
+  background: light-dark(#ffffff, #363636);
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  transform-origin: bottom right;
+}
+
+.dateBadge:hover {
+  transform: rotateX(10deg) rotateY(-5deg) translateY(-3px);
+  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.eventLabel {
+  margin-right: 16px;
+}
+
+.weekday {
+  font-size: rem(16px);
+  font-weight: 500;
+}
+
+.month {
+  font-size: rem(18px);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.day {
+  font-size: rem(50px);
+  line-height: 1.1;
+  font-weight: 900;
+}
+
+.locationText {
+  text-align: left;
+}
+
+.eventName {
+  letter-spacing: rem(-1px);
+  font-size: rem(50px);
+  font-weight: 700;
+  line-height: 1.1;
+  font-weight: 700;
+  text-align: right;
+}
+
+.descriptionBlock {
+  background-color: light-dark(#ffffff, #2e2e2e);
+  border: 1px solid #607d8b;
+  border-radius: 4px;
+  padding: 16px;
+  height: 100%;
+  max-width: 600px;
+}
+
+.ridersListContainer {
+  border-radius: 4px;
+  background-color: light-dark(#ffffff, #2e2e2e);
+}
+
+.registeredRiderText {
+  text-align: left;
+  color: light-dark(
+    var(--mantine-color-orange-9),
+    var(--mantine-color-orange-3)
+  );
+}
+
+.defaultRiderText {
+  text-align: left;
+}
+
+.riderListCollapse {
+  border: 1px solid #607d8b;
+}
+
+.riderListStack {
+  padding: 8px;
+}
+
+.riderListLabel {
+  text-align: left;
+}
+
+.actionFormInput {
+  border: 1px solid #607d8b;
+  border-radius: 3px;
+  color: #607d8b;
+  margin-right: 11px;
+}
+
+/* Make adjustments for smaller screens */
+@media (max-width: 825px) {
+  .eventName {
+    font-size: rem(30px);
+  }
+
+  .registeredRiderText {
+    font-size: rem(11px);
+  }
+
+  .defaultRiderText {
+    font-size: rem(11px);
+  }
+
+  .riderListLabel {
+    font-size: rem(11px);
+  }
+}
+
+.descriptionTextContainer {
+  width: 100%;
+  text-align: left;
+}

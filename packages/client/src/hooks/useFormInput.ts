@@ -27,7 +27,7 @@ type UseFormInputReturn = {
 export function useFormInput({
   initialValue = "",
   validate = () => true,
-  validateDelay = 500,
+  validateDelay = 100,
 }: UseFormInputProps = {}): UseFormInputReturn {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
@@ -46,13 +46,19 @@ export function useFormInput({
   };
 
   useEffect(() => {
+    console.log("useEffect Triggad kid");
     if (isTyping) {
+      console.log("typing detected");
       if (debouncedValue && !validate(debouncedValue)) {
+        console.log("not passing ");
         setError("Invalid input");
       } else {
+        console.log("passing");
         setError("");
       }
       setIsTyping(false);
+    } else {
+      console.log("typing not detected");
     }
   }, [debouncedValue, validate, isTyping]);
 

@@ -1,7 +1,7 @@
 import { simple, type SimpleResponse } from "simple-fetch-ts";
 import { buildProxyRequestUrl } from "./utility";
 import { B2C2_API_BASE_URL } from "../constants";
-import { EventDiscipline } from "../types";
+import { Carpool, EventDiscipline, Housing } from "../types";
 
 const url = `${B2C2_API_BASE_URL}/api/updateEvent`;
 
@@ -10,7 +10,10 @@ export type UpdateEventData = {
   eventType: EventDiscipline;
   housingUrl?: string | null; // null for deleting
   interestedRiders?: string[];
+  committedRiders?: string[];
   description?: string;
+  housing?: Housing;
+  carpools?: Carpool[];
 };
 
 export type UpdateEventResponse = {

@@ -4,15 +4,17 @@
  * @returns {string} The color name for the progress bar.
  */
 export const getHypeColor = (hypeLevel: number): string => {
-  if (hypeLevel > 100) return "red";
-  if (hypeLevel > 80) return "orange";
-  if (hypeLevel > 50) return "yellow";
-  if (hypeLevel > 30) return "green";
-  if (hypeLevel > 10) return "blue";
-  return "purple";
+  if (hypeLevel > 100) return "#e53935";
+  if (hypeLevel > 80) return "#fb8c00";
+  if (hypeLevel > 50) return "#fdd835";
+  if (hypeLevel > 30) return "#43a047";
+  if (hypeLevel > 11) return "#1e88e5";
+  return "#8e24aa";
 };
 
 export const getHypeLevel = (
   registeredRiders: number,
   interestedRiders: number,
-): number => (registeredRiders + interestedRiders) * 10;
+  numberOfCommittedRiders: number,
+): number =>
+  (registeredRiders + interestedRiders + numberOfCommittedRiders) * 10;

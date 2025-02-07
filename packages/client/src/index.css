@@ -1,3 +1,5 @@
+@import "leaflet/dist/leaflet.css";
+
 :root {
   --bg-dark: #2e2e2e;
   --bg-light: #ffffff;
@@ -8,4 +10,7 @@
   --link: #1e90ff;
   --b2c2-blue: #4385f0;
   --b2c2-orange: #f0b343;
+  --default-text-dark: #c9c9c9;
+  --default-text-light: #000000;
+  --secondary-button-dark: #bcbaba;
 }

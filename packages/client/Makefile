@@ -1,7 +1,7 @@
 run:
 	npm run dev
 
-run-api:
+proxy:
 	vercel dev --yes
 
 build:

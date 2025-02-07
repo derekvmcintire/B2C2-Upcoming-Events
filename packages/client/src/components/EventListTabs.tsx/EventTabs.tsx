@@ -12,18 +12,31 @@ export default function EventTabs(): JSX.Element {
 
   return (
     <Tabs.List>
-      <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.ROAD.text}>
+      <Tabs.Tab
+        data-testid="road-events-tab"
+        className={classes.eventListTab}
+        value={DISCIPLINES.ROAD.id}
+      >
         {DISCIPLINES.ROAD.text}
       </Tabs.Tab>
-      <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.CX.text}>
+      <Tabs.Tab
+        data-testid="cx-events-tab"
+        className={classes.eventListTab}
+        value={DISCIPLINES.CX.id}
+      >
         {isMobile ? DISCIPLINES.CX.mobileText : DISCIPLINES.CX.text}
       </Tabs.Tab>
-      <Tabs.Tab className={classes.eventListTab} value={DISCIPLINES.XC.text}>
+      <Tabs.Tab
+        data-testid="xc-vents-tab"
+        className={classes.eventListTab}
+        value={DISCIPLINES.XC.id}
+      >
         {isMobile ? DISCIPLINES.XC.mobileText : DISCIPLINES.XC.text}
       </Tabs.Tab>
       <Tabs.Tab
+        data-testid="team-events-tab"
         className={classes.eventListTab}
-        value={DISCIPLINES.SPECIAL.text}
+        value={DISCIPLINES.SPECIAL.id}
       >
         {isMobile ? DISCIPLINES.SPECIAL.mobileText : DISCIPLINES.SPECIAL.text}
       </Tabs.Tab>

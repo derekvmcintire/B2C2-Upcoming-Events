@@ -3,7 +3,6 @@ import { fetchRegistrations } from "../api/fetchRegisteredRiders";
 import { fetchEventsByDiscipline } from "../api/fetchEventsByType";
 import { useEventsContext } from "../context/events-context";
 import { EventDiscipline, EventDisciplineParam } from "../types";
-import { getDisciplineParamFromTextOrId } from "../utils/discipline";
 
 /**
  * Defines the shape of the object returned by the `useEventData` hook.
@@ -18,7 +17,6 @@ export interface UseEventDataReturn {
     disciplineId: EventDiscipline;
     skipCache?: boolean;
   }) => Promise<void>;
-  requestFreshDataForEventType: (disciplineId: EventDiscipline) => void;
   setEventsLoading: (isLoading: boolean) => void;
 }
 
@@ -35,7 +33,6 @@ export const useEventData = (): UseEventDataReturn => {
     setRegistrationsLoading,
     setEventsLoading,
     setIsSubmitting,
-    setRequestFreshData,
     setErrors,
   } = useEventsContext();
 
@@ -47,7 +44,6 @@ export const useEventData = (): UseEventDataReturn => {
    */
   const handleSetNewError = useCallback(
     (newError: string, message?: string): void => {
-      console.log("*** SETTING ERRORS ***");
       setErrors([`${message} ${newError}`]);
     },
     [setErrors],
@@ -118,25 +114,9 @@ export const useEventData = (): UseEventDataReturn => {
     [handleSetNewError, setEvents, setEventsLoading, setIsSubmitting],
   );
 
-  /**
-   * Requests fresh data for a specific event type, bypassing the cache.
-   *
-   * @param {EventDiscipline} disciplineId - The discipline ID for which fresh data is requested.
-   */
-  const requestFreshDataForEventType = useCallback(
-    (disciplineId: EventDiscipline) => {
-      const disciplineParam = getDisciplineParamFromTextOrId(disciplineId);
-      getRegisteredRiders({ disciplineParam, skipCache: true });
-      getEvents({ disciplineId, skipCache: true });
-      setRequestFreshData(undefined);
-    },
-    [getRegisteredRiders, getEvents, setRequestFreshData],
-  );
-
   return {
     getRegisteredRiders,
     getEvents,
-    requestFreshDataForEventType,
     setEventsLoading,
   };
 };

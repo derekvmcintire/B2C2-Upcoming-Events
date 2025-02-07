@@ -75,6 +75,36 @@ export const formatEventDate = (dateString: string): string => {
 };
 
 /**
+ * Extracts the weekday, day of the month, and month from a stored date string.
+ * Works with both:
+ * - UTC format ("2025-07-26T00:00:00.000+00:00")
+ * - Timezone offset format ("2025-03-02T00:00:00.000-05:00")
+ * @param dateString - The stored ISO date string
+ * @returns Object with { weekday, month, day }
+ */
+export const formatCalendarDate = (
+  dateString: string,
+): {
+  weekday: string;
+  month: string;
+  day: number;
+} => {
+  const date = normalizeToUTCDate(dateString);
+
+  return {
+    weekday: new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: "UTC",
+    }).format(date), // e.g., "Sunday"
+    month: new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      timeZone: "UTC",
+    }).format(date), // e.g., "March"
+    day: date.getUTCDate(), // Numeric day (e.g., 2)
+  };
+};
+
+/**
  * Validates and normalizes a date for form display
  * @param isoString - The ISO date string from storage
  * @returns YYYY-MM-DD format for form input

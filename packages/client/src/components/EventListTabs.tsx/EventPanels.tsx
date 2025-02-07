@@ -1,44 +1,31 @@
 import { Flex, Tabs } from "@mantine/core";
 import { DISCIPLINES } from "../../constants";
 import EventsList from "../EventList/EventsList";
-import { EventDiscipline } from "../../types";
 import Loading from "../Shared/Loading";
-
-type EventPanelsProps = {
-  eventsLoading: boolean;
-  requestFreshDataForEventType: (eventType: EventDiscipline) => void;
-};
+import { useEventsContext } from "../../context/events-context";
 
 /**
  * Renders the panels for different event disciplines in the EventListTabs component.
  *
  * @param {Object} props - The component props.
  * @param {boolean} props.eventsLoading - Indicates whether events are currently loading.
- * @param {Function} props.requestFreshDataForEventType - Callback function to request fresh data for a specific event type.
  * @returns {JSX.Element} The rendered EventPanels component.
  */
-export default function EventPanels({
-  eventsLoading,
-  requestFreshDataForEventType,
-}: EventPanelsProps): JSX.Element {
+export default function EventPanels(): JSX.Element {
+  const { eventsLoading } = useEventsContext();
+
   /**
    *
    * RoadPanel component represents the panel for Road events in the EventListTabs component.
    */
   const RoadPanel = (): JSX.Element => (
-    <Tabs.Panel
-      w="100%"
-      key={DISCIPLINES.ROAD.text}
-      value={DISCIPLINES.ROAD.text}
-    >
+    <Tabs.Panel w="100%" key={DISCIPLINES.ROAD.id} value={DISCIPLINES.ROAD.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.ROAD}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <div data-testid="road-events-list">
+          <EventsList discipline={DISCIPLINES.ROAD} />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -47,15 +34,13 @@ export default function EventPanels({
    * CxPanel component represents the panel for CX events in the EventListTabs component.
    */
   const CxPanel = () => (
-    <Tabs.Panel w="100%" key={DISCIPLINES.CX.text} value={DISCIPLINES.CX.text}>
+    <Tabs.Panel w="100%" key={DISCIPLINES.CX.id} value={DISCIPLINES.CX.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.CX}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <div data-testid="cx-events-list">
+          <EventsList discipline={DISCIPLINES.CX} />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -64,15 +49,16 @@ export default function EventPanels({
    * XcPanel component represents the panel for XC events in the EventListTabs component.
    */
   const XcPanel = () => (
-    <Tabs.Panel w="100%" key={DISCIPLINES.XC.text} value={DISCIPLINES.XC.text}>
+    <Tabs.Panel w="100%" key={DISCIPLINES.XC.id} value={DISCIPLINES.XC.id}>
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.XC}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <div data-testid="xc-events-list">
+          <EventsList
+            data-testid="xc-events-list"
+            discipline={DISCIPLINES.XC}
+          />
+        </div>
       )}
     </Tabs.Panel>
   );
@@ -83,17 +69,18 @@ export default function EventPanels({
   const TeamPanel = () => (
     <Tabs.Panel
       w="100%"
-      key={DISCIPLINES.SPECIAL.text}
-      value={DISCIPLINES.SPECIAL.text}
+      key={DISCIPLINES.SPECIAL.id}
+      value={DISCIPLINES.SPECIAL.id}
     >
       {eventsLoading ? (
         <Loading />
       ) : (
-        <EventsList
-          data-testid="events-list"
-          discipline={DISCIPLINES.SPECIAL}
-          requestDataCallback={requestFreshDataForEventType}
-        />
+        <div data-testid="team-events-list">
+          <EventsList
+            data-testid="team-events-list"
+            discipline={DISCIPLINES.SPECIAL}
+          />
+        </div>
       )}
     </Tabs.Panel>
   );

@@ -8,6 +8,7 @@ type DismissButtonProps = {
   withoutModal?: boolean;
   xs?: boolean;
   disabled?: boolean;
+  position?: "right" | "left";
 };
 
 /**
@@ -24,10 +25,16 @@ export default function DismissButton({
   withoutModal = false,
   xs = false,
   disabled = false,
-}: DismissButtonProps) {
+  position = "right",
+}: DismissButtonProps): JSX.Element {
   const [opened, { open, close }] = useDisclosure(false);
 
   const handleClick = () => (withoutModal ? clickHandler() : open());
+
+  const handleClickYes = () => {
+    close();
+    clickHandler();
+  };
 
   const size = xs ? "compact-xs" : "compact-s";
 
@@ -41,7 +48,7 @@ export default function DismissButton({
             <Button m="16" onClick={close}>
               Nope!
             </Button>
-            <Button m="16" onClick={clickHandler}>
+            <Button m="16" onClick={handleClickYes}>
               Yes, I do want to do that.
             </Button>
           </Flex>
@@ -53,6 +60,7 @@ export default function DismissButton({
         variant="subtle"
         size={size}
         disabled={disabled}
+        mr={position === "left" ? "0" : "8"}
       >
         <MdClose />
       </Button>
