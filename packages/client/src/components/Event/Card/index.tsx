@@ -61,7 +61,7 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
   };
 
   return (
-    <Stack gap={0}>
+    <Stack gap={0} data-testid={`event-card-${eventId}`}>
       <Stack
         key={eventId}
         gap={0}

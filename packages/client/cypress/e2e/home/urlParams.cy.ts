@@ -15,6 +15,7 @@ describe("URL Tab Params", () => {
       { fixture: "road-events.json" },
     );
 
+    // vist the road tab url
     cy.visit("/?tab=road");
 
     // Wait for loading state to appear and disappear
@@ -32,11 +33,35 @@ describe("URL Tab Params", () => {
       { fixture: "cx-events.json" },
     );
 
+    // visit page
     cy.visit("/?tab=cx");
 
+    // check loading state
     cy.get('[data-testid="loading"]').should("exist");
     cy.get('[data-testid="loading"]').should("not.exist");
 
+    //check the events list is rendered
     cy.get('[data-testid="cx-events-list"]').should("exist");
+  });
+
+  it("should render the CX events list with a specific event open", () => {
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fb2c2-events-api.vercel.app%2Fapi%2FgetEventsByType&params=%7B%22type%22%3A%22cx%22%7D",
+      { fixture: "cx-events.json" },
+    );
+
+    // visit the page
+    cy.visit("/?tab=cx&events=67842");
+
+    // check loading state
+    cy.get('[data-testid="loading"]').should("exist");
+    cy.get('[data-testid="loading"]').should("not.exist");
+
+    // check list is rendered
+    cy.get('[data-testid="cx-events-list"]').should("exist");
+
+    // check first event is expanded and the event card is found
+    cy.get('[data-testid="event-card-67842"]').should("exist");
   });
 });

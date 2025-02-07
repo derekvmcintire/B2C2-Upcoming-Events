@@ -76,6 +76,7 @@ export default function ExpandableRow({
   return (
     <React.Fragment key={eventId}>
       <Table.Tr
+        data-testid={eventId}
         style={{ cursor: "pointer" }}
         onClick={() => toggleRow(eventId)}
       >
