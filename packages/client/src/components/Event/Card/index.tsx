@@ -14,7 +14,7 @@ import Hypometer from "../Hypometer";
 import Date from "../Date";
 import { useMediaQuery } from "@mantine/hooks";
 import { LABELS, MOBILE_BREAK_POINT } from "../../../constants";
-import EventRidersBlock from "../RidersBlock/DraggableRidersBlock";
+import EventRidersBlock from "../RidersBlock/EventRidersBlock";
 import SubTitle from "../../Shared/SubTitle";
 import { useEventContext } from "../../../context/event-context";
 import { useEventUpdate } from "../../../hooks/useEventUpdate";
@@ -121,10 +121,7 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
           <Grid.Col span={12}>
             {/* Rider Lists */}
             <SubTitle text="Riders Attending" ta="center" />
-            <EventRidersBlock
-              registrations={registeredNames}
-              updateEventFn={handleSubmitEventUpdate}
-            />
+            <EventRidersBlock updateEventFn={handleSubmitEventUpdate} />
           </Grid.Col>
           {!isVirtualEvent && (
             <Grid.Col span={12}>

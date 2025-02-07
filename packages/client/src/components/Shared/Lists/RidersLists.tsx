@@ -28,7 +28,7 @@ import {
   useRiderLists,
 } from "../../../hooks/useRiderLists";
 
-interface DraggableRidersListsProps {
+interface RidersListsProps {
   isStatic?: boolean;
   eventListType: "race" | "special";
   xs?: boolean;
@@ -38,12 +38,12 @@ interface DraggableRidersListsProps {
 /**
  * DraggableRidersLists component renders a list of draggable riders.
  */
-const DraggableRidersLists = ({
+const RidersLists = ({
   isStatic = false,
   eventListType,
   xs = false,
   isHousing = false,
-}: DraggableRidersListsProps): JSX.Element => {
+}: RidersListsProps): JSX.Element => {
   const {
     riders,
     setRiders,
@@ -155,4 +155,4 @@ const DraggableRidersLists = ({
   );
 };
 
-export default DraggableRidersLists;
+export default RidersLists;

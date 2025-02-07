@@ -30,18 +30,20 @@ const SpecialEventSubmissionForm = ({
   } = useSpecialEventForm({ isQuickContes });
 
   const eventsContext = useEventsContext();
-  const { setEvents } = eventsContext;
+  const { setEvents, setEventsLoading } = eventsContext;
 
   /**
    * Updates the events after form submission.
    * Fetches events by discipline and updates the state with the response events.
    */
   const updateEventsAfterSubmit = async () => {
+    setEventsLoading(true);
     const response = await fetchEventsByDiscipline({
       discipline: formData.discipline,
       skipCache: true,
     });
     setEvents(response.events);
+    setEventsLoading(false);
   };
 
   /**

@@ -16,7 +16,7 @@ export default function LocationBlock() {
 
   return (
     <>
-      <Stack gap={0} w="100%" align="flex-start">
+      <Stack gap={0} w="100%" align="flex-start" pt="18">
         <Text
           ta="left"
           fw={600}

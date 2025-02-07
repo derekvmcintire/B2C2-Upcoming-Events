@@ -145,6 +145,8 @@ export default function Description({
       <Textarea
         w="100%"
         mb="8"
+        autosize
+        maxRows={8}
         value={value}
         onChange={(e) => setValue(e.currentTarget.value)}
         placeholder="Add an event description."
@@ -187,7 +189,14 @@ export default function Description({
       <EditLabel />
       <Flex className={classes.descriptionBlock}>
         <Text className={classes.descriptionTextContainer}>
-          {description || ""}
+          {description
+            ? description.split("\n").map((line, index) => (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              ))
+            : ""}
         </Text>
       </Flex>
     </Stack>

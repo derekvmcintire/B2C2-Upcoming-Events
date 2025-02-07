@@ -2,10 +2,7 @@ import { Flex, Tabs } from "@mantine/core";
 import { DISCIPLINES } from "../../constants";
 import EventsList from "../EventList/EventsList";
 import Loading from "../Shared/Loading";
-
-type EventPanelsProps = {
-  eventsLoading: boolean;
-};
+import { useEventsContext } from "../../context/events-context";
 
 /**
  * Renders the panels for different event disciplines in the EventListTabs component.
@@ -14,9 +11,9 @@ type EventPanelsProps = {
  * @param {boolean} props.eventsLoading - Indicates whether events are currently loading.
  * @returns {JSX.Element} The rendered EventPanels component.
  */
-export default function EventPanels({
-  eventsLoading,
-}: EventPanelsProps): JSX.Element {
+export default function EventPanels(): JSX.Element {
+  const { eventsLoading } = useEventsContext();
+
   /**
    *
    * RoadPanel component represents the panel for Road events in the EventListTabs component.

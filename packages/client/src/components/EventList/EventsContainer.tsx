@@ -1,6 +1,5 @@
 import { Stack, Tabs } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useEventsContext } from "../../context/events-context";
 import { DEFAULT_DISCIPLINE, DISCIPLINES } from "../../constants";
 import classes from "./event-list.module.css";
 import EventTabs from "../EventListTabs.tsx/EventTabs";
@@ -24,7 +23,6 @@ const EventsContainer = (): JSX.Element => {
   const initialTab = useMemo(() => getDisciplineFromUrl(), []);
   const [activeTab, setActiveTab] = useState<string | null>(initialTab);
   const { getRegisteredRiders, getEvents } = useEventData();
-  const { eventsLoading } = useEventsContext();
 
   const handleClickTab = useCallback((value: string | null) => {
     if (!value) return;
@@ -52,7 +50,7 @@ const EventsContainer = (): JSX.Element => {
         mb="64"
       >
         <EventTabs />
-        <EventPanels eventsLoading={eventsLoading} />
+        <EventPanels />
       </Tabs>
     </Stack>
   );

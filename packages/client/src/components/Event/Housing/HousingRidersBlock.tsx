@@ -1,6 +1,6 @@
 import { useEventContext } from "../../../context/event-context";
 import { DISCIPLINES } from "../../../constants";
-import DraggableRidersLists from "../../Shared/Lists/DraggableRidersList";
+import RidersLists from "../../Shared/Lists/RidersLists";
 import {
   RIDER_LIST_EVENT_TYPES,
   RiderListEventType,
@@ -19,7 +19,7 @@ export default function HousingRidersBlock(): JSX.Element {
       : RIDER_LIST_EVENT_TYPES.RACE;
 
   return (
-    <DraggableRidersLists
+    <RidersLists
       isHousing
       isStatic={event.eventType !== DISCIPLINES.SPECIAL.id}
       eventListType={riderListEventType}
