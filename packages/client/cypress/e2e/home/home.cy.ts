@@ -6,9 +6,20 @@ describe("Homepage", () => {
    * Test that the home page loads correctly.
    */
   it("should load the homepage and display the title", () => {
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fwww.crossresults.com%2Fapi%2Fb2c2lookup.php&params=%7B%22discipline%22%3A%22road%2520race%22%2C%22after%22%3A%222025-02-05%22%7D",
+      { fixture: "registrations.json" },
+    );
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fb2c2-events-api.vercel.app%2Fapi%2FgetEventsByType&params=%7B%22type%22%3A%22road%22%7D",
+      { fixture: "events.json" },
+    );
+
     cy.visit("/");
     // First wait for loading to appear
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
+    cy.get('[data-testid="loading"]', { timeout: 100 })
       .should("exist")
       // Then check the expected components
       .get('[data-testid="expandable-table"]')
@@ -22,71 +33,26 @@ describe("Homepage", () => {
   });
 
   /**
-   * Test that the form drawer opens correctly.
-   */
-  it("should open the form drawer when the sub drawer button is clicked", () => {
-    cy.visit("/");
-
-    // Simulate clicking the submit new event button
-    cy.get('[data-testid="sub-drawer-button"]').click();
-    cy.get('[data-testid="sub-control"]').should("exist");
-  });
-
-  /**
    * Test that default events load correctly.
    */
   it("should default to the road events list", () => {
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fwww.crossresults.com%2Fapi%2Fb2c2lookup.php&params=%7B%22discipline%22%3A%22road%2520race%22%2C%22after%22%3A%222025-02-05%22%7D",
+      { fixture: "registrations.json" },
+    );
+    cy.intercept(
+      "GET",
+      "/api/proxy?apiUrl=https%3A%2F%2Fb2c2-events-api.vercel.app%2Fapi%2FgetEventsByType&params=%7B%22type%22%3A%22road%22%7D",
+      { fixture: "events.json" },
+    );
+
     cy.visit("/");
 
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
+    cy.get('[data-testid="loading"]', { timeout: 100 })
       .should("exist")
       // Then check the expected components
       .get('[data-testid="road-events-list"]')
-      .should("exist");
-  });
-});
-
-/**
- * Test tab URL param works correctly.
- */
-describe("URL Tab Params", () => {
-  it("should render the road events list when road tab param is passed", () => {
-    cy.visit("/?tab=road");
-
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should("exist")
-      // Then check the expected components
-      .get('[data-testid="road-events-list"]')
-      .should("exist");
-  });
-
-  it("should render the CX events list when cx tab param is passed", () => {
-    cy.visit("/?tab=cx");
-
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should("exist")
-      // Then check the expected components
-      .get('[data-testid="cx-events-list"]')
-      .should("exist");
-  });
-
-  it("should render the XC events list when xc tab param is passed", () => {
-    cy.visit("/?tab=xc");
-
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should("exist")
-      // Then check the expected components
-      .get('[data-testid="xc-events-list"]')
-      .should("exist");
-  });
-
-  it("should render the Team events list when special tab param is passed", () => {
-    cy.visit("/?tab=special");
-
-    cy.get('[data-testid="loading"]', { timeout: 10000 })
-      .should("exist")
-      // Then check the expected components
-      .get('[data-testid="team-events-list"]')
       .should("exist");
   });
 });

@@ -1,0 +1,931 @@
+{
+  "0": {
+    "0": 67842,
+    "1": "Fatty Cross #3",
+    "2": "damien",
+    "3": "goudreau",
+    "4": "Open A",
+    "5": {
+      "date": "2035-02-09 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-02-09 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 67842,
+    "EventName": "Fatty Cross #3",
+    "FirstName": "damien",
+    "LastName": "goudreau",
+    "Category": "Open A",
+    "EventDate": {
+      "date": "2035-02-09 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-02-09 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "1": {
+    "0": 69057,
+    "1": "2035 New England Bicycle Racing Association (NEBRA) Club & Event Director Membership",
+    "2": "Stephanie",
+    "3": "Aldrich",
+    "4": "2035 Club/Race Director Membership (Voting) - Waived Fee - see event notes",
+    "5": {
+      "date": "2035-01-11 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 69057,
+    "EventName": "2035 New England Bicycle Racing Association (NEBRA) Club & Event Director Membership",
+    "FirstName": "Stephanie",
+    "LastName": "Aldrich",
+    "Category": "2035 Club/Race Director Membership (Voting) - Waived Fee - see event notes",
+    "EventDate": {
+      "date": "2035-01-11 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "2": {
+    "0": 69057,
+    "1": "2035 New England Bicycle Racing Association (NEBRA) Club & Event Director Membership",
+    "2": "Alexander",
+    "3": "Duncan",
+    "4": "2035 Club/Race Director Membership (Voting) - Waived Fee - see event notes",
+    "5": {
+      "date": "2035-01-11 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 69057,
+    "EventName": "2035 New England Bicycle Racing Association (NEBRA) Club & Event Director Membership",
+    "FirstName": "Alexander",
+    "LastName": "Duncan",
+    "Category": "2035 Club/Race Director Membership (Voting) - Waived Fee - see event notes",
+    "EventDate": {
+      "date": "2035-01-11 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "3": {
+    "0": 68877,
+    "1": "Monsters in the Basement Club Registration (2035)",
+    "2": "Eugene",
+    "3": "Klitenik",
+    "4": "Annual Club Registration",
+    "5": {
+      "date": "2035-01-03 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68877,
+    "EventName": "Monsters in the Basement Club Registration (2035)",
+    "FirstName": "Eugene",
+    "LastName": "Klitenik",
+    "Category": "Annual Club Registration",
+    "EventDate": {
+      "date": "2035-01-03 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "4": {
+    "0": 68315,
+    "1": "Buzz the Tower",
+    "2": "Colin",
+    "3": "Reuter",
+    "4": "Cat 3/4 Men ",
+    "5": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68315,
+    "EventName": "Buzz the Tower",
+    "FirstName": "Colin",
+    "LastName": "Reuter",
+    "Category": "Cat 3/4 Men ",
+    "EventDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "5": {
+    "0": 68315,
+    "1": "Buzz the Tower",
+    "2": "Karl",
+    "3": "Schultz",
+    "4": "Cat 3/4 Men ",
+    "5": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68315,
+    "EventName": "Buzz the Tower",
+    "FirstName": "Karl",
+    "LastName": "Schultz",
+    "Category": "Cat 3/4 Men ",
+    "EventDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "6": {
+    "0": 68315,
+    "1": "Buzz the Tower",
+    "2": "Karl",
+    "3": "Schultz",
+    "4": "Cat 4/5 Men 40 +  ",
+    "5": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68315,
+    "EventName": "Buzz the Tower",
+    "FirstName": "Karl",
+    "LastName": "Schultz",
+    "Category": "Cat 4/5 Men 40 +  ",
+    "EventDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "7": {
+    "0": 68315,
+    "1": "Buzz the Tower",
+    "2": "Derek",
+    "3": "McIntire",
+    "4": "Cat 3/4 Men ",
+    "5": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68315,
+    "EventName": "Buzz the Tower",
+    "FirstName": "Derek",
+    "LastName": "McIntire",
+    "Category": "Cat 3/4 Men ",
+    "EventDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "8": {
+    "0": 68315,
+    "1": "Buzz the Tower",
+    "2": "Senan",
+    "3": "Hogan-Hennessy",
+    "4": "Cat 3/4 Men ",
+    "5": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68315,
+    "EventName": "Buzz the Tower",
+    "FirstName": "Senan",
+    "LastName": "Hogan-Hennessy",
+    "Category": "Cat 3/4 Men ",
+    "EventDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-29 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "9": {
+    "0": 67458,
+    "1": "BATTENKILL",
+    "2": "Alexander",
+    "3": "Duncan",
+    "4": "USAC Men Cat 3",
+    "5": {
+      "date": "2035-05-10 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-05-10 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 67458,
+    "EventName": "BATTENKILL",
+    "FirstName": "Alexander",
+    "LastName": "Duncan",
+    "Category": "USAC Men Cat 3",
+    "EventDate": {
+      "date": "2035-05-10 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-05-10 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "10": {
+    "0": 39090,
+    "1": "Colin's Taste Event",
+    "2": "Colin",
+    "3": "Reuter",
+    "4": "Team Category - Pay For Stuff Later",
+    "5": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 39090,
+    "EventName": "Colin's Taste Event",
+    "FirstName": "Colin",
+    "LastName": "Reuter",
+    "Category": "Team Category - Pay For Stuff Later",
+    "EventDate": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "11": {
+    "0": 39090,
+    "1": "Colin's Taste Event",
+    "2": "Colin",
+    "3": "Reuter",
+    "4": "Free Category",
+    "5": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 39090,
+    "EventName": "Colin's Taste Event",
+    "FirstName": "Colin",
+    "LastName": "Reuter",
+    "Category": "Free Category",
+    "EventDate": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "12": {
+    "0": 39090,
+    "1": "Colin's Taste Event",
+    "2": "Colin",
+    "3": "Reuter",
+    "4": "Full Category that needs a waitlist Waitlist",
+    "5": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 39090,
+    "EventName": "Colin's Taste Event",
+    "FirstName": "Colin",
+    "LastName": "Reuter",
+    "Category": "Full Category that needs a waitlist Waitlist",
+    "EventDate": {
+      "date": "2035-08-28 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-08-30 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "13": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Eric",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Eric",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "14": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Liam",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Liam",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "15": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Liam",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Liam",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "16": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Sharon",
+    "3": "McLargeHuge",
+    "4": "Cat 5",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Sharon",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 5",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "17": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Gregory",
+    "3": "McLargeHuge",
+    "4": "Cat 1",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Gregory",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 1",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "18": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Alex",
+    "3": "McLargeHuge",
+    "4": "Cat 1",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Alex",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 1",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "19": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Sharon",
+    "3": "McLargeHuge",
+    "4": "Cat 5",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Sharon",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 5",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "20": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Gregory",
+    "3": "McLargeHuge",
+    "4": "Cat 1",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Gregory",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 1",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "21": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Alex",
+    "3": "McLargeHuge",
+    "4": "Cat 1",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Alex",
+    "LastName": "McLargeHuge",
+    "Category": "Cat 1",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "22": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Sharon",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Sharon",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "23": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Dan",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Dan",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "24": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Dan",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Dan",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "25": {
+    "0": 43064,
+    "1": "TEST-BackStopJS",
+    "2": "Kenneth",
+    "3": "McLargeHuge",
+    "4": "cat 3",
+    "5": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 43064,
+    "EventName": "TEST-BackStopJS",
+    "FirstName": "Kenneth",
+    "LastName": "McLargeHuge",
+    "Category": "cat 3",
+    "EventDate": {
+      "date": "2032-03-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2032-03-13 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "26": {
+    "0": 62907,
+    "1": "Peak to Peak Demo",
+    "2": "Colin",
+    "3": "Reuter",
+    "4": "50 Mile",
+    "5": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 62907,
+    "EventName": "Peak to Peak Demo",
+    "FirstName": "Colin",
+    "LastName": "Reuter",
+    "Category": "50 Mile",
+    "EventDate": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-12-31 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "27": {
+    "0": 68260,
+    "1": "The 5th Annual Connecticut Segment Championship of the Universe!",
+    "2": "damien",
+    "3": "goudreau",
+    "4": "The Misfits - Open  (READ ALL NOTES ON LATE REGISTRATION!)",
+    "5": {
+      "date": "2035-01-05 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-03-15 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 68260,
+    "EventName": "The 5th Annual Connecticut Segment Championship of the Universe!",
+    "FirstName": "damien",
+    "LastName": "goudreau",
+    "Category": "The Misfits - Open  (READ ALL NOTES ON LATE REGISTRATION!)",
+    "EventDate": {
+      "date": "2035-01-05 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-03-15 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "28": {
+    "0": 66203,
+    "1": "Pavement Ends Gravel Race (Triple Crown Gravel Series, Race #1)",
+    "2": "Gregory",
+    "3": "Colby",
+    "4": "Men 40+",
+    "5": {
+      "date": "2035-04-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "6": {
+      "date": "2035-04-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventID": 66203,
+    "EventName": "Pavement Ends Gravel Race (Triple Crown Gravel Series, Race #1)",
+    "FirstName": "Gregory",
+    "LastName": "Colby",
+    "Category": "Men 40+",
+    "EventDate": {
+      "date": "2035-04-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    },
+    "EventEndDate": {
+      "date": "2035-04-12 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "America/New_York"
+    }
+  },
+  "query": "Select Entries.EventID,EventName,Fname as FirstName,lname as LastName,Catagory as Category,EventDate,EventEndDate from Entries \r\n\tinner join races on entries.raceid=races.raceid\r\n\tinner join Events ev on entries.EventID = ev.EventID\r\n\tinner join EventType et on ev.EventType = et.TypeID\r\n\twhere Team like '%b2C2%'  and EventEndDate > '2035-02-05'"
+}

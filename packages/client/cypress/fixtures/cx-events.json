@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "eventId": "67842",
+      "eventType": "cx",
+      "name": "Fatty Cross",
+      "date": "2035-02-09T00:00:00.000-05:00",
+      "city": "Haddam Neck",
+      "state": "CT",
+      "eventUrl": "https://www.bikereg.com/fatty-cross-2025-3",
+      "interestedRiders": [],
+      "committedRiders": [],
+      "housingUrl": null,
+      "labels": [],
+      "carpools": [],
+      "housing": {}
+    }
+  ]
+}

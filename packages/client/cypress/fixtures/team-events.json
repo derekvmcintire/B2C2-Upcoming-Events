@@ -1,0 +1,74 @@
+{
+  "events": [
+    {
+      "eventId": "ef85fdf2-17d2-459f-b8a9-25a0c3166e7f",
+      "eventType": "special",
+      "name": "Conte's Group Ride",
+      "date": "2025-02-09T00:00:00.000+00:00",
+      "city": "Wattopia",
+      "state": "Zwift",
+      "interestedRiders": [],
+      "committedRiders": [],
+      "housingUrl": null,
+      "description": "9am start",
+      "labels": ["contes", "group", "virtual"],
+      "carpools": [],
+      "housing": {}
+    },
+    {
+      "eventId": "0467f1bf-69ac-4af5-9161-03b06c4950d6",
+      "eventType": "special",
+      "name": "Team Camp",
+      "date": "2025-05-02T04:00:00.000Z",
+      "city": "Charlemont",
+      "state": "MA",
+      "interestedRiders": [
+        "Derek",
+        "Todd ",
+        "Alex ",
+        "Dmytro",
+        "Karl",
+        "Senan",
+        "Eugene",
+        "Matt",
+        "Stephanie"
+      ],
+      "committedRiders": [],
+      "housingUrl": null,
+      "description": "Date for team camp is TBD",
+      "labels": ["trip"],
+      "carpools": [],
+      "housing": {}
+    },
+    {
+      "eventId": "5b19e059-0675-45f2-893e-0218699cab28",
+      "eventType": "special",
+      "name": "Example Event",
+      "date": "2026-02-28T00:00:00.000+00:00",
+      "city": "Boston",
+      "state": "MA",
+      "eventUrl": "https://www.b2c2cycling.com",
+      "interestedRiders": ["Rider Two", "Rider four"],
+      "committedRiders": ["Rider Three", "Rider One"],
+      "housingUrl": "https://www.vrbo.com",
+      "description": "An example special event that is also a team trip.",
+      "labels": ["trip", "special"],
+      "carpools": [
+        {
+          "riders": [],
+          "name": "CarOne",
+          "seats": 1
+        },
+        {
+          "name": "Jargmung's Car",
+          "seats": 2,
+          "riders": ["Jumjorby", "Jorgumber"]
+        }
+      ],
+      "housing": {
+        "committed": ["Rider One", "Rider Two"],
+        "interested": ["NonRider One"]
+      }
+    }
+  ]
+}
