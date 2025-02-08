@@ -27,9 +27,9 @@ export default function LinkBlock({
       className={classes.linkBlock}
       justify={alignment}
       align="center"
-      w="100%"
+      wrap="wrap"
     >
-      {eventType === DISCIPLINES.SPECIAL.id && (
+      {eventType == DISCIPLINES.SPECIAL.id && (
         <InterestedRiderForm handleUpdateEvent={updateEventFn} isCommitted />
       )}
       <InterestedRiderForm handleUpdateEvent={updateEventFn} />
