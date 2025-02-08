@@ -1,20 +1,22 @@
 import { Button, Flex } from "@mantine/core";
 import classes from "../styles/event.module.css";
 import { useMediaQuery } from "@mantine/hooks";
-import { MOBILE_BREAK_POINT } from "../../../constants";
+import { DISCIPLINES, MOBILE_BREAK_POINT } from "../../../constants";
 import InterestedRiderForm from "../ActionForm";
 import { UpdateEventData } from "../../../api/updateEvent";
+import { useEventContext } from "../../../context/event-context";
 
 /**
  * Renders a link block component for an event.
  */
 export default function LinkBlock({
-  eventUrl = undefined,
   updateEventFn,
 }: {
-  eventUrl?: string;
   updateEventFn: (data: UpdateEventData) => void;
 }) {
+  const { event } = useEventContext();
+  const { eventType, eventUrl } = event;
+
   const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const alignment = isMobile ? "center" : "right";
 
@@ -27,6 +29,9 @@ export default function LinkBlock({
       align="center"
       w="100%"
     >
+      {eventType === DISCIPLINES.SPECIAL.id && (
+        <InterestedRiderForm handleUpdateEvent={updateEventFn} isCommitted />
+      )}
       <InterestedRiderForm handleUpdateEvent={updateEventFn} />
       {eventUrl && (
         <Button size={buttonSize}>

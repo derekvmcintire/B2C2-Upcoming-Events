@@ -1,11 +1,12 @@
 import { useEventContext } from "../../../context/event-context";
-import { DISCIPLINES } from "../../../constants";
+import { DISCIPLINES, MOBILE_BREAK_POINT } from "../../../constants";
 import RidersLists from "../../Shared/Lists/RidersLists";
 import {
   RIDER_LIST_EVENT_TYPES,
   RiderListEventType,
 } from "../../Shared/Lists/types";
 import InterestedRiderForm from "../ActionForm";
+import { useMediaQuery } from "@mantine/hooks";
 import { UpdateEventData } from "../../../api/updateEvent";
 import { Flex, Stack } from "@mantine/core";
 
@@ -22,6 +23,8 @@ const EventRidersBlock = ({
   const { event } = useEventContext();
   const { eventType } = event;
 
+  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
+
   const riderListEventType: RiderListEventType =
     eventType === DISCIPLINES.SPECIAL.id
       ? RIDER_LIST_EVENT_TYPES.SPECIAL
@@ -33,12 +36,17 @@ const EventRidersBlock = ({
         isStatic={eventType !== DISCIPLINES.SPECIAL.id}
         eventListType={riderListEventType}
       />
-      <Flex justify="center">
-        {riderListEventType !== RIDER_LIST_EVENT_TYPES.RACE && (
-          <InterestedRiderForm handleUpdateEvent={updateEventFn} isCommitted />
-        )}
-        <InterestedRiderForm handleUpdateEvent={updateEventFn} />
-      </Flex>
+      {!isMobile && (
+        <Flex justify="center">
+          {eventType === DISCIPLINES.SPECIAL.id && (
+            <InterestedRiderForm
+              handleUpdateEvent={updateEventFn}
+              isCommitted
+            />
+          )}
+          <InterestedRiderForm handleUpdateEvent={updateEventFn} />
+        </Flex>
+      )}
     </Stack>
   );
 };

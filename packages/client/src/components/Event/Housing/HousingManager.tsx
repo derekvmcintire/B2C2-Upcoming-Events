@@ -90,6 +90,12 @@ export default function HousingManager({
           <InterestedRiderForm
             isHousing
             handleUpdateEvent={handleUpdateEvent}
+            customLabel={"I'm Committed to Housing"}
+            isCommitted
+          />
+          <InterestedRiderForm
+            isHousing
+            handleUpdateEvent={handleUpdateEvent}
             customLabel={"I'm Interested in Housing"}
           />
         </Stack>

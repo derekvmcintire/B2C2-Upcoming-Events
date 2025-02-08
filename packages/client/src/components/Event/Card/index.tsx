@@ -36,7 +36,6 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
 
   const {
     eventId,
-    eventUrl,
     interestedRiders = [],
     committedRiders = [],
     labels,
@@ -94,10 +93,7 @@ export default function EventCard({ registrations }: EventProps): JSX.Element {
           </Grid.Col>
           <Grid.Col span={isMobile ? 12 : 9}>
             <Stack h="100%" justify="center" p="16">
-              <LinkBlock
-                eventUrl={eventUrl}
-                updateEventFn={handleSubmitEventUpdate}
-              />
+              <LinkBlock updateEventFn={handleSubmitEventUpdate} />
               <EventName />
             </Stack>
           </Grid.Col>
