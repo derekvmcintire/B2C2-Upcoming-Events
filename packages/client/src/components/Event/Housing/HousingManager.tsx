@@ -87,17 +87,19 @@ export default function HousingManager({
           <Flex w="100%" justify="center">
             <HousingRidersBlock />
           </Flex>
-          <InterestedRiderForm
-            isHousing
-            handleUpdateEvent={handleUpdateEvent}
-            customLabel={"I'm Committed to Housing"}
-            isCommitted
-          />
-          <InterestedRiderForm
-            isHousing
-            handleUpdateEvent={handleUpdateEvent}
-            customLabel={"I'm Interested in Housing"}
-          />
+          <Flex w="100%" justify="center" wrap="wrap">
+            <InterestedRiderForm
+              isHousing
+              handleUpdateEvent={handleUpdateEvent}
+              customLabel={"I'm Committed to Housing"}
+              isCommitted
+            />
+            <InterestedRiderForm
+              isHousing
+              handleUpdateEvent={handleUpdateEvent}
+              customLabel={"I'm Interested in Housing"}
+            />
+          </Flex>
         </Stack>
       </Stack>
     </>
