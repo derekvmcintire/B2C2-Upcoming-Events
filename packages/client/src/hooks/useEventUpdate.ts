@@ -24,6 +24,22 @@ export const useEventUpdate = () => {
   const [error, setError] = useState<EventUpdateError | null>(null);
 
   /**
+   * Checks if the given housing object is valid.
+   *
+   * @param housing - The housing object to validate.
+   * @returns A boolean indicating whether the housing object is valid.
+   */
+  function isValidHousing(
+    housing: any,
+  ): housing is { interested: any[]; committed: any[] } {
+    return (
+      housing &&
+      Array.isArray(housing.interested) &&
+      Array.isArray(housing.committed)
+    );
+  }
+
+  /**
    * Updates the current event with the provided data. This function first updates the local state optimistically.
    * If the API request fails, it reverts the local state and sets an error.
    *
@@ -52,7 +68,11 @@ export const useEventUpdate = () => {
             data?.housingUrl === ""
               ? ""
               : data?.housingUrl || event?.housingUrl,
-          housing: data?.housing || event?.housing,
+          housing: (isValidHousing(data?.housing) && data.housing) ||
+            (isValidHousing(event?.housing) && event.housing) || {
+              interested: [],
+              committed: [],
+            },
           description: data.description ?? event.description,
           carpools: data?.carpools ?? event?.carpools,
         };
