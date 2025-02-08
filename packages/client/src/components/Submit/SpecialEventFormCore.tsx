@@ -80,65 +80,75 @@ export const SpecialEventFormCore: React.FC<FormCoreProps> = ({
         onChange={(e) => onUpdate({ date: e.target.value })}
         required
       />
-      <TextInput
-        label="Event City"
-        className={classes.formTextInput}
-        placeholder="City*"
-        value={city}
-        onChange={(e) => onUpdate({ city: e.target.value })}
-        required
-        disabled={isQuickContes}
-      />
-      <TextInput
-        label="Event State"
-        className={classes.formInput}
-        placeholder="State*"
-        value={state}
-        onChange={(e) => onUpdate({ state: e.target.value })}
-        required
-        disabled={isQuickContes}
-      />
-      <Select
-        label="Event Discipline"
-        className={`${classes.formInput} ${classes.disciplineInput}`}
-        placeholder="Event Discipline"
-        value={discipline}
-        onChange={onDisciplineChange}
-        required
-        data={disciplineOptions}
-        disabled={isQuickContes}
-      />
-      <MultiSelect
-        label="Event Labels"
-        placeholder="Event Labels"
-        data={labelOptions}
-        value={Array.from(labels)}
-        onChange={(values) => onUpdate({ labels: new Set(values) })}
-      />
-      <TextInput
-        label="Event URL"
-        className={classes.formInput}
-        placeholder="Event URL (optional)"
-        value={eventUrl}
-        onChange={(e) => onUpdate({ eventUrl: e.target.value })}
-        disabled={isQuickContes}
-      />
-      <TextInput
-        label="Housing URL"
-        className={classes.formInput}
-        placeholder="Housing URL (optional)"
-        value={housingUrl}
-        onChange={(e) => onUpdate({ housingUrl: e.target.value })}
-        disabled={isQuickContes}
-      />
-      <Textarea
-        label="Event Description"
-        placeholder="Add a description"
-        value={description}
-        onChange={(event) =>
-          onUpdate({ description: event.currentTarget.value })
-        }
-      />
+      {!isQuickContes && (
+        <>
+          {!isVirtual && (
+            <>
+              <TextInput
+                label="Event City"
+                className={classes.formTextInput}
+                placeholder="City*"
+                value={city}
+                onChange={(e) => onUpdate({ city: e.target.value })}
+                required
+                disabled={isQuickContes}
+              />
+              <TextInput
+                label="Event State"
+                className={classes.formInput}
+                placeholder="State*"
+                value={state}
+                onChange={(e) => onUpdate({ state: e.target.value })}
+                required
+                disabled={isQuickContes}
+              />
+            </>
+          )}
+          <Select
+            label="Event Discipline"
+            className={`${classes.formInput} ${classes.disciplineInput}`}
+            placeholder="Event Discipline"
+            value={discipline}
+            onChange={onDisciplineChange}
+            required
+            data={disciplineOptions}
+            disabled={isQuickContes}
+          />
+          <MultiSelect
+            label="Event Labels"
+            placeholder="Event Labels"
+            data={labelOptions}
+            value={Array.from(labels)}
+            onChange={(values) => onUpdate({ labels: new Set(values) })}
+          />
+          <TextInput
+            label="Event URL"
+            className={classes.formInput}
+            placeholder="Event URL (optional)"
+            value={eventUrl}
+            onChange={(e) => onUpdate({ eventUrl: e.target.value })}
+            disabled={isQuickContes}
+          />
+          {!isVirtual && (
+            <TextInput
+              label="Housing URL"
+              className={classes.formInput}
+              placeholder="Housing URL (optional)"
+              value={housingUrl}
+              onChange={(e) => onUpdate({ housingUrl: e.target.value })}
+              disabled={isQuickContes}
+            />
+          )}
+          <Textarea
+            label="Event Description"
+            placeholder="Add a description"
+            value={description}
+            onChange={(event) =>
+              onUpdate({ description: event.currentTarget.value })
+            }
+          />
+        </>
+      )}
     </Stack>
   );
 };

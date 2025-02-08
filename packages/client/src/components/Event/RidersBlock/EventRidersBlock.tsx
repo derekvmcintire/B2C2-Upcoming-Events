@@ -7,7 +7,7 @@ import {
 } from "../../Shared/Lists/types";
 import InterestedRiderForm from "../ActionForm";
 import { UpdateEventData } from "../../../api/updateEvent";
-import { Stack } from "@mantine/core";
+import { Flex, Stack } from "@mantine/core";
 
 interface EventRidersBlockProps {
   updateEventFn: (data: UpdateEventData) => void;
@@ -33,7 +33,12 @@ const EventRidersBlock = ({
         isStatic={eventType !== DISCIPLINES.SPECIAL.id}
         eventListType={riderListEventType}
       />
-      <InterestedRiderForm handleUpdateEvent={updateEventFn} />
+      <Flex justify="center">
+        {riderListEventType !== RIDER_LIST_EVENT_TYPES.RACE && (
+          <InterestedRiderForm handleUpdateEvent={updateEventFn} isCommitted />
+        )}
+        <InterestedRiderForm handleUpdateEvent={updateEventFn} />
+      </Flex>
     </Stack>
   );
 };

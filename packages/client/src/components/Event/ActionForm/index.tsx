@@ -7,6 +7,7 @@ interface InterestedRiderFormProps {
   handleUpdateEvent: (data: UpdateEventData) => void;
   isHousing?: boolean;
   customLabel?: string;
+  isCommitted?: boolean;
 }
 
 // @TODO: naming of this component vs naming of this file
@@ -19,6 +20,7 @@ const InterestedRiderForm = ({
   handleUpdateEvent,
   isHousing = false,
   customLabel,
+  isCommitted = false,
 }: InterestedRiderFormProps) => {
   const eventContext = useEventContext();
   const { event } = eventContext;
@@ -26,6 +28,7 @@ const InterestedRiderForm = ({
     eventId,
     eventType,
     interestedRiders,
+    committedRiders,
     housingUrl,
     housing = {},
   } = event;
@@ -36,6 +39,15 @@ const InterestedRiderForm = ({
       eventId: eventId,
       eventType: eventType,
       interestedRiders: [...existingInterestedRiders, rider],
+    });
+  };
+
+  const handleSubmitCommittedToEvent = (rider: string) => {
+    const existingCommittedRiders = committedRiders || [];
+    return handleUpdateEvent({
+      eventId: eventId,
+      eventType: eventType,
+      committedRiders: [...existingCommittedRiders, rider],
     });
   };
 
@@ -59,17 +71,35 @@ const InterestedRiderForm = ({
    * @param rider - The rider to be submitted.
    */
   const handleSubmitInterestedRider = (rider: string) => {
-    return isHousing
-      ? handleSubmitInterestedInHousing(rider)
+    if (isHousing) {
+      return handleSubmitInterestedInHousing(rider);
+    }
+    return isCommitted
+      ? handleSubmitCommittedToEvent(rider)
       : handleSubmitInterestedInEvent(rider);
+  };
+
+  const getDesktopLabel = () => {
+    if (customLabel) {
+      return customLabel;
+    }
+    return isCommitted ? "I'm Committed" : "I'm Interested";
+  };
+
+  const getMobileLabel = () => {
+    if (customLabel) {
+      return customLabel;
+    }
+
+    return isCommitted ? "Committed" : "Interested";
   };
 
   return (
     <Flex pr="16" justify="center" wrap="wrap">
       <ToggleInputForm
         buttonConfig={{
-          label: customLabel || "I'm interested",
-          mobileLabel: "Interested",
+          label: getDesktopLabel(),
+          mobileLabel: getMobileLabel(),
           testId: "interested-button",
         }}
         inputConfig={{
