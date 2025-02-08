@@ -76,7 +76,6 @@ const SpecialEventSubmissionForm = ({
     try {
       const submission = prepareSubmission();
       const response = await submitSpecialEvent(submission);
-      console.log("got response: ", response);
 
       if (response.success) {
         resetForm(true);
