@@ -6,8 +6,7 @@ import { getHypeColor, getHypeLevel } from "../../utils/hype";
 import { formatEventDate, formatShortDate } from "../../utils/dates";
 import { EventType, FetchRegistrationsResponse } from "../../types";
 import { getEntriesByEventId } from "../../utils/findRegisteredRiders";
-import { useMediaQuery } from "@mantine/hooks";
-import { LABELS, MOBILE_BREAK_POINT } from "../../constants";
+import { LABELS } from "../../constants";
 import LabelsList from "../Event/EventLabel/LabelsList";
 
 interface ExpandableRowProps {
@@ -43,7 +42,6 @@ export default function ExpandableRow({
     labels,
   } = event;
 
-  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
   const registeredNames = useMemo(
     () =>
       registrations ? getEntriesByEventId(registrations, Number(eventId)) : [],
@@ -52,9 +50,8 @@ export default function ExpandableRow({
   const formattedDate = useMemo(() => formatEventDate(date), [date]);
 
   const [weekday, dateString] = formattedDate.split(", ");
-  const eventDate = isMobile
-    ? formatShortDate(new Date(date))
-    : `${weekday} ${dateString}`;
+
+    
 
   const numberOfIntRiders = interestedRiders?.length || 0;
   const numberOfCommittedRiders = committedRiders?.length || 0;
@@ -64,8 +61,6 @@ export default function ExpandableRow({
     numberOfIntRiders,
     numberOfCommittedRiders,
   );
-
-  const chevronSize = isMobile ? 8 : 16;
 
   const getLocationText = () => {
     return labels?.includes(LABELS.VIRTUAL.id)
@@ -82,21 +77,22 @@ export default function ExpandableRow({
       >
         <Table.Td ta="left">
           {expandedRows.has(eventId) ? (
-            <FaChevronDown size={chevronSize} />
+            <FaChevronDown size={8} />
           ) : (
-            <FaChevronRight size={chevronSize} />
+            <FaChevronRight size={8} />
           )}
         </Table.Td>
-        <Table.Td ta="left" fw="600">
-          {eventDate}
+        <Table.Td ta="left" fw="600" className="hideOnDesktop">
+          {formatShortDate(new Date(date))}
+        </Table.Td>
+        <Table.Td ta="left" fw="600" className="hideOnMobile">
+          {`${weekday} ${dateString}`}
         </Table.Td>
         <Table.Td ta="left">{name}</Table.Td>
-        {!isMobile && <Table.Td ta="left">{getLocationText()}</Table.Td>}
-        {!isMobile && (
-          <Table.Td ta="left">
+        <Table.Td ta="left" className="hideOnMobile">{getLocationText()}</Table.Td>
+          <Table.Td ta="left" className="hideOnMobile">
             <LabelsList noText xs />
           </Table.Td>
-        )}
         <Table.Td ta="left">
           <Progress
             radius="xs"

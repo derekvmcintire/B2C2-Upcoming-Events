@@ -54,4 +54,14 @@
   #root {
     padding: 0.5rem;
   }
+
+  .hideOnMobile {
+    display: none;
+  }
+}
+
+@media (min-width: 825px) {
+  .hideOnDesktop {
+    display: none;
+  }
 }

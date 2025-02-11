@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Table, Card, Button } from "@mantine/core";
 import { EventType, FetchRegistrationsResponse } from "../../types";
 import ExpandableRow from "./ExpandableRow";
-import { useMediaQuery } from "@mantine/hooks";
-import { DEFAULT_DISCIPLINE, MOBILE_BREAK_POINT } from "../../constants";
+import { DEFAULT_DISCIPLINE } from "../../constants";
 import { EventProvider } from "../../context/event-context";
 import { getEventIdsFromUrl, updateUrlParams } from "../../utils/url";
 
@@ -19,7 +18,6 @@ interface ExpandableTableProps {
  * @param registrations - An array of registrations associated with the events.
  */
 const ExpandableTable = ({ events, registrations }: ExpandableTableProps) => {
-  const isMobile = useMediaQuery(MOBILE_BREAK_POINT);
 
   const eventIds = useMemo(() => {
     return events.map((event) => event.eventId);
@@ -96,9 +94,10 @@ const ExpandableTable = ({ events, registrations }: ExpandableTableProps) => {
             <Table.Th></Table.Th>
             <Table.Th>Date</Table.Th>
             <Table.Th>Name</Table.Th>
-            {!isMobile && <Table.Th>Location</Table.Th>}
-            {!isMobile && <Table.Th>Labels</Table.Th>}
-            <Table.Th>{isMobile ? "Hype" : "Hype Level"}</Table.Th>
+            <Table.Th className="hideOnMobile">Location</Table.Th>
+            <Table.Th className="hideOnMobile">Labels</Table.Th>
+            <Table.Th className="hideOnMobile">Hype Level</Table.Th>
+            <Table.Th className="hideOnDesktop">Hype</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

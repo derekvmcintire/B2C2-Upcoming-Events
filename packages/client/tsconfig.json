@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "packages/client/src",
+    "paths": {
+      "components/*": ["components/*"]
+    },
     "moduleResolution": "bundler",
     "module": "ESNext",
     "jsx": "react-jsx",
